@@ -72,8 +72,8 @@ body {
 .dragtooltip .dragtooltiptext {
     visibility: hidden;
     width: 160px;
-    background-color: black;
-    color: #fff;
+    background-color: $black;
+    color: $white;
     text-align: center;
     border-radius: 6px;
     padding: 5px 15px;
@@ -86,4 +86,10 @@ body {
 .dragtooltip:hover .dragtooltiptext {
     visibility: visible;
     cursor: pointer;
+}
+
+.invalid {
+    filter: grayscale(100%);
+    opacity: 0.2;
+    pointer-events: none;
 }
