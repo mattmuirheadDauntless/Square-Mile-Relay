@@ -1,0 +1,125 @@
+{#
+ # News index template
+ # -------------------
+ #
+ # This template is loaded whenever http://example.com/news is
+ # requested, because it is located at news/index.html in your
+ # craft/templates/ folder.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+
+{% block content %}
+	{% include "_includes/_page-header" %}
+    {% include "_includes/_cta-banner" %}
+
+    {% cache %}
+    {% set urlYear = craft.request.getParam('year') %}
+    {% set urlCity = craft.request.getParam('city') %}
+    <section class="filters active">
+        <div class="filters-btn">
+            <p>{{ 'filter'|t }}</p><i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </div>
+        <div class="filter-dropdown">
+            {% set events = craft.entries.section('event') %}
+            {% set years = [] %}
+            {% if events | length %}
+                {% for event in events %}
+                    {% set year = event.startDateTime | date('Y') %}
+                    {% if year not in years %}
+                        {% set years = years | merge([year]) %}
+                    {% endif %}
+                {% endfor %}
+
+                <ul class="filter-group small">
+                    {% for year in years %}
+                        {% if year == urlYear %}
+                            <li class="filter active" data-filter=".{{ year }}">{{ year }}</li>
+                        {% else %}
+                            <li class="filter" data-filter=".{{ year }}">{{ year }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+            {% endif %}
+            {% set cities = craft.entries.section('city').order('title') %}
+            {% if cities | length %}
+            <ul class="filter-group large">
+                {% for city in cities %}
+                    {% set latestEvent = craft.entries.section('event').relatedTo(city).order('startDateTime desc').first() %}
+                    {% if latestEvent %}
+                        {% if city.title == urlCity %}
+                            <li class="filter active" data-filter=".{{ city.slug }}" data-latest-event="{{ latestEvent.startDateTime|date('Y') }}">{{ city.title }}</li>
+                        {% else %}
+                            <li class="filter" data-filter=".{{ city.slug }}" data-latest-event="{{ latestEvent.startDateTime|date('Y') }}">{{ city.title }}</li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </section>
+
+    {% set events = craft.entries.section('event').order('title') %}
+    {% if events|length %}
+        <section class="partners">
+            {% for event in events %}
+                {% set city = event.relatedCity.first() %}
+                {% set year = event.startDateTime|date('Y') %}
+                {% set partners = event.relatedPartners %}
+                {% if partners|length %}
+                {% if city == urlCity and year == urlYear %}
+                    <div class="race {{ city.slug }} {{ year }} active">
+                {% else %}
+                    <div class="race {{ city.slug }} {{ year }} hide active">
+                {% endif %}
+                    <div class="race-title">
+                        <h2>{{ event.title }}</h2>
+                    </div>
+                    <ul id="{{ event.slug }}PartnersNav" class="slide-nav">
+                    {% set liCounter = 1 %}
+                    {% for partner in partners %}
+                        <li class="{{ city.slug }}{{ year }}Partner{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}" data-slide="{{ partner.partnerType|lower|replace(" ", "-") }}">
+                            <a href="#{{ city.slug }}{{ year }}Partner{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}">{{ partner.partnerType }}</a>
+                        </li>
+                        {% set liCounter = liCounter + 1 %}
+                    {% endfor %}
+                    </ul>
+                    <div class="race-partners">
+                    {% set liCounter = 1 %}
+                    {% for partner in partners %}
+                        {% set logo = partner.companyLogo.first() %}
+                        <div class="slide-nav-section" id="{{ city.slug }}{{ year }}Partner{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}" data-slide="{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}">
+                            <div class="content-left">
+                                <h3>{{ partner.partnerType }}</h3>
+                                <img src={{ logo.url }} alt={{ partner.title }}>
+                                {{ partner.simpleContent }}
+                            </div>
+                        </div>
+                        {% set liCounter = liCounter + 1 %}
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    {% include "_includes/_global-partners" %}
+
+    <section class="text partner-opportunities text-center">
+        <div class="wrapper-thin">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ entry.bodyContent }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% endcache %}
+
+{% endblock %}

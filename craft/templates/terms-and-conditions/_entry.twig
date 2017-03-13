@@ -1,0 +1,26 @@
+{% extends "_layout" %}
+
+{% block content %}
+
+    {% if craft.request.isAjax %}
+
+        {% include "_includes/loops/_news-loop" %}
+
+    {% else %}
+
+        {% include "_includes/_page-header" %}
+        {% include "_includes/_cta-banner" %}
+
+        <section class="faqs">
+            <div class="wrapper-thin">
+                <div class="row faq">
+                    <div class="col-md-12">
+                        {{ entry.bodyContent }}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    {% endif %}
+
+{% endblock %}

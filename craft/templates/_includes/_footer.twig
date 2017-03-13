@@ -1,0 +1,47 @@
+<footer class="footer">
+    <div class="wrapper-thin">
+        <div class="row">
+            <div class="col-md-3">
+                <h4>{{ 'Race Locations'|t }}</h4>
+                {% set cities = craft.entries.section('city').order('title') %}
+                {% if cities | length %}
+                <ul>
+                    {% for city in cities %}
+                        <li><a href={{ city.url }}>{{ city.title }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <h4>{{ 'Quicklinks'|t }}</h4>
+                {% set footerNav = navigation.footerNavigation %}
+                {% if footerNav | length %}
+                <ul>
+                    {% for navItem in footerNav %}
+                        {% if navItem.slug == "contact" %}
+                            <li><a href="#" id="contactBtn" type="button" data-toggle="modal" data-target="#contact">{{ navItem.title }}</a></li>
+                        {% else %}
+                            <li><a href={{ navItem.url }}>{{ navItem.title }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <h4>{{ 'Follow Us'|t }}</h4>
+                {% set socialNetworks = social.socialNetworks %}
+                {% if socialNetworks | length %}
+                <ul>
+                    {% for network in socialNetworks %}
+                        <li><a href={{ network.socialNetworkUrl }}><i class="fa {{ network.socialNetworkFontAwesomeIcon }}"></i>{{ network.socialNetworkTitle }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <h4>{{ 'Subscribe to our updates'|t }}</h4>
+                {{ subscribeToUpdates.updateForm|raw }}
+            </div>
+        </div>
+    </div>
+</footer>

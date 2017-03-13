@@ -1,0 +1,49 @@
+{% cache %}
+{% set limit = 15 %}
+{% set params = { section: 'company', limit: limit, order: 'title' } %}
+{% paginate craft.entries(params) as companies %}
+
+{% if craft.request.getPageNum() > paginate.totalPages %}
+    no-results
+{% else %}
+
+    {% for company in companies %}
+        {% set image = company.companyLogo.first() %}
+        {% set relatedTeams = craft.entries.section('team').relatedTo(company) %}
+        {% set teamCount = 0 %}
+        {% set years = [] %}
+        {% set cities = [] %}
+        {% for team in relatedTeams %}
+            {% set teamCount = teamCount + 1 %}
+            {% set relatedEvents = team.relatedEvent %}
+            {% for relatedEvent in relatedEvents %}
+                {% set year = relatedEvent.startDateTime | date('Y') %}
+                {% if year not in years %}
+                    {% set years = years | merge([year]) %}
+                {% endif %}
+                {% set city = relatedEvent.relatedCity.first() %}
+                {% if city is not null and city.slug not in cities %}
+                    {% set cities = cities | merge([city.slug]) %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        {% set yearsFilters = years | join(' ') %}
+        {% set citiesFilters = cities | join(' ') %}
+        <div class="companies-item grid-item {{ yearsFilters }} {{ citiesFilters }}">
+            <a href={{ company.url }} class="cover-link"></a>
+            {% if image|length %}
+            <div class="img-container" style="background-image: url({{ image.url }})"></div>
+            {% endif %}
+            <h3>{{ company.title }}</h3>
+            {% if teamCount == 1 %}
+                <h4>{{ teamCount }} team</h4>
+            {% else %}
+                <h4>{{ teamCount }} teams</h4>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+{% endif %}
+
+{% endpaginate %}
+{% endcache %}

@@ -1,0 +1,714 @@
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+
+/* Table of contents
+––––––––––––––––––––––––––––––––––––––––––––––––––
+- Grid
+- Base Styles
+- Typography
+- Links
+- Buttons
+- Forms
+- Lists
+- Code
+- Tables
+- Spacing
+- Utilities
+- Clearing
+- Media Queries
+- Progress Bar
+- Commerce Layout and Styles
+*/
+
+/* Grid
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.container {
+    position: relative;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 960px;
+
+    box-sizing: border-box;
+}
+
+.column,
+.columns {
+    float: left;
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+/* For devices larger than 550px */
+@media (min-width: 550px) {
+    .column,
+    .columns {
+        margin-left: 4%;
+    }
+
+    .column:first-child,
+    .columns:first-child {
+        margin-left: 0;
+    }
+
+    .one.column,
+    .one.columns {
+        width: 4.66666666667%;
+    }
+
+    .two.columns {
+        width: 13.3333333333%;
+    }
+
+    .three.columns {
+        width: 22%;
+    }
+
+    .four.columns {
+        width: 30.6666666667%;
+    }
+
+    .five.columns {
+        width: 39.3333333333%;
+    }
+
+    .six.columns {
+        width: 48%;
+    }
+
+    .seven.columns {
+        width: 56.6666666667%;
+    }
+
+    .eight.columns {
+        width: 65.3333333333%;
+    }
+
+    .nine.columns {
+        width: 74.0%;
+    }
+
+    .ten.columns {
+        width: 82.6666666667%;
+    }
+
+    .eleven.columns {
+        width: 91.3333333333%;
+    }
+
+    .twelve.columns {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .one-third.column {
+        width: 30.6666666667%;
+    }
+
+    .two-thirds.column {
+        width: 65.3333333333%;
+    }
+
+    .one-half.column {
+        width: 48%;
+    }
+
+    /* Offsets */
+    .offset-by-one.column,
+    .offset-by-one.columns {
+        margin-left: 8.66666666667%;
+    }
+
+    .offset-by-two.column,
+    .offset-by-two.columns {
+        margin-left: 17.3333333333%;
+    }
+
+    .offset-by-three.column,
+    .offset-by-three.columns {
+        margin-left: 26%;
+    }
+
+    .offset-by-four.column,
+    .offset-by-four.columns {
+        margin-left: 34.6666666667%;
+    }
+
+    .offset-by-five.column,
+    .offset-by-five.columns {
+        margin-left: 43.3333333333%;
+    }
+
+    .offset-by-six.column,
+    .offset-by-six.columns {
+        margin-left: 52%;
+    }
+
+    .offset-by-seven.column,
+    .offset-by-seven.columns {
+        margin-left: 60.6666666667%;
+    }
+
+    .offset-by-eight.column,
+    .offset-by-eight.columns {
+        margin-left: 69.3333333333%;
+    }
+
+    .offset-by-nine.column,
+    .offset-by-nine.columns {
+        margin-left: 78.0%;
+    }
+
+    .offset-by-ten.column,
+    .offset-by-ten.columns {
+        margin-left: 86.6666666667%;
+    }
+
+    .offset-by-eleven.column,
+    .offset-by-eleven.columns {
+        margin-left: 95.3333333333%;
+    }
+
+    .offset-by-one-third.column,
+    .offset-by-one-third.columns {
+        margin-left: 34.6666666667%;
+    }
+
+    .offset-by-two-thirds.column,
+    .offset-by-two-thirds.columns {
+        margin-left: 69.3333333333%;
+    }
+
+    .offset-by-one-half.column,
+    .offset-by-one-half.columns {
+        margin-left: 52%;
+    }
+}
+
+/* Base Styles
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/* NOTE
+html is set to 62.5% so that all the REM measurements throughout Skeleton
+are based on 10px sizing. So basically 1.5rem = 15px :) */
+html {
+    font-size: 62.5%;
+}
+
+body {
+    line-height: 1.6;
+    color: #222;
+    font-family: "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+    font-weight: 400;
+}
+
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+h1 {
+    line-height: 1.25;
+    letter-spacing: -.1rem;
+    font-size: 3.6rem;
+}
+
+h2 {
+    line-height: 1.25;
+    letter-spacing: -.1rem;
+    font-size: 3.6rem;
+}
+
+h3 {
+    line-height: 1.3;
+    letter-spacing: -.1rem;
+    font-size: 3.0rem;
+}
+
+h4 {
+    line-height: 1.35;
+    letter-spacing: -.08rem;
+    font-size: 2.4rem;
+}
+
+h5 {
+    line-height: 1.5;
+    letter-spacing: -.05rem;
+    font-size: 1.8rem;
+}
+
+h6 {
+    line-height: 1.6;
+    letter-spacing: 0;
+    font-size: 1.5rem;
+}
+
+/* Larger than phablet */
+@media (min-width: 550px) {
+    h1 {
+        font-size: 5.0rem;
+    }
+
+    h2 {
+        font-size: 4.2rem;
+    }
+
+    h3 {
+        font-size: 3.6rem;
+    }
+
+    h4 {
+        font-size: 3.0rem;
+    }
+
+    h5 {
+        font-size: 2.4rem;
+    }
+
+    h6 {
+        font-size: 1.5rem;
+    }
+}
+
+p {
+    margin-top: 0;
+}
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a {
+    text-decoration: none;
+    color: #da5a17;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #da5a17;
+}
+
+/* Lists
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+ul {
+    list-style: none;
+}
+
+ol {
+    list-style: none;
+}
+
+ol,
+ul {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+    margin: 1.5rem 0 1.5rem 3rem;
+    font-size: 90%;
+}
+
+li {
+    margin-bottom: .5rem;
+}
+
+/* Code
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+code {
+    margin: 0 .2rem;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    background: #f1f1f1;
+    padding: .2rem .5rem;
+    white-space: nowrap;
+    font-size: 90%;
+}
+
+pre > code {
+    display: block;
+    padding: 1rem 1.5rem;
+    white-space: pre;
+}
+
+/* Tables
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+th,
+td {
+    border-bottom: 1px solid #e1e1e1;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th:first-child,
+td:first-child {
+    padding-left: 0;
+}
+
+th:last-child,
+td:last-child {
+    padding-right: 0;
+}
+
+/* Spacing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+button,
+.button {
+    margin-bottom: 1rem;
+}
+
+input,
+textarea,
+select,
+fieldset {
+    margin-bottom: 1.5rem;
+}
+
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+    margin-bottom: 2.5rem;
+}
+
+/* Utilities
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.u-full-width {
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+.u-max-full-width {
+    max-width: 100%;
+
+    box-sizing: border-box;
+}
+
+.u-pull-right {
+    float: right;
+}
+
+.u-pull-left {
+    float: left;
+}
+
+/* Misc
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+hr {
+    margin-top: 3rem;
+    margin-bottom: 3.5rem;
+    border-top: 1px solid #e1e1e1;
+    border-width: 0;
+}
+
+/* Clearing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Self Clearing Goodness */
+.container:after,
+.row:after,
+.u-cf {
+    display: table;
+    clear: both;
+    content: "";
+}
+
+/* Helpers
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.rounded {
+            border-radius: 4px;
+
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+}
+
+.right {
+    float: right;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Media Queries
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Larger than mobile */
+@media (min-width: 400px) {
+}
+
+/* Larger than phablet (also point when grid becomes active) */
+@media (min-width: 550px) {
+}
+
+/* Larger than tablet */
+@media (min-width: 750px) {
+}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {
+}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {
+}
+
+/* Steps
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.steps {
+    margin-bottom: 40px;
+}
+.steps ul {
+    display:         flex;
+    display: -webkit-flex;
+    margin-bottom: 0;
+}
+.steps ul li {
+    display: block;
+    list-style: none;
+
+    flex: 1;
+}
+.steps ul li {
+    color: #aaa;
+}
+.steps ul li a {
+    color: #aaa;
+}
+.steps ul li.done {
+    opacity: .5;
+    color: #da5a17;
+}
+.steps ul li.done a {
+    color: #da5a17;
+}
+.steps ul li.sel {
+    opacity: 1;
+    color: #da5a17;
+}
+.steps ul li.sel a {
+    color: #da5a17;
+}
+.steps .meter {
+    position: relative;
+    margin-bottom: 10px;
+    border: 1px solid #bbb;
+            border-radius: 10px;
+    padding: 3px;
+    height: 10px;
+
+    -webkit-border-radius: 10px;
+       -moz-border-radius: 10px;
+}
+.steps .meter > span {
+    display: block;
+    position: relative;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 2px;
+    background-color: #da5a17;
+    height: 100%;
+    overflow: hidden;
+}
+
+@media (max-width: 750px) {
+    .steps ul {
+        display: block;
+        margin-left: 24px;
+    }
+    .steps ul li {
+        display: list-item;
+        list-style: decimal;
+    }
+    .steps .meter {
+        display: none;
+    }
+}
+
+/* Commerce Design
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+img.logo {
+    width: 400px;
+}
+
+#header {
+    margin-top: 50px;
+}
+
+#header nav {
+    margin-top: 25px;
+}
+
+img.product {
+    width: 100%;
+}
+
+.flash {
+    margin-bottom: 10px;
+    color: #da5a17;
+}
+
+.has-error input {
+    border: 1px solid #da5a17;
+}
+
+.has-error .help-block {
+    color: #da5a17;
+}
+
+.address-select {
+    position: relative;
+    margin-bottom: 1em;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background: #fff;
+}
+.address-select .radio input {
+    position: relative;
+    top: -1px;
+    margin: 0 5px 0 0;
+}
+
+.address-select .radio {
+    padding: 14px 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.address-select ul.address-data {
+    display: inline;
+}
+.address-select ul.address-data li {
+    display: inline;
+}
+.address-select ul.address-data li {
+    display: inline;
+}
+.address-select ul.address-data li strong {
+    display: none;
+}
+.address-select ul.address-data li span[data-key=firstName] {
+    font-weight: bold;
+}
+.address-select ul.address-data li span[data-key=lastName] {
+    font-weight: bold;
+}
+
+.address-select .actions {
+    float: right;
+    padding: 14px 15px;
+    font-size: .9em;
+}
+.address-select .actions ul {
+    margin: 0;
+}
+.address-select .actions ul li {
+    display: inline-block;
+    margin: 0 0 0 1em;
+}
+.address-select .actions ul li a {
+    text-decoration: underline;
+    color: #999;
+}
+
+.address-select .body {
+    padding: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+.product.row {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #fafafa;
+}
+
+.product-details {
+    padding-top: 2rem;
+}
+
+
+.address-card {
+    position: relative;
+    margin-bottom: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 20px 0 0 20px;
+}
+.address-card form {
+    display: inline;
+    margin: 0;
+}
+.address-card .edit {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.address-card ul {
+    list-style: none;
+}
+
+.shipping-select {
+    position: relative;
+    margin-bottom: 1em;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background: #fff;
+}
+.shipping-select input {
+    margin: 0 5px 0 0;
+}
+.shipping-select label {
+    padding: 10px 14px;
+}
+.shipping-select .price {
+    float: right;
+    padding: 4px 4px;
+    font-size: .9em;
+    font-weight: normal;
+}
+
+.review-card {
+    position: relative;
+    margin-bottom: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 20px;
+}
+.review-card ul {
+    margin: 0;
+    list-style: none;
+}
+.review-card ul li {
+    border-top: 1px solid #e1e1e1;
+    padding: 10px 0;
+}

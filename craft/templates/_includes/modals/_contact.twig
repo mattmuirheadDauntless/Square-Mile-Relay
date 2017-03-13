@@ -1,0 +1,61 @@
+<div id="contact" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ 'Contact Us'|t }}</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="" accept-charset="UTF-8">
+                    {{ getCsrfInput() }}
+                    <input type="hidden" name="action" value="contactForm/sendMessage">
+                    <input type="hidden" name="redirect" value="contact/thanks">
+
+                    <div class="input-wrapper">
+                        <input class="input" type="text" placeholder="Your Name">
+                        <label>{{ 'Your Name'|t }}</label>
+                        <i class="fa validation-icon" aria-hidden="true"></i>
+                        <div class="msg valid">{{' Great!'|t }}</div>
+                        <div class="msg in-valid">{{' That name is invalid.'|t }}</div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input class="input" type="email" placeholder="Email">
+                        <label>{{ 'Email'|t }}</label>
+                        <i class="fa validation-icon" aria-hidden="true"></i>
+                        <div class="msg valid">{{' Great!'|t }}</div>
+                        <div class="msg in-valid">{{' That email is invalid.'|t }}</div>
+                    </div>
+                    <div class="input-wrapper">
+                        <input class="input" type="phone" placeholder="Phone">
+                        <label>{{ 'Phone'|t }}</label>
+                        <i class="fa validation-icon" aria-hidden="true"></i>
+                        <div class="msg valid">{{' Great!'|t }}</div>
+                        <div class="msg in-valid">{{' That phone number is invalid.'|t }}</div>
+                    </div>
+                    <div class="input-wrapper select">
+                        <select class="input">
+                            {% set cities = craft.entries.section('city') %}
+                            {% for city in cities %}
+                                <option value="{{ city.slug }}">{{ city.title }}</option>
+                            {% endfor %}
+                        </select>
+                        <label>{{ 'City you are interested in'|t }}</label>
+                        <i class="fa validation-icon" aria-hidden="true"></i>
+                        <div class="msg valid">{{' Great!'|t }}</div>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea class="input" placeholder="Message"></textarea>
+                        <label>{{ 'Message'|t }}</label>
+                        <i class="fa validation-icon" aria-hidden="true"></i>
+                        <div class="msg valid">{{' Great!'|t }}</div>
+                        <div class="msg in-valid">{{' That phone number is invalid.'|t }}</div>
+                    </div>
+                    <div class="button-group">
+                        <input type="submit" value="{{ 'Submit'|t }}" class="btn btn-orange btn-long">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

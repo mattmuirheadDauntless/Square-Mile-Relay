@@ -1,0 +1,19 @@
+{% set partners = craft.entries.section('partners').search('featured:1') %}
+<section id="globalPartners" class="global-partners">
+    <div class="wrapper-thin">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>{{ 'Global Partners'|t }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            {% for partner in partners %}
+                {% set logo = partner.companyLogo.first() %}
+                <div class="partner">
+                    <img src="{{ logo.getUrl('newsThumb') }}" alt="{{ partner.title }}">
+                    <h4>{{ partner.partnerType }}</h4>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

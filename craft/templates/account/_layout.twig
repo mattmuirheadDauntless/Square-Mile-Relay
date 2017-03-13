@@ -1,0 +1,26 @@
+{% requireLogin %}
+
+{% extends "_layout" %}
+
+{% block content %}
+
+    {% if currentUser.firstName|length %}
+        {% set pageHeading = 'Ready to race, ' ~ currentUser.firstName|t ~ '?' %}
+    {% else %}
+        {% set pageHeading = 'Ready to race?' %}
+    {% endif %}
+
+    {% set entry = craft.entries.section(craft.request.firstSegment).first() %}
+    {% set image = entry.backgroundImage.first() %}
+    <section class="main-heading" style="background-image: url('{{ image.url }}');">
+        <div class="wrapper-thin">
+            <div class="title">
+                <h1>{{ 'My Account'|t }}</h1>
+                <h2>{{ pageHeading }}</h2>
+            </div>
+        </div>
+    </section>
+
+    {% block subContent %}{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% if currentUser %}
+    {% redirect 'checkout/addresses' %}
+{% endif %}
+
+{% extends "checkout/_layout" %}
+
+{% block subContent %}
+
+    <div class="row">
+        <div class="col-sm-6">
+
+            <h3>Log In</h3>
+
+            <form method="post" accept-charset="UTF-8">
+                {{ getCsrfInput() }}
+                <input type="hidden" name="action" value="users/login">
+                <input type="hidden" name="redirect" value="checkout/addresses">
+
+                {{ formFields.input({
+                    id:          'loginName',
+                    name:        'loginName',
+                    value:       craft.session.rememberedUsername,
+                    placeholder: 'Email'
+                }) }}
+
+                {{ formFields.input({
+                    id:          'password',
+                    name:        'password',
+                    type:        'password',
+                    placeholder: 'Password'
+                }) }}
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="rememberMe" value="1">
+                        Remember me
+                    </label>
+                </div>
+
+                <input type="submit" value="Login" class="btn btn-primary"/>
+
+            </form>
+
+            <p><a href="{{ url('forgotpassword') }}">Forget your password?</a></p>
+
+        </div>
+
+        <div class="col-sm-6">
+
+            <h3>Guest Checkout</h3>
+
+            <form method="POST" accept-charset="UTF-8">
+                <input type="hidden" name="action" value="commerce/cart/updateCart">
+                <input type="hidden" name="redirect" value="checkout/addresses">
+                {{ getCsrfInput() }}
+                {{ formFields.input({
+                    id:          'email',
+                    name:        'email',
+                    value:       cart.email,
+                    placeholder: 'email@site.com'
+                }) }}
+
+                <span class="flash">{{ cart.getErrors('email')|join }}</span><br>
+
+                <input type="submit" value="Continue as Guest" class="btn btn-primary"/>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

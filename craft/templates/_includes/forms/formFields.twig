@@ -1,0 +1,65 @@
+{% macro input(options) %}
+    <div id="d-{{ options.id }}" class="form-group">
+        <div>
+            <input
+                type="{{ options.type|default('text') }}"
+                id="{{ options.id }}"
+                name="{{ options.name }}"
+                class="input"
+                {%- if options.value is defined -%}value="{{ options.value|e }}"{%- endif -%}
+                {%- if options.placeholder is defined -%}placeholder="{{ options.placeholder }}"{%- endif -%}
+                {%- if options.pattern is defined -%}pattern="{{ options.pattern }}"{%- endif -%} />
+            <label>{%- if options.label is defined -%}{{ options.label }}{%- endif -%}</label>
+            <i class="fa validation-icon" aria-hidden="true"></i>
+            <div class="msg valid">{{ 'Great!'|t }}</div>
+            <div class="msg in-valid">{{ "That's an invalid "|t }}{%- if options.label is defined -%}{{ options.label }}{%- endif -%}</div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro static(options) %}
+    <div class="form-group">
+        <label for="{{ options.id }}" class="{{ options.labelClasses }} control-label">{{ options.label }}</label>
+        <div class="{{ options.divClasses }}">
+            <p class="form-control-static">{{ options.value }}</p>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro dropdown(options) %}
+    <div id="d-{{ options.id }}" class="form-group">
+        {% set optionKey = options.optionKeys[0] %}
+        {% set optionValue = options.optionKeys[1] %}
+
+        <select id="{{ options.id }}" name="{{ options.name }}" class="input">
+            <option value="">{{ '- Select '  ~ options.label ~ ' -'|t }}</option>
+            {% for option in options.options %}
+                {% if options.value is defined and options.value == option[optionKey] %}
+                    <option value="{{ option[optionKey] }}" selected="selected">{{ option[optionValue] }}</option>
+                {% else %}
+                    <option value="{{ option[optionKey] }}">{{ option[optionValue] }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <label>{%- if options.label is defined -%}{{ options.label }}{%- endif -%}</label>
+        <i class="fa validation-icon" aria-hidden="true"></i>
+        <div class="msg valid">{{ 'Great!'|t }}</div>
+        <div class="msg in-valid">{{ "That's an invalid option "|t }}</div>
+    </div>
+{% endmacro %}
+
+{% macro textArea(options) %}
+    <div id="d-{{ options.id }}" class="form-group">
+        <textarea
+            id="{{ options.id }}"
+            name="{{ options.name }}"
+            class="input"
+            {%- if options.rows is defined -%}rows="{{ options.rows }}"{%- endif -%}
+            {%- if options.value is defined -%}value="{{ options.value|nl2br }}"{%- endif -%}
+            {%- if options.placeholder is defined -%}placeholder="{{ options.placeholder }}"{%- endif -%}>{%- if options.value is defined -%}{{ options.value|nl2br }}{%- endif -%}</textarea>
+        <label>{%- if options.label is defined -%}{{ options.label }}{%- endif -%}</label>
+        <i class="fa validation-icon" aria-hidden="true"></i>
+        <div class="msg valid">{{ 'Great!'|t }}</div>
+        <div class="msg in-valid">{{ "That's an invalid "|t }}{%- if options.label is defined -%}{{ options.label }}{%- endif -%}</div>
+    </div>
+{% endmacro %}

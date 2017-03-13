@@ -1,0 +1,183 @@
+{% requireLogin %}
+
+{% extends "account/_layout" %}
+
+{% import "_includes/forms/formFields" as formFields %}
+
+{% block subContent %}
+
+    <section class="my-account tabs-container">
+        <a href="{{ url('account/profile') }}" class="tab active"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="{{ url('account/teams') }}" class="tab"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+        <a href="{{ url('account/orders') }}" class="tab"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+        <div class="tab-wrapper my-profile active">
+            <h5>{{ 'My Profile'|t }}</h5>
+
+            <div class="wrapper-wide">
+                <div class="profile-img">
+                    {% if currentUser.photoUrl != '' %}
+                        <img src="{{ currentUser.photoUrl }}" class="img-responsive" alt="profile image">
+                    {% else %}
+                        {% set defaultUserImage = defaults.defaultUserImage.first() %}
+                        {% if defaultUserImage is not null %}
+                            <img src="{{ defaultUserImage.url }}" class="img-responsive">
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <div class="profile-info">
+                    <h3>{{ currentUser.firstName ~ " " ~ currentUser.lastName }}</h3>
+                    <a href="{{ url('account/profile/edit') }}" class="btn btn-orange btn-small">{{ 'Edit'|t }}</a>
+
+                    {% set completedFields = 0 %}
+                    <ul>
+                        <li>
+                            <strong>{{ 'Email'|t }}</strong>
+                            {% if currentUser.email|length %}
+                                <span>{{ currentUser.email }}</span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please enter...'|t }}</span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <strong>{{ 'Phone'|t }}</strong>
+                            {% if currentUser.phoneNumber|length %}
+                                <span>{{ currentUser.phoneNumber }}</span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please enter...'|t }}</span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <strong>{{ 'Gender'|t }}</strong>
+                            {% if currentUser.gender|length %}
+                                <span>{{ currentUser.gender }}</span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please select...'|t }}</span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <strong>{{ 'Date of Birth'|t }}</strong>
+                            {% if currentUser.dateOfBirth|length %}
+                                <span>{{ craft.squareMileRelay.getAgeFromDate(currentUser.dateOfBirth) }}</span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please enter...'|t }}</span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <strong>{{ 'T-shirt size'|t }}</strong>
+                            {% if currentUser.shirtSize|length %}
+                                <span>{{ currentUser.shirtSize }}</span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please enter...'|t }}</span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <strong>{{ 'Why I compete'|t }}</strong>
+                            {% if currentUser.whyAreYouInterested|length %}
+                                <span>{{ currentUser.whyAreYouInterested }}</span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please enter...'|t }}</span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <strong>{{ 'Address'|t }}</strong>
+                            {% if currentUser.address1|length %}
+                                <span>
+                                    {% if currentUser.address1|length %}{{ currentUser.address1 }}<br/>{% endif %}
+                                    {% if currentUser.address2|length %}{{ currentUser.address2 }}<br/>{% endif %}
+                                    {% if currentUser.addressCity|length %}{{ currentUser.addressCity }}<br/>{% endif %}
+                                    {% if currentUser.addressCountry|length %}{{ currentUser.addressCountry }}<br/>{% endif %}
+                                    {% if currentUser.addressPostCode|length %}{{ currentUser.addressPostCode }}{% endif %}
+                                </span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please enter...'|t }}</span>
+                            {% endif %}
+                        </li>
+                        <li class="right">
+                            {% set company = currentUser.relatedCompany.first() ? currentUser.relatedCompany.first().title : '' %}
+                            <strong>{{ 'Company'|t }}</strong>
+                            {% if company|length %}
+                                <span>{{ company }}</span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please enter...'|t }}</span>
+                            {% endif %}
+                        </li>
+                        <li class="right">
+                            <strong>{{ 'Job Title'|t }}</strong>
+                            {% if currentUser.jobTitle|length %}
+                                <span>{{ currentUser.jobTitle }}</span>
+                                {% set completedFields = completedFields + 1 %}
+                            {% else %}
+                                <span class="no-info">{{ 'Please enter...'|t }}</span>
+                            {% endif %}
+                        </li>
+                    </ul>
+
+                    {% set completedPercentage = ((completedFields+1)/10) * 100 %}
+                    <div class="progress-radial progress-{{ completedPercentage }}">
+                        <div class="overlay">
+                            <div class="text">
+                                <span>{{ completedPercentage }}%</span>
+                                {{ 'Complete'|t }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-results">
+                {% set results = craft.entries.section('runningResults').relatedTo(currentUser) %}
+                <h3>{{ 'My Results'|t }} <span>{% if results|length %}<strong>{{ 'Personal Best'|t }}:</strong>{{ personalBest }}</span>{% endif %}</h3>
+                <div class="table-wrapper">
+                    <table class="tablesorter">
+                        <thead>
+                            <tr>
+                                <th><span></span>{{ 'Event'|t }}</th>
+                                <th><span></span>{{ 'My Time'|t }}</th>
+                                <th><span></span>{{ 'Relay Position'|t }}</th>
+                                <th><span></span>{{ 'Team Time'|t }}</th>
+                                <th><span></span>{{ 'Team Ranking'|t }}</th>
+                                <th><span></span>{{ 'Runner ID'|t }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in results %}
+                                {% set event = result.relatedEvents.first() %}
+                                <tr>
+                                    <td>{% if event|length %}{{ event.title }}{% endif %}</td>
+                                    <td><strong>{{ result.lapTime }}</strong></td>
+                                    <td>{{ result.lapPosition }}</td>
+                                    <td><strong>{{ result.finishTime }}</strong></td>
+                                    <td>{{ result.teamPosition }}</td>
+                                    <td>{{ result.bib }}</td>
+                                </tr>
+                            {% endfor %}
+                            {% if results|length == 0 %}
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="no-results">
+                                            <h3>{{ "You haven't crossed the finish line yet! Come back after you've run your race to see your results."|t }}</h3>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}

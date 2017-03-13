@@ -1,0 +1,295 @@
+{% requireLogin %}
+
+{% extends "account/_layout" %}
+
+{% import "_includes/forms/formFields" as formFields %}
+
+{% block subContent %}
+
+    <form method="post" enctype="multipart/form-data" class="my-account tabs-container">
+        {{ getCsrfInput() }}
+        <input type="hidden" name="action" value="users/saveUser">
+        <input type="hidden" name="redirect" value="account/profile">
+        <input type="hidden" name="userId" value="{{ currentUser.id }}">
+
+        <a href="{{ url('account/profile') }}" class="tab active"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="{{ url('account/teams') }}" class="tab"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+        <a href="{{ url('account/orders') }}" class="tab"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+        <div class="tab-wrapper my-profile active edit">
+            <h5>{{ 'My Profile'|t }} <span class="edit-element">- {{ 'Edit Profile'|t }}</span></h5>
+
+            <div class="edit-wrapper">
+
+                <div class="section">
+
+                    <div class="edit-col-small">
+                        <div class="profile-img">
+                            <label>{{ 'Profile Picture'|t }}</label>
+                            {% if currentUser.photoUrl != '' %}
+                                <img src="{{ currentUser.photoUrl }}" class="img-responsive" alt="profile image">
+                            {% else %}
+                                {% set defaultUserImage = defaults.defaultUserImage.first() %}
+                                {% if defaultUserImage is not null %}
+                                    <img src="{{ defaultUserImage.url }}" class="img-responsive">
+                                {% endif %}
+                            {% endif %}
+                            {# <div class="btn btn-dark-grey btn-tiny">Upload New</div> #}
+                        </div>
+                    </div>
+
+                    <div class="edit-col-large">
+                        <h3>{{ currentUser.firstName ~ " " ~ currentUser.lastName }}</h3>
+                        <button type="submit" class="btn btn-orange btn-small save-btn">{{ 'Save'|t }}</button>
+
+                        <div class="notification error hide">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+                            <p><strong>Important:</strong> Please make sure all required fields have been filled in and there are no validation errors.</p>
+
+                            <span class="close">Got it!<i class="fa fa-times" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="form">
+
+                            <div class="input-wrapper edit-element required">
+                                {{ formFields.input({
+                                    id:    'firstName',
+                                    label: 'First Name',
+                                    name:  'firstName',
+                                    placeholder: 'First Name',
+                                    value: currentUser.firstName
+                                }) }}
+                            </div>
+
+                            <div class="input-wrapper edit-element required">
+                                {{ formFields.input({
+                                    id:    'lastName',
+                                    label: 'Last Name',
+                                    name:  'lastName',
+                                    placeholder: 'Last Name',
+                                    value: currentUser.lastName
+                                }) }}
+                            </div>
+
+                             <div class="input-wrapper edit-element required">
+                                {{ formFields.input({
+                                    id:    'email',
+                                    label: 'Email',
+                                    name:  'email',
+                                    type: 'email',
+                                    placeholder: 'Email',
+                                    value: currentUser.email
+                                }) }}
+                            </div>
+
+                            <div class="input-wrapper edit-element">
+                                {{ formFields.input({
+                                    id:    'phoneNumber',
+                                    label: 'Contact Number',
+                                    name:  'fields[phoneNumber]',
+                                    placeholder: 'Contact Number',
+                                    pattern: '^\s*\(?(020[7,8]{1}\)?[ ]?[1-9]{1}[0-9{2}[ ]?[0-9]{4})|(0[1-8]{1}[0-9]{3}\)?[ ]?[1-9]{1}[0-9]{2}[ ]?[0-9]{3})\s*$',
+                                    value: currentUser.phoneNumber
+                                }) }}
+                            </div>
+
+                            <div class="input-wrapper edit-element select">
+                                {% set genders = craft.fields.getFieldByHandle('gender').getAttribute('settings').options %}
+                                {{ formFields.dropdown({
+                                    id:         'gender',
+                                    label:      'Gender',
+                                    name:       'fields[gender]',
+                                    value:      currentUser.gender,
+                                    options:    genders,
+                                    optionKeys: ['value', 'label']
+                                }) }}
+                            </div>
+
+                            <div class="input-wrapper edit-element select">
+                                {{ formFields.input({
+                                    id:    'dateOfBirth',
+                                    label: 'Date of birth',
+                                    name:  'fields[dateOfBirth]',
+                                    type:  'date',
+                                    placeholder: 'Date of Birth',
+                                    value: currentUser.dateOfBirth
+                                }) }}
+                            </div>
+
+
+
+                                        <div class="input-wrapper edit-element select">
+                                            {% set companies = craft.entries.section('company').limit(null).order('title asc') %}
+                                            {% set companyId = currentUser.relatedCompany.first() ? currentUser.relatedCompany.first().id : null %}
+                                            {{ formFields.dropdown({
+                                                id:         'relatedCompany',
+                                                label:      'Company',
+                                                name:       'fields[relatedCompany][]',
+                                                placeholder: 'Company',
+                                                value:      companyId,
+                                                options:    companies,
+                                                optionKeys: ['id', 'title']
+                                            }) }}
+                                        </div>
+
+                                        <div class="input-wrapper edit-element">
+                                            {{ formFields.input({
+                                                id:    'jobTitle',
+                                                label: 'Job Title',
+                                                name:  'fields[jobTitle]',
+                                                placeholder: 'Job Title',
+                                                value: currentUser.jobTitle
+                                            }) }}
+                                        </div>
+
+                                        
+
+
+                            <div class="input-wrapper edit-element no-validation">
+                                {% set shirtSizes = craft.fields.getFieldByHandle('shirtSize').getAttribute('settings').options %}
+                                {{ formFields.dropdown({
+                                    id:         'shirtSize',
+                                    label:      'Shirt Size',
+                                    name:       'fields[shirtSize]',
+                                    value:      currentUser.shirtSize,
+                                    options:    shirtSizes,
+                                    optionKeys: ['value', 'label']
+                                }) }}
+                                <span class="grey">*Please specify your preference. This does not guarantee your size</span>
+                            </div>
+
+                            <div class="input-wrapper edit-element no-validation">
+                                <label id="user-photo" for="userPhoto">{{ 'Profile Image'|t }}</label>
+                                <input type="file" name="userPhoto" value="Upload Image" placeholder="Profile Picture" class="input">
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="section-grey">
+                    <div class="edit-col-small"></div>
+                    <div class="edit-col-large">
+                        <div class="form">
+                            
+                            <div class="input-wrapper edit-element">
+                               {{ formFields.input({
+                                    id:    'address1',
+                                    label: 'Address Line 1',
+                                    name:  'fields[address1]',
+                                    placeholder: 'Address 1',
+                                    value: currentUser.address1
+                                }) }}
+                            </div>
+                            
+                            <div class="input-wrapper edit-element">
+                                {{ formFields.input({
+                                    id:    'address2',
+                                    label: 'Address Line 2',
+                                    name:  'fields[address2]',
+                                    placeholder: 'Address 2',
+                                    value: currentUser.address2
+                                }) }}
+                            </div>
+
+                            <div class="input-wrapper edit-element">
+                                {{ formFields.input({
+                                    id:    'addressCity',
+                                    label: 'City',
+                                    name:  'fields[addressCity]',
+                                    placeholder: 'City',
+                                    value: currentUser.addressCity
+                                }) }}
+                            </div>
+
+                            <div class="input-wrapper edit-element">
+                                {{ formFields.input({
+                                    id:    'addressPostcode',
+                                    label: 'Postcode / Zip Code',
+                                    name:  'fields[addressPostCode]',
+                                    placeholder: 'Postcode',
+                                    pattern: '((\d{5}([\-]\d{4})?)|[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2})',
+                                    value: currentUser.addressPostCode
+                                }) }}
+                            </div>
+
+                            <div class="input-wrapper edit-element select">
+                                {{ formFields.dropdown({
+                                    id:         'addressCountry',
+                                    label:      'Country',
+                                    name:       'fields[addressCountry]',
+                                    placeholder: 'Country',
+                                    value:      currentUser.addressCountry,
+                                    options:    craft.commerce.getCountries(),
+                                    optionKeys: ['iso', 'name']
+                                }) }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="edit-col-small"></div>
+                    <div class="edit-col-large">
+                        <div class="form">
+
+                            <div class="input-wrapper edit-element full-width textarea">
+                                {{ formFields.textArea({
+                                    id:    'whyAreYouInterested',
+                                    label: 'Why are you interested in taking part?',
+                                    name:  'fields[whyAreYouInterested]',
+                                    rows:  5,
+                                    placeholder: 'Why are you interested in taking part?',
+                                    value: currentUser.whyAreYouInterested
+                                }) }}
+                            </div>
+                            
+                            <div class="input-wrapper edit-element checkbox first">
+                                {% if currentUser.acceptInjuryWaiver == 1 %}
+                                    <input class="input" id="checkbox-1" name="fields[acceptInjuryWaiver]" checked="checked" type="checkbox">
+                                {% else %}
+                                    <input class="input" id="checkbox-1" name="fields[acceptInjuryWaiver]" type="checkbox">
+                                {% endif %}
+
+                                <label for="checkbox-1"></label>
+                                <p>I agree to the event <a href="{{ siteUrl }}injury-waiver" target="_blank">Injury Waiver Terms and Conditions</a></p>
+                            </div>
+
+                            <div class="input-wrapper edit-element checkbox first">
+                                {% if currentUser.acceptToReceiveInformation == 1 %}
+                                    <input class="input" id="checkbox-2" name="fields[acceptToReceiveInformation]" checked="checked" type="checkbox">
+                                {% else %}
+                                    <input class="input" id="checkbox-2" name="fields[acceptToReceiveInformation]" type="checkbox">
+                                {% endif %}
+
+                                <label for="checkbox-2"></label>
+                                <p>I would like to receive information from Bloomberg</p>
+                            </div>
+
+                            <div class="input-wrapper edit-element checkbox first">
+                                {% if currentUser.acceptContactByThirdParties == 1 %}
+                                    <input class="input" id="checkbox-3" name="fields[acceptContactByThirdParties]" checked="checked" type="checkbox">
+                                {% else %}
+                                    <input class="input" id="checkbox-3" name="fields[acceptContactByThirdParties]" type="checkbox">
+                                {% endif %}
+
+                                <label for="checkbox-3"></label>
+                                <p>I'm happy to be contacted by 3rd parties</p>
+                            </div>
+
+                            <button type="submit" class="btn btn-orange btn-small save-btn">{{ 'Save'|t }}</button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+{% endblock %}

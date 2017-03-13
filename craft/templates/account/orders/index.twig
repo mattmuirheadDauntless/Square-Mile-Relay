@@ -1,0 +1,97 @@
+{% extends "account/_layout" %}
+
+{% set pageHeading = 'Order History'|t %}
+{% set customer = craft.commerce.getCustomer() %}
+
+{% block subContent %}
+
+    <section class="my-account tabs-container">
+        <a href="{{ url('account/profile') }}" class="tab"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="{{ url('account/teams') }}" class="tab"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+        <a href="{{ url('account/orders') }}" class="tab active"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+        <div class="tab-wrapper orders active">
+            <h5>{{ 'Orders and Billing'|t }}</h5>
+
+            <div class="order-wrapper">
+                <h3>{{ 'Orders History'|t }}</h3>
+
+                <div class="notification error">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+                    <p><strong>{{ 'Important:'|t }}</strong> {{ "We have not received payment for this team's entry into the race. You can add/edit your team, but it won't be entered until payment is made."|t }}</p>
+
+                    <span class="close">{{ 'Got it!'|t }}<i class="fa fa-times" aria-hidden="true"></i></span>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="tablesorter">
+                    {% set criteria = {'customerId': customer.id} %}
+                    {% set orders = craft.commerce.orders(criteria) %}
+                    <thead>
+                        <tr>
+                            <th><span></span>{{ 'Date'|t }}</th>
+                            <th><span></span>{{ 'Order Ref #'|t }}</th>
+                            <th><span></span>{{ 'Quantity'|t }}</th>
+                            <th><span></span>{{ 'Order Total'|t }}</th>
+                            <th><span></span>{{ 'Order Status'|t }}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if orders|length %}
+                            {% for order in orders %}
+                                {% set iso = 'GBP' %}
+                                {% for item in order.lineItems %}
+                                    {% if loop.first %}
+                                        {% set product = craft.commerce.products.hasVariant({ sku: item.getSku() }).first() %}
+                                        {% if product.relatedCities[0].currencyIsoCode|length > 0 %}
+                                            {% set iso = product.relatedCities[0].currencyIsoCode %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <tr>
+                                    <td>{{ order.dateOrdered|date('j/m/Y') }}</td>
+                                    <td><a href="{{ url('account/orders/1?number=' ~ order.number) }}">{{ order }}</a></td>
+                                    <td>{{ order.totalQty }}</td>
+                                    <td>{{ order.totalPrice|commerceCurrency(iso, convert=false) }}</td>
+                                    <td>
+                                        {% for status in craft.commerce.getOrderStatuses() %}
+                                            {% if status.id == order.orderStatusId %}
+                                                {% if status.name == "New" %}
+                                                    {{ "Pending Payment"|t }}
+                                                {% endif %}
+
+                                                {% if status.name == "Processing" %}
+                                                    {{ "Processing Payment"|t }}
+                                                {% endif %}
+
+                                                {% if status.name == "Paid" %}
+                                                    {{ "Payment Received"|t }}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>{# <a href="#" class="btn btn-orange">Make Payment</a> #}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">
+                                    <div class="no-results">
+                                        <h2>{{ 'Sorry!'|t }}</h2>
+                                        <h3>{{ 'You currently have no orders'|t }}</h3>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}

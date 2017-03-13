@@ -1,0 +1,90 @@
+{% extends "account/_layout" %}
+
+{% set teamSlug = craft.request.getSegment(3) %}
+{% set team = craft.entries.section('team').slug(teamSlug).first() %}
+{% set pageHeading = team.title|t %}
+
+{% import "_includes/forms/formFields" as formFields %}
+
+{% block beforeHeading %}
+    {% if currentUser.isInGroup('teamCaptin') %}
+        <div class="pull-right">
+            <a href="{{ url('/account/teams/' ~ team.slug ~ '/edit') }}" class="btn btn-info">Edit Team</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block subContent %}
+
+    <section class="my-account tabs-container">
+        <a href="{{ url('account/profile') }}" class="tab"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="{{ url('account/teams') }}" class="tab active"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+        <a href="{{ url('account/orders') }}" class="tab"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+        <div class="tab-wrapper my-teams active">
+            <div class="table-wrapper runners-list">
+
+                <div class="row team-view">
+                    <div class="col-md-4">
+                        <h3>{{ 'Team Name'|t }}</h3>
+                        <h4>{{ team.title }}</h4>
+                    </div>
+                    <div class="col-md-4">
+                        {% set teamCaptain = team.teamCaptain.first() %}
+                        <h3>{{ 'Team Captain'|t }}</h3>
+                        {% if teamCaptain %}
+                            <h4>{{ teamCaptain.firstName ~ ' ' ~ teamCaptain.lastName|t }}</h4>
+                        {% else %}
+                            <h4><i>{{ 'None'|t }}</i></h4>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <h3>{{ 'Team Description'|t }}</h3>
+                        <h4>{{ team.summaryText }}</h4>
+                    </div>
+                </div>
+
+                <h2>{{ 'Runners & running order'|t }}</h2>
+
+                <table class="runners-list table">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Race Order'|t }}</th>
+                            <th>{{ 'First Name'|t }}</th>
+                            <th>{{ 'Last Name'|t }}</th>
+                            <th>{{ 'Email'|t }}</th>
+                            <th>{{ 'Status'|t }}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="team-members">
+                        {% set users = team.teamMembers.status('null') %}
+                        {% set count = 0 %}
+                        {% for user in users %}
+                            {% set count = count + 1 %}
+                            <tr>
+                                <td><span class="count">{{ count }}</span></td>
+                                <td valign="center">
+                                    {{ user.firstName }}
+                                </td>
+                                <td valign="center">
+                                    {{ user.lastName }}
+                                </td>
+                                <td valign="center">
+                                    {{ user.email }}
+                                </td>
+                                <td>
+                                    {% if user.pending %}
+                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> Sent</div>
+                                    {% else %}
+                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> Confirmed</div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

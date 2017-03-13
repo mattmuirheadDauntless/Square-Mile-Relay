@@ -1,0 +1,157 @@
+{#
+ # News entry template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+
+{% block content %}
+
+	{% cache %}
+    {% set image = entry.coverImage.first() %}
+    {% set cats = entry.relatedCategories %}
+    {% set id = entry.id %}
+    <section class="news-single-heading" style="background-image: url('{{ image.url }}'); background-position: {{ image.focalPoint|replace({ '-': ' ' }) }};">
+        <div class="wrapper-thin">
+            <div class="title">
+                {% if cats | length %}
+                    <ul>
+                        {% for cat in cats %}
+                            <li>{{ cat.title }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <h1>{{ entry.title }}</h1>
+                <p class="date">{{ entry.postDate | date("j F Y") }} at {{ entry.postDate | date("h:i A") }}</p>
+            </div>
+        </div>
+    </section>
+
+    {% include "_includes/_cta-banner" %}
+
+     <section class="news-single">
+        <div class="wrapper-thin">
+            <div class="row">
+                <div class="col-md-9">
+                    {% for block in entry.contentBlocks %}
+
+                        {% if block.type == "bodyContent" %}
+                            {{ block.text }}
+                        {% endif %}
+
+                        {% if block.type == "image" %}
+                            {% set image = block.image.first() %}
+                            <img src="{{ image.url }}">
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+                <div class="col-md-3">
+                    <div class="share-wrapper">
+                        <h3>Spread the word...</h3>
+                        <ul>
+                            <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.url }}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="https://twitter.com/home?status={{ entry.title }} {{ entry.url }}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ entry.url }}&title={{ entry.title }}&summary={{ entry.simpleContent|striptags }}"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                        </ul>
+                        <h3 class="h3-recent-articles">Recent Articles</h3>
+                        {% set newsItems = craft.entries.section('news').limit(4) %}
+                        {% set count = 0 %}
+                        {% for newsItem in newsItems %}
+                            {% set count = count + 1 %}
+                            {% set newsItemId = newsItem.id %}
+                            {% if newsItemId != id and count < 4 %}
+                                <div class="recent-article">
+                                    <a href="{{ entry.url }}" class="cover-link"></a>
+                                    <p class="date">{{ newsItem.postDate | date("j F Y") }}</p>
+                                    <p class="article-p-heading">{{ newsItem.title }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-articles">
+        <div class="buttons-slider">
+            {% set params = craft.entries.section('news').order('title asc') %}
+            {% set prevEntry = entry.getPrev(params) %}
+            {% set nextEntry = entry.getNext(params) %}
+            <div class="back-to-main">
+                <a href="{{ siteUrl }}/news">
+                    <i class="fa fa-th-large" aria-hidden="true"></i><p>{{ 'Back to main'|t }}</p>
+                </a>
+            </div>
+            {% if prevEntry|length %}
+            <div class="previous">
+                <a href={{ prevEntry.url }}>
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i><p>{{ 'prev'|t }}</p>
+                </a>
+            </div>
+            {% endif %}
+            {% if nextEntry|length %}
+            <div class="next">
+                <a href={{ nextEntry.url }}>
+                    <p>{{ 'next'|t }}</p><i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        {% set newsArticles = craft.entries({
+            section: 'news',
+            id: 'not ' ~ entry.id,
+            relatedTo: [
+                'and',
+                { targetElement: cats }
+            ]
+        }) %}
+        {% if newsArticles|length %}
+        <div class="wrapper">
+            <h3>Related Articles</h3>
+            <div class="related-articles-slider">
+                {% for article in newsArticles %}
+                    {% set image = article.coverImage.first() %}
+                    {% set cats = article.relatedCategories %}
+                    {% set catFilterList = "" %}
+                    {% for cat in cats %}
+                        {% set catFilterList = catFilterList ~ " " ~ cat.slug %}
+                    {% endfor %}
+                    <div class="carousel-cell">
+                        <a href="/news-single.php" class="cover-link"></a>
+                        {% if image|length %}
+                        <img src="{{ image.getUrl('newsThumb') }}" alt="article image">
+                        {% endif %}
+                        <p class="date">{{ article.postDate | date("j F Y") }} at {{ article.postDate | date("h:i A") }}</p>
+                        <h2>{{ article.title }}</h2>
+                        {% if cats | length %}
+                            <ul>
+                                {% for cat in cats %}
+                                    <li>{{ cat.title }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <p>{{ article.summaryText }}</p>
+                        <div class="btn btn-light">Read more</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </section>
+    {% endcache %}
+
+{% endblock %}

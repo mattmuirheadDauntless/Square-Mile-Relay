@@ -1,0 +1,106 @@
+{% set cities = craft.entries.section('city') %}
+<div id="enterRace" class="modal fade enter" role="dialog">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="slide current" data-slide="1">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ 'Your Information'|t }}</h4>
+                </div>
+                <p class="desc">{{ raceEnterModal.cityChooserText }}</p>
+                 <div class="input-wrapper select">
+                    {% if cities|length %}
+                    <select id="enterRaceLocation" class="input">
+                        <option value="select" selected disabled>- Select - </option>
+                        {% for city in cities %}
+                            <option value="{{ city.slug }}">{{ city.title }}</option>
+                        {% endfor %}
+                    </select>
+                    {% endif %}
+                    <label>{{ 'Race City'|t }}</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'Your username is incorrect.'|t }}</div>
+                </div>
+                <div class="next btn btn-invalid">{{ 'Continue'|t }}</div>
+            </div>
+
+            {% if cities|length %}
+                {% for city in cities %}
+                 <div class="slide country commerce text-left" data-city="{{ city.slug }}" data-slide="2">
+                    {% set ticket = craft.commerce.products.relatedTo(city).first() %}
+                    {% if ticket|length %}
+                        <iframe id="enterRaceFrame" class="enter-race-frame" data-city="{{ city.slug }}" src="" frameborder="0" width="100%" height="100%"></iframe>
+                    {% else %}
+                        <div class="form-wrapper payment-iframe scroll">
+                            <div class="back back-to-cities"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
+
+                            <h2>Register your interest!</h2>
+                            {% if city.registerInterestForm|length > 0 %}
+                            <p>We are yet to announce the race date for {{ city.title }}. Sign up below for updates about the next race in {{ city.title }} and we’ll let you know when entries are open!</p>
+                            {{ city.registerInterestForm|raw }}
+                            {% else %}
+                            <p>We currently haven't announced any races for this city.</p>
+                            <a href="{{ city.url }}" class="btn btn-orange">View past races</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if cities|length %}
+                {% for city in cities %}
+                    {% set ticket = craft.commerce.products.relatedTo(city).first() %}
+                    {% if ticket|length %}
+                        {% set ticketEvent = ticket.relatedEvent.first() %}
+                        <div class="slide country text-left" data-city="{{ city.slug }}" data-slide="3">
+                            <div class="modal-header">
+                                <h4 class="modal-title">{{ 'Payment Method'|t }}</h4>
+                            </div>
+
+                            <h3 class="text-left">{{ ticketEvent.title }}</h3>
+                            <p class="text-left">{{ 'How do you wish to pay?'|t }}</p>
+
+                            <div class="btn btn-orange btn-full-width next">{{ 'Invoice/Amex'|t }}</div>
+                            <br><br><br>
+                            <a href="{{ city.creditCardRedirectLink }}" target="_blank" class="btn btn-black btn-full-width next">{{ 'Credit Card'|t }}*</a>
+
+                            <p class="small text-left">* {{ raceEnterModal.paymentMethodNote }}</p>
+                        </div>
+                    {% else %}
+                        <div class="slide country" data-city="{{ city.slug }}" data-slide="3">
+                            <h2>Register your interest!</h2>
+                            {% if city.registerInterestForm|length > 0 %}
+                            <p>We are yet to announce the race date for {{ city.title }}. Sign up below for updates about the next race in {{ city.title }} and we’ll let you know when entries are open!</p>
+                            {{ city.registerInterestForm|raw }}
+                            {% else %}
+                            <p>We currently haven't announced any races for this city.</p>
+                            <a href="{{ city.url }}" class="btn btn-orange">View past races</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            <div class="slide commerce" data-slide="4">
+                <div class="row thank-you text-center">
+                    <h2>Thank You!</h2>
+                    <p>{{ raceEnterModal.thankYou }}</p>
+                </div>
+            </div>
+
+            <div class="modal-footer stages">
+                <ul class="stage-1">
+                    <li class="current" data-slide="1">1</li>
+                    <li data-slide="2">2</li>
+                    <li data-slide="3">3</li>
+                    <li data-slide="4">4</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>

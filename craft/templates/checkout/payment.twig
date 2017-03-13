@@ -1,0 +1,220 @@
+{% extends 'checkout/_layout' %}
+
+{% import "_includes/forms/formFields" as formFields %}
+
+{% block subContent %}
+
+    <h1>{{ 'Payment'|t }}</h2>
+
+    <div class="row">
+        <div class="col-sm-8">
+            {% if not craft.commerce.paymentMethods|length %}
+                <p>No payment methods available.</p>
+            {% endif %}
+
+            {% if craft.commerce.paymentMethods|length %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <form method="POST" id="paymentMethod" class="form-inline">
+
+                            <input type="hidden" name="action" value="commerce/cart/updateCart">
+                            <input type="hidden" name="redirect"
+                                   value="commerce/checkout/payment">
+                            {{ getCsrfInput() }}
+
+                            {{ formFields.dropdown({
+                                id:     'paymentMethod',
+                                label:  'Payment Method',
+                                name:   'paymentMethodId',
+                                options: craft.commerce.paymentMethods,
+                                value:   cart.paymentMethodId,
+                                optionKeys: ['id', 'name']
+                            }) }}
+
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if cart.paymentMethodId %}
+                <form method="POST" class="form-horizontal">
+                    <input type="hidden" name="action" value="commerce/payments/pay"/>
+                    <input type="hidden" name="redirect" value="/account/orders/10?number={number}"/>
+                    <input type="hidden" name="cancelUrl" value="/checkout/payment"/>
+                    {{ getCsrfInput() }}
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <noscript>
+                                <div class="bs-callout bs-callout-danger">
+                                    <h4>JavaScript is not enabled!</h4>
+
+                                    <p>This payment form requires your browser to have
+                                        JavaScript enabled. Please activate
+                                        JavaScript and reload this page. Check <a
+                                                href="http://enable-javascript.com"
+                                                target="_blank">enable-javascript.com</a>
+                                        for
+                                        more informations.</p>
+                                </div>
+                            </noscript>
+
+                            <span class="payment-success"></span>
+                        </div>
+                    </div>
+
+                    {% if cart.paymentMethod.class == 'Stripe' %}
+                        <script
+                                src="//checkout.stripe.com/checkout.js"
+                                class="stripe-button"
+                                data-key="{{ cart.paymentMethod.settings.publishableKey ?? '' }}"
+                                data-name="Craft Commerce"
+                                data-description="Purchase" {# This is not used for order description in stripe - see Craft Commerce general settings #}
+                                data-email="{{ cart.email }}"
+                                data-amount="{{ cart.totalPrice * 100 }}"
+                                data-locale="auto">
+                        </script>
+                    {% endif %}
+
+
+                    {% if cart.paymentMethod.class != 'Stripe' %}
+                        <fieldset>
+                            {% if cart.paymentMethod.requiresCard() %}
+                                {% set currentYear = date()|date_modify("+1 year").format('Y') %}
+                                {% set formValues = {
+                                firstName: paymentForm is defined ? paymentForm.firstName : (cart.billingAddress ? cart.billingAddress.firstName : ''),
+                                lastName: paymentForm is defined ? paymentForm.lastName : (cart.billingAddress ? cart.billingAddress.lastName : ''),
+                                number: paymentForm is defined ? paymentForm.number : '',
+                                cvv: paymentForm is defined ? paymentForm.cvv : '',
+                                month: paymentForm is defined ? paymentForm.month : 1,
+                                year: paymentForm is defined ? paymentForm.year : currentYear,
+                                } %}
+
+
+                                <!-- Card Holder Name -->
+                                <div class="{% if paymentForm is defined and (paymentForm.hasErrors('firstName') or paymentForm.hasErrors('firstName')) %}has-error{% endif %}">
+                                    <label>Card Holder</label>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+
+                                            <input type="text" name="firstName"
+                                                   maxlength="70"
+                                                   placeholder="First Name"
+                                                   class="card-holder-first-name form-control"
+                                                   value="{{ formValues.firstName }}">
+
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <input type="text" name="lastName"
+                                                   maxlength="70"
+                                                   placeholder="Last Name"
+                                                   class="card-holder-last-name form-control"
+                                                   value="{{ formValues.lastName }}">
+
+                                        </div>
+                                    </div>
+
+
+                                    <span class="help-block">{% if paymentForm is defined %}{{ paymentForm.getError('firstName') }}{% endif %}</span>
+
+                                    <span class="help-block">{% if paymentForm is defined %}{{ paymentForm.getError('lastName') }}{% endif %}</span>
+                                </div>
+
+                                <!-- Card Number -->
+                                <div class="col-sm-12">
+                                    {{ formFields.input({
+                                        id:    'cardNumber',
+                                        label: 'Card Number',
+                                        name:  'number',
+                                        type:  'number',
+                                        value: formValues.number
+                                    }) }}
+                                </div>
+
+                                <!-- Expiry-->
+                                <div class="form-inline {% if paymentForm is defined and (paymentForm.hasErrors('month') or paymentForm.hasErrors('year')) %}has-error{% endif %}">
+                                    <label>Card Expiry Date</label><br>
+
+                                    <select class="form-control" name="month">
+                                        {% for month in 1..12 %}
+                                            <option value="{{ month }}"
+                                                    {% if formValues.month == month %}selected{% endif %}>{{ month }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span> / </span>
+                                    <select class="required form-control"
+                                            name="year">
+                                        {% for year in currentYear-1..(currentYear + 12) %}
+                                            <option value="{{ year }}"
+                                                    {% if formValues.year == year %}selected{% endif %}>{{ year }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <span class="help-block">{% if paymentForm is defined %}{{ paymentForm.getError('month') }}{% endif %}</span>
+
+                                    <span class="help-block">{% if paymentForm is defined %}{{ paymentForm.getError('year') }}{% endif %}</span>
+
+                                </div>
+
+                                <!-- CVV -->
+                                <div class="">
+                                    <div class="col-sm-6">
+                                        {{ formFields.input({
+                                            id:    'cvv',
+                                            label: 'CVV',
+                                            name:  'cvv',
+                                            type:  'number',
+                                            value: formValues.cvv,
+                                            placeholder: 'CVV'
+                                        }) }}
+                                    </div>
+                                </div>
+
+                                <span class="help-block">{% if paymentForm is defined %}{{ paymentForm.getError('cvv') }}{% endif %}</span>
+
+                            {% endif %}
+
+                            <!-- Submit -->
+                            <div class="clearfix"></div>
+
+                            <button class="btn btn-primary" type="submit">Pay {{ cart.totalPrice|commerceCurrency(cart.paymentCurrency,convert=true) }}
+                                Now</button>
+                            
+                        </fieldset>
+                    {% endif %}
+                </form>
+            {% endif %}
+        </div>
+
+        <div class="col-sm-4">
+            <div class="review-card">
+                <h5>Order Review</h5>
+                <ul>
+                    <li>
+                        <strong>Products</strong> {{ cart.itemTotal|commerceCurrency(cart.paymentCurrency,convert=true) }}
+                    </li>
+
+                    {% for adjustment in cart.adjustments %}
+                        <li>
+                            <strong>{{ adjustment.name }}</strong> {{ adjustment.amount|commerceCurrency(cart.paymentCurrency,convert=true) }}
+                            ({{ adjustment.description }})
+                        </li>
+                    {% endfor %}
+
+                    {% if not cart.shippingMethod %}
+                        <li>
+                            <strong>Shipping</strong> None selected. <a href="{{ url('checkout/shipping') }}">Choose a shipping method.</a>
+                        </li>
+                    {% endif %}
+
+                    <li>
+                        <strong>Total:</strong> {{ cart.totalPrice|commerceCurrency(cart.paymentCurrency,convert=true) }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'account/_layout' %}
+
+{% set number = craft.request.param('number') %}
+{% set order = craft.commerce.orders.number(number).first() %}
+
+{% if not order %}
+    {% redirect '/account/orders' %}
+{% endif %}
+
+{% set pageHeading = 'Order #' ~ order.id %}
+
+{% block subContent %}
+
+    {% set iso = 'GBP' %}
+    {% for item in order.lineItems %}
+        {% if loop.first %}
+            {% set product = craft.commerce.products.hasVariant({ sku: item.getSku() }).first() %}
+            {% if product.relatedCities[0].currencyIsoCode|length > 0 %}
+                {% set iso = product.relatedCities[0].currencyIsoCode %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+     <section class="my-account tabs-container">
+        <a href="{{ url('account/profile') }}" class="tab"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="{{ url('account/teams') }}" class="tab"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+        <a href="{{ url('account/orders') }}" class="tab active"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+        <div class="tab-wrapper orders active">
+            <h5>{{ 'Orders and Billing'|t }}</h5>
+
+            <div class="row order-view">
+                <div class="col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>{{ 'Details'|t }}</h4>
+
+                            <ul>
+                                <li><strong>{{ "Customer"|t }}:</strong> {{ order.customer.email }}</li>
+                                <li><strong>{{ "Total"|t }}:</strong> {{ order.totalPrice|commerceCurrency(iso,convert=true) }}</li>
+                                <li><strong>{{ "Date"|t }}:</strong> {{ order.dateOrdered }}</li>
+                            </ul>
+
+                        </div>
+                        <div class="col-md-4">
+                            <h4>{{ 'Shipping Address'|t }}</h4>
+
+                            {% if order.shippingAddress %}
+                            {% include 'commerce/_includes/addresses/address' with { address: order.shippingAddress } %}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Billing Address</h4>
+                            {% if order.billingAddress %}
+                            {% include 'commerce/_includes/addresses/address' with { address: order.billingAddress } %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    {% if order.pdfUrl %}
+                        <br><br>
+                        <h4>{{ 'Receipt'|t }} <a href="{{ order.getPdfUrl('receipt') }}">({{ 'Download'|t }})</a></h4>
+                        <br><br>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{{ 'Item'|t }}</th>
+                        <th>{{ 'Unit Price'|t }}</th>
+                        <th>{{ 'Quantity'|t }}</th>
+                        <th class="text-right">{{ 'Total'|t }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in order.lineItems %}
+                        <tr>
+                            <td>
+                                <strong>{{ item.description }}</strong><br>
+                            </td>
+                            <td>
+                                {% if item.onSale %}
+                                    <strike>{{ item.price|commerceCurrency(iso,convert=true) }}</strike>   {{ item.salePrice|commerceCurrency(iso,convert=true) }}
+                                {% else %}
+                                    {{ item.price|commerceCurrency(iso,convert=true) }}
+                                {% endif %}
+                            </td>
+                            <td>{{ item.qty }}</td>
+                            <td class="text-right">
+                                {% if item.onSale %}
+                                    <strike>{{ (item.price * item.qty)|commerceCurrency(iso,convert=true) }}</strike>   {{ item.salePrice|commerceCurrency(iso,convert=true) }}
+                                {% else %}
+                                    {{ (item.price * item.qty)|commerceCurrency(iso,convert=true) }}
+                                {% endif %}
+                            </td>
+                            {# <td class="text-right">{{ item.total|commerceCurrency(iso,convert=true) }}</td> #}
+                        </tr>
+                    {% endfor %}
+
+                    {% for adjustment in order.adjustments %}
+                        {% if adjustment.type == 'Discount' %}
+                            <tr>
+                                <td><strong>{{ adjustment.type }}</strong></td>
+                                <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.amount|commerceCurrency(iso,convert=true) }} using code {{ adjustment.optionsJson.code }})</td>
+                                <td class="text-right">{{ adjustment.amount|commerceCurrency(iso,convert=true) }}</td>
+                            </tr>
+                        {% else %}
+                        <tr>
+                            <td><strong>{{ adjustment.type }}</strong></td>
+                            <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.description }})</td>
+                            <td class="text-right">{{ adjustment.amount|commerceCurrency(iso,convert=true) }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="4" class="text-right">
+                            {{ 'Item Total'|t }}: {{ order.itemTotal|commerceCurrency(iso,convert=true) }}<br>
+                            {{ 'Tax Total'|t }}: {{ order.totalTax|commerceCurrency(iso,convert=true) }}<br>
+                            <strong>{{ 'Total'|t }}: {{ order.totalPrice|commerceCurrency(iso,convert=true) }}</strong>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

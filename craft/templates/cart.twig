@@ -1,0 +1,113 @@
+{% extends "_layout" %}
+
+{% block content %}
+
+    <div class="container">
+
+        <h1>{{ 'Cart'|t }}</h1>
+
+        {% if cart.lineItems|length %}
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>{{ 'Item'|t }}</b>
+                </div>
+                <div class="col-sm-2">
+                    <b>{{ 'Item Price'|t }}</b>
+                </div>
+                <div class="col-sm-3">
+                    <b>{{ 'Quantity'|t }}</b>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <b>{{ 'Total'|t }}</b>
+                </div>
+            </div>
+            <hr>
+            {% for item in cart.lineItems %}
+                <div class="row cart-item">
+                    <div class="col-sm-4">
+                        <b>{{ item.description }}</b>
+                        <div class="sku">
+                            {{ 'SKU:'|t }} {{ item.sku }}
+                        </div>
+                        <form method="POST">
+                            <input type="hidden" name="action" value="commerce/cart/removeLineItem"/>
+                            <input type="hidden" name="redirect" value="cart"/>
+                            {{ getCsrfInput() }}
+                            <input type="hidden" name="lineItemId" value="{{ item.id }}"/>
+                            <input type="submit" class="button link" value="Remove"/>
+                        </form>
+                    </div>
+                    <div class="col-sm-2">
+                        {%- if item.onSale -%}
+                            {{ item.price|commerceCurrency(cart.paymentCurrency,convert=true) }}
+                        {%- else -%}
+                            {{ item.price|commerceCurrency(cart.paymentCurrency,convert=true) }}
+                        {%- endif -%}
+                    </div>
+                    <div class="col-sm-3">
+                        <form method="POST" class="form-inline">
+                            <input type="hidden" name="action" value="commerce/cart/updateLineItem">
+                            <input type="hidden" name="redirect" value="cart">
+                            <input type="hidden" name="lineItemId" value="{{ item.id }}">
+                            <span {% if item.getError('qty') %}class="has-error"{% endif %}>
+                            <input  type="number" name="qty" min="1" value="{{ item.qty }}" class="form-control">
+                            </span>
+                            {{ getCsrfInput() }}
+                            {% if item.options.giftWrapped is defined %}
+                            <select name="options[giftWrapped]">
+                                <option value="no" {% if item.options.giftWrapped == 'no' %}selected{% endif %}>No gift wrap.</option>
+                                <option value="yes" {% if item.options.giftWrapped == 'yes' %}selected{% endif %}>Gift wrapped.</option>
+                            </select>
+                            {% endif %}
+                            <input type="submit" class="button" value="Update"/>
+                        </form>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        {{- item.subtotal|commerceCurrency(cart.paymentCurrency,convert=true) -}}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="row">
+                <div class="col-sm-6">
+                    {# Update Coupon form uses the single update controller action: #}
+                    {% if cart.getError('couponCode') %}<span class="flash">{{ cart.getError('couponCode') }}</span>{% endif %}
+                    <form method="POST" class="form-inline">
+                        <input type="hidden" name="action" value="commerce/cart/updateCart">
+                        <input type="hidden" name="redirect" value="cart">
+                        {{ getCsrfInput() }}
+                        <span class="{% if cart.getError('couponCode') %}has-error{% endif %}">
+                        <input type="text" name="couponCode" width="11" class="form-control {% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ "Coupon Code"|t }}">
+                        </span>
+                        <input type="submit" class="button" value="{% if cart.couponCode %}Change{% else %}Apply{% endif %} Coupon"/>
+                    </form>
+                </div>
+
+                <div class="col-sm-6 text-right">
+                    <div class="total-discount">
+                        {{- 'Total Discount:'|t }}
+                        {{ cart.totalDiscount|commerceCurrency(cart.paymentCurrency,convert=true) -}}
+                    </div>
+                    <div class="total-shipping">
+                        {{- 'Total Shipping:'|t }}
+                        {{ cart.totalShippingCost|commerceCurrency(cart.paymentCurrency,convert=true) -}}
+                    </div>
+                    <div class="total-tax">
+                        {{- 'Total Tax:'|t }}
+                        {{ cart.totalTax|commerceCurrency(cart.paymentCurrency,convert=true) -}}
+                    </div>
+                    <div class="total">
+                        <b>{{- 'Total Price:'|t }}
+                        {{ cart.totalPrice|commerceCurrency(cart.paymentCurrency,convert=true) -}}</b>
+                    </div>
+
+                    <a class="btn btn-primary" href="{{ url('checkout') }}">Checkout</a>
+                </div>
+            </div>
+        {% else %}
+            <p>You have no items in your cart.</p>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

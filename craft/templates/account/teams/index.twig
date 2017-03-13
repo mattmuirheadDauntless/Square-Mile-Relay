@@ -1,0 +1,101 @@
+{% requireLogin %}
+
+{% extends "account/_layout" %}
+
+{% set pageHeading = 'My Teams'|t %}
+
+{% block beforeHeading %}
+    <div class="pull-right">
+        {% include '_includes/city_picker' %}
+    </div>
+{% endblock %}
+
+{% block subContent %}
+
+    <section class="my-account tabs-container">
+        <a href="{{ url('account/profile') }}" class="tab"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="{{ url('account/teams') }}" class="tab active"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+        <a href="{{ url('account/orders') }}" class="tab"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+
+         <div class="tab-wrapper my-teams active">
+            <h5>{{ 'My Teams'|t }}</h5>
+
+            <div class="controls">
+                <div class="control-btn orange enter-race-modal" type="button" data-toggle="modal" data-target="#enterRace">{{ 'Add a team'|t }}</div>
+                <div class="control-btn grey enter-race-modal" type="button" data-toggle="modal" data-target="#enterRace">{{ 'Buy Supporter Tickets'|t }}</div>
+            </div>
+
+            <div class="teams">
+                {% set teams = craft.entries.section('team').relatedTo(currentUser).order('id desc') %}
+                {% if teams|length %}
+                    {% for team in teams %}
+                        <div class="team">
+                            <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
+
+                            {% set inactiveMembers = team.teamMembers.status('pending')|length %}
+                            {% set activeMembers = team.teamMembers.status('active')|length %}
+                            {% set teamMembers = inactiveMembers + activeMembers %}
+                            {% set percentage = (activeMembers/10) * 100 %}
+
+                            <div class="progress-radial progress-{{ percentage }}">
+                                <div class="overlay">
+                                    <div class="text">
+                                        <span>{{ percentage }}%</span>
+                                        {{ 'Complete'|t }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% set event = team.relatedEvent.first() %}
+                            {% if event|length %}
+                            {% set relatedCity = event.relatedCity.first() %}
+                            {% if relatedCity is not null %}
+                                <h3>{{ relatedCity.title }}</h3>
+                            {% endif %}
+                            <h6>{{ event.startDateTime|date('j F Y') }}</h6>
+                            {% endif %}
+
+                            <h4 class="team-name">{{ team.title }}</h4>
+                            {% if team.relatedCompany|length %}
+                                {% set relatedCompany = team.relatedCompany.first() %}
+                                {% if relatedCompany is not null %}
+                                    <h5 class="team-sub-name">{{ relatedCompany.title }}</h5>
+                                {% endif %}
+                            {% else %}
+                                {% set relatedCompany = currentUser.relatedCompany.first() %}
+                                {% if relatedCompany is not null %}
+                                    <h5 class="team-sub-name"><i>{{ relatedCompany.title }}</i></h5>
+                                {% endif %}
+                            {% endif %}
+
+                            {% set captain = team.teamCaptain.first() %}
+                            {% if captain|length %}
+                                <p class="captain">{{ 'Captain:'|t }} {{ captain.firstName ~ " " ~ captain.lastName }}</p>
+                            {% else %}
+                                <p class="captain"><i>{{ 'Please select a captain'|t }}</i></p>
+                            {% endif %}
+
+                            <ul class="runners">
+                                <li>{{ 'Runners Invited'|t }} <span>{{ teamMembers }}/10</span></li>
+                                <li>{{ 'Registration Completed'|t }} <span>{{ activeMembers }}/10</span></li>
+                            </ul>
+
+                            <ul class="tasks">
+                                {# Need to work out how we'll know if additional hospitality has been bought #}
+                                <li>{{ 'Additional Hospitality'|t }} <i class="fa fa-times" aria-hidden="true"></i></li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-teams">
+                        <h2>{{ 'Sorry!'|t }}</h2>
+                        <h3>{{ "You're currently not part of any teams."|t }}</h3>
+                    </div>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}

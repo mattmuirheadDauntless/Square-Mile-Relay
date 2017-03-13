@@ -1,0 +1,297 @@
+{% extends "account/_layout" %}
+
+{% set teamSlug = craft.request.getSegment(3) %}
+{% set team = craft.entries.section('team').slug(teamSlug).first() %}
+{% set relatedEvent = team.relatedEvent.first() %}
+{% set captain = team.teamCaptain.first() %}
+{% set author = team.author %}
+
+{#
+# User must be in the user group Team Captin
+# to be able to view this page.
+#}
+{% set access = 0 %}
+{% if currentUser.id == author.id or captain|length and currentUser.id != captain.id %}
+    {% set access = 1 %}
+{% endif %}
+{% if access == 0 %}
+    {% redirect '/account/teams/' ~ team.slug %}
+{% endif %}
+
+{% import "_includes/forms/formFields" as formFields %}
+
+{% block beforeHeading %}
+    <div class="pull-right">
+        {% include '_includes/city_picker' %}
+    </div>
+{% endblock %}
+
+{% block subContent %}
+
+    <section class="my-account tabs-container">
+        <a href="{{ url('account/profile') }}" class="tab"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="{{ url('account/teams') }}" class="tab active"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+        <a href="{{ url('account/orders') }}" class="tab"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+        <div class="tab-wrapper my-teams active">
+            <h5>{{ 'My Teams'|t }} {% if relatedEvent|length %}- {{ relatedEvent.title }}{% endif %} - <span>{{ 'Edit Team'|t }}</span></h5>
+
+            <div class="controls">
+                <div class="team edit-team">
+                    {% set inactiveMembers = team.teamMembers.status('pending')|length %}
+                    {% set activeMembers = team.teamMembers.status('active')|length %}
+                    {% set teamMembers = inactiveMembers + activeMembers %}
+                    {% set percentage = (activeMembers/10) * 100 %}
+
+                    <div class="progress-radial progress-{{ percentage }}">
+                        <div class="overlay">
+                            <div class="text">
+                                <span>{{ percentage }}%</span>
+                                {{ 'Complete'|t }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="runners">
+                        <li>{{ 'Runners Invited'|t }} <span>{{ teamMembers }}/10</span></li>
+                        <li>{{ 'Registration Completed'|t }} <span>{{ activeMembers }}/10</span></li>
+                    </ul>
+
+                    <ul class="tasks">
+                        {# Need to work out how we'll know if additional hospitality has been bought #}
+                        <li>{{ 'Additional Hospitality'|t }} <i class="fa fa-times" aria-hidden="true"></i></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="teams">
+                {% if relatedEvent|length %}
+                {% set relatedCity = relatedEvent.relatedCity.first() %}
+                {% if relatedCity is not null %}
+                    <h3>{{ relatedCity.title }}</h3>
+                {% endif %}
+                <h4>{{ relatedEvent.startDateTime|date('j F Y') }}</h4>
+                {% endif %}
+
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="squareMileRelay/teams/save">
+                    <input type="hidden" name="redirect" value="account/teams">
+                    <input type="hidden" name="teamId" value="{{ team.id }}">
+                    {{ getCsrfInput() }}
+
+                    {% set title = team is defined ? team.title : '' %}
+                    {% set summaryText = team is defined ? team.summaryText : '' %}
+
+                    <div class="input-wrapper">
+                        {{ formFields.input({
+                            id:    'title',
+                            label: 'Team Name',
+                            name:  'title',
+                            placeholder: 'Team Name',
+                            value: title
+                        }) }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        {{ formFields.input({
+                            id:    'slug',
+                            label: 'Team Slug',
+                            name:  'slug',
+                            placeholder: 'Team Slug',
+                            value: slug
+                        }) }}
+                    </div>
+
+                    <div class="input-wrapper">
+                        {% if currentUser %}
+                            {{ formFields.dropdown({
+                                id:         'teamCaptain',
+                                name:       'fields[teamCaptain][]',
+                                label:      'Team Captain',
+                                value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
+                                options:    team.teamMembers,
+                                optionKeys: [
+                                    'id',
+                                    'firstName'
+                                ]
+                            }) }}
+                        {% endif %}
+                    </div>
+
+                    <div class="input-wrapper edit-element">
+                        <label for="teamPhoto" class="active">{{ 'Team Photo'|t }}</label>
+                        <input type="file" name="teamPhoto" value="Upload Image" class="input">
+                    </div>
+
+                    <div class="input-wrapper textarea">
+                        {{ formFields.textArea({
+                            id:    'summaryText',
+                            label: 'Team Description',
+                            name:  'fields[summaryText]',
+                            rows:  4,
+                            placeholder: 'Team Description',
+                            value: team.summaryText
+                        }) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-orange btn-long">Save</button>
+                </form>
+
+            </div>
+        </div>
+
+        {% if currentUser and team is defined %}
+            {% set users = team.teamMembers.status('null') %}
+            {% set captain = team.teamCaptain.first() %}
+            {% set count = 0 %}
+            <div class="table-wrapper runners-list">
+                <h2>{{ 'Runners & Race Order'|t }}</h2>
+
+                <div class="notification warning">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+                    <p>
+                        Please note that the order in which your runners appear below is the order that they will run in on race day!<br>
+                        {% if relatedEvent is not null %}
+                            The order can be updated until midnight {{ relatedEvent.startDateTime|date('j F Y') }}
+                        {% endif %}
+                    </p>
+
+                    <span class="close">{{ 'Dismiss'|t }}<i class="fa fa-times" aria-hidden="true"></i></span>
+                </div>
+
+                {% if users|length != 10 %}
+                    <div class="notification warning">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+                        <p><strong>{{ 'Alert'|t }}:</strong> {{ 'You currently have'|t }} {{ users|length }} {{ 'runners in your team. Please add more runners to complete your team entry.'|t }}</p>
+
+                        <span class="close">{{ 'Dismiss'|t }}<i class="fa fa-times" aria-hidden="true"></i></span>
+                    </div>
+                {% endif %}
+
+                <form id="update-team-members" method="POST">
+                    <input type="hidden" name="action" value="squareMileRelay/teamMembers/updateTeamMembers">
+                    <input type="hidden" name="redirect" value="account/teams/{{ team.slug }}/edit">
+                    <input type="hidden" name="teamId" value="{{ team.id }}">
+                    {{ getCsrfInput() }}
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{ 'Race Order'|t }}</th>
+                                <th>{{ 'First Name'|t }}</th>
+                                <th>{{ 'Last Name'|t }}</th>
+                                <th>{{ 'Email'|t }}</th>
+                                <th>{{ 'Status'|t }}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="team-members">
+                        {% for user in users %}
+                            {% set count = count + 1 %}
+                            <tr class="s-drag">
+                                <td>
+                                    {% if captain|length and user.id == captain.id %}
+                                        <span class="captain">C</span>
+                                    {% else %}
+                                        <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
+                                    {% endif %}
+                                </td>
+                                <td valign="center" class="s-handle">
+                                    <i class="fa fa-bars"></i>
+                                    <input type="hidden" name="teamMembers[]" value="{{ user.id }}">
+                                    <span class="count">{{ count }}</span>
+                                </td>
+                                <td valign="center">
+                                    {{ formFields.input({
+                                        id:          'firstName',
+                                        name:        'firstName',
+                                        value:       user.firstName,
+                                        placeholder: 'First Name'
+                                    }) }}
+                                </td>
+                                <td valign="center">
+                                    {{ formFields.input({
+                                        id:          'lastName',
+                                        name:        'lastName',
+                                        value:       user.lastName,
+                                        placeholder: 'Last Name'
+                                    }) }}
+                                </td>
+                                <td valign="center">
+                                    {{ formFields.input({
+                                        id:   'email',
+                                        name: 'email',
+                                        value: user.email,
+                                        placeholder: 'Email'
+                                    }) }}
+                                </td>
+                                <td valign="center">
+                                    {% if user.pending %}
+                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> Sent</div>
+                                    {% else %}
+                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> Confirmed</div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        {% set spacesLeft = 10 - users|length %}
+                        {% for i in 1..spacesLeft %}
+                            {% set count = count + 1 %}
+                            <tr class="s-drag">
+                                <td></td>
+                                <td class="s-handle">
+                                    <div class="dragtooltip">
+                                        <i class="fa fa-bars"></i>
+                                        <span class="dragtooltiptext">Drag to order.</span>
+                                    </div>
+                                    <span class="count">{{ count }}</span>
+                                </td>
+                                <td>
+                                    {{ formFields.input({
+                                        id:   'firstName',
+                                        name: 'newMembers['~ i ~'][firstName]',
+                                        placeholder: 'First Name'
+                                    }) }}
+                                </td>
+                                <td>
+                                    {{ formFields.input({
+                                        id:   'lastName',
+                                        name: 'newMembers['~ i ~'][lastName]',
+                                        placeholder: 'Last Name'
+                                    }) }}
+                                </td>
+                                <td>
+                                    {{ formFields.input({
+                                        id:   'email',
+                                        name: 'newMembers['~ i ~'][email]',
+                                        placeholder: 'Email'
+                                    }) }}
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-orange btn-tiny">{{ 'Send Invitation'|t }}</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+
+            </div>
+        {% endif %}
+    </section>
+
+
+{% endblock %}
+
+{% block jsFooter %}
+    <script>
+        makeSortable('team-members', {
+            handle: '.s-handle',
+            onEnd: function () {
+                document.getElementById('update-team-members').submit();
+            }
+        });
+    </script>
+{% endblock %}

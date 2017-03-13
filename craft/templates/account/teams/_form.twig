@@ -1,0 +1,51 @@
+{% set title = team is defined ? team.title : '' %}
+{% set summaryText = team is defined ? team.summaryText : '' %}
+
+<div class="row">
+    {%- if team is defined and team.teamPhoto.first() -%}
+        <div class="col-sm-4">
+            {% set teamPhoto = team.teamPhoto.first() %}
+            {% if teamPhoto is not null %}
+                <img src="{{ url(teamPhoto.url) }}" class="img-responsive">
+            {% endif %}
+
+            <input type="file" name="fields[teamPhoto]">
+            <button type="text" class="btn btn-info">Change Image</button>
+        </div>
+    {%- endif -%}
+
+    <div class="col-sm-4">
+        {{ formFields.input({
+            id:    'title',
+            label: 'Team Name',
+            name:  'title',
+            value: title
+        }) }}
+
+        {% if currentUser %}
+            {{ formFields.dropdown({
+                id:         'teamCaptain',
+                name:       'fields[teamCaptain][]',
+                label:      'Team Leader',
+                value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
+                options:    craft.users.group('member'),
+                optionKeys: [
+                    'id',
+                    'firstName'
+                ]
+            }) }}
+        {% endif %}
+
+        <button type="submit" class="btn btn-success">Save</button>
+    </div>
+
+    <div class="col-sm-4">
+        {{ formFields.textArea({
+            id:    'summaryText',
+            label: 'Team Description',
+            name:  'fields[summaryText]',
+            rows:  9,
+            value: summaryText
+        }) }}
+    </div>
+</div>

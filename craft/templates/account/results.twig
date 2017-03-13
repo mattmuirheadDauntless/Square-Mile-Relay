@@ -1,0 +1,22 @@
+{% extends "account/_layout" %}
+
+{% import "_includes/forms/formFields" as formFields %}
+
+{% set pageHeading = 'My Results'|t %}
+
+{% block subContent %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'Event'|t }}</th>
+                <th>{{ 'My TIme'|t }}</th>
+                <th>{{ 'Relay Position'|t }}</th>
+                <th>{{ 'Team TIme'|t }}</th>
+                <th>{{ 'Team Position'|t }}</th>
+                <th>{{ 'Runner ID'|t }}</th>
+            </tr>
+        </thead>
+    </table>
+
+{% endblock %}

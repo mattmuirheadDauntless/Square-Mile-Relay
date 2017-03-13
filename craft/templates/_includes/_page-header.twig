@@ -1,0 +1,23 @@
+{% if entry is defined %}
+    {% set image = entry.backgroundImage.first() %}
+    {% if image is defined and image|length %}
+    <section class="main-heading" style="background-image: url('{{ image.url }}'); background-position: {{ image.focalPoint|lower|replace({"-": " "}) }}">
+    {% else %}
+    <section class="main-heading">
+    {% endif %}
+        <div class="wrapper-thin">
+            <div class="title">
+                <h1>{{ entry.title }}</h1>
+                <h2>{{ entry.simpleContent }}</h2>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <section class="main-heading">
+        <div class="wrapper-thin">
+            <div class="title">
+                <h1>{{ craft.request.getSegment(1) }}</h1>
+            </div>
+        </div>
+    </section>
+{% endif %}

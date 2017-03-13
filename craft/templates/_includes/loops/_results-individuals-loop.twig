@@ -1,0 +1,41 @@
+{% cache %}
+{% paginate craft.entries({
+    section: 'runningResults',
+    limit: 20,
+    order: 'lapTime',
+    search: 'lapTime:*'
+}) as individualResults %}
+
+{% if craft.request.getPageNum() > paginate.totalPages %}
+    no-results
+{% else %}
+
+    {% for result in individualResults %}
+        {% set event = result.relatedEvents.first() %}
+        {% set year = event.startDateTime|date('Y') %}
+        {% set city = event.relatedCity.first() %}
+        {% if city is not null %}
+            <tr class="{{ year }} {{ city.slug }}">
+                <td><strong>{{ ((paginate.currentPage - 1) * 20) + loop.index }}</strong></td>
+                <td><strong>{{ result.lapPosition }}</strong></td>
+                <td>
+                    <strong>{{ result.runner }}</strong>
+                </td>
+                <td>
+                {% if result.lapTime|length %}
+                    <strong>{{ result.lapTime }}</strong>
+                {% else %}
+                    <strong>{{ result.finishedStatus }}</strong>
+                {% endif %}
+                </td>
+                <td>{{ result.teamName }}</td>
+                <td>{% if event|length and event.relatedCity|length %}{{ event.relatedCity.first().title }}{% endif %}</td>
+                <td>{{ year }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+
+{% endif %}
+
+{% endpaginate %}
+{% endcache %}

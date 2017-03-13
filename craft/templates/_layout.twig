@@ -1,0 +1,231 @@
+{#
+ # Layout template
+ # ---------------
+ #
+ # This template defines your site’s global layout. It can be
+ # “extended” by other templates to fill in the gaps.
+ #
+ # See Twig’s Template Inheritance documentation for more details:
+ # http://twig.sensiolabs.org/doc/templates.html#template-inheritance
+ #}
+
+{% set cart = craft.commerce.cart %}
+{% set cities = craft.entries.section('city') %}
+
+
+
+
+{% set element = (entry is defined ? entry : null) %}
+{% set currentLocale = craft.i18n.getCurrentLocale() %}
+{% if currentLocale.id == 'en_gb' %}
+    {% set currentLocale = '' %}
+    {% set defaultTimeFormat = 'g:i a' %}
+{% else %}
+    {% set currentLocale = currentLocale.id %}
+    {% set defaultTimeFormat = 'H:i' %}
+{% endif %}
+{% set citySlug = '' %}
+{% set city = craft.request.firstSegment %}
+
+{% set routeCities = craft.entries({
+    section: 'city',
+    slug: city
+}).first() %}
+
+{% if routeCities|length > 0 %}
+    {% set citySlug = '/'  ~ city %}
+{% endif %}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+    <link rel="home" href="{{ siteUrl }}" />
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="{{ craft.config.environmentVariables.baseUrl }}library/images/squaremilerelay.png">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700,900" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link  rel="stylesheet" href="{{ craft.config.environmentVariables.baseUrl }}/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/7d72b6aac4.js"></script>
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{ craft.config.environmentVariables.baseUrl }}library/css/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href={{ siteUrl }}>
+                {% include "_includes/_logo" %}
+            </a>
+        </div>
+
+        <div class="menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        {% set locale = '' %}
+        {% if craft.locale != 'en_gb' %}
+            {% set locale = craft.locale %}
+        {% endif %}
+
+        {% set mainNav = navigation.mainNavigation %}
+        {% set cities = craft.entries.section('city').order('lft') %}
+        {% if mainNav | length %}
+        <ul class="nav">
+            {% for navItem in mainNav %}
+                {% if navItem.slug == "race-locations" %}
+                    <li class="has-child">
+                        <a>{{ navItem.title }}</a>
+                        {% if cities | length %}
+                            <ul class="locations">
+                                <div class="locations-wrapper">
+                                    {% cache globally %}
+                                    {% for city in cities %}
+                                        <li><a href={{ city.url }}>
+                                            {% set cityIcon = city.cityIcon.first() %}
+                                            {% if cityIcon is not null %}
+                                                <img src="{{ cityIcon.getUrl('newsThumb') }}">
+                                            {% endif %}
+                                            <div class="location">
+                                                {{ city.title }}
+                                                {% set events = craft.entries.section('event') %}
+                                                {% set nextEventDaysLeft = -999999999 %}
+                                                {% set nextEventDate = "" %}
+                                                {% for event in events.order('startDateTime asc') %}
+                                                    {% set eventCity = event.relatedCity.first() %}
+                                                    {% if eventCity is not null and eventCity.title == city.title %}
+                                                        {% set today = "now" | date('U') %}
+                                                        {% set eventDate = event.startDateTime | date('U') %}
+                                                        {% set daysLeft = ((today - eventDate) / (60 * 60 * 24)) | round %}
+                                                        {% if daysLeft < 0 and daysLeft > nextEventDaysLeft %}
+                                                            {% set nextEventDate =  event.startDateTime | date('j F Y') %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <span class="time">{{ nextEventDate }}</span>
+                                            </div>
+                                        </a></li>
+                                    {% endfor %}
+                                    {% endcache %}
+                                </div>
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% else %}
+                    <li><a href={{ siteUrl ~ navItem.title|lower }}>{{ navItem.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if currentUser|length %}
+                <li><a href="{{ siteUrl }}account/profile">My Account</a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
+
+        <select class="language-select">
+            {% set otherLocales = craft.i18n.getSiteLocales() %}
+            {% for locale in otherLocales %}
+                {% if entry is defined %}
+                    {# Find the current entry in the other locale #}
+                    {% set localeEntry = craft.entries.id(entry.id).locale(locale.id).first %}
+                {% endif %}
+
+                {# Make sure that it's actually localized to this locale #}
+                {% if localeEntry is defined and localeEntry is not null and localeEntry.locale == locale.id %}
+
+                    {# Output a link to it #}
+                    <option value="{{ localeEntry.getUrl() }}" {% if currentLocale == locale.id %}selected{% endif %}>{{ locale.nativeName|title }}</option>
+                {% else %}
+
+                    {# Output a link to the hompage #}
+                    <option value="{{ craft.config.siteUrl[locale.id] }}" {% if currentLocale == locale.id %}selected{% endif %}>{{ locale.nativeName|title }}</option>
+                {% endif %}
+
+            {% endfor %}
+        </select>
+
+        <div class="header-account">
+            {% if currentUser|length %}
+                <a href="{{ siteUrl }}logout">Logout</a>
+            {% else %}
+                <a href="#" type="button" data-toggle="modal" data-target="#login">Login</a>
+            {% endif %}
+        </div>
+
+        <div class="header-bg"></div>
+
+         <div class="cta-banner">
+            {{ ctaBanner.ctaBannerText }}
+            <a href="#" class="btn btn-black enter-race-modal" type="button" data-toggle="modal" data-target="#enterRace">{{ ctaBanner.ctaBannerButton }}</a>
+        </div>
+    </header>
+
+    <!-- LOADER -->
+    <div class="loader">
+        <div class="svg-wrapper">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 612 792" enable-background="new 0 0 612 792" xml:space="preserve">
+                <polyline class="line-4" fill="none" stroke="#F16F3C" stroke-width="40" stroke-linecap="square" stroke-miterlimit="10" points="591.3,390
+                591.3,640 20.7,640 20.7,94 20.7,84 591.3,84 591.3,337 "/>
+                <polyline class="line-3" fill="none" stroke="#F16F3C" stroke-width="40" stroke-linecap="square" stroke-miterlimit="10" points="591.3,390
+                591.3,640 20.7,640 20.7,94 20.7,84 591.3,84 591.3,337 "/>
+                <polyline class="line-2" fill="none" stroke="#F16F3C" stroke-width="40" stroke-linecap="square" stroke-miterlimit="10" points="591.3,390
+                591.3,640 20.7,640 20.7,94 20.7,84 591.3,84 591.3,337 "/>
+                <polyline class="line-1" fill="none" stroke="#F16F3C" stroke-width="40" stroke-linecap="square" stroke-miterlimit="10" points="591.3,390
+                591.3,640 20.7,640 20.7,94 20.7,84 591.3,84 591.3,337 "/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    {% import "_includes/forms/formFields" as formFields %}
+
+    {% include "_includes/modals/_login" %}
+
+    {% include "_includes/modals/_contact" %}
+
+    {% include "_includes/modals/_media" %}
+
+    {% include "_includes/modals/_enter-race" %}
+    <!-- END MODALS -->
+
+    {% block content %}
+        <p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
+        <p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
+    {% endblock %}
+
+    {% include "_includes/_footer" %}
+
+    {% cache globally %}
+    <!-- TrackDuck -->
+    <script src="//cdn.trackduck.com/toolbar/prod/td.js" async data-trackduck-id="58a58931026b48e6591c647b"></script>
+    <!-- jQuery -->
+    <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js"></script>
+    <script src="/app.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/isotope/dist/isotope.pkgd.min.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/flickity/dist/flickity.pkgd.min.js"></script>
+    <script src="https://npmcdn.com/isotope-packery@2/packery-mode.pkgd.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/jquery.countdown/dist/jquery.countdown.min.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/tablesorter/jquery.tablesorter.min.js"></script>
+    <!-- Main JS -->
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/plugins-min.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js"></script>
+
+    {% block jsFooter %}{% endblock %}
+
+    {% endcache %}
+
+</body>
+</html>

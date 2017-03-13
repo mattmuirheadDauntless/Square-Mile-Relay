@@ -1,0 +1,284 @@
+{% extends "_layout" %}
+
+{% block content %}
+
+{% cache %}
+
+<section class="hero-home">
+    <div class="wrapper-thin">
+        <div class="title">
+            <h2>{{ entry.heading1|nl2br }}</h2>
+            <h3>{{ entry.heading2|nl2br }}</h3>
+            <h1>{{ entry.heading3|nl2br }}</h1>
+        </div>
+        <div class="play-video vid-modal-link" data-toggle="modal" data-target="#media" data-src="https://www.youtube.com/embed/{{ entry.videoUrl }}?autoplay=1&controls=0&modestbranding=1&rel=0">
+            <div class="play-btn">
+                <i class="fa fa-2x fa-play" aria-hidden="true"></i>
+            </div>
+            <span>Play Video</span>
+        </div>
+    </div>
+    <div class="cinemagraph">
+        <div class="flx-embed"><div style="position:relative; height:0; padding-bottom:51.24%; width:100%"><iframe style="position:absolute; top:0; left:0; width:100%; height:100%;" src="{{ entry.cinemagraphUrl }}" frameborder="0" allowfullscreen></iframe></div></div>
+    </div>
+</section>
+
+{% include "_includes/_cta-banner" %}
+
+<section class="next-races">
+    <div class="races">
+        {% set cities = craft.entries.section('city').limit(null) %}
+        {% set todaysDate = "now"|date('U') %}
+        {% for city in cities %}
+            {% set event = craft.entries.section('event').relatedTo(city).order('startDateTime desc').first() %}
+            {% if event|length %}
+            {% set eventDate = event.startDateTime|date('U') %}
+            {% set daysLeft = ((todaysDate - eventDate) / (60 * 60 * 24)) | round %}
+            <div class="race">
+                <a href="{{ city.url }}" class="cover-link"></a>
+                <div class="text">
+                    {% if loop.index == 1 %}
+                        <h4>{{ 'Next Race:'|t }}</h4>
+                    {% endif %}
+                    {% if eventDate > todaysDate %}
+                    <h3>{{ event.startDateTime }}</h3>
+                    {% else %}
+                    <h3>{{ 'Date coming soon'|t }}</h3>
+                    {% endif %}
+                    <h2>{{ city.title }}</h2>
+                    {% if eventDate > todaysDate %}
+                    <h5>
+                        {% if daysLeft < 1 %}
+                            {{ daysLeft | trim('-') }} {{ 'days'|t }}
+                        {% else %}
+                            {{ daysLeft | trim('-') }} {{ 'day'|t }}
+                        {% endif %}
+                    </h5>
+                    {% else %}
+                    <h5 class="coming-soon"></h5>
+                    {% endif %}
+                </div>
+                {% set cityIcon = city.cityIcon.first() %}
+                {% if cityIcon is not null %}
+                    <img src="{{ cityIcon.getUrl('newsThumb') }}">
+                {% endif %}
+            </div>
+            {% else %}
+                <div class="race">
+                    <a href="{{ city.url }}" class="cover-link"></a>
+                    <div class="text">
+                        <h3>{{ 'Date coming soon'|t }}</h3>
+                        <h2>{{ city.title }}</h2>
+                        <h5 class="coming-soon"></h5>
+                    </div>
+                    {% set cityIcon = city.cityIcon.first() %}
+                    {% if cityIcon is not null %}
+                        <img src="{{ cityIcon.getUrl('newsThumb') }}">
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="viewMoreRaces" class="view-more">
+        <span>{{ 'View More Races'|t }}</span>
+    </div>
+</section>
+
+<section id="aboutAccordion" class="about-accordion">
+    <ul class="nav-items">
+        <li class="nav-item active" data-accordion="1">
+            <span>01</span>
+            <h2>{{ entry.tabTitle1 }}</h2>
+        </li>
+        <div class="main-accordion about active" data-accordion="1">
+            <h3>{{ entry.title1 }}</h3>
+
+            <div class="text">
+                {{ entry.bodyContent }}
+                <div class="btn btn-long btn-orange next-accordion" data-accordion="2">{{ 'Next: How to Enter'|t }}</div>
+            </div>
+
+            <div class="global-stats">
+                <h4>{{ 'Global Stats'|t }}</h4>
+
+                {% set globalStats = entry.globalStats %}
+                {% if globalStats | length %}
+                    {% for stat in globalStats %}
+                        <div class="stat">
+                            <strong>{{ stat.statistic }}</strong>
+                            <span>{{ stat.description }}</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <li class="nav-item" data-accordion="2">
+            <span>02</span>
+            <h2>{{ entry.tabTitle2 }}</h2>
+        </li>
+        <div class="main-accordion get-started" data-accordion="2">
+            <h3>{{ entry.title2 }}</h3>
+
+            <div class="text">
+                {{ entry.bodyContent2 }}
+                <h4 class="push">{{ 'Have fun!'|t }}</h4>
+                <div class="btn btn-long btn-black next-accordion" data-accordion="4">{{ 'Choose My City'|t }}</div>
+                <div class="btn btn-long btn-orange next-accordion" data-accordion="3">{{ 'Next: Global Gallery'|t }}</div>
+            </div>
+        </div>
+
+        <li class="nav-item" data-accordion="3">
+            <span>03</span>
+            <h2>{{ entry.tabTitle3 }}</h2>
+        </li>
+        <div class="main-accordion global-gallery" data-accordion="3">
+            {% set event = craft.entries.section('event').order('startDateTime desc').search('eventImages:*').first() %}
+            {% set images = event.eventImages %}
+            {% if images | length %}
+                <div class="gallery-grid no-ajax">
+                    {% for image in images.limit(20) %}
+                        {% set imageSmall = image.getUrl('newsThumb') %}
+                        {% set imageLarge = image.url %}
+                        <div class="img-item grid-item img-modal-link" data-toggle="modal" data-target="#media" data-src={{ imageLarge }} data-caption={{ image.summaryText }}>
+                            <img src={{ imageSmall }} alt="Gallery Image">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <a href="{{ siteUrl }}gallery" class="btn btn-orange">{{ 'View More Images'|t }}</a>
+        </div>
+
+        <li class="nav-item" data-accordion="4">
+            <span>04</span>
+            <h2>{{ entry.tabTitle4 }}</h2>
+        </li>
+        <div class="main-accordion race-locations" data-accordion="4">
+            {% set cities = craft.entries.section('city').order('lft') %}
+            {% if cities|length %}
+                <ul class="cities">
+                    {% set cityCount = 0 %}
+                    {% for city in cities %}
+                        {% set cityCount = cityCount + 1 %}
+                        {% if cityCount == 1 %}
+                            <li class="active" data-city="{{ city.slug }}">{{ city.title }}</li>
+                        {% else %}
+                            <li data-city="{{ city.slug }}">{{ city.title }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if cities | length %}
+            {% set cityCount = 0 %}
+                {% for city in cities %}
+                {% set cityCount = cityCount + 1 %}
+                {% if cityCount == 1 %}
+                <div class="city active" data-city={{ city.slug }}>
+                {% else %}
+                <div class="city" data-city={{ city.slug }}>
+                {% endif %}
+                    {% set cityIcon = city.cityIcon.first() %}
+                    {% set relatedEvents = craft.entries.section('event').relatedTo(city) %}
+                    {% set dateYear = 0 %}
+                    {% set date = 0 %}
+                    {% set eventDescription = city.summaryText %}
+                    {% for event in relatedEvents %}
+                        {% set eventYear = event.startDateTime|date('Y') %}
+                        {% set eventDate = event.startDateTime|date('U') %}
+                        {% if eventYear >= dateYear %}
+                            {% set dateYear = eventYear %}
+                            {% set date = eventDate %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <h4>{{ "Next Race"|t }}</h4>
+
+                    {% if date == 0 or date|date('U') < "now"|date('U') %}
+                        <div class="no-date">{{ 'Date coming soon'|t }}</div>
+                        {% if eventDescription|length %}
+                            <p>{{ eventDescription }}</p>
+                        {% else %}
+                            <p>{{ 'More information to follow ...'|t }}</p>
+                        {% endif %}
+                        {% if relatedEvents|length == 0 %}
+                            <a href="#" class="btn btn-orange enter-race-modal" type="button" data-city="{{ city.slug }}" data-toggle="modal" data-target="#enterRace">>{{ 'Register your interest'|t }}</a>
+                        {% else %}
+                            <a href="{{ city.url }}" class="btn btn-orange">{{ 'Race this city'|t }}</a>
+                        {% endif %}
+                    {% else %}
+                        <h3>{{ date }}</h3>
+                        <div class="timer-wrapper">
+                            <div class="timer" data-date={{ date|date('Y/m/d') }}></div>
+                            <ul>
+                                <li>{{ 'Days'|t }}</li>
+                                <li>{{ 'Hours'|t }}</li>
+                                <li>{{ 'Mins'|t }}</li>
+                                <li>{{ 'Secs'|t }}</li>
+                            </ul>
+                        </div>
+                        {% if eventDescription|length %}
+                            <p>{{ eventDescription }}</p>
+                        {% else %}
+                            <p>{{ 'More information to follow ...'|t }}</p>
+                        {% endif %}
+                        <a href={{ city.url }} class="btn btn-black">{{ 'Race this city'|t }}</a>
+                    {% endif %}
+                    
+                    {% if cityIcon is not null %}
+                        <img src={{ cityIcon.getUrl('newsThumb') }} alt="{{ city.title }}">
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+    </ul>
+</section>
+
+{% include "_includes/_global-partners" %}
+
+{% set bgImg = entry.backgroundImage.first() %}
+<section class="home-results" style="background-image: url({{ bgImg.getUrl() }});">
+    {% set featuredResults = entry.topResults %}
+    <div class="wrapper-thin">
+        <div class="row">
+            {% if featuredResults|length %}
+                {% for result in featuredResults %}
+                    {% set user = result.entry.first() %}
+                    {% set event = user.relatedEvents.first() %}
+                    {% set type = result.teamOrIndividual %}
+                    {% set img = result.overrideImage.first() %}
+                    <div class="col-md-4 text-center">
+                        <img src="{{ img.getUrl('smallThumbs') }}">
+                        <h3>{{ result.resultTitle }}</h3>
+                        {% if type == "team" %}
+                        <h4>{{ user.teamName }}</h4>
+                        <h4>{{ user.finishTime }}</h4>
+                        {% else %}
+                        <h4>{{ user.runner }}</h4>
+                        <h4>{{ user.lapTime }}</h4>
+                        {% endif %}
+                        <h5>{{ event.title }}</h5>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12 text-center">
+                    <div class="no-results">
+                        <h2>{{ 'Sorry!'|t }}</h2>
+                        <h3>{{ "We currently don't have result statistics, please check back later"|t }}</h3>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="{{ siteUrl }}results" class="btn btn-orange">{{ 'View All Results'|t }}</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endcache %}
+
+{% endblock %}

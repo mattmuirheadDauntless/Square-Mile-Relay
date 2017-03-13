@@ -1,0 +1,12 @@
+{% extends "_layout" %}
+
+{% import "_includes/forms/formFields" as formFields %}
+
+{% block content %}
+    <div class="container">
+        <div class="flash">{{ craft.session.getFlash('notice') }}</div>
+        <div class="flash">{{ craft.session.getFlash('error') }}</div>
+
+        {% block subContent %}{% endblock %}
+    </div>
+{% endblock %}
