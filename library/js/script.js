@@ -1013,13 +1013,29 @@ $('.btn-remove-member').click(function(event) {
         }
     });
 
+    //on terms toggle
     $('#terms').on('click', function () {
         if ( $(this).is(':checked') ) {
             var button = $(this).parent().parent().find('.btn-continue');
             button.removeClass('btn-invalid');
             button.addClass('btn-orange');
+        } else {
+            var button = $(this).parent().parent().find('.btn-continue');
+            button.addClass('btn-invalid');
+            button.removeClass('btn-orange');
         }
     });
+
+    //on load
+    if ($('#terms').is(':checked')) {
+        var button = $(this).parent().parent().find('.btn-continue');
+        button.removeClass('btn-invalid');
+        button.addClass('btn-orange');
+    } else {
+        var button = $(this).parent().parent().find('.btn-continue');
+        button.addClass('btn-invalid');
+        button.removeClass('btn-orange');
+    }
 
     function getParameterByName(name, url) {
         if (!url) {
