@@ -12,9 +12,6 @@
 {% set cart = craft.commerce.cart %}
 {% set cities = craft.entries.section('city') %}
 
-
-
-
 {% set element = (entry is defined ? entry : null) %}
 {% set currentLocale = craft.i18n.getCurrentLocale() %}
 {% if currentLocale.id == 'en_gb' %}
@@ -141,11 +138,11 @@
                 {% if localeEntry is defined and localeEntry is not null and localeEntry.locale == locale.id %}
 
                     {# Output a link to it #}
-                    <option value="{{ localeEntry.getUrl() }}" {% if currentLocale == locale.id %}selected{% endif %}>{{ locale.nativeName|title }}</option>
+                    <option value="{{ localeEntry.getUrl() }}" {% if currentLocale == locale.id %}selected{% endif %}>{{ locale.id|replace({"_gb": ""})|upper }}</option>
                 {% else %}
 
                     {# Output a link to the hompage #}
-                    <option value="{{ craft.config.siteUrl[locale.id] }}" {% if currentLocale == locale.id %}selected{% endif %}>{{ locale.nativeName|title }}</option>
+                    <option value="{{ craft.config.siteUrl[locale.id] }}" {% if currentLocale == locale.id %}selected{% endif %}>{{ locale.id|replace({"_gb": ""})|upper }}</option>
                 {% endif %}
 
             {% endfor %}
