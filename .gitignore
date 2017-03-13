@@ -1,0 +1,14 @@
+app.js
+bower_components
+craft/app
+craft/config
+craft/plugins
+craft/storage
+library/images
+library/js/min
+config.codekit3
+uploads
+library/css
+web.config
+.htaccess
+/index.php
