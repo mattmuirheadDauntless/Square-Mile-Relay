@@ -58,13 +58,13 @@
                 </div>
                 <div class="col-md-3">
                     <div class="share-wrapper">
-                        <h3>Spread the word...</h3>
+                        <h3>{{ 'Spread the word...'|t }}</h3>
                         <ul>
                             <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.url }}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                             <li><a href="https://twitter.com/home?status={{ entry.title }} {{ entry.url }}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                             <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ entry.url }}&title={{ entry.title }}&summary={{ entry.simpleContent|striptags }}"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                         </ul>
-                        <h3 class="h3-recent-articles">Recent Articles</h3>
+                        <h3 class="h3-recent-articles">{{ 'Recent Articles'|t }}</h3>
                         {% set newsItems = craft.entries.section('news').limit(4) %}
                         {% set count = 0 %}
                         {% for newsItem in newsItems %}
@@ -144,7 +144,7 @@
                             </ul>
                         {% endif %}
                         <p>{{ article.summaryText }}</p>
-                        <div class="btn btn-light">Read more</div>
+                        <div class="btn btn-light">{{ 'Read more'|t }}</div>
                     </div>
                 {% endfor %}
             </div>

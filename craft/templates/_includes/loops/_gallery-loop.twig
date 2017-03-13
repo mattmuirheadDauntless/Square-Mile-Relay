@@ -10,7 +10,7 @@
 }) as events %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    no-results
+    {{ 'no-results'|t }}
 {% else %}
 
     {% for event in events %}

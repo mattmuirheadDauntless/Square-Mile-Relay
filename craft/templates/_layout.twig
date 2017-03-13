@@ -124,7 +124,7 @@
                 {% endif %}
             {% endfor %}
             {% if currentUser|length %}
-                <li><a href="{{ siteUrl }}account/profile">My Account</a></li>
+                <li><a href="{{ siteUrl }}account/profile">{{ 'My Account'|t }}</a></li>
             {% endif %}
         </ul>
         {% endif %}
@@ -153,9 +153,9 @@
 
         <div class="header-account">
             {% if currentUser|length %}
-                <a href="{{ siteUrl }}logout">Logout</a>
+                <a href="{{ siteUrl }}logout">{{ 'Logout'|t }}</a>
             {% else %}
-                <a href="#" type="button" data-toggle="modal" data-target="#login">Login</a>
+                <a href="#" type="button" data-toggle="modal" data-target="#login">{{ 'Login'|t }}</a>
             {% endif %}
         </div>
 

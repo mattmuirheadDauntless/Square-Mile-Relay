@@ -4,7 +4,7 @@
 {% paginate craft.entries(params) as companies %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    no-results
+    {{ 'no-results'|t }}
 {% else %}
 
     {% for company in companies %}
@@ -36,9 +36,9 @@
             {% endif %}
             <h3>{{ company.title }}</h3>
             {% if teamCount == 1 %}
-                <h4>{{ teamCount }} team</h4>
+                <h4>{{ teamCount }} {{ 'team'|t }}</h4>
             {% else %}
-                <h4>{{ teamCount }} teams</h4>
+                <h4>{{ teamCount }} {{ 'teams'|t }}</h4>
             {% endif %}
         </div>
     {% endfor %}

@@ -91,7 +91,7 @@
                                 <p class="cost">
                                     {{ teamTicket.defaultPrice|currency(currencyCode, true) }}
                                     {% if entry.taxName|length %}+ {{ entry.taxName }} {% endif %}
-                                    per team - 10 runners
+                                    {{ 'per team - 10 runners'|t }}
                                 </p>
                                 <a class="btn btn-orange enter-race-modal" data-city="{{ entry.slug }}" type="button" data-toggle="modal" data-target="#enterRace">{{ "Enter a team"|t }}</a>
                                 {% if included|length %}
@@ -116,7 +116,7 @@
                                 <p class="cost">
                                     {{ hospTicket.defaultPrice|currency(currencyCode, true) }}
                                     {% if entry.taxName|length %}+ {{ entry.taxName }} {% endif %}
-                                    per person
+                                    {{ 'per person'|t }}
                                 </p>
                                 <a class="btn btn-black enter-race-modal" data-city="{{ entry.slug }}" type="button" data-toggle="modal" data-target="#enterRace">{{ "Buy Packages"|t }}</a>
                                 {% if included|length %}
@@ -195,11 +195,11 @@
                                             <li>{{ companyCount }}. {{ company.title }}</li>
                                         {% endfor %}
                                     </ul>
-                                    <a href="{{siteUrl}}companies" class="btn btn-black">All Companies</a>
+                                    <a href="{{siteUrl}}companies" class="btn btn-black">{{ 'All Companies'|t }}</a>
                                 {% endif %}
 
                                 {% if event.relatedProudSponsor|length %}
-                                    <h5>Proudly sponsored by:</h5>
+                                    <h5>{{ 'Proudly sponsored by:'|t }}</h5>
                                     {% for partner in event.relatedProudSponsor %}
                                         {% set logo = partner.companyLogo.first() %}
                                         <a href="{{ siteUrl }}partners?year={{ year }}&city={{ entry.title }}">
@@ -218,7 +218,7 @@
                                 <div class="img-button">
                                     {% set courseMap = event.courseMap.first() %}
                                     <img src={{ courseMap.url }} alt="Course Map">
-                                     <a href="{{ courseMap.url }}" target="_blank" download class="btn btn-orange">Download map</a>
+                                     <a href="{{ courseMap.url }}" target="_blank" download class="btn btn-orange">{{ 'Download map'|t }}</a>
                                 </div>
                                 {{ event.simpleContent }}
                             </div>
@@ -226,7 +226,7 @@
                                 {% if event.address|length %}
                                 <h4>{{ 'Race Village Location'|t }}</h4>
                                 <p>{{ event.address|nl2br }}</p>
-                                <a href="https://www.google.com/maps/dir//{{ event.address }}" target="_blank" class="btn btn-black">Directions</a>
+                                <a href="https://www.google.com/maps/dir//{{ event.address }}" target="_blank" class="btn btn-black">{{ 'Directions'|t }}</a>
                                 {% endif %}
                                 <h6>{{ 'Spread the word...'|t }}</h6>
                                 <ul>

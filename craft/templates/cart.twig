@@ -55,11 +55,11 @@
                             {{ getCsrfInput() }}
                             {% if item.options.giftWrapped is defined %}
                             <select name="options[giftWrapped]">
-                                <option value="no" {% if item.options.giftWrapped == 'no' %}selected{% endif %}>No gift wrap.</option>
-                                <option value="yes" {% if item.options.giftWrapped == 'yes' %}selected{% endif %}>Gift wrapped.</option>
+                                <option value="no" {% if item.options.giftWrapped == 'no' %}selected{% endif %}>{{ 'No gift wrap.'|t }}</option>
+                                <option value="yes" {% if item.options.giftWrapped == 'yes' %}selected{% endif %}>{{ 'Gift wrapped.'|t }}</option>
                             </select>
                             {% endif %}
-                            <input type="submit" class="button" value="Update"/>
+                            <input type="submit" class="button" value="{{ 'Update'|t }}"/>
                         </form>
                     </div>
                     <div class="col-sm-3 text-right">
@@ -79,7 +79,7 @@
                         <span class="{% if cart.getError('couponCode') %}has-error{% endif %}">
                         <input type="text" name="couponCode" width="11" class="form-control {% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ "Coupon Code"|t }}">
                         </span>
-                        <input type="submit" class="button" value="{% if cart.couponCode %}Change{% else %}Apply{% endif %} Coupon"/>
+                        <input type="submit" class="button" value="{% if cart.couponCode %}{{ 'Change Coupon'|t }}{% else %}{{ 'Apply Coupon'|t }}{% endif %}"/>
                     </form>
                 </div>
 
@@ -101,11 +101,11 @@
                         {{ cart.totalPrice|commerceCurrency(cart.paymentCurrency,convert=true) -}}</b>
                     </div>
 
-                    <a class="btn btn-primary" href="{{ url('checkout') }}">Checkout</a>
+                    <a class="btn btn-primary" href="{{ url('checkout') }}">{{ 'Checkout'|t }}</a>
                 </div>
             </div>
         {% else %}
-            <p>You have no items in your cart.</p>
+            <p>{{ 'You have no items in your cart.'|t }}</p>
         {% endif %}
 
     </div>
