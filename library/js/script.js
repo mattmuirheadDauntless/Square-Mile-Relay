@@ -990,14 +990,14 @@ $('.btn-remove-member').click(function(event) {
         }, 1000 );
     });​
 
-    $('#subForm button').on('click', function(event) {
-        event.preventDefault();
-        if ( $('#terms').is(':checked') ) {
-            $('#subForm').submit();
-        } else {
-            alert('Please, before registering your interest you need to accept our Terms & Conditions.');
-        }
-    });
+    // $('#subForm button').on('click', function(event) {
+    //     event.preventDefault();
+    //     if ( $('#terms').is(':checked') ) {
+    //         $('#subForm').submit();
+    //     } else {
+    //         alert('Please, before registering your interest you need to accept our Terms & Conditions.');
+    //     }
+    // });
 
     $enterRace = $('#enterRace');
     var $city = getParameterByName('city');
