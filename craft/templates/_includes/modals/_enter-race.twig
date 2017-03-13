@@ -13,7 +13,7 @@
                  <div class="input-wrapper select">
                     {% if cities|length %}
                     <select id="enterRaceLocation" class="input">
-                        <option value="select" selected disabled>- Select - </option>
+                        <option value="select" selected disabled>- {{ 'Select'|t }} - </option>
                         {% for city in cities %}
                             <option value="{{ city.slug }}">{{ city.title }}</option>
                         {% endfor %}
@@ -35,15 +35,16 @@
                         <iframe id="enterRaceFrame" class="enter-race-frame" data-city="{{ city.slug }}" src="" frameborder="0" width="100%" height="100%"></iframe>
                     {% else %}
                         <div class="form-wrapper payment-iframe scroll">
-                            <div class="back back-to-cities"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
+                            <div class="back back-to-cities"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>{{ 'Back'|t }}</span></div>
 
-                            <h2>Register your interest!</h2>
+                            <h2>{{ 'Register your interest!'|t }}</h2>
                             {% if city.registerInterestForm|length > 0 %}
-                            <p>We are yet to announce the race date for {{ city.title }}. Sign up below for updates about the next race in {{ city.title }} and we’ll let you know when entries are open!</p>
+                            <p>{{ 'We are yet to announce the race date for'|t }} {{ city.title }}. {{ "Sign up below for updates about the next race in"|t }} {{ city.title }}
+                                                                                                  {{ "and we’ll let you know when entries are open!"|t }}</p>
                             {{ city.registerInterestForm|raw }}
                             {% else %}
-                            <p>We currently haven't announced any races for this city.</p>
-                            <a href="{{ city.url }}" class="btn btn-orange">View past races</a>
+                            <p>{{ "We currently haven't announced any races for this city."|t }}</p>
+                            <a href="{{ city.url }}" class="btn btn-orange">{{ 'View past races'|t }}</a>
                             {% endif %}
                         </div>
                     {% endif %}
@@ -72,13 +73,14 @@
                         </div>
                     {% else %}
                         <div class="slide country" data-city="{{ city.slug }}" data-slide="3">
-                            <h2>Register your interest!</h2>
+                            <h2>{{ "Register your interest!"|t }}</h2>
                             {% if city.registerInterestForm|length > 0 %}
-                            <p>We are yet to announce the race date for {{ city.title }}. Sign up below for updates about the next race in {{ city.title }} and we’ll let you know when entries are open!</p>
+                            <p>{{ "We are yet to announce the race date for"|t }} {{ city.title }}.
+                                {{ "Sign up below for updates about the next race in"|t }} {{ city.title }} {{ 'and we’ll let you know when entries are open!'|t }}</p>
                             {{ city.registerInterestForm|raw }}
                             {% else %}
-                            <p>We currently haven't announced any races for this city.</p>
-                            <a href="{{ city.url }}" class="btn btn-orange">View past races</a>
+                            <p>{{ "We currently haven't announced any races for this city."|t }}</p>
+                            <a href="{{ city.url }}" class="btn btn-orange">{{ 'View past races'|t }}</a>
                             {% endif %}
                         </div>
                     {% endif %}
@@ -87,7 +89,7 @@
 
             <div class="slide commerce" data-slide="4">
                 <div class="row thank-you text-center">
-                    <h2>Thank You!</h2>
+                    <h2>{{ "Thank You!"|t }}</h2>
                     <p>{{ raceEnterModal.thankYou }}</p>
                 </div>
             </div>

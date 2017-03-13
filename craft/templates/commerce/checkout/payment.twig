@@ -2,10 +2,10 @@
 
 {% block content %}
 
-	<div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
+	<div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>{{ 'Back'|t }}</span></div>
 
 	<div class="modal-header">
-        <h4 class="modal-title">Review</h4>
+        <h4 class="modal-title">{{ 'Review'|t }}</h4>
     </div>
 
 	<div class="row">
@@ -15,9 +15,9 @@
 	    <table class="u-full-width">
 	        <thead>
 	        <tr>
-	            <th>Product</th>
-	            <th>Qty</th>
-	            <th class="text-right">Price</th>
+	            <th>{{ 'Product'|t }}</th>
+	            <th>{{ 'Qty'|t }}</th>
+	            <th class="text-right">{{ 'Price'|t }}</th>
 	        </tr>
 	        </thead>
 	        <tbody>
@@ -34,7 +34,7 @@
 	                    <strong>{{ item.qty }}</strong>
 	                </td>
 	                <td class="text-right">
-	                    Total: {{ item.subtotal|commerceCurrency(iso, convert=false) }}<br>
+	                    {{ 'Total:'|t }} {{ item.subtotal|commerceCurrency(iso, convert=false) }}<br>
 	                </td>
 	            </tr>
 	        {% endfor %}
@@ -58,8 +58,8 @@
 	            <td>
 	            </td>
 	            <td class="text-right">
-	                Total Tax: {{ cart.totalTax|commerceCurrency(iso, convert=false) }}<br>
-	                <h4>Total Price: {{ cart.totalPrice|commerceCurrency(iso, convert=false) }}</h4>
+	                {{ 'Total Tax:'|t }} {{ cart.totalTax|commerceCurrency(iso, convert=false) }}<br>
+	                <h4>{{ 'Total Price:'|t }} {{ cart.totalPrice|commerceCurrency(iso, convert=false) }}</h4>
 	            </td>
 	        </tr>
 
@@ -75,7 +75,7 @@
 			#}
 
 			{% if not craft.commerce.paymentMethods|length %}
-				<p>No payment methods available.</p>
+				<p>{{ 'No payment methods available.'|t }}</p>
 			{% endif %}
 
 			{% if craft.commerce.paymentMethods|length %}
@@ -86,7 +86,7 @@
 						   value="commerce/checkout/payment">
 					{{ getCsrfInput() }}
 
-					<label for="paymentMethodId">Select a payment method:</label>
+					<label for="paymentMethodId">{{ 'Select a payment method:'|t }}</label>
 					<select id="paymentMethodId" name="paymentMethodId"
 							class="form-control">
 						{% for id,name in craft.commerce.paymentMethods %}
@@ -109,15 +109,11 @@
 						<div class="twelve columns">
 							<noscript>
 								<div class="bs-callout bs-callout-danger">
-									<h4>JavaScript is not enabled!</h4>
+									<h4>{{ 'JavaScript is not enabled!'|t }}</h4>
 
-									<p>This payment form requires your browser to have
-										JavaScript enabled. Please activate
-										JavaScript and reload this page. Check <a
-												href="http://enable-javascript.com"
-												target="_blank">enable-javascript.com</a>
-										for
-										more informations.</p>
+									<p>{{ "This payment form requires your browser to have JavaScript enabled. Please activate JavaScript and reload this page. Check"|t }}
+										<a href="http://enable-javascript.com" target="_blank">enable-javascript.com</a>
+										{{ "for more informations."|t }}</p>
 								</div>
 							</noscript>
 
@@ -154,14 +150,14 @@
 
 								<!-- Card Holder Name -->
 								<div class="form-group {% if paymentForm is defined and (paymentForm.hasErrors('firstName') or paymentForm.hasErrors('firstName')) %}has-error{% endif %}">
-									<label>Card Holder</label>
+									<label>{{ 'Card Holder'|t }}</label>
 
 									<div class="row">
 										<div class="six columns">
 
 											<input type="text" name="firstName"
 												   maxlength="70"
-												   placeholder="First Name"
+												   placeholder="{{ 'First Name'|t }}"
 												   class="card-holder-first-name u-full-width"
 												   value="{{ formValues.firstName }}">
 
@@ -170,7 +166,7 @@
 										<div class="six columns">
 											<input type="text" name="lastName"
 												   maxlength="70"
-												   placeholder="Last Name"
+												   placeholder="{{ 'Last Name'|t }}"
 												   class="card-holder-last-name u-full-width"
 												   value="{{ formValues.lastName }}">
 
@@ -185,11 +181,11 @@
 
 								<!-- Card Number -->
 								<div class="form-group {% if paymentForm is defined and paymentForm.hasErrors('number') %}has-error{% endif %}">
-									<label>Card Number</label>
+									<label>{{ 'Card Number'|t }}</label>
 
 									<input type="text" name="number"
 										   maxlength="19"
-										   placeholder="Card Number"
+										   placeholder="{{ 'Card Number'|t }}"
 										   class="card-number u-full-width"
 										   value="{{ formValues.number }}">
 
@@ -198,7 +194,7 @@
 
 								<!-- Expiry-->
 								<div class="form-group {% if paymentForm is defined and (paymentForm.hasErrors('month') or paymentForm.hasErrors('year')) %}has-error{% endif %}">
-									<label>Card Expiry Date</label>
+									<label>{{ 'Card Expiry Date'|t }}</label>
 
 									<select class="form-control" name="month">
 										{% for month in 1..12 %}
@@ -224,9 +220,9 @@
 								<!-- CVV -->
 								<div class="form-group {% if paymentForm is defined and paymentForm.hasErrors('cvv') %}has-error{% endif %}">
 
-									<label>CVV/CVV2</label>
+									<label>{{ 'CVV/CVV2'|t }}</label>
 									<input type="text" name="cvv"
-										   placeholder="CVV" maxlength="4"
+										   placeholder="{{ 'CVV'|t }}" maxlength="4"
 										   class="card-cvc"
 										   value="{{ formValues.cvv }}">
 
@@ -241,7 +237,7 @@
 						</fieldset>
 					{% endif %}
 
-					<button class="btn btn-orange flr finish-payment" type="submit">Finish</button>
+					<button class="btn btn-orange flr finish-payment" type="submit">{{ 'Finish'|t }}</button>
 				</form>
 			{% endif %}
 		</div>

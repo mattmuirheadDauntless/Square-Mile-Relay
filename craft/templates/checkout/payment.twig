@@ -4,12 +4,12 @@
 
 {% block subContent %}
 
-    <h1>{{ 'Payment'|t }}</h2>
+    <h1>{{ 'Payment'|t }}</h1>
 
     <div class="row">
         <div class="col-sm-8">
             {% if not craft.commerce.paymentMethods|length %}
-                <p>No payment methods available.</p>
+                <p>{{ 'No payment methods available.'|t }}</p>
             {% endif %}
 
             {% if craft.commerce.paymentMethods|length %}
@@ -93,14 +93,14 @@
 
                                 <!-- Card Holder Name -->
                                 <div class="{% if paymentForm is defined and (paymentForm.hasErrors('firstName') or paymentForm.hasErrors('firstName')) %}has-error{% endif %}">
-                                    <label>Card Holder</label>
+                                    <label>{{ 'Card Holder'|t }}</label>
 
                                     <div class="row">
                                         <div class="col-sm-6">
 
                                             <input type="text" name="firstName"
                                                    maxlength="70"
-                                                   placeholder="First Name"
+                                                   placeholder="{{ 'First Name'|t }}"
                                                    class="card-holder-first-name form-control"
                                                    value="{{ formValues.firstName }}">
 
@@ -109,7 +109,7 @@
                                         <div class="col-sm-6">
                                             <input type="text" name="lastName"
                                                    maxlength="70"
-                                                   placeholder="Last Name"
+                                                   placeholder="{{ 'Last Name'|t }}"
                                                    class="card-holder-last-name form-control"
                                                    value="{{ formValues.lastName }}">
 
@@ -135,7 +135,7 @@
 
                                 <!-- Expiry-->
                                 <div class="form-inline {% if paymentForm is defined and (paymentForm.hasErrors('month') or paymentForm.hasErrors('year')) %}has-error{% endif %}">
-                                    <label>Card Expiry Date</label><br>
+                                    <label>{{ 'Card Expiry Date'|t }}</label><br>
 
                                     <select class="form-control" name="month">
                                         {% for month in 1..12 %}
@@ -179,8 +179,7 @@
                             <!-- Submit -->
                             <div class="clearfix"></div>
 
-                            <button class="btn btn-primary" type="submit">Pay {{ cart.totalPrice|commerceCurrency(cart.paymentCurrency,convert=true) }}
-                                Now</button>
+                            <button class="btn btn-primary" type="submit">{{ 'Pay Now'|t }} {{ cart.totalPrice|commerceCurrency(cart.paymentCurrency,convert=true) }}</button>
                             
                         </fieldset>
                     {% endif %}
@@ -190,10 +189,10 @@
 
         <div class="col-sm-4">
             <div class="review-card">
-                <h5>Order Review</h5>
+                <h5>{{ 'Order Review'|t }}</h5>
                 <ul>
                     <li>
-                        <strong>Products</strong> {{ cart.itemTotal|commerceCurrency(cart.paymentCurrency,convert=true) }}
+                        <strong>{{ 'Products'|t }}</strong> {{ cart.itemTotal|commerceCurrency(cart.paymentCurrency,convert=true) }}
                     </li>
 
                     {% for adjustment in cart.adjustments %}
@@ -205,12 +204,12 @@
 
                     {% if not cart.shippingMethod %}
                         <li>
-                            <strong>Shipping</strong> None selected. <a href="{{ url('checkout/shipping') }}">Choose a shipping method.</a>
+                            <strong>{{ 'Shipping'|t }}</strong> {{ 'None selected'|t }} <a href="{{ url('checkout/shipping') }}">{{ 'Choose a shipping method.'|t }}</a>
                         </li>
                     {% endif %}
 
                     <li>
-                        <strong>Total:</strong> {{ cart.totalPrice|commerceCurrency(cart.paymentCurrency,convert=true) }}
+                        <strong>{{ 'Total:'|t }}</strong> {{ cart.totalPrice|commerceCurrency(cart.paymentCurrency,convert=true) }}
                     </li>
                 </ul>
             </div>

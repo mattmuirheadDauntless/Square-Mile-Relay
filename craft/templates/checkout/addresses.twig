@@ -14,8 +14,8 @@
                 {{ getCsrfInput() }}
 
                 {% if not cart.email %}
-                <label for="">Email</label>
-                <input class="u-full-width" type="text" value="{{ cart.email }}" name="email"
+                <label for="">{{ 'Email'|t }}</label>
+                <input class="u-full-width" type="text" value="{{ cart.email }}" name="{{ 'email'|t }}"
                        placeholder="email@site.com"/>
 
                 <span class="flash">{{ cart.getErrors('email')|join }}</span><br>
@@ -29,8 +29,9 @@
 
                 <input type="hidden" name="sameAddress" value="0">
 
-                <label for="sameAddress"><input id="sameAddress" name="sameAddress" type="checkbox" checked="checked"/><span class="label-body">Use same address for
-                billing</span></label>
+                <label for="sameAddress"><input id="sameAddress" name="sameAddress" type="checkbox" checked="checked"/><span class="label-body">
+                        {{ 'Use same address for billing'|t }}
+                    </span></label>
 
                 <br>
 
@@ -40,7 +41,7 @@
                     name: 'billingAddress'
                 } %}
 
-                <input type="submit" class="button button-primary" value="Confirm addresses">
+                <input type="submit" class="button button-primary" value="{{ 'Confirm addresses'|t }}">
 
             </form>
 

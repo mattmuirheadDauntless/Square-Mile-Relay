@@ -14,7 +14,7 @@
         {% if currentUser %}
           <a href="{{ url('commerce/customer') }}">{{ "My Orders"|t }}</a>
           — <a href="{{ url('commerce/customer/addresses') }}">{{ "My Addresses"|t }}</a>
-          — <a href="{{ logoutUrl }}">Logout</a>
+          — <a href="{{ logoutUrl }}">{{ 'Logout'|t }}</a>
         {% else %}
           {{ "Guest"|t }}
         {% endif %}

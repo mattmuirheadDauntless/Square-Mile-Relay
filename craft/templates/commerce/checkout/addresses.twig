@@ -9,7 +9,7 @@
     <div class="row" class="addresses-body">
         <div class="twelve columns">
 
-            <div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
+            <div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>{{ 'Back'|t }}</span></div>
 
             <form method="post">
 
@@ -20,7 +20,7 @@
 
                 <div class="hide">
                     {% if not cart.email %}
-                    <label for="">Email</label>
+                    <label for="">{{ 'Email'|t }}</label>
                     <input class="u-full-width" type="text" value="{{ currentUser.email }}" name="email"
                            placeholder="email@site.com"/>
 

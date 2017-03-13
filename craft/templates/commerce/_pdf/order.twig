@@ -37,13 +37,13 @@
                         </ul>
                     </td>
                     <td style="font-size: 11px;">
-                        <h5>Address</h5>
+                        <h5>{{ 'Address'|t }}</h5>
                         {% if order.shippingAddress %}
                         {% include 'commerce/_includes/addresses/address' with { address: order.shippingAddress } %}
                         {% endif %}
                     </td>
                     <td style="font-size: 11px;">
-                        <h5>Billing Address</h5>
+                        <h5>{{ 'Billing Address'|t }}</h5>
                         {% if order.billingAddress %}
                         {% include 'commerce/_includes/addresses/address' with { address: order.billingAddress } %}
                         {% endif %}
@@ -53,10 +53,10 @@
             <table class="u-full-width">
                 <thead>
                 <tr>
-                    <th>Item</th>
-                    <th>Unit Price</th>
-                    <th>Quantity</th>
-                    <th class="text-right">Total</th>
+                    <th>{{ 'Item'|t }}</th>
+                    <th>{{ 'Unit Price'|t }}</th>
+                    <th>{{ 'Quantity'|t }}</th>
+                    <th class="text-right">{{ 'Total'|t }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -82,7 +82,7 @@
                     {% if adjustment.type == 'Discount' %}
                         <tr>
                             <td><strong>{{ adjustment.type }}</strong></td>
-                            <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.amount|commerceCurrency(iso,convert=true) }} using code {{ adjustment.optionsJson.code }})</td>
+                            <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.amount|commerceCurrency(iso,convert=true) }} {{ 'using code'|t }} {{ adjustment.optionsJson.code }})</td>
                             <td class="text-right">{{ adjustment.amount|commerceCurrency(iso,convert=true) }}</td>
                         </tr>
                     {% else %}
@@ -95,10 +95,10 @@
                 {% endfor %}
                 <tr>
                     <td colspan="4" class="text-right">
-                        Item Total: {{ order.itemTotal|commerceCurrency(iso, convert=false) }}<br>
-                        Base Discount: {{ order.baseDiscount|commerceCurrency(iso, convert=false) }}<br>
-                        Base Shipping Rate: {{ order.baseShippingCost|commerceCurrency(iso, convert=false) }}<br>
-                        <h4>Total: {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</h4>
+                        {{ 'Item Total:'|t }} {{ order.itemTotal|commerceCurrency(iso, convert=false) }}<br>
+                        {{ 'Base Discount:'|t }} {{ order.baseDiscount|commerceCurrency(iso, convert=false) }}<br>
+                        {{ 'Base Shipping Rate:'|t }} {{ order.baseShippingCost|commerceCurrency(iso, convert=false) }}<br>
+                        <h4>{{ 'Total:'|t }} {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</h4>
                     </td>
                 </tr>
 
@@ -115,12 +115,12 @@
     <div class="logo">
         <img src="{{ logos.companyLogo.first().url }}" alt="Square Mile Relay" style="width: 200px; height: 90px;">
     </div>
-    <h4 style="font-family: 'AvenirNext';">Receipt for Order #{{ order.number[:7] }}</h4>
+    <h4 style="font-family: 'AvenirNext';">{{ 'Receipt for Order #'|t }}{{ order.number[:7] }}</h4>
     {{ orderTable }}
 {% case "ajax" %}
-    <h4 style="font-family: 'AvenirNext';">NA</h4>
+    <h4 style="font-family: 'AvenirNext';">{{ 'NA'|t }}</h4>
 {% default %}
-    <h4 style="font-family: 'AvenirNext';">Order #{{ order.number[:7] }}</h4>
+    <h4 style="font-family: 'AvenirNext';">{{ 'Order #'|t }}{{ order.number[:7] }}</h4>
     {{ orderTable }}
 {% endswitch %}
 

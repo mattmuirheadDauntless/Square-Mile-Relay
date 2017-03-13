@@ -12,21 +12,21 @@
                     <input type="hidden" name="redirect" value="contact/thanks">
 
                     <div class="input-wrapper">
-                        <input class="input" type="text" placeholder="Your Name">
+                        <input class="input" type="text" placeholder="{{ 'Your Name'|t }}">
                         <label>{{ 'Your Name'|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
                         <div class="msg valid">{{' Great!'|t }}</div>
                         <div class="msg in-valid">{{' That name is invalid.'|t }}</div>
                     </div>
                     <div class="input-wrapper">
-                        <input class="input" type="email" placeholder="Email">
+                        <input class="input" type="email" placeholder="{{ 'Email'|t }}">
                         <label>{{ 'Email'|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
                         <div class="msg valid">{{' Great!'|t }}</div>
                         <div class="msg in-valid">{{' That email is invalid.'|t }}</div>
                     </div>
                     <div class="input-wrapper">
-                        <input class="input" type="phone" placeholder="Phone">
+                        <input class="input" type="phone" placeholder="{{ 'Phone'|t }}">
                         <label>{{ 'Phone'|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
                         <div class="msg valid">{{' Great!'|t }}</div>
@@ -44,7 +44,7 @@
                         <div class="msg valid">{{' Great!'|t }}</div>
                     </div>
                     <div class="input-wrapper">
-                        <textarea class="input" placeholder="Message"></textarea>
+                        <textarea class="input" placeholder="{{ 'Message'|t }}"></textarea>
                         <label>{{ 'Message'|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
                         <div class="msg valid">{{' Great!'|t }}</div>

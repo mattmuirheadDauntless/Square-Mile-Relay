@@ -7,7 +7,7 @@
 }) as individualResults %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    no-results
+    {{ 'no-results'|t }}
 {% else %}
 
     {% for result in individualResults %}

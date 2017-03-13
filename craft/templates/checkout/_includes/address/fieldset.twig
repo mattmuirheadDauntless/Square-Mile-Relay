@@ -13,7 +13,7 @@
                     {% include 'checkout/_includes/address/address' %}
                 </label>
 
-                <a class="btn btn-primary btn-sm" href="{{ url('commerce/customer/addresses/edit?addressId='~ address.id ~'&redirect='~craft.request.path)}}">Edit</a>
+                <a class="btn btn-primary btn-sm" href="{{ url('commerce/customer/addresses/edit?addressId='~ address.id ~'&redirect='~craft.request.path)}}">{{ 'Edit'|t }}</a>
             </li>
         {% endfor %}
         </ul>

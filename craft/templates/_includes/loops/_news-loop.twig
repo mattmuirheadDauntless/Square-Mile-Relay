@@ -4,7 +4,7 @@
 {% paginate craft.entries(params) as newsItems %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    no-results
+    {{ 'no-results'|t }}
 {% else %}
     {% for newsItem in newsItems %}
 
@@ -36,7 +36,7 @@
                 </ul>
             {% endif %}
             <p>{{ newsItem.summaryText }}</p>
-            <div class="btn btn-light btn-small">Read More</div>
+            <div class="btn btn-light btn-small">{{ 'Read More'|t }}</div>
         </div>
 
     {% endfor %}

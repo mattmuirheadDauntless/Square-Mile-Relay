@@ -1,8 +1,8 @@
 {% extends 'commerce/_layouts/main' %}
 {% block main %}
 <div class="modal-header">
-    <div class="back back-to-cities"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
-    <h4 class="modal-title">Team Packages</h4>
+    <div class="back back-to-cities"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>{{ 'Back'|t }}</span></div>
+    <h4 class="modal-title">{{ 'Team Packages'|t }}</h4>
 </div>
 
 {% set citySelected = craft.request.getParam('city') %}
@@ -70,7 +70,7 @@
                 <span class="{% if cart.getError('couponCode') %}has-error{% endif %}">
                 <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ "Enter Coupon Code"|t }}">
                 </span>
-                <input type="submit" class="btn btn-full-width btn-orange" value="{% if cart.couponCode %}Change{% else %}Apply{% endif %} Coupon"/>
+                <input type="submit" class="btn btn-full-width btn-orange" value="{% if cart.couponCode %}{{ 'Change Coupon'|t }}{% else %}{{ 'Apply Coupon'|t }}{% endif %}"/>
             </form>
         </div>
 
@@ -80,7 +80,7 @@
                     {% for adjustment in cart.adjustments %}
                         <li>
                             {% if adjustment.type == 'Discount' %}
-                                Discount
+                                {{ 'Discount'|t }}
                                 <span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
                             {% else %}
                                 {{ adjustment.type }} {{ adjustment.name }} ({{ adjustment.description }})<span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
@@ -107,11 +107,11 @@
         <div class="terms input-wrapper checkbox">
             <input type="checkbox" class="input{% if cart.lineItems|length %} active{% endif %}" name="terms" id="terms">
             <label for="terms"></label>
-            <p>I accept the <a href="{{ product.relatedEvent.first().relatedTermsAndConditions.first().getUrl() }}" target="_blank">Terms &amp; Conditions</a></p>
+            <p>{{ "I accept the"|t }} <a href="{{ product.relatedEvent.first().relatedTermsAndConditions.first().getUrl() }}" target="_blank">{{ "Terms & Conditions"|t }}</a></p>
             <br>
         </div>
 
-        <a href="/commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid flr">Continue</a>
+        <a href="/commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid flr">{{ 'Continue'|t }}</a>
 
         <br>
 
@@ -119,7 +119,7 @@
             <input type="hidden" name="action" value="commerce/cart/removeAllLineItems"/>
             <input type="hidden" name="redirect" value="commerce/products?city={{ citySelected }}"/>
             {{ getCsrfInput() }}
-            <input class="btn btn-empty btn-black fll" id="emptyCart" type="submit" value="Empty Basket"/>
+            <input class="btn btn-empty btn-black fll" id="emptyCart" type="submit" value="{{ "Empty Basket"|t }}"/>
         </form>
 
     </div>

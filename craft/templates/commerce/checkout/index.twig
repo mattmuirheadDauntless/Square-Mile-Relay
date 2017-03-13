@@ -10,10 +10,10 @@
     <div class="row">
         <div class="six columns">
 
-            <div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
+            <div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>{{ 'Back'|t }}</span></div>
 
             <div class="modal-header">
-                <h4 class="modal-title">Existing User</h4>
+                <h4 class="modal-title">{{ 'Existing User'|t }}</h4>
             </div>
 
             <form method="post" accept-charset="UTF-8">
@@ -24,37 +24,37 @@
                 <input type="hidden" name="redirect" value="commerce/checkout/addresses">
 
                 <div class="input-wrapper">
-                    <input id="loginName" class="input" type="email" name="loginName" placeholder="Email"
+                    <input id="loginName" class="input" type="email" name="loginName" placeholder="{{ 'Email'|t }}"
                            value="{{ craft.session.rememberedUsername }}">
-                    <label for="loginName">Email</label>
+                    <label for="loginName">{{ 'Email'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">That email is invalid.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ "That email is invalid."|t }}</div>
                 </div>
 
                 <div class="input-wrapper">
-                    <input id="password" class="input" type="password" name="password" placeholder="Password">
-                    <label for="password">Password</label>
+                    <input id="password" class="input" type="password" name="password" placeholder="{{ 'Password'|t }}">
+                    <label for="password">{{ 'Password'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">That username is invalid.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That password is invalid.'|t }}</div>
                 </div>
 
                 <label>
                     <input type="checkbox" name="rememberMe" value="1">
-                    Remember me
+                    {{ 'Remember me'|t }}
                 </label>
 
-                <input type="submit" value="Login" class="btn btn-orange flr"/>
+                <input type="submit" value="{{ 'Login'|t }}" class="btn btn-orange flr"/>
 
-                <p><a href="#" class="send-to-forgot-password">Forget your password?</a></p>
+                <p><a href="#" class="send-to-forgot-password">{{ 'Forget your password?'|t }}</a></p>
             </form>
         </div>
 
         <div class="six columns">
 
             <div class="modal-header">
-                <h4 class="modal-title">New User?</h4>
+                <h4 class="modal-title">{{ 'New User?'|t }}</h4>
             </div>
 
             <form method="post" accept-charset="UTF-8">
@@ -75,12 +75,12 @@
                 {% from _self import errorList %}
 
                 <div class="input-wrapper">
-                    <input id="firstName" type="text" class="input" name="firstName" placeholder="First Name"
+                    <input id="firstName" type="text" class="input" name="firstName" placeholder="{{ 'First Name'|t }}"
                     {%- if account is defined %} value="{{ account.firstName }}"{% endif -%}>
-                    <label for="firstName">First Name</label>
+                    <label for="firstName">{{ 'First Name'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">That name is invalid.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That name is invalid.'|t }}</div>
                 </div>
 
                 {% if account is defined %}
@@ -88,12 +88,12 @@
                 {% endif %}
 
                 <div class="input-wrapper">
-                    <input id="lastName" type="text" class="input" name="lastName" placeholder="Last Name"
+                    <input id="lastName" type="text" class="input" name="lastName" placeholder="{{ 'Last Name'|t }}"
                     {%- if account is defined %} value="{{ account.lastName }}"{% endif -%}>
-                    <label for="lastName">Last Name</label>
+                    <label for="lastName">{{ 'Last Name'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">That name is invalid.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That name is invalid.'|t }}</div>
                 </div>
 
                 {% if account is defined %}
@@ -109,21 +109,21 @@
                             {% endfor %}
                         </select>
                     {% endif %}
-                    <label for="relatedCompany">Company</label>
+                    <label for="relatedCompany">{{ "Company"|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">That company is invalid.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That company is invalid.'|t }}</div>
                 </div>
 
                 <div class="input-wrapper checkbox">
                     <input id="newCompany" type="checkbox" class="input" name="newCompany">
                     <label for="newCompany"></label>
-                    <p>Is your company new to the Square Mile Relay?</p>
+                    <p>{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
                 </div>
 
                 <div class="input-wrapper new-company-name hide">
-                    <input id="newCompanyName" type="text" class="input" name="newCompanyName" placeholder="Company Name">
-                    <label for="newCompanyName">Company Name</label>
+                    <input id="newCompanyName" type="text" class="input" name="newCompanyName" placeholder="{{ 'Company Name'|t }}">
+                    <label for="newCompanyName">{{ 'Company Name'|t }}</label>
                 </div>
 
                 {% if account is defined %}
@@ -141,10 +141,10 @@
                             <option value="{{ option }}">{{ option }}</option>
                         {% endfor %}
                     </select>
-                    <label for="addressCountry">Country</label>
+                    <label for="addressCountry">{{ 'Country'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">That country is invalid.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That country is invalid.'|t }}</div>
                 </div>
 
                 {% if account is defined %}
@@ -152,12 +152,12 @@
                 {% endif %}
 
                 <div class="input-wrapper">
-                    <input id="email" type="email" class="input" name="email" placeholder="Email"
+                    <input id="email" type="email" class="input" name="email" placeholder="{{ 'Email'|t }}"
                     {%- if account is defined %} value="{{ account.email }}"{% endif %}>
-                    <label for="email">Email</label>
+                    <label for="email">{{ 'Email'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">That username is invalid.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That email is invalid.'|t }}</div>
                 </div>
 
                 {% if account is defined %}
@@ -165,11 +165,11 @@
                 {% endif %}
 
                 <div class="input-wrapper">
-                    <input id="password" type="password" class="input" name="password" placeholder="Password">
-                    <label for="password">Password</label>
+                    <input id="password" type="password" class="input" name="password" placeholder="{{ 'Password'|t }}">
+                    <label for="password">{{ 'Password'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">That username is invalid.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That password is invalid.'|t }}</div>
                 </div>
 
                 {% if account is defined %}

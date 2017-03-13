@@ -119,7 +119,7 @@
 
                     <div class="input-wrapper edit-element">
                         <label for="teamPhoto" class="active">{{ 'Team Photo'|t }}</label>
-                        <input type="file" name="teamPhoto" value="Upload Image" class="input">
+                        <input type="file" name="teamPhoto" value="{{ 'Upload Image'|t }}" class="input">
                     </div>
 
                     <div class="input-wrapper textarea">
@@ -133,7 +133,7 @@
                         }) }}
                     </div>
 
-                    <button type="submit" class="btn btn-orange btn-long">Save</button>
+                    <button type="submit" class="btn btn-orange btn-long">{{ 'Save'|t }}</button>
                 </form>
 
             </div>
@@ -150,9 +150,9 @@
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 
                     <p>
-                        Please note that the order in which your runners appear below is the order that they will run in on race day!<br>
+                        {{ 'Please note that the order in which your runners appear below is the order that they will run in on race day!'|t }}<br>
                         {% if relatedEvent is not null %}
-                            The order can be updated until midnight {{ relatedEvent.startDateTime|date('j F Y') }}
+                            {{ 'The order can be updated until midnight'|t }} {{ relatedEvent.startDateTime|date('j F Y') }}
                         {% endif %}
                     </p>
 
@@ -228,9 +228,9 @@
                                 </td>
                                 <td valign="center">
                                     {% if user.pending %}
-                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> Sent</div>
+                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Sent'|t }}</div>
                                     {% else %}
-                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> Confirmed</div>
+                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Confirmed'|t }}</div>
                                     {% endif %}
                                 </td>
                             </tr>
@@ -244,7 +244,7 @@
                                 <td class="s-handle">
                                     <div class="dragtooltip">
                                         <i class="fa fa-bars"></i>
-                                        <span class="dragtooltiptext">Drag to order.</span>
+                                        <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
                                     </div>
                                     <span class="count">{{ count }}</span>
                                 </td>

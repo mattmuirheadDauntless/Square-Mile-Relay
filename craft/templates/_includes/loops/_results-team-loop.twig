@@ -7,7 +7,7 @@
 }) as teamResults %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    no-results
+    {{ 'no-results'|t }}
 {% else %}
 
     {% set count = 0 %}
