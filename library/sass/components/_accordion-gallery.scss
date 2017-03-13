@@ -1,0 +1,30 @@
+.accordion-gallery {
+    margin: 0 5px;
+    padding: 5px 0;
+    width: calc(100% - 10px);
+    .img-item {
+        background-color: $white;
+        padding: 5px;
+        width: 25%;
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+.main-accordion.global-gallery {
+    margin-bottom: 0;
+    text-align: center;
+    .btn {
+        margin-top: 30px;
+    }
+}
+
+@include phone {
+    .accordion-gallery {
+        .img-item {
+            width: 50%;
+        }
+    }
+}

@@ -1,0 +1,119 @@
+.footer {
+    position: relative;
+    clear: both;
+    background-color: $black;
+    padding: 15px 0;
+    z-index: 999;
+    h4 {
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        word-spacing: 1px;
+        letter-spacing: 1px;
+        color: $white;
+        font-size: 14px;
+        font-weight: 700;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+            margin-bottom: 5px;
+            a {
+                text-decoration: none;
+                color: $lightgrey;
+                font-size: 18px;
+                font-weight: 100;
+                i {
+                    margin-right: 10px;
+                    width: 20px;
+                    color: $orange;
+                }
+            }
+        }
+    }
+    form {
+        margin-bottom: 30px;
+        label {
+            display: inline-block;
+            transition: all ease-in .2s;
+            margin-right: 10px;
+            text-align: left;
+            text-transform: uppercase;
+            color: $white;
+            font-size: 12px;
+            font-weight: 200;
+        }
+        input {
+            appearance: none;
+            border: 0;
+            border-radius: 3px;
+            background-color: rgba(255,255,255,.2);
+            padding: 5px 10px;
+            width: 100%;
+            color: $white;
+        }
+        input[type="checkbox"] {
+            display: none;
+            & + label {
+                cursor: pointer;
+                text-transform: none;
+                color: $lightgrey;
+                font-size: 14px;
+            }
+            &:checked + label {
+                transition: all ease-in .2s;
+                color: $orange;
+            }
+        }
+        button {
+            appearance: none;
+            border: 0;
+            border-radius: 20px;
+            background: $orange;
+            padding: 5px 20px;
+            text-transform: uppercase;
+            color: $white;
+        }
+    }
+}
+
+@include desktop {
+    .footer {
+        h4 {
+            font-size: 12px;
+        }
+        ul {
+            li {
+                a {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    h4 {
+        margin-top: 40px;
+    }
+}
+@media(max-width:991px) {
+    .footer .col-xs-12 {
+        clear: both;
+    }
+}
+@media(max-width:400px) {
+    .footer .row div {
+        h4 {
+            margin: 25px 0 20px;
+        }
+        ul {
+            li {
+                a {
+                    font-size: 12px;
+                }
+            }
+        } 
+    }
+}

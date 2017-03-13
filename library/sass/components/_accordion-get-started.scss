@@ -1,0 +1,102 @@
+.about-accordion {
+    .get-started {
+        padding: 0 61px;
+        &.active {
+            padding: 70px 0 70px 70px;
+        }
+        h3 {
+            margin: 0 0 50px;
+            font-size: 33px;
+            font-weight: 700;
+        }
+        .text {
+            float: left;
+            padding-left: 4px;
+            width: 100%;
+            max-width: 1000px;
+            h4 {
+                margin: 0;
+                font-size: 22px;
+                font-weight: 600;
+                strong {
+                    margin-right: 16px;
+                    color: $orange;
+                    font-size: 45px;
+                    font-weight: 800;
+                }
+                &.push {
+                    margin: 38px 62px 40px;
+                }
+            }
+            p {
+                margin: 14px 0 16px;
+                padding: 0 90px 0;
+                line-height: 27px;
+                color: $grey;
+                font-size: 18px;
+            }
+            .btn {
+                float: left;
+                margin: 38px 30px 68px 0;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+@include desktop {
+    .about-accordion {
+        .get-started {
+            h3 {
+                margin: 0 0 40px;
+                font-size: 33px;
+            }
+            .text {
+                h4 {
+                    font-size: 20px;
+                }
+                p {
+                    margin: 10px 0 40px;
+                }
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .about-accordion {
+        .get-started {
+            padding: 0 50px;
+            &.active {
+                padding: 50px 50px 60px;
+            }
+        }
+    }
+}
+
+@include phone {
+    .about-accordion {
+        .get-started {
+            padding: 0 20px;
+            &.active {
+                padding: 30px 20px;
+            }
+            h3 {
+                margin-bottom: 40px;
+            }
+            .text {
+                p {
+                    padding: 0;
+                }
+                h4.push {
+                    margin: 20px 0;
+                }
+                .btn {
+                    margin: 10px 30px 20px 0;
+                }
+            }
+        }
+    }
+}

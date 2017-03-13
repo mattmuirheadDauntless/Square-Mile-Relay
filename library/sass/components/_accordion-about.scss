@@ -1,0 +1,118 @@
+.about-accordion {
+    .about {
+        padding: 0 0 0 61px;
+        &.active {
+            padding: 70px 0 70px 70px;
+        }
+        h3 {
+            margin: 0 0 50px;
+            font-size: 33px;
+            font-weight: 700;
+        }
+        .text {
+            float: left;
+            width: calc(100% - 300px);
+            max-width: 1000px;
+            h4 {
+                margin: 0;
+                font-size: 22px;
+                font-weight: 600;
+            }
+            p {
+                margin: 10px 0 66px;
+                line-height: 27px;
+                color: $grey;
+                font-size: 18px;
+            }
+        }
+        .global-stats {
+            float: right;
+            background-color: $offwhite;
+            background-image: url('../images/global-stats.png');
+            background-size: cover;
+            padding: 35px 20px 15px;
+            width: 200px;
+            h4 {
+                margin: 0 0 30px;
+                text-transform: uppercase;
+                color: $lightgrey;
+                font-size: 22px;
+                font-weight: 500;
+            }
+            .stat {
+                margin: 0;
+                strong {
+                    display: block;
+                    letter-spacing: 2px;
+                    color: $orange;
+                    font-size: 31px;
+                    font-weight: 800;
+                }
+                span {
+                    display: block;
+                    margin: 1px 0 30px;
+                    line-height: 23px;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+
+@include desktop {
+    .about-accordion {
+        .about {
+            h3 {
+                margin: 0 0 40px;
+                font-size: 33px;
+            }
+            .text {
+                h4 {
+                    font-size: 22px;
+                }
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .about-accordion {
+        .about {
+            padding: 0 0 0 50px;
+            &.active {
+                padding: 50px 0 60px 50px;
+            }
+        }
+    }
+}
+
+@include phone {
+    .about-accordion {
+        .about {
+            padding: 0 20px;
+            &.active {
+                padding: 30px 20px;
+            }
+            .text {
+                float: none;
+                width: 100%;
+            }
+            .global-stats {
+                float: none;
+                margin-top: 30px;
+                width: 100%;
+                h4 {
+                    margin: 0 0 20px 0;
+                }
+                .stat {
+                    strong {
+                        font-size: 20px;
+                    }
+                    span {
+                        margin: 0 0 15px 0;
+                    }
+                }
+            }
+        }
+    }
+}

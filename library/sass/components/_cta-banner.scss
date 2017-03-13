@@ -1,0 +1,75 @@
+.cta-banner {
+    clear: both;
+    background-color: $orange;
+    padding: 20px 5px;
+    text-align: center;
+    color: $white;
+    font-size: 35px;
+    font-weight: 500;
+    .btn {
+        margin-left: 65px;
+        font-size: 15px;
+    }
+}
+
+header,
+.header {
+    .cta-banner {
+        position: fixed;
+        top: 68px;
+        left: 0;
+        transform: translateY(-150px);
+        transition: all ease-in .5s;
+        z-index: 1;
+        background-color: $orange;
+        padding: 10px 0;
+        width: 100%;
+        font-size: 22px;
+        .btn {
+            padding: 12px 25px;
+            font-size: 11px;
+        }
+    }
+}
+
+.cta-fixed {
+    header,
+    .header {
+        .cta-banner {
+            transform: translateY(0);
+            transition: all ease-in .5s;
+        }
+    }
+}
+
+@include desktop {
+    .cta-banner {
+        font-size: 33px;
+    }
+}
+
+@include tablet-l {
+    .header .cta-banner {
+        display: none;
+    }
+    .cta-banner {
+        padding-bottom: 15px;
+        font-size: 20px;
+        .btn-black {
+            margin: 0 0 0 5px;
+            font-size: 13px;
+        }
+    }
+}
+
+@include phone {
+    .cta-banner {
+        padding: 20px;
+        font-size: 18px;
+        .btn-black {
+            display: block;
+            margin: 15px auto 0;
+            width: 250px;
+        }
+    }
+}

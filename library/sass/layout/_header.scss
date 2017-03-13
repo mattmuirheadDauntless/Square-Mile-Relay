@@ -1,0 +1,417 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all ease-in .2s ;
+    z-index: 12;
+    background-color: transparent;
+    width: 100%;
+    &.fixed-header {
+        transition: all ease-in .3s .4s;
+        background-color: $black;
+        .logo {
+            transition: all ease-in .2s .3s;
+            width: 90px;
+        }
+        .nav {
+            transition: all ease-in .2s .3s;
+            margin: 0 0 0 180px;
+        }
+        .header-bg {
+            transition: all ease-in .2s .3s;
+            background-color: $black;
+        }
+    }
+    &.fixed-logo {
+        .logo {
+            transition: all ease-in .2s .3s;
+            width: 90px;
+        }
+    }
+    .header-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transition: all ease-in .2s .3s;
+        z-index: 2;
+        background-color: transparent;
+    }
+    .logo {
+        position: fixed;
+        top: 12px;
+        left: 18px;
+        transition: all ease-in .2s .5s;
+        z-index: 9;
+        width: 147px;
+        height: auto;
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .menu-btn {
+        display: none;
+    }
+    .nav {
+        position: relative;
+        float: left;
+        transition: all ease-in .2s .5s;
+        z-index: 3;
+        margin: 0 0 0 226px;
+        padding: 0;
+        li {
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            a {
+                margin-right: 29px;
+                cursor: pointer;
+                padding: 24px 0;
+                text-transform: capitalize;
+                color: $white;
+                font-size: 16px;
+                &:hover,
+                &:active,
+                &:focus,
+                &:visited {
+                    background-color: transparent;
+                }
+            }
+            //if has child show triangle
+            &.has-child:after {
+                position: absolute;
+                top: 99%;
+                left: calc(50% - 15px);
+                transform: translateX(-50%);
+                transition: all ease-in .3s .1s;
+                z-index: 4;
+                border-width: 0 7.5px 0 7.5px;
+                border-style: solid;
+                border-color: $orange transparent transparent transparent;
+                width: 0;
+                height: 0;
+                content: "";
+            }
+            .locations {
+                position: fixed;
+                top: 68px;
+                left: 0;
+                float: left;
+                z-index: 2;
+                padding: 0;
+                width: 100%;
+                overflow: hidden;
+
+                pointer-events: none;
+                .locations-wrapper {
+                    float: left;
+                    transform: translateY(-100%);
+                    transition: all ease-in .3s;
+                    background: $white;
+                    padding: 10px 100px;
+                    width: 100%;
+                }
+                li {
+                    float: left;
+                    width: 20%;
+                    a {
+                        display: block;
+                        text-align: center;
+                        img {
+                            transform: scale(1);
+                            transition: all ease-in .3s .2s;
+                            width: 100%;
+                            height: auto;
+                        }
+                        .location {
+                            transform: translateY(0);
+                            transition: all ease-in .3s .2s;
+                            margin-top: -15px;
+                            height: 45px;
+                            text-transform: uppercase;
+                            color: $black;
+                            font-size: 20px;
+                            font-weight: 800;
+                            .time {
+                                display: block;
+                                width: 100%;
+                                text-transform: uppercase;
+                                line-height: 14px;
+                                color: $orange;
+                                font-size: 14px;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                    &:hover {
+                        .location {
+                            transform: translateY(-10px);
+                            transition: all ease-in .3s .2s;
+                        }
+                        img {
+                            transform: scale(.9);
+                            transition: all ease-in .3s .2s;
+                        }
+                    }
+                }
+            }
+            &:hover {
+                &.has-child:after {
+                    transition: all ease-in .3s .5s;
+                    border-width: 10px 7.5px 0 7.5px;
+                }
+                .locations-wrapper {
+                    transform: translateY(0px);
+                    transition: all ease-in .3s .6s;
+
+                    pointer-events: all;
+                }
+            }
+        }
+    }
+    .language-select {
+        position: fixed;
+        top: 20px;
+        right: 200px;
+        font-size: 14px;
+        color: #ccc;
+        z-index: 999;
+        padding: 0 5px;
+        display: block;
+        height: 40px;
+        border: 0;
+        margin: 0;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s linear;
+        &:hover {
+            background:#222;
+            color: #fff;
+        }
+    }
+    .header-account {
+        position: fixed;
+        top: 16px;
+        right: 63px;
+        z-index: 3;
+        margin: 0;
+        padding-top: 5px;
+        a {
+            display: block;
+            position: relative;
+            border-radius: 15px;
+            background-color: $orange;
+            cursor: pointer;
+            padding: 7px 22px 6px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: $white;
+            font-size: 16px;
+            &:hover,
+            &:focus,
+            &:active {
+                outline: none;
+            }
+        }
+    }
+}
+
+.cta-fixed {
+    .header {
+        transition: all ease-in .3s;
+        background-color: $black;
+        .header-wrapper {
+            transition: all ease-in .3s;
+            background-color: $black;
+        }
+    }
+}
+
+@include desktop {
+    .header {
+        .nav {
+            li {
+                a {
+                    font-size: 15px;
+                }
+            }
+        }
+        .header-account {
+            a {
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .header {
+        transition: all .3s .6s ease-in-out;
+        padding-top: 14px;
+        padding-bottom: 10px;
+        .nav {
+            position: absolute;
+            top: 100%;
+            z-index: 5;
+            margin: 0!important;
+            background-color: rgba(0, 0, 0, .9);
+            padding: 0;
+            width: 100%;
+            height: auto;
+            max-height: 0;
+            overflow: hidden;
+            li .locations {
+                display: block;
+                position: relative;
+                top: 0;
+                float: none;
+                transition: all ease-in .3s;
+                height: auto;
+                max-height: 0;
+                li {
+                    display: block;
+                    float: none;
+                    margin: 0 auto;
+                    width: 100%;
+                    max-width: 400px;
+                }
+                .locations-wrapper {
+                    transform: none !important;
+                    padding: 10px 20px 0;
+                }
+            }
+            li {
+                display: block;
+                &.has-child {
+                    &:after {
+                        display: none;
+                    }
+                    &.active {
+                        .locations {
+                            transition: all ease-in .3s;
+                            padding: 0;
+                            max-height: 2000px;
+                        }
+                    }
+                }
+                a {
+                    display: block;
+                    margin: 0;
+                    padding: 13px 18px;
+                    text-align: center;
+                    color: $white;
+                    font-size: 22px;
+                }
+            }
+        }
+        .header-account {
+            margin-right: 20px;
+        }
+        .header-bg {
+            display: none;
+        }
+        .menu-btn {
+            display: block;
+            position: relative;
+            float: right;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            margin: 6px 15px 0 0;
+            cursor: pointer;
+            span {
+                display: block;
+                position: absolute;
+                right: 0;
+                transform: rotate(0deg);
+                transition: transform .25s ease-in-out, top .25s .25s ease-in-out, opacity .25s .4s ease-in-out;
+                opacity: 1;
+                margin: 0 5px 10px 0;
+                background-color: $orange;
+                width: 42px;
+                height: 5px;
+
+                transform-origin: center;
+            }
+            span:nth-child(1) {
+                top: 0;
+            }
+            span:nth-child(2) {
+                top: 15px;
+            }
+            span:nth-child(3) {
+                top: 30px;
+            }
+        }
+        .logo {
+            position: relative;
+            top: 0;
+            float: left;
+            width: 90px;
+        }
+    }
+    .menu-open {
+        cursor: pointer;
+        .header {
+            transition: all .3s 0s ease-in-out;
+            background-color: $black;
+            .nav {
+                padding: 13px 0 80px;
+                max-height: calc(100vh - 74px);
+
+                -webkit-overflow-scrolling: touch;
+                overflow-x: hidden;
+                overflow-y: scroll;
+            }
+        }
+        .menu-btn {
+            span {
+                transition: opacity .25s ease-in-out, top .25s ease-in-out, transform .25s .25s ease-in-out;
+            }
+            span:nth-child(1) {
+                top: 15px;
+                transform: rotate(135deg);
+            }
+            span:nth-child(2) {
+                opacity: 0;
+            }
+            span:nth-child(3) {
+                top: 15px;
+                transform: rotate(-135deg);
+            }
+        }
+    }
+}
+
+@include phone {
+    .header {
+        .header-account {
+            margin-right: 10px;
+            a {
+                font-size: 10px;
+                margin-top: 3px;
+            }
+        }
+        .language-select {
+            right: 155px;
+            position: fixed;
+            top: 25px;
+            font-size: 12px;
+            color: #fff;
+            padding: 0 5px;
+            height: 26px;
+            background: #000;
+        }
+    }
+}
+
+@media(max-width:1200px) {
+    .header {
+        .nav {
+            .language-select {
+                right: 175px;
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+.tabs-container {
+    .tab {
+        position: relative;
+        float: left;
+        z-index: 2;
+        margin: 19px 20px 0;
+        border: 1px solid $offwhite;
+        border-bottom: 0;
+        background-color: $offwhite;
+        cursor: pointer;
+        padding: 12px 27px;
+        width: calc(33.33% - 40px);
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 1px;
+        color: $lightgrey;
+        font-size: 24px;
+        font-weight: 800;
+        i {
+            display: none;
+        }
+        &.active {
+            border: 1px solid $lightgrey;
+            border-bottom: 0;
+            background-color: $white;
+            color: $black;
+            &:before {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                left: 0;
+                background-color: $white;
+                height: 5px;
+                content: "";
+            }
+        }
+    }
+    .tab-wrapper {
+        display: none;
+        position: relative;
+        clear: both;
+        z-index: 1;
+        border-top: 1px solid $lightgrey;
+        &.active {
+            display: block;
+        }
+    }
+}
+
+@include tablet-l {
+    .tabs-container {
+        .tab {
+            margin: 19px 10px 0;
+            width: calc(33.33% - 20px);
+            text-align: center;
+            .text {
+                display: none;
+            }
+            i {
+                display: block;
+            }
+        }
+    }
+}

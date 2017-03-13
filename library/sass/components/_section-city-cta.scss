@@ -1,0 +1,177 @@
+.city-cta {
+    position: relative;
+    background-color: $lightestgrey;
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    .wrapper-thin {
+        .row {
+            padding: 0;
+            .col-md-5 {
+                div {
+                    background-color: $white;
+                    text-align: center;
+                    h2 {
+                        margin-top: 0;
+                        margin-bottom: 28px;
+                        padding-top: 30px;
+                        font-size: 26px;
+                        font-weight: 800;
+                    }
+                    h3 {
+                        text-transform: uppercase;
+                        font-size: 16px;
+                        font-weight: 800;
+                    }
+                    p {
+                        font-size: 16px;
+                    }
+                    ul {
+                        padding: 10px 0 0;
+                        li {
+                            padding-top: 1px;
+                            list-style: none;
+                            text-align: center;
+                            font-size: 16px;
+                        }
+                    }
+                    a {
+                        margin-top: 30px;
+                        margin-bottom: 32px;
+                        padding: 14px 45px;
+                    }
+                    .cost {
+                        font-size: 18px;
+                        font-weight: 400;
+                    }
+                }
+            }
+            .col-md-5:first-child {
+                div {
+                    position: relative;
+                    padding: 10px 20px 20px;
+                    .circle-one {
+                        position: absolute;
+                        top: 150px;
+                        left: -55px;
+                        border-radius: 50%;
+                        background-color: $black;
+                        padding: 33px 12px;
+                        width: 125px;
+                        height: 125px;
+                        text-align: center;
+                        line-height: 20px;
+                        color: $white;
+                        p {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+            .col-md-5:last-child {
+                div {
+                    position: relative;
+                    border-bottom: 0;
+                    padding: 10px 20px 42px;
+                    .circle-two {
+                        position: absolute;
+                        top: 205px;
+                        right: -50px;
+                        border-radius: 50%;
+                        background-color: $orange;
+                        padding: 31px 12px;
+                        width: 125px;
+                        height: 125px;
+                        text-align: center;
+                        line-height: 21px;
+                        color: $white;
+                        p {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .city-cta {
+        .wrapper-thin {
+            .row {
+                .col-md-5 {
+                    div {
+                        a {
+                            margin-top: 18px;
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+                .col-md-5:first-child {
+                    div {
+                        margin-top: 25px;
+                        .circle-one {
+                            position: relative;
+                            top: inherit;
+                            left: inherit;
+                            margin: 30px auto 10px;
+                        }
+                    }
+                }
+                .col-md-5:last-child {
+                    div {
+                        margin-top: 25px;
+                        margin-bottom: 25px;
+                        border: 2px solid $lightergrey;
+                        .circle-two {
+                            position: relative;
+                            top: inherit;
+                            right: inherit;
+                            margin: 30px auto 0;
+                            line-height: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@include phone {
+    .city-cta {
+        .wrapper-thin {
+            .row {
+                .col-md-5 {
+                    div {
+                        h2 {
+                            font-size: 24px;
+                        }
+                        h3 {
+                            font-size: 15px;
+                        }
+                        p {
+                            font-size: 15px;
+                        }
+                        ul {
+                            li {
+                                font-size: 15px;
+                            }
+                        }
+                        .cost {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

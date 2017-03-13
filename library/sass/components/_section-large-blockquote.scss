@@ -1,0 +1,110 @@
+.large-blockquote {
+    clear: both;
+    background-color: $white;
+    background-color: $white;
+    padding: 60px 0;
+    h2 {
+        position: relative;
+        margin: 0;
+        line-height: 58px;
+        font-size: 40px;
+        font-weight: 800;
+        &:before {
+            position: absolute;
+            top: -22px;
+            left: 47%;
+            transform: translate(0, -50%);
+            color: $orange;
+            font-size: 120px;
+            font-weight: 800;
+            font-style: italic;
+            content: '"';
+        }
+    }
+    p {
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: 400;
+    }
+}
+
+.large-blockquote-img {
+    position: relative;
+    clear: both;
+    z-index: 5;
+    background-color: $white;
+    background-position: bottom left;
+    background-size: cover;
+    padding: 115px 0 70px;
+    h2 {
+        position: relative;
+        margin: 0;
+        padding: 0 70px;
+        line-height: 55px;
+        font-size: 40px;
+        font-weight: 800;
+        &:before {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: $orange;
+            font-size: 120px;
+            font-weight: 800;
+            font-style: italic;
+            content: '"';
+        }
+    }
+    p {
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: 400;
+    }
+}
+
+@include desktop {
+    .large-blockquote {
+        padding: 40px 0;
+        h2 {
+            line-height: 45px;
+            font-size: 30px;
+            &:before {
+                font-size: 90px;
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .large-blockquote-img {
+        padding: 260px 0 170px;
+        h2 {
+            padding: 0 100px;
+        }
+    }
+}
+
+@include phone {
+    .large-blockquote {
+        padding: 40px 0 110px;
+        h2 {
+            line-height: 52px;
+            font-size: 33px;
+            &:before {
+                left: 38%;
+            }
+        }
+    }
+    .large-blockquote-img {
+        padding: 158px 0 90px;
+        h2 {
+            padding: 0 10px;
+            line-height: 32px;
+            font-size: 20px;
+            &:before {
+                font-size: 90px;
+                font-weight: 800;
+            }
+        }
+    }
+}

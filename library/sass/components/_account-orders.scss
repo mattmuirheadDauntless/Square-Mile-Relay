@@ -1,0 +1,50 @@
+.orders {
+    padding: 10px 0;
+    h5 {
+        margin: 0 0 25px;
+        padding: 20px;
+        font-size: 16px;
+        font-weight: 700;
+        span {
+            color: $orange;
+        }
+    }
+    .order-wrapper {
+        padding: 0 40px;
+        h3 {
+            margin: 0 0 25px;
+            font-size: 33px;
+            font-weight: 800;
+        }
+    }
+}
+
+.order-view {
+    margin: 0;
+    padding: 0 5px;
+    h4 {
+        font-size: 25px;
+        font-weight: 800;
+        a {
+            text-decoration: none;
+            color: $orange;
+            font-size: 20px;
+            font-weight: 500;
+        }
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        color: $grey;
+        font-size: 16px;
+    }
+}
+
+@include phone {
+    .orders {
+        .order-wrapper {
+            padding: 0 20px;
+        }
+    }
+}

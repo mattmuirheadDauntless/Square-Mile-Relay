@@ -1,0 +1,60 @@
+.faqs {
+    padding: 40px 0 100px;
+    a {
+        text-decoration: none;
+        color: $orange;
+    }
+    h2 {
+        margin-bottom: 30px;
+        line-height: 40px;
+        color: $darkgrey;
+        font-size: 28px;
+        font-weight: 700;
+    }
+    img {
+        margin: 20px 0 30px;
+        width: 100%;
+    }
+    p {
+        margin: 0 0 30px;
+        line-height: 27px;
+        color: $grey;
+        font-size: 18px;
+        font-weight: 400;
+    }
+    h3 {
+        margin-top: 30px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        line-height: 26px;
+        color: $darkgrey;
+        font-size: 16px;
+        font-weight: 800;
+    }
+    h4 {
+        margin: 20px 0 15px;
+        color: $darkgrey;
+        font-size: 16px;
+        font-weight: 700;
+    }
+    ol {
+        margin-bottom: 20px;
+        li {
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+    }
+    ul {
+        margin-bottom: 20px;
+        li {
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+    }
+    blockquote {
+        margin: 40px 0 50px;
+        border-color: $orange;
+        font-size: 23px;
+        font-weight: 800;
+    }
+}

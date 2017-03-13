@@ -1,0 +1,123 @@
+.single-city-heading {
+    padding: 40px 0 30px;
+    color: $white;
+    min-height: 334px;
+    background-position: top;
+    background-size: cover;
+
+    .wrapper-thin {
+
+        .title {
+            padding: 103px 0 0 7px;
+            position: relative;
+
+
+            h1 {
+                font-size: 80px;
+                font-weight: 800;
+            }
+            h2 {
+                font-size: 22px;
+                font-weight: 200;
+                line-height: 28px;
+                margin-top: 15px;
+            }
+
+            .stats {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+
+                h3 {
+                    display: inline-block;
+                    padding-right: 60px;
+                    font-size: 20px;
+                    font-weight: 200;
+                    text-transform: uppercase;
+                    text-align: right;
+                    margin-bottom: 0;
+                    strong {
+                        font-size: 40px;
+                        display: block;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+    
+}
+
+@include tablet-l {
+    .single-city-heading {
+        .wrapper-thin {
+            .title {
+                h1 {
+                    font-size: 65px;
+                }
+                h2 {
+                    font-size: 21px;
+                }
+
+                .stats {
+                    h3 {
+                        font-size: 18px;
+                        padding-right: 40px;
+
+                        &:last-child {
+                            padding-right: 10px;
+                        }
+
+                        strong {
+                            font-size: 35px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 767px){
+    .single-city-heading {
+        .wrapper-thin {
+            .title {
+                h1 {
+                    font-size: 40px;
+                } 
+                h2 {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
+@include phone {
+    .single-city-heading {
+        .wrapper-thin {
+            .title {
+                h1 {
+                    font-size: 45px;
+                    margin-bottom: 5px;
+                }
+                h2 {
+                    font-size: 15px;
+                }
+
+                .stats {
+                    position: relative;
+                    h3 {
+                        font-size: 13px;
+                        padding-right: 20px;
+                        text-align: left;
+
+                        strong {
+                            font-size: 25px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

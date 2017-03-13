@@ -1,0 +1,135 @@
+.error-404 {
+    background-position: top;
+    background-size: cover;
+    padding: 40px 0 30px;
+    color: $white;
+    .wrapper-thin {
+        .title {
+            padding: 150px 7px 10px;
+            h1 {
+                font-size: 225px;
+                font-weight: 800;
+                margin-bottom: 10px;
+
+
+                svg {
+                    width: 160px;
+                    height: 160px;
+                    margin: 0 10px;
+                }
+            }
+
+            h2 {
+                line-height: 35px;
+                font-size: 55px;
+                font-weight: 400;
+                margin-bottom: 35px;
+            }
+            h4 {
+                font-size: 22px;
+                margin-bottom: 35px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1240px){
+    .error-404 {
+        height: auto;
+
+        .wrapper-thin {
+            .title {
+                padding-top: 105px;
+                h1 {
+                    font-size: 183px;
+                    svg {
+                        width: 130px;
+                        height: 130px;
+                        margin: 0 9px;
+                    }
+                }
+
+                h2 {
+                    margin-top: 0px;
+                    margin-bottom: 30px;
+                    font-size: 48px;
+                }
+
+                a {
+                    margin-bottom: 22px;
+                }
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .error-404 {
+        height: auto;
+        .wrapper-thin {
+            .title {
+                padding: 145px 0 10px 10px;
+                h1 {
+                    font-size: 182px;
+
+                    svg {
+                        width: 130px;
+                        height: 130px;
+                        margin: 0 9px;
+                    }
+                }
+
+                a {
+                    margin-bottom: 70px;
+                }
+
+                h2 {
+                    font-size: 48px;
+                    margin-bottom: 35px;
+                }
+                h4 {
+                    font-size: 21px;
+                    margin-bottom: 30px;
+                }
+            }
+        }
+    }
+}
+
+@include phone {
+    .error-404 {
+        height: auto;
+        .wrapper-thin {
+            .title {
+                padding: 105px 5px 10px;
+
+                h1 {
+                    font-size: 120px;
+                    padding-left: 0px;
+
+                    svg {
+                        width: 86px;
+                        height: 86px;
+                        margin: 0 7px;
+                    }
+                }
+
+                h2 {
+                    font-size: 33px;
+                    margin-bottom: 18px;
+                }
+                h4 {
+                    font-size: 17px;
+                    margin-bottom: 25px;
+                }
+
+                a {
+                    padding: 14px 26px;
+                    font-size: 12px;
+                    margin-bottom: 60px;
+                }
+            }
+        }
+
+    }
+}

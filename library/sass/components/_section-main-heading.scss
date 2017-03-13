@@ -1,0 +1,80 @@
+.main-heading {
+    position: relative;
+    background-color: $black;
+    background-position: top;
+    background-size: cover;
+    padding: 40px 0 30px;
+    color: $white;
+    &:before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: .4;
+        background-color: $black;
+        content: "";
+    }
+    .wrapper-thin {
+        position: relative;
+        .title {
+            padding: 200px 0 10px 7px;
+            h1 {
+                text-transform: capitalize;
+                font-size: 100px;
+                font-weight: 800;
+            }
+            h2 {
+                max-width: 85%;
+                line-height: 35px;
+                font-size: 26px;
+                font-weight: 200;
+            }
+        }
+    }
+}
+
+@include desktop {
+    .main-heading {
+        .wrapper-thin {
+            .title {
+                padding: 97px 0 0 7px;
+                h1 {
+                    font-size: 82px;
+                }
+                h2 {
+                    line-height: 28px;
+                    font-size: 22px;
+                }
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .main-heading {
+        .wrapper-thin {
+            .title {
+                h1 {
+                    font-size: 72px;
+                }
+            }
+        }
+    }
+}
+
+@include phone {
+    .main-heading {
+        .wrapper-thin {
+            .title {
+                h1 {
+                    font-size: 50px;
+                }
+                h2 {
+                    margin-top: 5px;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,187 @@
+.about-accordion {
+    .race-locations {
+        padding: 0 103px 0;
+        &.active {
+            padding: 70px 0;
+        }
+        .cities {
+            position: relative;
+            float: left;
+            z-index: 2;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            li {
+                transition: all ease-in .3s .2s;
+                margin: 0 0 17px;
+                border: 1px solid $white;
+                border-radius: 50px;
+                cursor: pointer;
+                padding: 5px 16px 5px 22px;
+                color: $black;
+                font-size: 26px;
+                font-weight: 700;
+                position: relative !important;
+                height:auto;
+                &:hover {
+                    transform: translateX(10px);
+                    transition: all ease-in .3s .2s;
+                }
+                &.active {
+                    transition: all ease-in .3s;
+                    border-color: $orange;
+                    color: $orange;
+                }
+            }
+        }
+        .city {
+            display: none;
+            z-index: 1;
+            padding-top: 15px;
+            padding-left: 343px;
+            max-width: 1000px;
+            img {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                z-index: -1;
+                width: 100%;
+                max-width: 700px;
+
+                pointer-events: none;
+            }
+            h4 {
+                margin: 0 0 8px;
+                text-transform: uppercase;
+                color: $orange;
+            }
+            h3 {
+                margin: 0 0 26px;
+                color: $orange;
+                font-size: 25px;
+                font-weight: 800;
+            }
+            .timer,
+            .no-date {
+                margin: 0 0 30px;
+                letter-spacing: 2px;
+                font-size: 60px;
+                font-weight: 800;
+            }
+            .timer-wrapper {
+                .timer {
+                    margin: 0;
+                }
+                ul {
+                    margin: -17px 0 30px;
+                    padding: 0;
+                    list-style: none;
+
+                    @include tablet-l {
+                        display: none;
+                    }
+                    li {
+                        display: inline-block;
+                        margin: 0 13px 0 0;
+                        padding-left: 5px;
+                        width: 80px;
+                        text-align: left;
+                        font-size: 14px;
+                        font-weight: 600;
+                    }
+                }
+            }
+            .no-date {
+                text-transform: uppercase;
+                line-height: 60px;
+                font-size: 50px;
+            }
+            p {
+                margin: 0 0 35px;
+                line-height: 28px;
+                font-size: 17px;
+            }
+            &.active {
+                display: block;
+            }
+        }
+    }
+}
+
+@include desktop {
+    .about-accordion {
+        .race-locations {
+            .cities {
+                left: 70px;
+                li {
+                    font-size: 21px;
+                }
+            }
+            .city {
+                padding-left: 275px;
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .about-accordion {
+        .race-locations {
+            padding: 0 50px 0;
+            &.active {
+                padding: 50px 50px 66px;
+            }
+            .cities {
+                top: 70px;
+                left: 50px;
+            }
+            .city {
+                min-height: 600px;
+                .timer,.no-date {
+                    font-size: 40px;
+                }
+            }
+        }
+    }
+}
+
+@include phone {
+    .about-accordion {
+        .race-locations {
+            padding: 0 20px 0;
+            &.active {
+                padding: 30px 20px 50px;
+            }
+            .cities {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 30px;
+                li {
+                    display: inline-block;
+                    margin: 0 10px 0 0;
+                    border: 0;
+                    border-radius: 0;
+                    padding: 0;
+                    width: initial;
+                    overflow: visible;
+                    font-size: 16px;
+                    &:hover {
+                        transform: none;
+                    }
+                }
+            }
+            .city {
+                padding: 0;
+                min-height: 0;
+                .no-date {
+                    font-size: 30px;
+                }
+                .timer {
+                    margin: 0 0 20px;
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}

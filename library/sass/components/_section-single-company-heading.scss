@@ -1,0 +1,77 @@
+.single-company-heading {
+    float: left;
+    background-color: $black;
+    padding: 40px 0 36px;
+    width: 100%;
+    color: $white;
+    .wrapper-thin {
+        .title {
+            padding: 97px 0 0 7px;
+            h1 {
+                float: left;
+                max-width: 55%;
+                font-size: 60px;
+                font-weight: 800;
+            }
+            img {
+                float: right;
+                background-color: $white;
+                padding: 30px;
+                width: auto;
+                max-width: 200px;
+                height: auto;
+                max-height: 200px;
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .single-company-heading {
+        .wrapper-thin {
+            .title {
+                padding: 60px 0 0 0;
+                h1 {
+                    font-size: 50px;
+                    margin: 0 0 20px 0;
+                }
+            }
+        }
+    }
+}
+@media(max-width: 767px){
+    .single-company-heading {
+        .wrapper-thin {
+            .title {
+                padding: 60px 0 0 0;
+                h1 {
+                    font-size: 40px;
+                } 
+                h2 {
+                    font-size: 18px;
+                    line-height: 150%
+                }
+            }
+        }
+    }
+}
+@include phone {
+    .single-company-heading {
+        .wrapper-thin {
+            .title {
+                h1 {
+                    float: none;
+                    width: 100%;
+                    font-size: 30px;
+                }
+                h2 {
+                    font-size: 16px;
+                    line-height: 130%
+                }
+                img {
+                    float: none;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+    &:focus,
+    &:active {
+        outline: none;
+    }
+    &::selection {
+        background-color: $lightorange;
+        color: $black;
+    }
+}
+html,
+body {
+    margin: 0;
+    background-color: $white;
+    padding: 0;
+    font-family: $bodyFont;
+    font-weight: 400;
+}
+
+body {
+    &:before {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: -1;
+        background-color: $black;
+        height: 200px;
+        content: '';
+    }
+    &:after {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        background-color: $black;
+        height: 200px;
+        content: '';
+    }
+}
+
+.cover-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    &:hover,
+    &:focus,
+    &:visited,
+    &:active {
+        outline: none;
+        border: 0;
+        box-shadow: none;
+    }
+}
+.clear {
+    clear: both;
+}
+.grey {
+    color: #999;
+}
+
+.dragtooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.dragtooltip .dragtooltiptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 15px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.dragtooltip:hover .dragtooltiptext {
+    visibility: visible;
+    cursor: pointer;
+}

@@ -1,0 +1,213 @@
+.next-races {
+    float: left;
+    clear: both;
+    width: 100%;
+    .races {
+        float: left;
+        width: calc(100% - 80px);
+        height: 400px;
+        overflow: hidden;
+        .race {
+            position: relative;
+            float: left;
+            width: 33.33%;
+            height: 400px;
+            overflow: hidden;
+            .text {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                transform: translateX(0);
+                transition: all ease-in .4s .2s;
+                z-index: 2;
+                padding: 48px 50px;
+                //location
+                h2 {
+                    margin: 0 0 3px;
+                    text-transform: uppercase;
+                    letter-spacing: 3px;
+                    color: $white;
+                    font-size: 35px;
+                    font-weight: 700;
+                }
+                //date
+                h3 {
+                    margin: 0 0 7px;
+                    color: $orange;
+                    font-size: 25px;
+                    font-weight: 100;
+                    font-weight: 500;
+                }
+                //Next Race:
+                h4 {
+                    margin: 0 0 40px;
+                    text-transform: uppercase;
+                    letter-spacing: 4px;
+                    color: $orange;
+                    font-size: 40px;
+                    font-weight: 800;
+                }
+                //number of days
+                h5 {
+                    margin: 0;
+                    color: $white;
+                    font-size: 64px;
+                    font-weight: 800;
+                    &.coming-soon {
+                        margin-top: 65px;
+                        text-transform: uppercase;
+                        font-size: 28px;
+                    }
+                }
+            }
+            img {
+                position: absolute;
+                right: -5px;
+                bottom: -6%;
+                transform: scale(1);
+                transition: all ease-in .4s .2s;
+                z-index: 1;
+                width: 80%;
+                height: auto;
+
+                transform-origin: right bottom;
+            }
+            &:nth-child(1),
+            &:nth-child(4),
+            &:nth-child(7),
+            &:nth-child(10) {
+                background-color: $black;
+            }
+            &:nth-child(2),
+            &:nth-child(5),
+            &:nth-child(8),
+            &:nth-child(11) {
+                background-color: $grey;
+            }
+            &:nth-child(3),
+            &:nth-child(6),
+            &:nth-child(9),
+            &:nth-child(12) {
+                background-color: $lightgrey;
+            }
+            &:hover {
+                .text {
+                    transform: translateX(10px);
+                    transition: all ease-in .4s .2s;
+                }
+                img {
+                    transform: scale(1.05);
+                    transition: all ease-in .4s .2s;
+                }
+            }
+        }
+    }
+    .view-more {
+        position: relative;
+        float: right;
+        transition: all ease-in .4s .2s;
+        background-color: $black;
+        cursor: pointer;
+        width: 80px;
+        height: 400px;
+        overflow: hidden;
+        color: $white;
+        span {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+            width: 100%;
+            width: 450px;
+            height: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 24px;
+            font-weight: 800;
+        }
+        &:hover {
+            transition: all ease-in .4s .2s;
+            background-color: lighten($black, 15%);
+        }
+    }
+}
+
+@include desktop {
+    .next-races {
+        .races {
+            height: 279px;
+            .race {
+                height: 279px;
+                .text {
+                    padding: 32px 35px;
+                    //date
+                    h3 {
+                        font-size: 17px;
+                    }
+                    //Next Race:
+                    h4 {
+                        font-size: 31px;
+                    }
+                    //number of days
+                    h5 {
+                        font-size: 57px;
+                    }
+                }
+            }
+        }
+        .view-more {
+            height: 279px;
+            span {
+                left: 13px;
+                width: 310px;
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .next-races {
+        .races {
+            float: none;
+            width: 100%;
+            height: auto;
+            .race {
+                width: 50%;
+                img {
+                    max-width: 400px;
+                    height: auto;
+                }
+            }
+        }
+        .view-more {
+            float: left;
+            transform: none;
+            width: 100%;
+            height: auto;
+            span {
+                position: relative;
+                left: 0;
+                transform: none;
+                margin: 0;
+                padding: 20px 0;
+                width: 100%;
+            }
+        }
+    }
+}
+
+@include phone {
+    .next-races {
+        .races {
+            float: none;
+            width: 100%;
+            .race {
+                float: none;
+                width: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+.wrapper {
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: 1366px;
+    &-thin {
+        max-width: 1200px;
+
+        @extend .wrapper;
+    }
+    &-wide {
+        max-width: none;
+
+        @extend .wrapper;
+    }
+}
+
+@include desktop {
+    .wrapper {
+        &-thin {
+            max-width: 1060px;
+        }
+    }
+}

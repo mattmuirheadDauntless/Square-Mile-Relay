@@ -1,0 +1,44 @@
+.single-charity {
+    clear: both;
+    margin: 50px 0 150px;
+    padding-top: 50px;
+    img {
+        margin-bottom: 30px;
+        width: 100%;
+    }
+    p {
+        font-size: 18px;
+        a {
+            text-decoration: none;
+            color: $orange;
+        }
+    }
+}
+
+@include phone {
+    .single-company-heading {
+        .wrapper-thin {
+            .title {
+                h1 {
+                    max-width: 100% !important;
+                }
+                img {
+                    margin-top: 30px !important;
+                    width: 100% !important;
+                }
+            }
+        }
+    }
+    .single-charity {
+        p {
+            font-size: 16px;
+        }
+    }
+}
+@media(max-width: 400px) {
+    .single-charity {
+        p {
+            font-size: 14px;
+        }
+    }
+}
