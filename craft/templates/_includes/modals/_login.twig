@@ -17,10 +17,10 @@
                             value:       craft.session.rememberedUsername,
                             placeholder: 'Email'
                         }) }}
-                        <label>Email</label>
+                        <label>{{ "Email"|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
-                        <div class="msg valid">Great!</div>
-                        <div class="msg in-valid">Your email is incorrect.</div>
+                        <div class="msg valid">{{ 'Great!'|t }}</div>
+                        <div class="msg in-valid">{{ 'Your email is incorrect.'|t }}</div>
                     </div>
                     <div class="input-wrapper">
                         {{ formFields.input({
@@ -29,14 +29,14 @@
                             type:        'password',
                             placeholder: 'Password'
                         }) }}
-                        <label>Password</label>
+                        <label>{{ 'Password'|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
-                        <div class="msg valid">Great!</div>
-                        <div class="msg in-valid">Your password is incorrect.</div>
+                        <div class="msg valid">{{ 'Great!'|t }}</div>
+                        <div class="msg in-valid">{{ 'Your password is incorrect.'|t }}</div>
                     </div>
-                    <p><a href="{{ siteUrl }}forgot-password">Forget your password?</a></p>
+                    <p><a href="{{ siteUrl }}forgot-password">{{ 'Forget your password?'|t }}</a></p>
                     <div class="button-group">
-                        <button type="submit" class="btn btn-orange btn-long">Login</button>
+                        <button type="submit" class="btn btn-orange btn-long">{{ 'Login'|t }}</button>
                     </div>
                 </form>
             </div>

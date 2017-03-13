@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-sm-6">
 
-            <h3>Log In</h3>
+            <h3>{{ 'Log In'|t }}</h3>
 
             <form method="post" accept-charset="UTF-8">
                 {{ getCsrfInput() }}
@@ -33,21 +33,21 @@
                 <div class="form-group">
                     <label>
                         <input type="checkbox" name="rememberMe" value="1">
-                        Remember me
+                        {{ 'Remember me'|t }}
                     </label>
                 </div>
 
-                <input type="submit" value="Login" class="btn btn-primary"/>
+                <input type="submit" value="{{ 'Login'|t }}" class="btn btn-primary"/>
 
             </form>
 
-            <p><a href="{{ url('forgotpassword') }}">Forget your password?</a></p>
+            <p><a href="{{ url('forgotpassword') }}">{{ 'Forget your password?'|t }}</a></p>
 
         </div>
 
         <div class="col-sm-6">
 
-            <h3>Guest Checkout</h3>
+            <h3>{{ 'Guest Checkout'|t }}</h3>
 
             <form method="POST" accept-charset="UTF-8">
                 <input type="hidden" name="action" value="commerce/cart/updateCart">
@@ -62,7 +62,7 @@
 
                 <span class="flash">{{ cart.getErrors('email')|join }}</span><br>
 
-                <input type="submit" value="Continue as Guest" class="btn btn-primary"/>
+                <input type="submit" value="{{ 'Continue as Guest'|t }}" class="btn btn-primary"/>
 
             </form>
         </div>

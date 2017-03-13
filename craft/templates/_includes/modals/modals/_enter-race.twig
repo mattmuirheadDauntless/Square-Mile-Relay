@@ -69,17 +69,17 @@
                             <br><br><br>
                             <a href="{{ city.creditCardRedirectLink }}" target="_blank" class="btn btn-black btn-full-width">{{ 'Credit Card'|t }}*</a>
 
-                            <p class="small">* This will take you our preexisting payment tool, this does not accept Amex cards.</p>
+                            <p class="small">* {{ 'This will take you our preexisting payment tool, this does not accept Amex cards.'|t }}</p>
                             </div>
                         </div>
                     {% else %}
                         <div class="slide country {{ city.slug }}" data-slide="2">
-                            <h2>Sorry!</h2>
+                            <h2>{{ 'Sorry!'|t }}</h2>
                             {% if city.registerInterestForm|length > 0 %}
-                            <p>We currently haven't announced any races for this city. Sign up below for updates about the next race in {{ city.title }}.</p>
+                            <p>{{ "We currently haven't announced any races for this city. Sign up below for updates about the next race in"|t }} {{ city.title }}.</p>
                             {% else %}
-                            <p>We currently haven't announced any races for this city.</p>
-                            <a href="{{ city.url }}" class="btn btn-orange">View past races</a>
+                            <p>{{ "We currently haven't announced any races for this city."|t }}</p>
+                            <a href="{{ city.url }}" class="btn btn-orange">{{ 'View past races'|t }}</a>
                             {% endif %}
                             {{ city.registerInterestForm|raw }}
                         </div>
@@ -89,30 +89,30 @@
 
             <div class="slide" data-slide="3">
                 <div class="modal-header">
-                    <h4 class="modal-title">Team Packages</h4>
+                    <h4 class="modal-title">{{ 'Team Packages'|t }}</h4>
                 </div>
                 <div class="package">
                     <div class="description">
-                        <h5>Teams</h5>
-                        <p>Teams consist og 10 runners. Each runner will receive 1 meal, 2 drinks, 1 t-shirt and access to the after party</p>
+                        <h5>{{ 'Teams'|t }}</h5>
+                        <p>{{ 'Teams consist og 10 runners. Each runner will receive 1 meal, 2 drinks, 1 t-shirt and access to the after party'|t }}</p>
                     </div>
                     <div class="quantity">
                         <input type="number" value="1">
                     </div>
                     <div class="price">
-                        <p>£1,050.00</p>
+                        <p>{{ '£1,050.00'|t }}</p>
                     </div>
                 </div>
                 <div class="package">
                     <div class="description">
-                        <h5>Supporter Tickets</h5>
-                        <p>Supporters receive 1 meal, 2 drinks, 1 t-shirt, access to runner village and the after party</p>
+                        <h5>{{ 'Supporter Tickets'|t }}</h5>
+                        <p>{{ 'Supporters receive 1 meal, 2 drinks, 1 t-shirt, access to runner village and the after party'|t }}</p>
                     </div>
                     <div class="quantity">
                         <input type="number" value="1">
                     </div>
                     <div class="price">
-                        <p>£500.00</p>
+                        <p>{{ '£500.00'|t }}</p>
                     </div>
                 </div>
                 <div class="checkout">
@@ -121,69 +121,69 @@
                     </div>
                     <div class="totals">
                         <ul>
-                            <li>VAT <span>£190.05</span></li>
-                            <li>Total<span>£1,590.05</span></li>
+                            <li>{{ 'VAT'|t }} <span>{{ '£190.05'|t }}</span></li>
+                            <li>{{ 'Total'|t }}<span>{{ '£1,590.05'|t }}</span></li>
                         </ul>
                     </div>
                 </div>
                 <div class="terms">
                     <input type="checkbox">
-                    <label for="">I accept the <a href="#" target="_blank">Terms &amp; Conditions</a></label>
+                    <label for="">{{ 'I accept the'|t }} <a href="#" target="_blank">{{ 'Terms & Conditions'|t }}</a></label>
                 </div>
-                <div class="next btn btn-invalid">Next</div>
+                <div class="next btn btn-invalid">{{ 'Next'|t }}</div>
             </div>
 
             <div class="slide" data-slide="3">
                 <div class="modal-header">
-                    <h4 class="modal-title">Payment</h4>
+                    <h4 class="modal-title">{{ 'Payment'|t }}</h4>
                 </div>
                 <div class="input-wrapper">
-                    <input class="input" type="text" placeholder="Card Number">
-                    <label>Card Number</label>
+                    <input class="input" type="text" placeholder="{{ 'Card Number'|t }}">
+                    <label>{{ 'Card Number'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">Please enter a valid card number.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'Please enter a valid card number.'|t }}</div>
                 </div>
                 <div class="input-wrapper">
-                    <input class="input" type="text" placeholder="Name on Card">
-                    <label>Name on Card</label>
+                    <input class="input" type="text" placeholder="{{ 'Name on Card'|t }}">
+                    <label>{{ 'Name on Card'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">Please enter a valid card name.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'Please enter a valid card name.'|t }}</div>
                 </div>
                 <div class="input-wrapper half-width">
-                    <input class="input" type="text" placeholder="Expires">
-                    <label>Expires</label>
+                    <input class="input" type="text" placeholder="{{ 'Expires'|t }}">
+                    <label>{{ 'Expires'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">Please enter a valid expiry date.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'Please enter a valid expiry date.'|t }}</div>
                 </div>
                 <div class="input-wrapper half-width">
-                    <input class="input" type="text" placeholder="Card Code">
-                    <label>Card Code</label>
+                    <input class="input" type="text" placeholder="{{ 'Card Code'|t }}">
+                    <label>{{ 'Card Code'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">Please enter a valid card code.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'Please enter a valid card code.'|t }}</div>
                 </div>
-                <div class="next btn btn-invalid">Make Payment</div>
+                <div class="next btn btn-invalid">{{ 'Make Payment'|t }}</div>
                 <div class="payment-total">
-                    Payment Total <strong>£1,590.05</strong>
+                    {{ 'Payment Total'|t }} <strong>{{ '£1,590.05'|t }}</strong>
                 </div>
             </div>
 
             <div class="slide text-center" data-slide="4">
                 <div class="thank-you-text">
                     <div class="modal-header">
-                        <h4 class="modal-title">Thank You!</h4>
+                        <h4 class="modal-title">{{ 'Thank You!'|t }}</h4>
                     </div>
-                    <p>You have registered successfully. Visit your dashboard to start building you team.</p>
+                    <p>{{ 'You have registered successfully. Visit your dashboard to start building you team.'|t }}</p>
                 </div>
-                <div class="next btn btn-orange thank-you-btn">Dashboard</div>
+                <div class="next btn btn-orange thank-you-btn">{{ 'Dashboard'|t }}</div>
             </div>
 
             <div class="slide" data-slide="5">
                 <div class="modal-header">
-                    <h4 class="modal-title">Moment of your time?</h4>
+                    <h4 class="modal-title">{{ 'Moment of your time?'|t }}</h4>
                 </div>
                 <div class="input-wrapper">
                     <select class="input">
@@ -191,10 +191,10 @@
                         <option value="">Option 2</option>
                         <option value="">Option 3</option>
                     </select>
-                    <label>How did you hear about us?</label>
+                    <label>{{ 'How did you hear about us?'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">Please enter a valid option.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'Please enter a valid option.'|t }}</div>
                 </div>
                 <div class="input-wrapper">
                     <select class="input">
@@ -202,20 +202,20 @@
                         <option value="">Option 2</option>
                         <option value="">Option 3</option>
                     </select>
-                    <label>How is your entry funded?</label>
+                    <label>{{ 'How is your entry funded?'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">Please enter a valid option.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'Please enter a valid option.'|t }}</div>
                 </div>
                  <div class="input-wrapper">
-                    <textarea class="input" type="text" placeholder="What is yout team's main reason for entering the race?"></textarea>
-                    <label>What is yout team's main reason for entering the race?</label>
+                    <textarea class="input" type="text" placeholder="{{ "What is yout team's main reason for entering the race?"|t }}"></textarea>
+                    <label>{{ "What is yout team's main reason for entering the race?"|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">Great!</div>
-                    <div class="msg in-valid">Please enter a valid reason.</div>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'Please enter a valid reason.'|t }}</div>
                 </div>
-                <a href="my-account.php" class="btn btn-light btn-long">Skip</a>
-                <a href="my-account.php" class="btn btn-orange btn-long">Submit</a>
+                <a href="my-account.php" class="btn btn-light btn-long">{{ 'Skip'|t }}</a>
+                <a href="my-account.php" class="btn btn-orange btn-long">{{ 'Submit'|t }}</a>
             </div>
 
             <div class="modal-footer stages">

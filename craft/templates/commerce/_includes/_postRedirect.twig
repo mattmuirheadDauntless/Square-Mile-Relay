@@ -9,10 +9,10 @@
 {# We suggest inlining all css and keeping the page size to a minimum #}
 <body onload="document.forms[0].submit();">
 <form action="{{ actionUrl|raw }}" method="post">
-	<p style="color:green">Redirecting to payment page...</p>
+	<p style="color:green">{{ 'Redirecting to payment page...'|t }}</p>
 	<p>
 		{{ inputs|raw }}
-		<input type="submit" value="Continue" />
+		<input type="submit" value="{{ 'Continue'|t }}" />
 	</p>
 </form>
 </body>

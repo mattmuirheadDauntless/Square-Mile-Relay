@@ -9,9 +9,9 @@
             <table class="u-full-width">
                 <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th class="text-right">Price</th>
+                    <th>{{ 'Product'|t }}</th>
+                    <th>{{ 'Qty'|t }}</th>
+                    <th class="text-right">{{ 'Price'|t }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,7 +31,7 @@
                                 <input type="hidden" name="redirect" value="commerce/cart"/>
                                 {{ getCsrfInput() }}
                                 <input type="hidden" name="lineItemId" value="{{ item.id }}"/>
-                                <input type="submit" class="button link" value="Remove"/>
+                                <input type="submit" class="button link" value="{{ 'Remove'|t }}"/>
                             </form>
                         </td>
                         <td>
@@ -39,37 +39,37 @@
                                 <input type="hidden" name="action" value="commerce/cart/updateLineItem">
                                 <input type="hidden" name="redirect" value="commerce/cart">
                                 <input type="hidden" name="lineItemId" value="{{ item.id }}">
-                                <input type="text" placeholder="My Note" size="20" name="note" value="{{ item.note }}">
+                                <input type="text" placeholder="{{ "My Note"|t }}" size="20" name="note" value="{{ item.note }}">
                                 <span {% if item.getError('qty') %}class="has-error"{% endif %}>
                                 <input  type="number" name="qty" min="1" value="{{ item.qty }}">
                                 </span>
                                 {{ getCsrfInput() }}
                                 {% if item.options.giftWrapped is defined %}
                                 <select name="options[giftWrapped]">
-                                    <option value="no" {% if item.options.giftWrapped == 'no' %}selected{% endif %}>No gift wrap.</option>
-                                    <option value="yes" {% if item.options.giftWrapped == 'yes' %}selected{% endif %}>Gift wrapped.</option>
+                                    <option value="no" {% if item.options.giftWrapped == 'no' %}selected{% endif %}>{{ 'No gift wrap.'|t }}</option>
+                                    <option value="yes" {% if item.options.giftWrapped == 'yes' %}selected{% endif %}>{{ 'Gift wrapped.'|t }}</option>
                                 </select>
                                 {% endif %}
-                                <input type="submit" class="button" value="Update"/>
+                                <input type="submit" class="button" value="{{ 'Update'|t }}"/>
                             </form>
                         </td>
                         <td class="text-right">
                             {% if item.onSale %}
-                                <s>Price: {{ item.price|commerceCurrency(iso, convert=false) }}</s><br>
-                                Sale Off: {{ item.saleAmount|commerceCurrency(iso, convert=false) }}<br>
-                                Sale Price {{ item.salePrice|commerceCurrency(iso, convert=false) }}<br>
-                                Sale Price Subtotal: {{ item.subtotal|commerceCurrency(iso, convert=false) }}<br>
+                                <s>{{ 'Price:'|t }} {{ item.price|commerceCurrency(iso, convert=false) }}</s><br>
+                                {{ 'Sale Off:'|t }} {{ item.saleAmount|commerceCurrency(iso, convert=false) }}<br>
+                                {{ 'Sale Price:'|t }} {{ item.salePrice|commerceCurrency(iso, convert=false) }}<br>
+                                {{ 'Sale Price Subtotal:'|t }} {{ item.subtotal|commerceCurrency(iso, convert=false) }}<br>
                             {% else %}
-                                Price: {{ item.price|commerceCurrency(iso, convert=false) }}<br>
-                                Sale Price {{ item.salePrice|commerceCurrency(iso, convert=false) }}<br>
-                                Sale Price Subtotal: {{ item.subtotal|commerceCurrency(iso, convert=false) }}<br>
+                                {{ 'Price:'|t }} {{ item.price|commerceCurrency(iso, convert=false) }}<br>
+                                {{ 'Sale Price'|t }} {{ item.salePrice|commerceCurrency(iso, convert=false) }}<br>
+                                {{ 'Sale Price Subtotal:'|t }} {{ item.subtotal|commerceCurrency(iso, convert=false) }}<br>
                             {% endif %}
 
-                            Discount: {{ item.discount|commerceCurrency(iso, convert=false) }}<br>
-                            Taxes: {{ item.tax|commerceCurrency(iso, convert=false) }}<br>
-                            Taxes (Inc): {{ item.taxIncluded|commerceCurrency(iso, convert=false) }}<br>
-                            Shipping: {{ item.shippingCost|commerceCurrency(iso, convert=false) }}<br>
-                            Total: {{ item.total|commerceCurrency(iso, convert=false) }}<br>
+                            {{ 'Discount:'|t }} {{ item.discount|commerceCurrency(iso, convert=false) }}<br>
+                            {{ 'Taxes:'|t }} {{ item.tax|commerceCurrency(iso, convert=false) }}<br>
+                            {{ 'Taxes (Inc):'|t }} {{ item.taxIncluded|commerceCurrency(iso, convert=false) }}<br>
+                            {{ 'Shipping:'|t }} {{ item.shippingCost|commerceCurrency(iso, convert=false) }}<br>
+                            {{ 'Total:'|t }} {{ item.total|commerceCurrency(iso, convert=false) }}<br>
                         </td>
                     </tr>
                 {% endfor %}
@@ -90,7 +90,7 @@
                             <input type="hidden" name="action" value="commerce/cart/removeAllLineItems"/>
                             <input type="hidden" name="redirect" value="commerce/cart"/>
                             {{ getCsrfInput() }}
-                            <input class="button link" type="submit" value="Empty Basket"/>
+                            <input class="button link" type="submit" value="{{ 'Empty Basket'|t }}"/>
                         </form>
 
                         {# Update Coupon form uses the single update controller action: #}
@@ -100,34 +100,35 @@
                             <input type="hidden" name="redirect" value="commerce/cart">
                             {{ getCsrfInput() }}
                             <span class="{% if cart.getError('couponCode') %}has-error{% endif %}">
-                            <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ "Coupon Code"|t }}">
+                            <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}"
+                                   placeholder="{{ "Coupon Code"|t }}">
                             </span>
-                            <input type="submit" class="button" value="{% if cart.couponCode %}Change{% else %}Apply{% endif %} Coupon"/>
+                            <input type="submit" class="button" value="{% if cart.couponCode %}{{ 'Change Coupon'|t }}{% else %}{{ 'Apply Coupon'|t }}{% endif %}"/>
                         </form>
 
                     </td>
                     <td>
                     </td>
                     <td class="text-right">
-                        Total Discount: {{ cart.totalDiscount|commerceCurrency(iso, convert=false) }}<br>
-                        Total Shipping: {{ cart.totalShippingCost|commerceCurrency(iso, convert=false) }}<br>
-                        Total Tax: {{ cart.totalTax|commerceCurrency(iso, convert=false) }}<br>
-                        Total Tax (inc): {{ cart.totalTaxIncluded|commerceCurrency(iso, convert=false) }}<br>
-                        Item Total: {{ cart.itemTotal|commerceCurrency(iso, convert=false) }}<br>
-                        Base Discount: {{ cart.baseDiscount|commerceCurrency(iso, convert=false) }}<br>
-                        Base Shipping Cost: {{ cart.baseShippingCost|commerceCurrency(iso, convert=false) }}<br>
-                        <h4>Total Price: {{ cart.totalPrice|commerceCurrency(iso, convert=false) }}</h4>
+                        {{ 'Total Discount:'|t }} {{ cart.totalDiscount|commerceCurrency(iso, convert=false) }}<br>
+                        {{ 'Total Shipping:'|t }} {{ cart.totalShippingCost|commerceCurrency(iso, convert=false) }}<br>
+                        {{ 'Total Tax:'|t }} {{ cart.totalTax|commerceCurrency(iso, convert=false) }}<br>
+                        {{ 'Total Tax (inc):'|t }} {{ cart.totalTaxIncluded|commerceCurrency(iso, convert=false) }}<br>
+                        {{ 'Item Total:'|t }} {{ cart.itemTotal|commerceCurrency(iso, convert=false) }}<br>
+                        {{ 'Base Discount:'|t }} {{ cart.baseDiscount|commerceCurrency(iso, convert=false) }}<br>
+                        {{ 'Base Shipping Cost:'|t }} {{ cart.baseShippingCost|commerceCurrency(iso, convert=false) }}<br>
+                        <h4>{{ 'Total Price:'|t }} {{ cart.totalPrice|commerceCurrency(iso, convert=false) }}</h4>
                     </td>
                 </tr>
 
                 </tbody>
             </table>
 
-            <a class="button button-primary" href="{{ url('commerce/checkout') }}">Checkout</a>
+            <a class="button button-primary" href="{{ url('commerce/checkout') }}">{{ 'Checkout'|t }}</a>
             {% endif %}
 
             {% if not cart.lineItems|length %}
-                <p>You have no items in your cart, add some on the <a href="/commerce/products">products page</a>.</p>
+                <p>{{ "You have no items in your cart, add some on the"|t }} <a href="/commerce/products">{{ 'products page'|t }}</a>.</p>
             {% endif %}
 
         </div>

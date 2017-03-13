@@ -2,7 +2,7 @@
 {% block main %}
 
         <div class="modal-header">
-            <h4 class="modal-title">Race Tickets</h4>
+            <h4 class="modal-title">{{ 'Race Tickets'|t }}</h4>
         </div>
 
         <div class="row product-details">
@@ -27,7 +27,7 @@
                     <input type="submit" value="{{ "Add to basket"|t }}" class="button"/>
                 </form>
 
-                <p><a href="{{ url('commerce/products') }}">&larr; Back to all products.</a></p>
+                <p><a href="{{ url('commerce/products') }}">&larr; {{ 'Back to all products.'|t }}</a></p>
             </div>
         </div>
 

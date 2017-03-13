@@ -1,7 +1,7 @@
 {% extends 'commerce/_layouts/checkout' %}
 
 {% block content %}
-    <h3>Shipping Method</h3>
+    <h3>{{ 'Shipping Method'|t }}</h3>
     <div class="row">
 
         <div class="two-thirds column">
@@ -15,7 +15,7 @@
         #}
 
         {% if not craft.commerce.availableShippingMethods|length %}
-            <p>No shipping methods available.<p><p> <a class="button button-primary" href="/commerce/checkout/payment">Continue to payment</a></p>
+            <p>{{ 'No shipping methods available.'|t }}<p><p> <a class="button button-primary" href="/commerce/checkout/payment">{{ 'Continue to payment'|t }}</a></p>
         {% endif %}
 
         {% if craft.commerce.availableShippingMethods|length %}
@@ -40,7 +40,7 @@
             {% endfor %}
             <span class="flash">{{ cart.getErrors('shippingMethod')|join }}</span>
 
-            <p><input type="submit" class="button button-primary" value="Select Shipping Method"/></p>
+            <p><input type="submit" class="button button-primary" value="{{ 'Select Shipping Method'|t }}"/></p>
 
         </form>
         {% endif %}
@@ -49,21 +49,21 @@
         
         <div class="one-third column">
             <div class="address-card">
-                <h5 class="label">Shipping Address</h5>
+                <h5 class="label">{{ 'Shipping Address'|t }}</h5>
                 {% if cart.shippingAddress %}
                     {% include 'commerce/_includes/addresses/address' with {'address': cart.shippingAddress} %}
                 {% else %}
-                    <p>No shipping address selected.</p>
+                    <p>{{ 'No shipping address selected.'|t }}</p>
                 {% endif %}
-                {% if currentUser %}<a class="edit" href="/commerce/customer/addresses/edit?addressId={{ cart.shippingAddressId }}&redirect={{ craft.request.path }}">Edit</a>{% endif %}
+                {% if currentUser %}<a class="edit" href="/commerce/customer/addresses/edit?addressId={{ cart.shippingAddressId }}&redirect={{ craft.request.path }}">{{ 'Edit'|t }}</a>{% endif %}
             </div>
             <div class="address-card">
-                <h5 class="label">Billing Address</h5>
+                <h5 class="label">{{ 'Billing Address'|t }}</h5>
                 {% if cart.billingAddress %}
                     {% include 'commerce/_includes/addresses/address' with {'address': cart.billingAddress} %}
-                    {% if currentUser %}<a class="edit" href="/commerce/customer/addresses/edit?addressId={{ cart.billingAddressId }}&redirect={{ craft.request.path }}">Edit</a>{% endif %}
+                    {% if currentUser %}<a class="edit" href="/commerce/customer/addresses/edit?addressId={{ cart.billingAddressId }}&redirect={{ craft.request.path }}">{{ 'Edit'|t }}</a>{% endif %}
                 {% else %}
-                    <p>No billing address selected.</p>
+                    <p>{{ 'No billing address selected.'|t }}</p>
                 {% endif %}
             </div>
         </div>

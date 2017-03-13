@@ -9,7 +9,7 @@
 {% block beforeHeading %}
     {% if currentUser.isInGroup('teamCaptin') %}
         <div class="pull-right">
-            <a href="{{ url('/account/teams/' ~ team.slug ~ '/edit') }}" class="btn btn-info">Edit Team</a>
+            <a href="{{ url('/account/teams/' ~ team.slug ~ '/edit') }}" class="btn btn-info">{{ 'Edit Team'|t }}</a>
         </div>
     {% endif %}
 {% endblock %}
@@ -74,9 +74,9 @@
                                 </td>
                                 <td>
                                     {% if user.pending %}
-                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> Sent</div>
+                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Sent'|t }}</div>
                                     {% else %}
-                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> Confirmed</div>
+                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Confirmed'|t }}</div>
                                     {% endif %}
                                 </td>
                             </tr>

@@ -26,9 +26,9 @@
         <input type="submit" class="btn btn-orange flr" value="Save Address">
     </form>
     {% if redirect %}
-        <a href="/{{ redirect }}">Cancel</a>
+        <a href="/{{ redirect }}">{{ 'Cancel'|t }}</a>
     {% else %}
-        <a href="/commerce/customer/addresses">Cancel</a>
+        <a href="/commerce/customer/addresses">{{ 'Cancel'|t }}</a>
     {% endif %}
 
 {% endblock %}
