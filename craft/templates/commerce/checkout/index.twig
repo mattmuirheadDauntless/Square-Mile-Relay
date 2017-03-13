@@ -132,6 +132,7 @@
 
                 <div class="input-wrapper select">
                     <select name="fields[addressCountry]" id="addressCountry" class="input">
+                        <option value="select">{{ "- Select -"|t }}</option>
                         {% set countries = craft.commerce.countriesList %}
                         {% set modelName = modelName is defined ? modelName : 'address' %}
                         {% set model = address is defined ? address : null %}
