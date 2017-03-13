@@ -8,9 +8,9 @@
 
 	<div class="row">
 
-		<div class="input-wrapper">
-            <input type="text" id="{{ modelName }}-firstName" class="input" name="{{ modelName }}[firstName]" value="{{ model ? model.firstName : '' }}" placeholder="First Name">
-            <label for="{{ modelName }}-firstName">First Name *</label>
+		<div class="input-wrapper required">
+            <input type="text" id="{{ modelName }}-firstName" class="input" name="{{ modelName }}[firstName]" value="{{ model ? model.firstName : '' }}" placeholder="First Name" required>
+            <label for="{{ modelName }}-firstName">First Name</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">Great!</div>
             <div class="msg in-valid">That name is invalid.</div>
@@ -19,9 +19,9 @@
 			{% endif %}
         </div>
 
-        <div class="input-wrapper">
-            <input type="text" id="{{ modelName }}-lastName" class="input" name="{{ modelName }}[lastName]" value="{{ model ? model.lastName : '' }}" placeholder="Last Name">
-            <label for="{{ modelName }}-lastName">Last Name *</label>
+        <div class="input-wrapper required">
+            <input type="text" id="{{ modelName }}-lastName" class="input" name="{{ modelName }}[lastName]" value="{{ model ? model.lastName : '' }}" placeholder="Last Name" required>
+            <label for="{{ modelName }}-lastName">Last Name</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">Great!</div>
             <div class="msg in-valid">That name is invalid.</div>
@@ -52,8 +52,8 @@
 			{% endif %}
         </div>
 
-        <div class="input-wrapper">
-            <input type="text" id="{{ modelName }}-address1" class="input" name="{{ modelName }}[address1]" value="{{ model ? model.address1 : '' }}" placeholder="Address 1">
+        <div class="input-wrapper required">
+            <input type="text" id="{{ modelName }}-address1" class="input" name="{{ modelName }}[address1]" value="{{ model ? model.address1 : '' }}" placeholder="Address 1" required>
             <label for="{{ modelName }}-address1">Address 1</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">Great!</div>
@@ -74,8 +74,8 @@
 			{% endif %}
         </div>
 
-        <div class="input-wrapper">
-            <input type="text" id="{{ modelName }}-city" class="input" name="{{ modelName }}[city]" value="{{ model ? model.city : '' }}" placeholder="City">
+        <div class="input-wrapper required">
+            <input type="text" id="{{ modelName }}-city" class="input" name="{{ modelName }}[city]" value="{{ model ? model.city : '' }}" placeholder="City" required>
             <label for="{{ modelName }}-city">City</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">Great!</div>
@@ -85,8 +85,8 @@
 			{% endif %}
         </div>
 
-        <div class="input-wrapper">
-            <input type="text" id="{{ modelName }}-zipCode" class="input" name="{{ modelName }}[zipCode]" value="{{ model ? model.zipCode : '' }}" placeholder="Zip Code">
+        <div class="input-wrapper required">
+            <input type="text" id="{{ modelName }}-zipCode" class="input" name="{{ modelName }}[zipCode]" value="{{ model ? model.zipCode : '' }}" placeholder="Zip Code" required>
             <label for="{{ modelName }}-zipCode">Zip Code</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">Great!</div>
@@ -118,8 +118,9 @@
 			{% endif %}
         </div>
 
-        <div class="input-wrapper">
+        <div class="input-wrapper required">
            <select class="address-country input" name="{{ modelName }}[countryId]">
+                <option value="select">{{ '- Select -'|t }}</option>
 				{% for key, option in countries %}
 					{% set optionValue = (model ? model.countryId : '') %}
 					<option value="{{ key }}" {% if key == optionValue %} selected{% endif %}>{{ option }}</option>
@@ -128,13 +129,13 @@
             <label for="{{ modelName }}-countryId">Country *</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">Great!</div>
-            <div class="msg in-valid">That number is invalid.</div>
+            <div class="msg in-valid">That country is invalid.</div>
             {% if model and model.getErrors('countryId') %}
 				<span class="flash">{{ model.getErrors('countryId')|join }}</span>
 			{% endif %}
         </div>
 
-        <div class="input-wrapper">
+        <div class="input-wrapper required">
            {% set options = (model and states[model.countryId] is defined ? states[model.countryId] : []) %}
 			<select id="{{ modelName }}-stateId" data-modelname="{{ modelName }}" class="address-stateId input {% if options|length == 0 or (model and model.stateName) %}hidden{% endif %}" name="{{ modelName }}[stateValue]">
 				{% for key, option in options %}
@@ -146,7 +147,7 @@
 			<input type="text" data-modelname="{{ modelName }}" id="{{ modelName }}-stateName" class="address-stateName {% if options|length > 0 or (model and model.stateId) %}hidden{% endif %} input" {% if model and model.stateName %}name="{{ modelName }}[stateValue]" value="{{ model.stateName}}"{% endif %} placeholder="State">
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">Great!</div>
-            <div class="msg in-valid">That number is invalid.</div>
+            <div class="msg in-valid">That state is invalid.</div>
             {% if model and model.getErrors('countryId') %}
 				<span class="flash">{{ model.getErrors('countryId')|join }}</span>
 			{% endif %}
