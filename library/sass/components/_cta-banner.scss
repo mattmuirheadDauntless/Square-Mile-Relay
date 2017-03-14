@@ -16,13 +16,13 @@ header,
 .header {
     .cta-banner {
         position: fixed;
-        top: 68px;
+        top: 69px;
         left: 0;
         transform: translateY(-150px);
         transition: all ease-in .5s;
         z-index: 1;
         background-color: $orange;
-        padding: 10px 0;
+        padding: 11px 0;
         width: 100%;
         font-size: 22px;
         .btn {

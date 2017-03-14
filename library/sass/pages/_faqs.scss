@@ -10,6 +10,15 @@
         color: $darkgrey;
         font-size: 28px;
         font-weight: 700;
+        @media (max-width: 1199px) {
+            font-size:24px;
+            line-height:130%;
+            margin:0 0 15px 0;
+        }
+        @media (max-width: 991px) {
+            font-size:20px;
+            margin:0 0 10px 0;
+        }
     }
     img {
         margin: 20px 0 30px;
@@ -21,6 +30,11 @@
         color: $grey;
         font-size: 18px;
         font-weight: 400;
+        @media (max-width: 991px) {
+            font-size:14px;
+            line-height:130%;
+            margin:0 0 25px 0;
+        }
     }
     h3 {
         margin-top: 30px;
