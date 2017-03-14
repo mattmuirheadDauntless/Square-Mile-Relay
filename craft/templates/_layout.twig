@@ -199,11 +199,24 @@
 
     {% include "_includes/_footer" %}
 
-    {# alert after login #}
-    <div class="alert outstanding-forms">
-        <p>{{ 'You have outstanding Injury waiver forms to agree too before you race.'|t }} <a href="" class="btn btn-black">{{ 'Review'|t }}</a></p>
-        <span>&times;</span>
-    </div>
+    {% if currentUser %}
+
+        {% set waiverAgreed = 0 %}
+        {% set savedWaivers = currentUser.acceptedWaivers %}
+        {% set teams = craft.entries.section('team').relatedTo(currentUser) %}
+        {% for savedWaiver in savedWaivers %}
+            {% if savedWaiver.acceptedWaiver == "on" %}
+                {% set waiverAgreed = waiverAgreed + 1 %}
+            {% endif %}
+        {% endfor %}
+
+        {% if waiverAgreed != savedWaivers|length or teams|length > savedWaivers|length %}
+            <div class="alert outstanding-forms">
+                <p>{{ 'You have outstanding Injury waiver forms to agree too before you race.'|t }} <a href="{{ siteUrl }}account/profile/edit" class="btn btn-black">{{ 'Review'|t }}</a></p>
+                <span>&times;</span>
+            </div>
+        {% endif %}
+    {% endif %}
 
     {% cache globally %}
     <!-- TrackDuck -->
