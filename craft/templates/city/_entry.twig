@@ -157,25 +157,16 @@
 
     {% if relatedEvents|length %}
     <section class="races-by-year">
-        <ul id="citySlideNav" class="slide-nav">
-            <li class="active" title="{{ 'Race Overview'|t }}" data-slide="race-overview"><a href="#overview">{{ 'Race Overview'|t }}</a></li>
-            <li title="{{ 'The Course'|t }}" data-slide="the-course"><a href="#course">{{ 'The Course'|t }}</a></li>
-            {% if raceSchedule|length %}
-            <li title="{{ 'The Schedule'|t }}" data-slide="the-schedule"><a href="#schedule">{{ 'The Schedule'|t }}</a></li>
-            {% endif %}
-            <li title="{{ 'Partners'|t }}" data-slide="partners"><a href="#partners">{{ 'Partners'|t }}</a></li>
-            <li title="{{ 'Gallery'|t }}" data-slide="gallery"><a href="#gallery">{{ 'Gallery'|t }}</a></li>
-            {% if relatedCharities|length %}
-                <li title="{{ 'Charities'|t }}" data-slide="charities"><a href="#charities">{{ 'Charities'|t }}</a></li>
-            {% endif %}
-        </ul>
 
+        {% set count = 0 %}
         {% for event in relatedEvents %}
+            {% set count = count + 1 %}
             {% set relatedPartners = event.relatedPartners %}
             {% set relatedCharities = event.relatedCharity %}
             {% set raceSchedule = event.raceSchedule %}
             {% set year = event.startDateTime|date('Y') %}
 
+            {% if count == 1 %}
             <ul id="citySlideNav" class="slide-nav">
                 <li class="active" title="Race Overview" data-slide="race-overview"><a href="#overview">{{ 'Race Overview'|t }}</a></li>
                 <li title="The Course" data-slide="the-course"><a href="#course">{{ 'The Course'|t }}</a></li>
@@ -349,6 +340,7 @@
                     </div>
                 {% endif %}
             </div>
+            {% endif %}
 
         {% endfor %}
     </section>
