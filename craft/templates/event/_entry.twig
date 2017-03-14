@@ -108,19 +108,33 @@
 
     <section class="races-by-year">
         <ul id="citySlideNav" class="slide-nav">
-            <li class="active" title="Race Overview" data-slide="race-overview"><a href="#overview">{{ 'Race Overview'|t }}</a></li>
-            <li title="The Course" data-slide="the-course"><a href="#course">{{ 'The Course'|t }}</a></li>
-            <li title="The Schedule" data-slide="the-schedule"><a href="#schedule">{{ 'The Schedule'|t }}</a></li>
-            <li title="Partners" data-slide="partners"><a href="#partners">{{ 'Partners'|t }}</a></li>
-            <li title="Gallery" data-slide="gallery"><a href="#gallery">{{ 'Gallery'|t }}</a></li>
-            <li title="Charities" data-slide="charities"><a href="#charities">{{ 'Charities'|t }}</a></li>
+            <li class="active" title="{{ 'Race Overview'|t }}" data-slide="race-overview">
+                <a href="#overview" title="{{ 'Race Overview'|t }}">{{ 'Race Overview'|t }}</a>
+            </li>
+            <li title="{{ 'The Course'|t }}" data-slide="the-course">
+                <a href="#course" title="{{ 'The Course'|t }}">{{ 'The Course'|t }}</a>
+            </li>
+            <li title="{{ 'The Schedule'|t }}" data-slide="the-schedule">
+                <a href="#schedule" title="{{ 'The Schedule'|t }}">{{ 'The Schedule'|t }}</a>
+            </li>
+            <li title="{{ 'Partners'|t }}" data-slide="partners">
+                <a href="#partners" title="{{ 'Partners'|t }}">{{ 'Partners'|t }}</a>
+            </li>
+            <li title="{{ 'Gallery'|t }}" data-slide="gallery">
+                <a href="#gallery" title="{{ 'Gallery'|t }}">{{ 'Gallery'|t }}</a>
+            </li>
+            {% if relatedEvents|length > 0 %}
+                <li title="{{ 'Charities'|t }}" data-slide="charities">
+                    <a href="#charities" title="{{ 'Charities'|t }}">{{ 'Charities'|t }}</a>
+                </li>
+            {% endif %}
         </ul>
 
         {% set year = entry.startDateTime|date('Y') %}
         <div class="race-year active" data-year={{ year }}>
 
             <div id="overview" class="section city-overview active" data-slide="race-overview">
-                <h3 title="Race Overview">{{ 'Race Overview'|t }}</h3>
+                <h3 title="{{ 'Race Overview'|t }}">{{ 'Race Overview'|t }}</h3>
                 <div class="row">
                     <div class="col-md-7">
                         {{ entry.raceOverview }}
@@ -153,7 +167,7 @@
             </div>
 
             <div id="course" class="section city-course" data-slide="the-course">
-                <h3 title="The Course">{{ 'The Course'|t }}</h3>
+                <h3 title="{{ 'The Course'|t }}">{{ 'The Course'|t }}</h3>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="img-button">
@@ -180,7 +194,7 @@
             </div>
 
             <div id="schedule" class="section city-schedule" data-slide="the-schedule">
-                <h3 title="The Schedule">{{ 'The Schedule'|t }}</h3>
+                <h3 title="{{ 'The Schedule'|t }}">{{ 'The Schedule'|t }}</h3>
 
                 {% set raceSchedule = entry.raceSchedule %}
                 {% if raceSchedule|length %}
@@ -205,7 +219,7 @@
             </div>
 
             <div id="partners" class="section city-partners" data-slide="partners">
-                <h3 title="Partners">{{ 'Partners'|t }}</h3>
+                <h3 title="{{ 'Partners'|t }}">{{ 'Partners'|t }}</h3>
                 {% if relatedPartners|length %}
                     <div class="row">
                     {% for partner in relatedPartners %}
@@ -230,7 +244,7 @@
             </div>
 
             <div id="gallery" class="section city-gallery" data-slide="gallery">
-                <h3 title="Gallery">{{ 'Gallery'|t }}</h3>
+                <h3 title="{{ 'Gallery'|t }}">{{ 'Gallery'|t }}</h3>
 
                 {% set images = entry.eventImages %}
                 {% set prevYear = 0 %}
@@ -269,7 +283,7 @@
 
             {% if relatedCharities|length > 0 %}
             <div id="charities" class="section city-charities" data-slide="charities">
-                <h3 title="Charities">{{ 'Charities'|t }}</h3>
+                <h3 title="{{ 'Charities'|t }}">{{ 'Charities'|t }}</h3>
                 {% for charity in relatedCharities %}
                     {% set image = charity.coverImage.first() %}
                     <div class="row">
