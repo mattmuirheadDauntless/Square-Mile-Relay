@@ -199,6 +199,12 @@
 
     {% include "_includes/_footer" %}
 
+    {# alert after login #}
+    <div class="alert outstanding-forms">
+        <p>{{ 'You have outstanding Injury waiver forms to agree too before you race.'|t }} <a href="">{{ 'Review'|t }}</a></p>
+        <span>&times;</span>
+    </div>
+
     {% cache globally %}
     <!-- TrackDuck -->
     <script src="//cdn.trackduck.com/toolbar/prod/td.js" async data-trackduck-id="58a58931026b48e6591c647b"></script>
