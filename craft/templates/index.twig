@@ -48,7 +48,7 @@
                     <h2>{{ city.title }}</h2>
                     {% if eventDate > todaysDate %}
                     <h5>
-                        {% if daysLeft < 1 %}
+                        {% if daysLeft < -1 %}
                             {{ daysLeft | trim('-') }} {{ 'days'|t }}
                         {% else %}
                             {{ daysLeft | trim('-') }} {{ 'day'|t }}
