@@ -78,6 +78,9 @@
                 &:visited {
                     background-color: transparent;
                 }
+                @media (max-width: 1289px) {
+                    margin-right: 23px;
+                }
             }
             //if has child show triangle
             &.has-child:after {
@@ -174,7 +177,7 @@
     .language-select {
         position: fixed;
         top: 20px;
-        right: 200px;
+        right: 120px;
         font-size: 14px;
         color: #ccc;
         z-index: 999;
@@ -190,11 +193,14 @@
             background:#222;
             color: #fff;
         }
+        @media (max-width: 1200px) {
+            right:180px;
+        }
     }
     .header-account {
         position: fixed;
         top: 16px;
-        right: 63px;
+        right: 15px;
         z-index: 3;
         margin: 0;
         padding-top: 5px;
@@ -204,7 +210,7 @@
             border-radius: 15px;
             background-color: $orange;
             cursor: pointer;
-            padding: 7px 22px 6px;
+            padding: 7px 20px 6px;
             text-transform: uppercase;
             text-decoration: none;
             color: $white;
@@ -214,6 +220,9 @@
             &:active {
                 outline: none;
             }
+        }
+        @media (max-width: 1200px) {
+                right:60px;
         }
     }
 }
@@ -413,5 +422,19 @@
                 right: 175px;
             }
         }
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1800px) {
+    .ja .header .nav li a {
+        font-size:12px;
+        margin-right: 18px;
+    }
+}
+@media (min-width: 1201px) and (max-width: 1800px) {
+    .header .nav li a {
+        font-size:12px;
+        margin-right: 18px;
+        text-shadow: 0 0 1px #000;
     }
 }
