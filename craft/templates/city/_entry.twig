@@ -157,190 +157,187 @@
 
     {% if relatedEvents|length %}
     <section class="races-by-year">
-        <ul id="citySlideNav" class="slide-nav">
-            <li class="active" title="Race Overview" data-slide="race-overview"><a href="#overview">{{ 'Race Overview'|t }}</a></li>
-            <li title="The Course" data-slide="the-course"><a href="#course">{{ 'The Course'|t }}</a></li>
-            <li title="The Schedule" data-slide="the-schedule"><a href="#schedule">{{ 'The Schedule'|t }}</a></li>
-            <li title="Partners" data-slide="partners"><a href="#partners">{{ 'Partners'|t }}</a></li>
-            <li title="Gallery" data-slide="gallery"><a href="#gallery">{{ 'Gallery'|t }}</a></li>
-            {% if relatedEvents|length > 0 %}
-                <li title="Charities" data-slide="charities"><a href="#charities">{{ 'Charities'|t }}</a></li>
-            {% endif %}
-        </ul>
-
-        {% set count = 0 %}
         {% for event in relatedEvents %}
             {% set relatedPartners = event.relatedPartners %}
             {% set relatedCharities = event.relatedCharity %}
+            {% set raceSchedule = event.raceSchedule %}
             {% set year = event.startDateTime|date('Y') %}
-            {% set count = count + 1 %}
 
-            {% if count == 1 %}
-                <div class="race-year active" data-year={{ year }}>
+            <ul id="citySlideNav" class="slide-nav">
+                <li class="active" title="Race Overview" data-slide="race-overview"><a href="#overview">{{ 'Race Overview'|t }}</a></li>
+                <li title="The Course" data-slide="the-course"><a href="#course">{{ 'The Course'|t }}</a></li>
+                {% if raceSchedule|length %}
+                <li title="The Schedule" data-slide="the-schedule"><a href="#schedule">{{ 'The Schedule'|t }}</a></li>
+                {% endif %}
+                <li title="Partners" data-slide="partners"><a href="#partners">{{ 'Partners'|t }}</a></li>
+                <li title="Gallery" data-slide="gallery"><a href="#gallery">{{ 'Gallery'|t }}</a></li>
+                {% if relatedCharities|length %}
+                    <li title="Charities" data-slide="charities"><a href="#charities">{{ 'Charities'|t }}</a></li>
+                {% endif %}
+            </ul>
 
-                    <div id="overview" class="section city-overview" data-slide="race-overview">
-                        <h3 title="Race Overview">{{ 'Race Overview'|t }}</h3>
-                        <div class="row">
-                            <div class="col-md-7">
-                                {{ event.raceOverview }}
-                            </div>
+            <div class="race-year active" data-year={{ year }}>
 
-                            <div class="col-md-4 col-md-offset-1">
-                                {% if relatedCompanies|length %}
-                                    <h5>{{ "Who's competing?"|t }}</h5>
-                                    <ul>
-                                        {% set companyCount = 0 %}
-                                        {% for company in relatedCompanies %}
-                                            {% set companyCount = companyCount + 1 %}
-                                            <li>{{ companyCount }}. {{ company.title }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                    <a href="{{siteUrl}}companies" class="btn btn-black">{{ 'All Companies'|t }}</a>
-                                {% endif %}
-
-                                {% if event.relatedProudSponsor|length %}
-                                    <h5>{{ 'Proudly sponsored by:'|t }}</h5>
-                                    {% for partner in event.relatedProudSponsor %}
-                                        {% set logo = partner.companyLogo.first() %}
-                                        <a href="{{ siteUrl }}partners?year={{ year }}&city={{ entry.title }}">
-                                            <img src={{ logo.url }} alt={{ partner.title }}>
-                                        </a>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
+                <div id="overview" class="section city-overview" data-slide="race-overview">
+                    <h3 title="Race Overview">{{ 'Race Overview'|t }}</h3>
+                    <div class="row">
+                        <div class="col-md-7">
+                            {{ event.raceOverview }}
                         </div>
-                    </div>
 
-                    <div id="course" class="section city-course" data-slide="the-course">
-                        <h3 title="The Course">{{ 'The Course'|t }}</h3>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="img-button">
-                                    {% set courseMap = event.courseMap.first() %}
-                                    <img src={{ courseMap.url }} alt="Course Map">
-                                     <a href="{{ courseMap.url }}" target="_blank" download class="btn btn-orange">{{ 'Download map'|t }}</a>
-                                </div>
-                                {{ event.simpleContent }}
-                            </div>
-                            <div class="col-md-4">
-                                {% if event.address|length %}
-                                <h4>{{ 'Race Village Location'|t }}</h4>
-                                <p>{{ event.address|nl2br }}</p>
-                                <a href="https://www.google.com/maps/dir//{{ event.address }}" target="_blank" class="btn btn-black">{{ 'Directions'|t }}</a>
-                                {% endif %}
-                                <h6>{{ 'Spread the word...'|t }}</h6>
+                        <div class="col-md-4 col-md-offset-1">
+                            {% if relatedCompanies|length %}
+                                <h5>{{ "Who's competing?"|t }}</h5>
                                 <ul>
-                                    <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.url }}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="https://twitter.com/home?status={{ event.title }} {{ entry.url }}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ entry.url }}&title={{ event.title }}&summary={{ event.simpleContent|striptags }}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                    {% set companyCount = 0 %}
+                                    {% for company in relatedCompanies %}
+                                        {% set companyCount = companyCount + 1 %}
+                                        <li>{{ companyCount }}. {{ company.title }}</li>
+                                    {% endfor %}
                                 </ul>
-                            </div>
+                                <a href="{{siteUrl}}companies" class="btn btn-black">{{ 'All Companies'|t }}</a>
+                            {% endif %}
+
+                            {% if event.relatedProudSponsor|length %}
+                                <h5>{{ 'Proudly sponsored by:'|t }}</h5>
+                                {% for partner in event.relatedProudSponsor %}
+                                    {% set logo = partner.companyLogo.first() %}
+                                    <a href="{{ siteUrl }}partners?year={{ year }}&city={{ entry.title }}">
+                                        <img src={{ logo.url }} alt={{ partner.title }}>
+                                    </a>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
+                </div>
 
+                <div id="course" class="section city-course" data-slide="the-course">
+                    <h3 title="The Course">{{ 'The Course'|t }}</h3>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="img-button">
+                                {% set courseMap = event.courseMap.first() %}
+                                <img src={{ courseMap.url }} alt="Course Map">
+                                 <a href="{{ courseMap.url }}" target="_blank" download class="btn btn-orange">{{ 'Download map'|t }}</a>
+                            </div>
+                            {{ event.simpleContent }}
+                        </div>
+                        <div class="col-md-4">
+                            {% if event.address|length %}
+                            <h4>{{ 'Race Village Location'|t }}</h4>
+                            <p>{{ event.address|nl2br }}</p>
+                            <a href="https://www.google.com/maps/dir//{{ event.address }}" target="_blank" class="btn btn-black">{{ 'Directions'|t }}</a>
+                            {% endif %}
+                            <h6>{{ 'Spread the word...'|t }}</h6>
+                            <ul>
+                                <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ entry.url }}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="https://twitter.com/home?status={{ event.title }} {{ entry.url }}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.linkedin.com/shareArticle?mini=true&url={{ entry.url }}&title={{ event.title }}&summary={{ event.simpleContent|striptags }}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {% if raceSchedule|length %}
                     <div id="schedule" class="section city-schedule active" data-slide="the-schedule">
                         <h3 title="The Schedule">{{ 'The Schedule'|t }}</h3>
-
-                        {% set raceSchedule = event.raceSchedule %}
-                        {% if raceSchedule|length %}
-                            <ul class="timeline">
-                            {% set count = 0 %}
-                            {% for row in raceSchedule %}
-                                {% set percentage = (100/(raceSchedule|length)) * count %}
-                                {% if count == 0 %}
-                                    {% set percentage = 0 %}
-                                {% endif %}
-
-                                <li style="left: {{ percentage }}%; width: {{100/(raceSchedule|length)}}%;"><strong>{{ row.timeOfDay|date(defaultTimeFormat) }}</strong>{{ row.whatsHappening }}</li>
-                                {% set count = count + 1 %}
-                            {% endfor %}
-                            </ul>
-                        {% endif %}
-                    </div>
-
-                    <div id="partners" class="section city-partners" data-slide="partners">
-                        <h3 title="Partners">{{ 'Partners'|t }}</h3>
-                        {% if relatedPartners|length %}
-                            <div class="row">
-                            {% for partner in relatedPartners %}
-
-                                {% set logo = partner.companyLogo.first() %}
-                                <div class="partner-wrapper">
-                                    <a href="{{ siteUrl }}partners?year={{ year }}&city={{ entry.title }}" class="cover-link"></a>
-                                    <div class="partner-img" style="background-image: url({{ logo.url }})"></div>
-                                    <h4>{{ partner.partnerType }}</h4>
-                                </div>
-
-                            {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="no-results">
-                                <h5>{{ 'Sorry!'|t }}</h5>
-                                <p>{{ 'There are currently no community partners for this event. Check back later to see our partners for this race!'|t }}</p>
-                                <h6>{{ 'Or'|t }}</h6>
-                                <a href="{{ siteUrl }}partners" class="btn btn-orange">{{ 'View all our partners'|t }}</a>
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div id="gallery" class="section city-gallery" data-slide="gallery">
-                        <h3 title="Gallery">{{ 'Gallery'|t }}</h3>
-
-                        {% set images = event.eventImages %}
-                        {% set prevYear = 0 %}
-                        {% if images|length == 0 %}
-                            {% set prevYear = 1 %}
-                            {% set city = event.relatedCity.first().title %}
-                            {% set lastEvent = craft.entries.section('event').search( city ~ " -" ~ year ).first %}
-                            {% set images = lastEvent.eventImages %}
-                        {% endif %}
-
-                        {% if images|length %}
-                            {% if prevYear == 1 %}
-                            <h4>{{ "Check out the highlights from last year's race:"|t }}</h4>
+                        <ul class="timeline">
+                        {% set count = 0 %}
+                        {% for row in raceSchedule %}
+                            {% set percentage = (100/(raceSchedule|length)) * count %}
+                            {% if count == 0 %}
+                                {% set percentage = 0 %}
                             {% endif %}
-                            <div class="gallery-grid no-ajax">
-                            {% for image in images.limit(20) %}
-                                {% set imageSmall = image.getUrl('newsThumb') %}
-                                {% set imageLarge = image.url %}
 
-                                <div class="img-item grid-item slider-modal-link {{ year }} {{ entry.title }}" data-toggle="modal" data-target="#media" data-src="{{ imageLarge }}" data-caption="{{ image.summaryText }}">
-                                    <img src="{{ imageSmall }}" alt="Gallery Image">
-                                </div>
-                            {% endfor %}
-                            </div>
-                        {% else %}
-                             <div class="no-results">
-                                <h5>{{ 'Sorry!'|t }}</h5>
-                                <p>{{ 'There are currently no images for this event. Check back afterwards to see all the images from the race!'|t }}</p>
-                                <h6>{{ 'Or'|t }}</h6>
-                                <a href="{{ siteUrl }}gallery" class="btn btn-orange">{{ 'View the gallery'|t }}</a>
-                            </div>
-                        {% endif %}
+                            <li style="left: {{ percentage }}%; width: {{100/(raceSchedule|length)}}%;"><strong>{{ row.timeOfDay|date(defaultTimeFormat) }}</strong>{{ row.whatsHappening }}</li>
+                            {% set count = count + 1 %}
+                        {% endfor %}
+                        </ul>
                     </div>
-        
-                    {% if relatedCharities|length %}
-                        <div id="charities" class="section city-charities" data-slide="charities">
-                            <h3 title="Charities">{{ 'Charities'|t }}</h3>
-                            {% for charity in relatedCharities %}
-                                {% set image = charity.coverImage.first() %}
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        {% if image is not null %}
-                                            <img src="{{ image.url }}" alt={{ charity.title }}>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h4>{{ charity.title }}</h4>
-                                        <h5>{{ charity.subTitle }}</h5>
-                                        {{ charity.bodyContent }}
-                                    </div>
-                                </div>
-                            {% endfor %}
+                {% endif %}
+
+                <div id="partners" class="section city-partners" data-slide="partners">
+                    <h3 title="Partners">{{ 'Partners'|t }}</h3>
+                    {% if relatedPartners|length %}
+                        <div class="row">
+                        {% for partner in relatedPartners %}
+
+                            {% set logo = partner.companyLogo.first() %}
+                            <div class="partner-wrapper">
+                                <a href="{{ siteUrl }}partners?year={{ year }}&city={{ entry.title }}" class="cover-link"></a>
+                                <div class="partner-img" style="background-image: url({{ logo.url }})"></div>
+                                <h4>{{ partner.partnerType }}</h4>
+                            </div>
+
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="no-results">
+                            <h5>{{ 'Sorry!'|t }}</h5>
+                            <p>{{ 'There are currently no community partners for this event. Check back later to see our partners for this race!'|t }}</p>
+                            <h6>{{ 'Or'|t }}</h6>
+                            <a href="{{ siteUrl }}partners" class="btn btn-orange">{{ 'View all our partners'|t }}</a>
                         </div>
                     {% endif %}
                 </div>
-            {% endif %}
+
+                <div id="gallery" class="section city-gallery" data-slide="gallery">
+                    <h3 title="Gallery">{{ 'Gallery'|t }}</h3>
+
+                    {% set images = event.eventImages %}
+                    {% set prevYear = 0 %}
+                    {% if images|length == 0 %}
+                        {% set prevYear = 1 %}
+                        {% set city = event.relatedCity.first().title %}
+                        {% set lastEvent = craft.entries.section('event').search( city ~ " -" ~ year ).first %}
+                        {% set images = lastEvent.eventImages %}
+                    {% endif %}
+
+                    {% if images|length %}
+                        {% if prevYear == 1 %}
+                        <h4>{{ "Check out the highlights from last year's race:"|t }}</h4>
+                        {% endif %}
+                        <div class="gallery-grid no-ajax">
+                        {% for image in images.limit(20) %}
+                            {% set imageSmall = image.getUrl('newsThumb') %}
+                            {% set imageLarge = image.url %}
+
+                            <div class="img-item grid-item slider-modal-link {{ year }} {{ entry.title }}" data-toggle="modal" data-target="#media" data-src="{{ imageLarge }}" data-caption="{{ image.summaryText }}">
+                                <img src="{{ imageSmall }}" alt="Gallery Image">
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                         <div class="no-results">
+                            <h5>{{ 'Sorry!'|t }}</h5>
+                            <p>{{ 'There are currently no images for this event. Check back afterwards to see all the images from the race!'|t }}</p>
+                            <h6>{{ 'Or'|t }}</h6>
+                            <a href="{{ siteUrl }}gallery" class="btn btn-orange">{{ 'View the gallery'|t }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if relatedCharities|length %}
+                    <div id="charities" class="section city-charities" data-slide="charities">
+                        <h3 title="Charities">{{ 'Charities'|t }}</h3>
+                        {% for charity in relatedCharities %}
+                            {% set image = charity.coverImage.first() %}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {% if image is not null %}
+                                        <img src="{{ image.url }}" alt={{ charity.title }}>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-8">
+                                    <h4>{{ charity.title }}</h4>
+                                    <h5>{{ charity.subTitle }}</h5>
+                                    {{ charity.bodyContent }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
 
         {% endfor %}
     </section>

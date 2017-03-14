@@ -107,13 +107,18 @@
     {% endif %}
 
     <section class="races-by-year">
+        {% set raceSchedule = entry.raceSchedule %}
         <ul id="citySlideNav" class="slide-nav">
             <li class="active" title="Race Overview" data-slide="race-overview"><a href="#overview">{{ 'Race Overview'|t }}</a></li>
             <li title="The Course" data-slide="the-course"><a href="#course">{{ 'The Course'|t }}</a></li>
+            {% if raceSchedule|length %}
             <li title="The Schedule" data-slide="the-schedule"><a href="#schedule">{{ 'The Schedule'|t }}</a></li>
+            {% endif %}
             <li title="Partners" data-slide="partners"><a href="#partners">{{ 'Partners'|t }}</a></li>
             <li title="Gallery" data-slide="gallery"><a href="#gallery">{{ 'Gallery'|t }}</a></li>
-            <li title="Charities" data-slide="charities"><a href="#charities">{{ 'Charities'|t }}</a></li>
+            {% if relatedCharities|length %}
+                <li title="Charities" data-slide="charities"><a href="#charities">{{ 'Charities'|t }}</a></li>
+            {% endif %}
         </ul>
 
         {% set year = entry.startDateTime|date('Y') %}
@@ -179,30 +184,23 @@
                 </div>
             </div>
 
+            {% if raceSchedule|length %}
             <div id="schedule" class="section city-schedule" data-slide="the-schedule">
                 <h3 title="The Schedule">{{ 'The Schedule'|t }}</h3>
+                <ul class="timeline">
+                {% set count = 0 %}
+                {% for row in raceSchedule %}
+                    {% set percentage = (100/(raceSchedule|length)) * count %}
+                    {% if count == 0 %}
+                        {% set percentage = 0 %}
+                    {% endif %}
 
-                {% set raceSchedule = entry.raceSchedule %}
-                {% if raceSchedule|length %}
-                    <ul class="timeline">
-                    {% set count = 0 %}
-                    {% for row in raceSchedule %}
-                        {% set percentage = (100/(raceSchedule|length)) * count %}
-                        {% if count == 0 %}
-                            {% set percentage = 0 %}
-                        {% endif %}
-
-                        <li style="left: {{ percentage }}%; width: {{100/(raceSchedule|length)}}%;"><strong>{{ row.timeOfDay|date(defaultTimeFormat) }}</strong>{{ row.whatsHappening }}</li>
-                        {% set count = count + 1 %}
-                    {% endfor %}
-                    </ul>
-                {% else %}
-                <div class="no-results">
-                    <h5>{{ 'Sorry!'|t }}</h5>
-                    <p>{{ "We haven't set a schedule for this event yet. Please check back later."|t }}</p>
-                </div>
-                {% endif %}
+                    <li style="left: {{ percentage }}%; width: {{100/(raceSchedule|length)}}%;"><strong>{{ row.timeOfDay|date(defaultTimeFormat) }}</strong>{{ row.whatsHappening }}</li>
+                    {% set count = count + 1 %}
+                {% endfor %}
+                </ul>
             </div>
+            {% endif %}
 
             <div id="partners" class="section city-partners" data-slide="partners">
                 <h3 title="Partners">{{ 'Partners'|t }}</h3>
