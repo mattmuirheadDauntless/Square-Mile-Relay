@@ -202,12 +202,12 @@
                             <p>{{ 'More information to follow ...'|t }}</p>
                         {% endif %}
                         {% if relatedEvents|length == 0 %}
-                            <a href="#" class="btn btn-orange enter-race-modal" type="button" data-city="{{ city.slug }}" data-toggle="modal" data-target="#enterRace">>{{ 'Register your interest'|t }}</a>
+                            <a href="#" class="btn btn-orange enter-race-modal" type="button" data-city="{{ city.slug }}" data-toggle="modal" data-target="#enterRace">{{ 'Register your interest'|t }}</a>
                         {% else %}
                             <a href="{{ city.url }}" class="btn btn-orange">{{ 'Race this city'|t }}</a>
                         {% endif %}
                     {% else %}
-                        <h3>{{ date }}</h3>
+                        <h3>{{ date|date('F j Y') }}</h3>
                         <div class="timer-wrapper">
                             <div class="timer" data-date={{ date|date('Y/m/d') }}></div>
                             <ul>
@@ -224,7 +224,7 @@
                         {% endif %}
                         <a href={{ city.url }} class="btn btn-black">{{ 'Race this city'|t }}</a>
                     {% endif %}
-                    
+
                     {% if cityIcon is not null %}
                         <img src={{ cityIcon.getUrl('newsThumb') }} alt="{{ city.title }}">
                     {% endif %}
