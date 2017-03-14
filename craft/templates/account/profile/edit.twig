@@ -143,7 +143,7 @@
                                             }) }}
                                         </div>
 
-                                        
+
 
 
                             <div class="input-wrapper edit-element no-validation">
@@ -173,7 +173,7 @@
                     <div class="edit-col-small"></div>
                     <div class="edit-col-large">
                         <div class="form">
-                            
+
                             <div class="input-wrapper edit-element">
                                {{ formFields.input({
                                     id:    'address1',
@@ -183,7 +183,7 @@
                                     value: currentUser.address1
                                 }) }}
                             </div>
-                            
+
                             <div class="input-wrapper edit-element">
                                 {{ formFields.input({
                                     id:    'address2',
@@ -246,19 +246,33 @@
                                     value: currentUser.whyAreYouInterested
                                 }) }}
                             </div>
-                            
-                            <div class="input-wrapper edit-element checkbox first">
-                                {% if currentUser.acceptInjuryWaiver == 1 %}
-                                    <input class="input" id="checkbox-1" name="fields[acceptInjuryWaiver]" checked="checked" type="checkbox">
-                                {% else %}
-                                    <input class="input" id="checkbox-1" name="fields[acceptInjuryWaiver]" type="checkbox">
-                                {% endif %}
 
-                                <label for="checkbox-1"></label>
-                                <p>{{ 'I agree to the event'|t }} <a href="{{ siteUrl }}injury-waiver" target="_blank">{{ 'Injury Waiver Terms and Conditions'|t }}</a></p>
-                            </div>
+                            {% set teams = craft.entries.section('team').relatedTo(currentUser) %}
+                            {% set savedWaivers = currentUser.acceptedWaivers %}
+                            <input type="hidden" name="fields[acceptedWaivers]" value="">
 
-                            <div class="input-wrapper edit-element checkbox first">
+                            {% for team in teams %}
+                                {% set event = team.relatedEvent.first() %}
+                                {% set waiver = event.relatedWaiverForm.first() %}
+
+                                {% set waiverAgreed = 0 %}
+                                {% for savedWaiver in savedWaivers %}
+                                    {% if savedWaiver.event == event.title and savedWaiver.acceptedWaiver == "on" %}
+                                        {% set waiverAgreed = 1 %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                <div class="input-wrapper edit-element checkbox{% if loop.index == 1 %} first{% endif %}">
+                                    <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col2]" value="{{ event.title }}">
+                                    <input type="hidden" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]">
+                                    <input class="input" id="checkbox-{{ loop.index - 1 }}" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]" type="checkbox" {% if waiverAgreed == 1 %} checked{% endif %}>
+
+                                    <label for="checkbox-{{ loop.index - 1 }}"></label>
+                                    <p>{{ 'I agree to the event'|t }} ({{ event.title }}) <a href="{{ waiver.url }}" target="_blank">{{ 'Injury Waiver Terms and Conditions'|t }}</a></p>
+                                </div>
+                            {% endfor %}
+
+                            <div class="input-wrapper edit-element checkbox">
                                 {% if currentUser.acceptToReceiveInformation == 1 %}
                                     <input class="input" id="checkbox-2" name="fields[acceptToReceiveInformation]" checked="checked" type="checkbox">
                                 {% else %}
@@ -269,7 +283,7 @@
                                 <p>{{ 'I would like to receive information from Bloomberg'|t }}</p>
                             </div>
 
-                            <div class="input-wrapper edit-element checkbox first">
+                            <div class="input-wrapper edit-element checkbox">
                                 {% if currentUser.acceptContactByThirdParties == 1 %}
                                     <input class="input" id="checkbox-3" name="fields[acceptContactByThirdParties]" checked="checked" type="checkbox">
                                 {% else %}

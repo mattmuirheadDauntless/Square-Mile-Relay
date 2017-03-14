@@ -62,7 +62,7 @@
                         <li>
                             <strong>{{ 'Date of Birth'|t }}</strong>
                             {% if currentUser.dateOfBirth|length %}
-                                <span>{{ craft.squareMileRelay.getAgeFromDate(currentUser.dateOfBirth) }}</span>
+                                <span>{{ currentUser.dateOfBirth|date('F j Y') }}</span>
                                 {% set completedFields = completedFields + 1 %}
                             {% else %}
                                 <span class="no-info">{{ 'Please enter...'|t }}</span>
