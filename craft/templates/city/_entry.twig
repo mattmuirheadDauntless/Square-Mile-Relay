@@ -310,11 +310,18 @@
                         {% endfor %}
                         </div>
                     {% else %}
-                         <div class="no-results">
-                            <h5>{{ 'Sorry!'|t }}</h5>
-                            <p>{{ 'There are currently no images for this event. Check back afterwards to see all the images from the race!'|t }}</p>
-                            <h6>{{ 'Or'|t }}</h6>
-                            <a href="{{ siteUrl }}gallery" class="btn btn-orange">{{ 'View the gallery'|t }}</a>
+                        {% set lastEvent = craft.entries.section('event').order('startDateTime desc').search('eventImages:*').first() %}
+                        <h4>{{ "Check out the highlights from"|t }} {{ lastEvent.title }}</h4>
+                        <div class="gallery-grid no-ajax">
+                        {% set images = lastEvent.eventImages %}
+                        {% for image in images.limit(20) %}
+                            {% set imageSmall = image.getUrl('newsThumb') %}
+                            {% set imageLarge = image.url %}
+
+                            <div class="img-item grid-item slider-modal-link {{ year }} {{ entry.title }}" data-toggle="modal" data-target="#media" data-src="{{ imageLarge }}" data-caption="{{ image.summaryText }}">
+                                <img src="{{ imageSmall }}" alt="Gallery Image">
+                            </div>
+                        {% endfor %}
                         </div>
                     {% endif %}
                 </div>
