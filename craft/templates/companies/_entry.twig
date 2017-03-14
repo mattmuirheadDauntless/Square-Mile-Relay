@@ -90,7 +90,7 @@
                                         {% if teamMembers|length %}
                                         <ul>
                                         {% for member in teamMembers %}
-                                            <li>{{ loop.index }}. {{ member.runner }} <span>{{ member.lapTime }}</span></li>
+                                            <li><span class="ellipsis" title="{{ member.runner }}">{{ loop.index }}. {{ member.runner }} </span> <span>{{ member.lapTime }}</span></li>
                                             {% if loop.index == 5 %}
                                             </ul>
                                             <ul>

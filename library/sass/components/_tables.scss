@@ -155,7 +155,15 @@
                                 width: 100%;
                                 font-size: 16px;
                                 span {
+                                    display: block;
                                     float: right;
+                                    &.ellipsis {
+                                        float: left;
+                                        width:unquote("calc(100% - 70px)");
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        white-space:nowrap;
+                                    }
                                 }
                             }
                         }
