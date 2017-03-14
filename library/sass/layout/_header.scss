@@ -72,6 +72,7 @@
                 text-transform: capitalize;
                 color: $white;
                 font-size: 16px;
+                text-shadow: 0 0 1px #000;
                 &:hover,
                 &:active,
                 &:focus,
@@ -122,6 +123,7 @@
                     a {
                         display: block;
                         text-align: center;
+                        text-shadow: none;
                         img {
                             transform: scale(1);
                             transition: all ease-in .3s .2s;
@@ -183,7 +185,7 @@
         z-index: 999;
         padding: 0 5px;
         display: block;
-        height: 40px;
+        height: 31px;
         border: 0;
         margin: 0;
         background: none;
@@ -425,16 +427,18 @@
     }
 }
 
-@media (min-width: 1201px) and (max-width: 1800px) {
+@media (min-width: 1201px) and (max-width: 1289px) {
     .ja .header .nav li a {
         font-size:12px;
         margin-right: 18px;
     }
 }
-@media (min-width: 1201px) and (max-width: 1800px) {
-    .header .nav li a {
-        font-size:12px;
+@media (min-width: 1290px) {
+    .ja .header .nav li a {
         margin-right: 18px;
-        text-shadow: 0 0 1px #000;
     }
+}
+.ja .header .header-account a {
+    padding-left:16px;
+    padding-right:16px;
 }
