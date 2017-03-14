@@ -1,6 +1,8 @@
 .partners {
     background-color: $white;
     padding: 30px 0 20px;
+    position: relative;
+    z-index:2;
     .slide-nav {
         position: absolute;
         top: 160px;

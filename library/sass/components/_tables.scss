@@ -105,6 +105,9 @@
                 padding: 20px 10px;
                 text-align: left;
                 font-size: 18px;
+                @media (max-width: 1199px) {
+                    padding:10px;
+                }
                 .no-results {
                     margin: 0 auto;
                     width: 100%;
@@ -128,6 +131,9 @@
                 &.table-expander {
                     transition: all ease-in .3s;
                     padding: 5px 20px 5px 40px;
+                    @media (max-width: 1199px) {
+                        padding:10px 15px;
+                    }
                     div {
                         transition: all ease-in .3s;
                         height: auto;
@@ -142,13 +148,13 @@
                         ul {
                             float: left;
                             margin: 0;
-                            margin-right: 80px;
+                            margin-right: 5%;
                             padding: 0;
                             width: 23%;
                             list-style: none;
 
-                            @include phone {
-                                width: calc(100vw - 80px);
+                            @media (max-width: 1199px) {
+                                width:unquote("calc(100vw - 30px)")
                             }
                             li {
                                 margin-bottom: 10px;
@@ -179,6 +185,9 @@
                 }
                 &:first-child {
                     padding-left: 40px;
+                    @media (max-width: 1199px) {
+                        padding:10px;
+                    }
                 }
                 img {
                     margin-right: 20px;
@@ -194,6 +203,15 @@
                     letter-spacing: 1px;
                     font-size: 22px;
                     font-weight: 800;
+                    @media (max-width: 1199px) {
+                        font-size:18px;
+                    }
+                    @media (max-width: 599px) {
+                        font-size:16px;
+                    }
+                    @media (max-width: 320px) {
+                        font-size:14px;
+                    }
                 }
                 .orange {
                     color: $lightorange;
@@ -323,6 +341,17 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.my-account {
+    .table-wrapper {
+        &:before {
+            top:57px;
+        }
+        &:after {
+            top:60px;
         }
     }
 }

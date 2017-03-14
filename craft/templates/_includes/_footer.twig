@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="wrapper-thin">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 col-xs-6">
                 <h4>{{ 'Race Locations'|t }}</h4>
                 {% set cities = craft.entries.section('city').order('title') %}
                 {% if cities | length %}
