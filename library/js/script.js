@@ -1001,12 +1001,12 @@ $('.btn-remove-member').click(function(event) {
 
     $enterRace = $('#enterRace');
     var $city = getParameterByName('city');
-    console.log('city: ' + $city);
+    console.log('city: 2' + $city);
 
     $enterRace.find('select').on('change', function() {
         if ( $(this).val().length > 0 ) {
-            $enterRace.find('.next').removeClass('btn-invalid');
-            $enterRace.find('.next').addClass('btn-orange');
+            $enterRace.find('div.next').removeClass('btn-invalid');
+            $enterRace.find('div.next').addClass('btn-orange');
             $('.slide[data-city='+ $(this).val() +'] #enterRaceFrame').attr('src', '/commerce/products?city=' + $(this).val());
             $city = $(this).val();
             console.log($city);
