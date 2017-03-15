@@ -1,0 +1,54 @@
+<div class="address-fieldset {{ class }}">
+    <h3>{{ title }}</h3>
+    {% if addresses and currentUser%}
+        <ul class="list-group address-select">
+        {% for address in addresses %}
+            <li class="list-group-item">
+                <label for="select{{ name }}Id">
+                    <input type="radio"
+                        id="select{{ name }}Id"
+                        name="{{ name }}Id"
+                        {% if attribute(cart,name~'Id') == address.id %}checked="checked"{% endif %}
+                        value="{{ address.id }}" />
+                    {% include 'checkout/_includes/address/address' %}
+                </label>
+
+                <a class="btn btn-primary btn-sm" href="{{ url('commerce/customer/addresses/edit?addressId='~ address.id ~'&redirect='~craft.request.path)}}">Edit</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="address-select">
+
+        {% if attribute(cart, name~'Id') %}
+            {% set addressHasErrors = attribute(cart, name).hasErrors() %}
+        {% else %}
+            {% set addressHasErrors = false %}
+        {% endif %}
+
+        <ul class="list-group new-address">
+            <li class="list-group-item">
+                {% if currentUser %}
+                    <div class="radio">
+                        {# If we have no addresses expand the 'New Address" fields by default it to being checked. If we have errors on the address also check and expand. #}
+                        <label for="new{{ name }}Id">
+                            <input type="radio" id="new{{ name }}Id" name="{{ name }}Id"
+                               {% if not addresses|length or addressHasErrors %}checked="checked"{% endif %} value=""/>
+                            <strong>{{ "New"|t }} {{ title }}</strong>
+                        </label>
+                    </div>
+                {% endif %}
+
+                <div class="body {% if currentUser %}hidden{% endif %}">
+                    {% if addressHasErrors %}<span class="flash">{{ cart.getErrors(name)|join }}</span><br>{% endif %}
+                    {% include 'checkout/_includes/address/form' with {
+                        'modelName': name,
+                        'address': attribute(cart, name)
+                    } %}
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+{% extends '_layout' %}
+
+{% block content %}
+
+    <!-- heading -->
+    <section class="error-404 thank-you" style="background-image: url('{{ defaults.errorImage.first().url }}');">
+        <div class="wrapper-thin">
+            <div class="title">
+                <h1>{{ 'Thank you'|t }}</h1>
+                <h2>{{ 'We received your message'|t }}</h2>
+                <h4>{{ "A member of our staff will be back to you shortly."|t }}</h4>
+                <a href="{{ siteUrl }}" class="btn btn-orange">{{ 'Back to Home'|t }}</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

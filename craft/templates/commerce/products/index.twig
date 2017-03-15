@@ -89,12 +89,12 @@
                         <br>
                     {% endfor %}
                     <li>
-                        Total<span>{{ cart.totalPrice|commerceCurrency(isoCode, convert=false) }}</span>
+                        {{ 'Total'|t }}<span>{{ cart.totalPrice|commerceCurrency(isoCode, convert=false) }}</span>
                         <br>
                     </li>
                 {% else %}
                 <li>
-                    Total<span>{{ cart.itemSubtotal|commerceCurrency(isoCode, convert=false) }}</span>
+                    {{ 'Total'|t }}<span>{{ cart.itemSubtotal|commerceCurrency(isoCode, convert=false) }}</span>
                     <br>
                     {# <span class="small">Excl. Tax</span> #}
                 </li>
@@ -111,7 +111,7 @@
             <br>
         </div>
 
-        <a href="/commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid flr">{{ 'Continue'|t }}</a>
+        <a href="{{ siteUrl }}commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid flr">{{ 'Continue'|t }}</a>
 
         <br>
 

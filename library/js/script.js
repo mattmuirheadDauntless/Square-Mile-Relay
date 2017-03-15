@@ -312,7 +312,7 @@ $(function(){
         if ( $raceLocation.length > 0 ) {
             $('#enterRaceLocation').val($raceLocation);
             $('.slide[data-slide=1] .next').trigger('click');
-            $('.slide[data-city='+ $raceLocation +'] #enterRaceFrame').attr('src', '/commerce/products?city='+$raceLocation);
+            $('.slide[data-city='+ $raceLocation +'] #enterRaceFrame').attr('src', 'commerce/products?city='+$raceLocation);
         }
     });
 

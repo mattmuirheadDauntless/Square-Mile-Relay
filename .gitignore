@@ -12,3 +12,6 @@ library/css
 web.config
 .htaccess
 /index.php
+.DS_*
+._.DS_*
+.phpintel
