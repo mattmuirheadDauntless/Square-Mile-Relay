@@ -259,7 +259,9 @@
                         <h4>{{ user.runner }}</h4>
                         <h4>{{ user.lapTime }}</h4>
                         {% endif %}
-                        <h5>{{ event.title }}</h5>
+                        {% if event is not null %}
+                            <h5>{{ event.title }}</h5>
+                        {% endif %}
                     </div>
                 {% endfor %}
             {% else %}
