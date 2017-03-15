@@ -1007,7 +1007,7 @@ $('.btn-remove-member').click(function(event) {
         if ( $(this).val().length > 0 ) {
             $enterRace.find('div.next').removeClass('btn-invalid');
             $enterRace.find('div.next').addClass('btn-orange');
-            $('.slide[data-city='+ $(this).val() +'] #enterRaceFrame').attr('src', window.location.pathname + 'commerce/products?city=' + $(this).val());
+            $('.slide[data-city='+ $(this).val() +'] #enterRaceFrame').attr('src', 'commerce/products?city=' + $(this).val());
             $city = $(this).val();
             console.log($city);
         }
