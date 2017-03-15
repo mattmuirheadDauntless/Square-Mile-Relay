@@ -312,17 +312,30 @@ $(function(){
         if ( $raceLocation != undefined && $raceLocation.length > 0 ) {
             $('#enterRaceLocation').val($raceLocation);
             $('.slide[data-slide=1] .next').trigger('click');
-            $('.slide[data-city='+ $raceLocation +'] #enterRaceFrame').attr('src', 'commerce/products?city='+$raceLocation);
+
+            var locale = $('body').data('locale');
+
+            if ( locale == undefined || (locale != undefined && locale.length <= 0) ) {
+                locale = '';
+            } else {
+                if ( locale == 'en_gb' ) {
+                    locale = '';
+                } else {
+                    locale = '/' + locale;
+                }
+            }
+
+            $('.slide[data-city='+ $raceLocation +'] #enterRaceFrame').attr('src', locale + 'commerce/products?city='+$raceLocation);
         }
     });
 
-    $('#enterRaceLocation').on('change', function() {
-        var $raceLocation = $(this).val(),
-            $btn = $(this).parent().parent().find('.btn');
-       $('.slide[data-city='+ $raceLocation +'] #enterRaceFrame').attr('src', '/commerce/products?city='+$raceLocation);
-       $btn.removeClass('btn-invalid');
-       $btn.addClass('btn-orange');
-    });
+    // $('#enterRaceLocation').on('change', function() {
+    //     var $raceLocation = $(this).val(),
+    //         $btn = $(this).parent().parent().find('.btn');
+    //    $('.slide[data-city='+ $raceLocation +'] #enterRaceFrame').attr('src', '/commerce/products?city='+$raceLocation);
+    //    $btn.removeClass('btn-invalid');
+    //    $btn.addClass('btn-orange');
+    // });
 
     //enter race modal controls
     $('.slide .next').click(function() {

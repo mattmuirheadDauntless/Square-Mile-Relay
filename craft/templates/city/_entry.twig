@@ -93,7 +93,8 @@
                                     {% if entry.taxName|length %}+ {{ entry.taxName }} {% endif %}
                                     {{ 'per team - 10 runners'|t }}
                                 </p>
-                                <a class="btn btn-orange enter-race-modal" data-city="{{ entry.slug }}" type="button" data-toggle="modal" data-target="#enterRace">{{ "Enter a team"|t }}</a>
+                                {# <a class="btn btn-orange enter-race-modal" data-city="{{ entry.slug }}" type="button" data-toggle="modal" data-target="#enterRace">{{ "Enter a team"|t }}</a> #}
+                                <a href="#" class="btn btn-orange enter-race-modal" type="button" data-toggle="modal" data-target="#enterRace">{{ "Enter a team"|t }}</a>
                                 {% if included|length %}
                                 <h3>{{ "What's included"|t }}:</h3>
                                 <ul>

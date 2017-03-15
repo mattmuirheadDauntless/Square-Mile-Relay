@@ -64,7 +64,8 @@
                             <h3 class="text-left">{{ ticketEvent.title }}</h3>
                             <p class="text-left">{{ 'How do you wish to pay?'|t }}</p>
 
-                            <div class="btn btn-orange btn-full-width next">{{ 'Invoice/Wire Transfer'|t }}</div>
+                            <div class="btn btn-orange btn-full-width next">{{ 'INVOICE/AMEX'|t }}</div>
+                            
                             <br><br><br>
                             {% if city.creditCardRedirectLink|length %}
                             <a href="{{ city.creditCardRedirectLink }}" target="_blank" class="btn btn-orange btn-full-width next">{{ 'Credit Card'|t }}*</a>
