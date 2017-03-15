@@ -121,10 +121,20 @@
         margin: 10px 0 20px;
         padding: 20px;
         width: 100%;
+
+        @include phone {
+            #emptyCart {
+                margin-top: 10px;
+            }
+        }
         .coupons {
             float: left;
             padding-right: 30px;
             width: 50%;
+
+            @include phone {
+                width: 100%;
+            }
             input:not([type=submit]) {
                 appearance: none;
                 border: 1px solid $lightgrey;

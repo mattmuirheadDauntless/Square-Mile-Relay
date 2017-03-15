@@ -46,7 +46,7 @@
                                 {% for item in order.lineItems %}
                                     {% if loop.first %}
                                         {% set product = craft.commerce.products.hasVariant({ sku: item.getSku() }).first() %}
-                                        {% if product.relatedCities[0].currencyIsoCode|length > 0 %}
+                                        {% if product is not null and product.relatedCities[0].currencyIsoCode|length > 0 %}
                                             {% set iso = product.relatedCities[0].currencyIsoCode %}
                                         {% endif %}
                                     {% endif %}

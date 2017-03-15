@@ -25,7 +25,9 @@
 
         <div class="news-item grid-item {{ catFilterList }}">
             <a href={{ newsItem.url }} class="cover-link"></a>
-            <div class="news-img" style="background-image: url({{ image.getUrl('newsThumb') }})"></div>
+            {% if image is not null %}
+                <div class="news-img" style="background-image: url({{ image.getUrl('newsThumb') }})"></div>
+            {% endif %}
             <p class="date">{{ newsItem.postDate | date("j F Y") }} at {{ newsItem.postDate | date("h:i A") }}</p>
             <h3>{{ newsItem.title }}</h3>
             {% if cats | length %}
