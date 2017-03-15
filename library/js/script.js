@@ -308,6 +308,7 @@ $(function(){
     $('.enter-race-modal').click(function() {
         var $this = $(this),
             $raceLocation = $this.attr('data-city');
+        console.log('I work like wind.');
 
         if ( $raceLocation != undefined && $raceLocation.length > 0 ) {
             $('#enterRaceLocation').val($raceLocation);
@@ -325,7 +326,7 @@ $(function(){
                 }
             }
 
-            $('.slide[data-city='+ $raceLocation +'] #enterRaceFrame').attr('src', locale + 'commerce/products?city='+$raceLocation);
+            $('.slide[data-city='+ $raceLocation +'] #enterRaceFrame').attr('src', locale + '/commerce/products?city='+$raceLocation);
         }
     });
 

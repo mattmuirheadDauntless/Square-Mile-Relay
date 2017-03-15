@@ -71,14 +71,13 @@
                             <a href="{{ city.creditCardRedirectLink }}" target="_blank" class="btn btn-orange btn-full-width next">{{ 'Credit Card'|t }}</a>
                             {% else %}
                             {% if city.slug == 'tokyo' %}
+                                <a class="btn btn-invalid btn-full-width next">{{ 'Credit Card'|t }}</a>
+                            {% else %}
                                 <a class="btn btn-invalid btn-full-width next">{{ 'Credit Card'|t }}*</a>
                                 <br>
                                 <p>
                                     * {{ 'This will take you to our online payment platform; this does not accept Amex cards.'|t }}
                                 </p>
-                            {% else %}
-                                <a class="btn btn-invalid btn-full-width next">{{ 'Credit Card'|t }}</a>
-                                <br>
                             {% endif %}
                             {% endif %}
 
