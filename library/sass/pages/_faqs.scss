@@ -24,7 +24,7 @@
         margin: 20px 0 30px;
         width: 100%;
     }
-    p {
+    p,ul,ol {
         margin: 0 0 30px;
         line-height: 27px;
         color: $grey;
@@ -50,18 +50,6 @@
         color: $darkgrey;
         font-size: 16px;
         font-weight: 700;
-    }
-    ol,ul {
-        margin:0 0 20px 20px;
-        padding:0;
-        li {
-            margin:0 0 5px 0;
-            padding:0 0 0 10px;
-            font-size: 18px;
-            li {
-                margin-left:15px;
-            }
-        }
     }
     blockquote {
         margin: 40px 0 50px;
