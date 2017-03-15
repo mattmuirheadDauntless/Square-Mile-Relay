@@ -117,10 +117,12 @@
                 h2 {
                     font-size: 33px;
                     margin-bottom: 18px;
+                    line-height: 37px;
                 }
                 h4 {
                     font-size: 17px;
                     margin-bottom: 25px;
+                    line-height: 27px;
                 }
 
                 a {
@@ -134,9 +136,25 @@
     }
 }
 
-.ja .hide-en_gb {
+.ja .hide-en {
     display: none;
 }
-.en .hide-ja {
+.en_gb .hide-ja {
     display: none;
+}
+
+.error-404.thank-you {
+    .wrapper-thin {
+        .title {
+            h1 {
+                font-size: 155px;
+                @include tablet-l {
+                    font-size: 90px;
+                }
+                @include phone {
+                    font-size: 60px;
+                }
+            }
+        }
+    }
 }

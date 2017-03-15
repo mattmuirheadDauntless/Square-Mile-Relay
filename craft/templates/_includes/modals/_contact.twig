@@ -36,7 +36,7 @@
 
                             {% if field.type == "PlainText" %}
                             <div class="input-wrapper">
-                                <input class="input" type="text" placeholder="{{ field.name }}">
+                                <input class="input" type="text" name="fields[{{ field.handle }}]" placeholder="{{ field.name }}">
                                 <label>{{ field.name }}</label>
                                 <i class="fa validation-icon" aria-hidden="true"></i>
                                 <div class="msg valid">{{' Great!'|t }}</div>
@@ -46,7 +46,7 @@
 
                             {% if field.type == "Dropdown" %}
                             <div class="input-wrapper select">
-                                <select class="input">
+                                <select class="input" name="fields[{{ field.handle }}]">
                                     <option value="select">- Select -</option>
                                     {% for option in field.settings.options %}
                                         <option value="{{ option.value }}">{{ option.label }}</option>
