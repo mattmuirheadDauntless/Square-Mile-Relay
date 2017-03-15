@@ -100,7 +100,7 @@
                             {% set year = event.startDateTime|date('Y') %}
                             {% set city = event.relatedCity.first() %}
                             {% for video in videos %}
-                                <div class="grid-item vid-item {% if city is not null %}{{ city.slug }}{% endif %} {{ year }} vid-modal-link" data-toggle="modal" data-target="#media" data-src="https://www.youtube.com/embed/{{ video.youtubeId }}?autoplay=1&controls=0&modestbranding=1&rel=0" data-caption="{{ video.summaryText }}">
+                                <div class="vid-item {% if city is not null %}{{ city.slug }}{% endif %} {{ year }} vid-modal-link" data-toggle="modal" data-target="#media" data-src="https://www.youtube.com/embed/{{ video.youtubeId }}?autoplay=1&controls=0&modestbranding=1&rel=0" data-caption="{{ video.summaryText }}">
                                     <img src={{ video.getUrl('newsthumb') }} alt="Video">
                                     <div class="play-video">
                                         <div class="play-btn">
