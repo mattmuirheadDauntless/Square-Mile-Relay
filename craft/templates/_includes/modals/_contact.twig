@@ -6,54 +6,66 @@
                 <h4 class="modal-title">{{ 'Contact Us'|t }}</h4>
             </div>
             <div class="modal-body">
-                <form method="post" action="" accept-charset="UTF-8">
-                    {{ getCsrfInput() }}
-                    <input type="hidden" name="action" value="contactForm/sendMessage">
-                    <input type="hidden" name="redirect" value="contact/thanks">
 
-                    <div class="input-wrapper">
-                        <input class="input" type="text" placeholder="{{ 'Your Name'|t }}">
-                        <label>{{ 'Your Name'|t }}</label>
-                        <i class="fa validation-icon" aria-hidden="true"></i>
-                        <div class="msg valid">{{' Great!'|t }}</div>
-                        <div class="msg in-valid">{{' That name is invalid.'|t }}</div>
-                    </div>
-                    <div class="input-wrapper">
-                        <input class="input" type="email" placeholder="{{ 'Email'|t }}">
-                        <label>{{ 'Email'|t }}</label>
-                        <i class="fa validation-icon" aria-hidden="true"></i>
-                        <div class="msg valid">{{' Great!'|t }}</div>
-                        <div class="msg in-valid">{{' That email is invalid.'|t }}</div>
-                    </div>
-                    <div class="input-wrapper">
-                        <input class="input" type="phone" placeholder="{{ 'Phone'|t }}">
-                        <label>{{ 'Phone'|t }}</label>
-                        <i class="fa validation-icon" aria-hidden="true"></i>
-                        <div class="msg valid">{{' Great!'|t }}</div>
-                        <div class="msg in-valid">{{' That phone number is invalid.'|t }}</div>
-                    </div>
-                    <div class="input-wrapper select">
-                        <select class="input">
-                            {% set cities = craft.entries.section('city') %}
-                            {% for city in cities %}
-                                <option value="{{ city.slug }}">{{ city.title }}</option>
+                {% macro errorList(errors) %}
+                    {% if errors %}
+                        <ul class="errors">
+                            {% for error in errors %}
+                                    <li>{{ error }}</li>
                             {% endfor %}
-                        </select>
-                        <label>{{ 'City you are interested in'|t }}</label>
-                        <i class="fa validation-icon" aria-hidden="true"></i>
-                        <div class="msg valid">{{' Great!'|t }}</div>
-                    </div>
-                    <div class="input-wrapper">
-                        <textarea class="input" placeholder="{{ 'Message'|t }}"></textarea>
-                        <label>{{ 'Message'|t }}</label>
-                        <i class="fa validation-icon" aria-hidden="true"></i>
-                        <div class="msg valid">{{' Great!'|t }}</div>
-                        <div class="msg in-valid">{{' That phone number is invalid.'|t }}</div>
-                    </div>
+                        </ul>
+                    {% endif %}
+                {% endmacro %}
+
+                {% set form = craft.sproutForms.form('contactUs') %}
+
+                {% set submittedEntry = craft.sproutForms.getEntry(form) %}
+
+                <form method="post" accept-charset="UTF-8">
+                    {{ getCsrfInput() }}
+                    <input type="hidden" name="action" value="sproutForms/entries/saveEntry">
+                    <input type="hidden" name="handle" value="{{ form.handle }}">
+                    <input type="hidden" name="redirect" value="{{ form.redirectUri }}">
+
+                    {% for tab in form.getFieldLayout().getTabs() %}
+                        {% set fields = tab.getFields() %}
+                        {% for field in fields %}
+                            {% set required = field.required %}
+                            {% set tabId = field.tabId %}
+                            {% set field = field.getField() %}
+
+                            {% if field.type == "PlainText" %}
+                            <div class="input-wrapper">
+                                <input class="input" type="text" placeholder="{{ field.name }}">
+                                <label>{{ field.name }}</label>
+                                <i class="fa validation-icon" aria-hidden="true"></i>
+                                <div class="msg valid">{{' Great!'|t }}</div>
+                                <div class="msg in-valid">{{' Your input is invalid.'|t }}</div>
+                            </div>
+                            {% endif %}
+
+                            {% if field.type == "Dropdown" %}
+                            <div class="input-wrapper select">
+                                <select class="input">
+                                    <option value="select">- Select -</option>
+                                    {% for option in field.settings.options %}
+                                        <option value="{{ option.value }}">{{ option.label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>{{ field.name }}</label>
+                                <i class="fa validation-icon" aria-hidden="true"></i>
+                                <div class="msg valid">{{' Great!'|t }}</div>
+                            </div>
+                            {% endif %}
+
+                        {% endfor %}
+                    {% endfor %}
+
                     <div class="button-group">
-                        <input type="submit" value="{{ 'Submit'|t }}" class="btn btn-orange btn-long">
+                        <input type="submit" class="btn btn-orange btn-long" value="Submit">
                     </div>
                 </form>
+
             </div>
         </div>
 

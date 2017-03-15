@@ -7,7 +7,7 @@
             <div class="address-select" data-address-id="{{ address.id }}">
                 <div class="actions">
                     <ul>
-                        <li><a class="edit" href="{{ url('commerce/customer/addresses/edit?addressId='~ address.id ~'&redirect='~craft.request.path)}}">Edit</a>
+                        <li><a class="edit" href="{{ url('commerce/customer/addresses/edit?addressId='~ address.id ~'&redirect='~craft.request.path)}}">{{ "Edit"|t }}</a>
                         </li>
                     </ul>
                 </div>

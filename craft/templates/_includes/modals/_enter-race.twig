@@ -64,15 +64,15 @@
                             <h3 class="text-left">{{ ticketEvent.title }}</h3>
                             <p class="text-left">{{ 'How do you wish to pay?'|t }}</p>
 
-                            <div class="btn btn-orange btn-full-width next">{{ 'Invoice/Amex'|t }}</div>
+                            <div class="btn btn-orange btn-full-width next">{{ 'Invoice/Wire Transfer'|t }}</div>
                             <br><br><br>
                             {% if city.creditCardRedirectLink|length %}
                             <a href="{{ city.creditCardRedirectLink }}" target="_blank" class="btn btn-orange btn-full-width next">{{ 'Credit Card'|t }}*</a>
                             {% else %}
-                            <a class="btn btn-invalid btn-full-width next">{{ 'Credit Card'|t }}*</a>
+                            <a class="btn btn-invalid btn-full-width next">{{ 'Credit Card'|t }}</a>
                             {% endif %}
 
-                            <p class="small text-left">* {{ raceEnterModal.paymentMethodNote }}</p>
+                            {# <p class="small text-left">* {{ raceEnterModal.paymentMethodNote }}</p> #}
                         </div>
                     {% else %}
                         <div class="slide country" data-city="{{ city.slug }}" data-slide="3">
@@ -82,7 +82,7 @@
                                 {{ "Sign up below for updates about the next race in"|t }} {{ city.title }} {{ 'and we’ll let you know when entries are open!'|t }}</p>
                             {{ city.registerInterestForm|raw }}
                             {% else %}
-                            <p>{{ "We currently haven't announced any races for this city."|t }}</p>
+                            <p>{{ "We are yet to announce the race date for"|t }} {{ city.title }}.</p>
                             <a href="{{ city.url }}" class="btn btn-orange">{{ 'View past races'|t }}</a>
                             {% endif %}
                         </div>

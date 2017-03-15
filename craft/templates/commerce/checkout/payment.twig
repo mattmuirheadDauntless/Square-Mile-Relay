@@ -83,7 +83,7 @@
 
 					<input type="hidden" name="action" value="commerce/cart/updateCart">
 					<input type="hidden" name="redirect"
-						   value="commerce/checkout/payment">
+						   value="{{ siteUrl }}commerce/checkout/payment">
 					{{ getCsrfInput() }}
 
 					<label for="paymentMethodId">{{ 'Select a payment method:'|t }}</label>
@@ -101,8 +101,8 @@
 			{% if cart.paymentMethodId %}
 				<form method="POST" class="form-horizontal">
 					<input type="hidden" name="action" value="commerce/payments/pay"/>
-					<input type="hidden" name="redirect" value="/commerce/customer/order?number={number}"/>
-					<input type="hidden" name="cancelUrl" value="/commerce/checkout/payment"/>
+					<input type="hidden" name="redirect" value="{{ siteUrl }}commerce/customer/order?number={number}"/>
+					<input type="hidden" name="cancelUrl" value="commerce/checkout/payment"/>
 					{{ getCsrfInput() }}
 
 					<div class="row">

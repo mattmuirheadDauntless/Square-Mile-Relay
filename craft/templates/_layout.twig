@@ -86,7 +86,7 @@
                                 <div class="locations-wrapper">
                                     {% cache globally %}
                                     {% for city in cities %}
-                                        <li><a href={{ city.url }}>
+                                        <li><a href="{{ city.url }}">
                                             {% set cityIcon = city.cityIcon.first() %}
                                             {% if cityIcon is not null %}
                                                 <img src="{{ cityIcon.getUrl('newsThumb') }}">
@@ -199,7 +199,7 @@
 
     {% include "_includes/_footer" %}
 
-    {% if currentUser %}
+    {# {% if currentUser %}
 
         {% set waiverAgreed = 0 %}
         {% set savedWaivers = currentUser.acceptedWaivers %}
@@ -216,7 +216,7 @@
                 <span>&times;</span>
             </div>
         {% endif %}
-    {% endif %}
+    {% endif %} #}
 
     {% cache globally %}
     <!-- TrackDuck -->

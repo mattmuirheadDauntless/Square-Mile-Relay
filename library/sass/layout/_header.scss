@@ -178,18 +178,18 @@
         }
     }
     .language-select {
+        background: rgba(0,0,0,0.6);
+        color: $white;
         position: fixed;
-        top: 20px;
+        top: 23px;
         right: 120px;
         font-size: 14px;
-        color: #ccc;
         z-index: 999;
         padding: 0 5px;
         display: block;
-        height: 33px;
+        height: 29px;
         border: 0;
         margin: 0;
-        background: none;
         cursor: pointer;
         transition: all 0.3s linear;
         &:hover {
