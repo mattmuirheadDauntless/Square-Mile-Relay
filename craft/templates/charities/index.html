@@ -1,0 +1,117 @@
+{#
+ # News index template
+ # -------------------
+ #
+ # This template is loaded whenever http://example.com/news is
+ # requested, because it is located at news/index.html in your
+ # craft/templates/ folder.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://craftcms.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+
+{% block content %}
+	{% include "_includes/_page-header" %}
+    {% include "_includes/_cta-banner" %}
+
+    {% cache %}
+    <section class="filters">
+        <div class="filters-btn">
+            <p>{{ 'filter'|t }}</p><i class="fa fa-chevron-down" aria-hidden="true"></i>
+            <div class="view-all">
+                <div class="btn btn-orange-hollow filter" data-filter="*">{{ 'View All'|t }}</div>
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="filter-dropdown">
+            {% set events = craft.entries.section('event') %}
+            {% set years = [] %}
+
+            {% if events | length %}
+                {% for event in events %}
+                    {% set year = event.startDateTime | date('Y') %}
+                    {% if year in years %}
+                    {% else %}
+                        {% set years = years | merge([year]) %}
+                    {% endif %}
+                {% endfor %}
+
+                <ul class="filter-group small">
+                    {% for year in years %}
+                        <li class="filter" data-filter=".{{ year }}">{{ year }}</li>
+                    {% endfor %}
+                </ul>
+
+            {% endif %}
+
+            {% set cities = craft.entries.section('city').order('title') %}
+
+            {% if cities | length %}
+            <ul class="filter-group large">
+                {% for city in cities %}
+                    <li class="filter" data-filter=".{{ city.slug }}">{{ city.title }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </section>
+
+
+    {% set charities = craft.entries.section('charity').find() %}
+    {% if charities | length %}
+    <section class="charities grid">
+
+        <div class="isotope-no-items inactive">
+            <h2>{{ 'Sorry!'|t }}</h2>
+            <h3>{{ "There aren't any results for your filter search"|t }}</h3>
+            <div class="btn btn-black filter" data-filter="*">{{ "View all categories"|t }}</div>
+        </div>
+
+        {% for charity in charities %}
+            {% set image = charity.companyLogo.first() %}
+            {% set relatedEvents = craft.entries.section('event').relatedTo(charity) %}
+            {% set cities = [] %}
+            {% set years = [] %}
+
+            {% for event in relatedEvents %}
+
+                {% set city = event.relatedCity.first().slug %}
+                {% if city in cities %}
+                {% else %}
+                    {% set cities = cities | merge([city]) %}
+                {% endif %}
+
+                {% set year = event.startDateTime | date('Y') %}
+                {% if year in years %}
+                {% else %}
+                    {% set years = years | merge([year]) %}
+                {% endif %}
+
+            {% endfor %}
+
+            {% set yearsFilters = years | join(' ') %}
+            {% set citiesFilters = cities | join(' ') %}
+
+            <div class="charities-item grid-item {{ yearsFilters }} {{ citiesFilters }}">
+                <a href={{ charity.url }} class="cover-link"></a>
+                {% if image|length %}
+                <div class="img-container" style="background-image: url({{ image.getUrl('newsThumb') }})"></div>
+                {% endif %}
+                <h3>{{ charity.title }}</h3>
+                <h4>{{ charity.subTitle }}</h4>
+                {% if relatedEvents | length %}
+                    {% for event in relatedEvents %}
+                        <h5>{{ event.title }}</h5>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+    </section>
+    {% endif %}
+
+    {% endcache %}
+
+{% endblock %}
