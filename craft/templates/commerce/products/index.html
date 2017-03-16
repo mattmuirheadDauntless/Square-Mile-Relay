@@ -1,0 +1,122 @@
+{% extends 'commerce/_layouts/main' %}
+{% block main %}
+<div class="modal-header">
+    <div class="back back-to-cities"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
+    <h4 class="modal-title">Team Packages</h4>
+</div>
+{% set iso = 'GBP' %}
+{% set citySelected = craft.request.getParam('city') %}
+{% if citySelected|length %}
+    {% for product in craft.commerce.products.search(citySelected).order('title desc') %}
+
+        {% set iso = product.relatedCities.first().currencyIsoCode %}
+        <form method="POST">
+            <input type="hidden" name="action" value="commerce/cart/updateCart">
+            <input type="hidden" name="redirect" value="commerce/products?city={{ citySelected }}">
+            {{ getCsrfInput() }}
+            <select name="purchasableId" class="hide">
+                {%- for purchasable in product.variants -%}
+                    <option {% if purchasable.stock <= 0 and purchasable.unlimitedStock == false %}disabled {% endif %} value="{{ purchasable.purchasableId }}">{{ purchasable.description }} {{ purchasable.salePrice|commerceCurrency(iso) }}</option>
+                {%- endfor -%}
+            </select>
+
+            {# {% set sku = "" %}
+            {% for variant in product.variants %}
+                {% set sku = variant.sku %}
+            {% endfor %}
+
+            {% set inCart = 0 %}
+            {% for item in cart.lineItems %}
+                {% if item.sku == sku %}
+                    {% set inCart = item.qty %}
+                {% endif %}
+            {% endfor %} #}
+
+            <div class="package">
+                <div class="description">
+                    <h5>{{ product.title }}</h5>
+                    <p>{{ product.bodyContent }}</p>
+                </div>
+                <div class="quantity">
+                    <input type="number" name="qty" value="1">
+                </div>
+                <div class="price">
+                    <p>{{ product.defaultPrice|commerceCurrency(iso) }} {# <br/>Excl. Tax #}</p>
+                    {# <p>In cart: {{ inCart }}</p> #}
+                    {% if product.unlimitedStock or (product.unlimitedStock == false and product.totalStock > 0 ) %}
+                        <button type="submit" class="btn btn-black btn-tiny">{{ "Add to cart"|t }}</button>
+                    {% else %}
+                        <p>{{ "Out of Stock"|t }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+
+    {% endfor %}
+
+    <div class="checkout">
+        {# Update Coupon form uses the single update controller action: #}
+        <div class="coupons">
+            {% if cart.getError('couponCode') %}<span class="flash">{{ cart.getError('couponCode') }}</span>{% endif %}
+            <form method="POST">
+                <input type="hidden" name="action" value="commerce/cart/updateCart">
+                <input type="hidden" name="redirect" value="commerce/products?city={{ citySelected }}">
+                {{ getCsrfInput() }}
+                <span class="{% if cart.getError('couponCode') %}has-error{% endif %}">
+                <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ "Enter Coupon Code"|t }}">
+                </span>
+                <input type="submit" class="btn btn-full-width btn-orange" value="{% if cart.couponCode %}Change{% else %}Apply{% endif %} Coupon"/>
+            </form>
+        </div>
+
+        <div class="totals">
+            <ul>
+                {% if currentUser %}
+                    {% for adjustment in cart.adjustments %}
+                        <li>
+                            {% if adjustment.type == 'Discount' %}
+                                Discount
+                                <span>{{ adjustment.amount|commerceCurrency(iso, convert=false) }}</span>
+                            {% else %}
+                                {{ adjustment.type }} {{ adjustment.name }} ({{ adjustment.description }})<span>{{ adjustment.amount|commerceCurrency(iso, convert=false) }}</span>
+                            {% endif %}
+                        </li>
+                        <br>
+                    {% endfor %}
+                    <li>
+                        Total<span>{{ cart.totalPrice|commerceCurrency(iso, convert=false) }}</span>
+                        <br>
+                    </li>
+                {% else %}
+                <li>
+                    Total<span>{{ cart.itemSubtotal|commerceCurrency(iso, convert=false) }}</span>
+                    <br>
+                    {# <span class="small">Excl. Tax</span> #}
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="terms input-wrapper checkbox">
+            <input type="checkbox" class="input{% if cart.lineItems|length %} active{% endif %}" name="terms" id="terms">
+            <label for="terms"></label>
+            <p>I accept the <a href="{{ siteUrl }}terms-and-conditions">Terms &amp; Conditions</a></p>
+            <br>
+        </div>
+
+        <a href="/commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid flr">Continue</a>
+
+        <br>
+
+        <form method="POST">
+            <input type="hidden" name="action" value="commerce/cart/removeAllLineItems"/>
+            <input type="hidden" name="redirect" value="commerce/products?city={{ citySelected }}"/>
+            {{ getCsrfInput() }}
+            <input class="btn btn-empty btn-black fll" id="emptyCart" type="submit" value="Empty the Cart"/>
+        </form>
+
+    </div>
+
+{% endif %}
+
+{% endblock %}

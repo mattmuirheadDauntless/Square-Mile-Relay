@@ -9,21 +9,18 @@
     <div class="row" class="addresses-body">
         <div class="twelve columns">
 
-            <div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>{{ 'Back'|t }}</span></div>
+            <div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
 
             <form method="post">
 
                 <input type="hidden" name="action" value="commerce/cart/updateCart">
-                <input type="hidden" name="redirect" value="{{ siteUrl }}commerce/checkout/payment"/>
-
-                <input type="hidden" name="shippingAddressId" value="1">
-                <input type="hidden" name="billingAddressId" value="1">
+                <input type="hidden" name="redirect" value="commerce/checkout/payment"/>
 
                 {{ getCsrfInput() }}
 
                 <div class="hide">
                     {% if not cart.email %}
-                    <label for="">{{ 'Email'|t }}</label>
+                    <label for="">Email</label>
                     <input class="u-full-width" type="text" value="{{ currentUser.email }}" name="email"
                            placeholder="email@site.com"/>
 
@@ -37,7 +34,7 @@
                     name: 'billingAddress'
                 } %}
 
-                <input type="submit" class="btn btn-orange flr" value="{{ "Continue"|t }}">
+                <input type="submit" class="btn btn-orange flr" value="Continue">
 
             </form>
 

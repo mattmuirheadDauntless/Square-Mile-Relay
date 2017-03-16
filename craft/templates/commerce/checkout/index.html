@@ -1,0 +1,183 @@
+{% if currentUser %}
+    {% redirect 'commerce/checkout/addresses' %}
+{% endif %}
+
+{% extends 'commerce/_layouts/checkout' %}
+
+{% block content %}
+{% set citySelected = craft.request.getParam('city') %}
+
+    <div class="row">
+        <div class="six columns">
+
+            <div class="back" onclick="window.history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span>Back</span></div>
+
+            <div class="modal-header">
+                <h4 class="modal-title">Existing User</h4>
+            </div>
+
+            <form method="post" accept-charset="UTF-8">
+
+                {{ getCsrfInput() }}
+
+                <input type="hidden" name="action" value="users/login">
+                <input type="hidden" name="redirect" value="commerce/checkout/addresses">
+
+                <div class="input-wrapper">
+                    <input id="loginName" class="input" type="email" name="loginName" placeholder="Email"
+                           value="{{ craft.session.rememberedUsername }}">
+                    <label for="loginName">Email</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">Great!</div>
+                    <div class="msg in-valid">That email is invalid.</div>
+                </div>
+
+                <div class="input-wrapper">
+                    <input id="password" class="input" type="password" name="password" placeholder="Password">
+                    <label for="password">Password</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">Great!</div>
+                    <div class="msg in-valid">That username is invalid.</div>
+                </div>
+
+                <label>
+                    <input type="checkbox" name="rememberMe" value="1">
+                    Remember me
+                </label>
+
+                <input type="submit" value="Login" class="btn btn-orange flr"/>
+
+                <p><a href="#" class="send-to-forgot-password">Forget your password?</a></p>
+            </form>
+        </div>
+
+        <div class="six columns">
+
+            <div class="modal-header">
+                <h4 class="modal-title">New User?</h4>
+            </div>
+
+            <form method="post" accept-charset="UTF-8">
+                {{ getCsrfInput() }}
+                <input type="hidden" name="action" value="users/saveUser">
+                <input type="hidden" name="redirect" value="commerce/checkout/addresses">
+
+                {% macro errorList(errors) %}
+                    {% if errors %}
+                        <ul class="errors">
+                            {% for error in errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endmacro %}
+
+                {% from _self import errorList %}
+
+                <div class="input-wrapper">
+                    <input id="firstName" type="text" class="input" name="firstName" placeholder="First Name"
+                    {%- if account is defined %} value="{{ account.firstName }}"{% endif -%}>
+                    <label for="firstName">First Name</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">Great!</div>
+                    <div class="msg in-valid">That name is invalid.</div>
+                </div>
+
+                {% if account is defined %}
+                    {{ errorList(account.getErrors('firstName')) }}
+                {% endif %}
+
+                <div class="input-wrapper">
+                    <input id="lastName" type="text" class="input" name="lastName" placeholder="Last Name"
+                    {%- if account is defined %} value="{{ account.lastName }}"{% endif -%}>
+                    <label for="lastName">Last Name</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">Great!</div>
+                    <div class="msg in-valid">That name is invalid.</div>
+                </div>
+
+                {% if account is defined %}
+                    {{ errorList(account.getErrors('lastName')) }}
+                {% endif %}
+
+                <div class="input-wrapper select">
+                    {% set companies = craft.entries.section('company') %}
+                    {% if companies|length %}
+                        <select name="fields[relatedCompany][]" id="relatedCompany" class="input">
+                            {% for company in companies %}
+                                <option value="{{ company.id }}">{{ company.title }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+                    <label for="relatedCompany">Company</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">Great!</div>
+                    <div class="msg in-valid">That company is invalid.</div>
+                </div>
+
+                {# <div class="input-wrapper checkbox">
+                    <input id="newCompany" type="checkbox" class="input" name="newCompany">
+                    <label for="newCompany"></label>
+                    <p>Is your company new to the Square Mile Relay?</p>
+                </div>
+
+                <div class="input-wrapper new-company-name hide">
+                    <input id="newCompanyName" type="text" class="input" name="newCompanyName" placeholder="Company Name">
+                    <label for="newCompanyName">Company Name</label>
+                </div> #}
+
+                {% if account is defined %}
+                    {{ errorList(account.getErrors('addressCountry')) }}
+                {% endif %}
+
+                <div class="input-wrapper select">
+                    <select name="fields[addressCountry]" id="addressCountry" class="input">
+                        {% set countries = craft.commerce.countriesList %}
+                        {% set modelName = modelName is defined ? modelName : 'address' %}
+                        {% set model = address is defined ? address : null %}
+                        {% for key, option in countries %}
+                            {% set optionValue = (model ? model.countryId : '') %}
+                            <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="addressCountry">Country</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">Great!</div>
+                    <div class="msg in-valid">That country is invalid.</div>
+                </div>
+
+                {% if account is defined %}
+                    {{ errorList(account.getErrors('addressCountry')) }}
+                {% endif %}
+
+                <div class="input-wrapper">
+                    <input id="email" type="email" class="input" name="email" placeholder="Email"
+                    {%- if account is defined %} value="{{ account.email }}"{% endif %}>
+                    <label for="email">Email</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">Great!</div>
+                    <div class="msg in-valid">That username is invalid.</div>
+                </div>
+
+                {% if account is defined %}
+                    {{ errorList(account.getErrors('email')) }}
+                {% endif %}
+
+                <div class="input-wrapper">
+                    <input id="password" type="password" class="input" name="password" placeholder="Password">
+                    <label for="password">Password</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">Great!</div>
+                    <div class="msg in-valid">That username is invalid.</div>
+                </div>
+
+                {% if account is defined %}
+                    {{ errorList(account.getErrors('password')) }}
+                {% endif %}
+
+                <input type="submit" value="Register" class="btn btn-orange flr">
+            </form>
+
+        </div>
+    </div>
+{% endblock %}
