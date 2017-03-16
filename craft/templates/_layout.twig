@@ -251,6 +251,20 @@
     <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/plugins-min.js"></script>
     <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js?ver=001"></script>
 
+    <script>
+        $(document).ready(function() {
+            //STG Exit Click
+            $('.credit-card').on('click', function() {
+                var event = $(this).data('event');
+
+                dataLayer.push({
+                    'event': 'stgTrack',
+                    'cityEventTitle': event
+                });
+            });
+        });
+    </script>
+
     {% block jsFooter %}{% endblock %}
 
     {% endcache %}
