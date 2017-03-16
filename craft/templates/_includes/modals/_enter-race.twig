@@ -72,19 +72,17 @@
 
                             <br><br><br>
                             {% if city.creditCardRedirectLink|length %}
-                            <a href="{{ city.creditCardRedirectLink }}" target="_blank" class="btn btn-orange btn-full-width next">{{ 'Credit Card'|t }}</a>
+                                <a href="{{ city.creditCardRedirectLink }}" target="_blank" class="btn btn-orange btn-full-width next credit-card" data-event="{{ ticketEvent.title }}">{{ 'Credit Card'|t }}</a>
                             {% else %}
-                            {% if city.slug == 'tokyo' %}
-                                <a class="btn btn-invalid btn-full-width next">{{ 'Credit Card'|t }}</a>
-                            {% else %}
-
-                                <a class="btn btn-invalid btn-full-width next">{{ 'Credit Card'|t }}*</a>
-                                <br>
-                                <p class="tiny-text">
-                                    * {{ 'This will take you to our online payment platform; this does not accept Amex cards.'|t }}
-                                </p>
-                            {% endif %}
-
+                                {% if city.slug == 'tokyo' %}
+                                    <a class="btn btn-invalid btn-full-width next credit-card" data-event="{{ ticketEvent.title }}">{{ 'Credit Card'|t }}</a>
+                                {% else %}
+                                    <a class="btn btn-invalid btn-full-width next credit-card" data-event="{{ ticketEvent.title }}">{{ 'Credit Card'|t }}*</a>
+                                    <br>
+                                    <p class="tiny-text">
+                                        * {{ 'This will take you to our online payment platform; this does not accept Amex cards.'|t }}
+                                    </p>
+                                {% endif %}
                             {% endif %}
 
                             {# <p class="small text-left">* {{ raceEnterModal.paymentMethodNote }}</p> #}
