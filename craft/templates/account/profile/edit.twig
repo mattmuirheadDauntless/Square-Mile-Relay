@@ -89,7 +89,6 @@
                                     label: 'Contact Number',
                                     name:  'fields[phoneNumber]',
                                     placeholder: 'Contact Number',
-                                    pattern: '^\s*\(?(020[7,8]{1}\)?[ ]?[1-9]{1}[0-9{2}[ ]?[0-9]{4})|(0[1-8]{1}[0-9]{3}\)?[ ]?[1-9]{1}[0-9]{2}[ ]?[0-9]{3})\s*$',
                                     value: currentUser.phoneNumber
                                 }) }}
                             </div>
@@ -266,7 +265,7 @@
                                     <div class="input-wrapper edit-element checkbox{% if loop.index == 1 %} first{% endif %}">
                                         <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col2]" value="{{ event.title }}">
                                         <input type="hidden" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]">
-                                        <input class="input" id="checkbox-{{ loop.index - 1 }}" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]" type="checkbox" {% if waiverAgreed == 1 %} checked{% endif %}>
+                                        <input class="input" id="checkbox-{{ loop.index - 1 }}" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]" type="checkbox" {% if waiverAgreed == 1 %} checked{% endif %} required>
 
                                         <label for="checkbox-{{ loop.index - 1 }}"></label>
                                         <p>{{ 'I agree to the event'|t }} ({{ event.title }}) <a href="{{ waiver.url }}" target="_blank">{{ 'Injury Waiver Terms and Conditions'|t }}</a></p>
