@@ -74,3 +74,11 @@
     url('../fonts/AvenirNextMForBBG-Heavy.woff') format('woff'),
     url('../fonts/AvenirNextMForBBG-Heavy.ttf') format('truetype');
 }
+
+@font-face {
+    font-family: 'MSGothic';
+    font-weight: 900;
+    font-style: normal;
+
+    src: url('../fonts/ms-pgothic.ttf') format('truetype');
+}
