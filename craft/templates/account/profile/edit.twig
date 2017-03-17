@@ -116,34 +116,30 @@
                                 }) }}
                             </div>
 
+                            <div class="input-wrapper edit-element select required">
+                                {% set companies = craft.entries.section('company').limit(null).order('title asc') %}
+                                {% set companyId = currentUser.relatedCompany.first() ? currentUser.relatedCompany.first().id : null %}
+                                {{ formFields.dropdown({
+                                    id:         'relatedCompany',
+                                    label:      'Company',
+                                    name:       'fields[relatedCompany][]',
+                                    placeholder: 'Company',
+                                    value:      companyId,
+                                    options:    companies,
+                                    optionKeys: ['id', 'title'],
+                                    required:   true
+                                }) }}
+                            </div>
 
-
-                                        <div class="input-wrapper edit-element select">
-                                            {% set companies = craft.entries.section('company').limit(null).order('title asc') %}
-                                            {% set companyId = currentUser.relatedCompany.first() ? currentUser.relatedCompany.first().id : null %}
-                                            {{ formFields.dropdown({
-                                                id:         'relatedCompany',
-                                                label:      'Company',
-                                                name:       'fields[relatedCompany][]',
-                                                placeholder: 'Company',
-                                                value:      companyId,
-                                                options:    companies,
-                                                optionKeys: ['id', 'title']
-                                            }) }}
-                                        </div>
-
-                                        <div class="input-wrapper edit-element">
-                                            {{ formFields.input({
-                                                id:    'jobTitle',
-                                                label: 'Job Title',
-                                                name:  'fields[jobTitle]',
-                                                placeholder: 'Job Title',
-                                                value: currentUser.jobTitle
-                                            }) }}
-                                        </div>
-
-
-
+                            <div class="input-wrapper edit-element">
+                                {{ formFields.input({
+                                    id:    'jobTitle',
+                                    label: 'Job Title',
+                                    name:  'fields[jobTitle]',
+                                    placeholder: 'Job Title',
+                                    value: currentUser.jobTitle
+                                }) }}
+                            </div>
 
                             <div class="input-wrapper edit-element no-validation">
                                 {% set shirtSizes = craft.fields.getFieldByHandle('shirtSize').getAttribute('settings').options %}
