@@ -76,9 +76,12 @@
 }
 
 @font-face {
-    font-family: 'MSGothic';
+    font-family: 'MS PGothic';
     font-weight: 900;
     font-style: normal;
 
-    src: url('../fonts/ms-pgothic.ttf') format('truetype');
+    src: url('../fonts/ms-pgothic.eot');
+    src: url('../fonts/ms-pgothic.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/ms-pgothic.woff') format('woff'),
+    url('../fonts/ms-pgothic.ttf') format('truetype');
 }
