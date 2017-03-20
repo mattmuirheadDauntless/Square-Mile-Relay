@@ -16,6 +16,10 @@ body {
     padding: 0;
     font-family: $bodyFont;
     font-weight: 400;
+
+    &.ja {
+        font-family: $jaBodyFont;
+    }
 }
 
 body {
