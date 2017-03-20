@@ -1,0 +1,5 @@
+VISIT WEBSITE {title} {{entry.subTitle}}
+
+Dear {author.firstName},
+
+{{entry.bodyContent}} squaremilerelay.com
