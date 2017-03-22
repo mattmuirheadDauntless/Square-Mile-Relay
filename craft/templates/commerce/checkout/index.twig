@@ -101,9 +101,10 @@
                 {% endif %}
 
                 <div class="input-wrapper select">
-                    {% set companies = craft.entries.section('company') %}
+                    {% set companies = craft.entries.section('company').order('title asc') %}
                     {% if companies|length %}
                         <select name="fields[relatedCompany][]" id="relatedCompany" class="input">
+                            <option value="" selected="selected">Please select Your company</option>
                             {% for company in companies %}
                                 <option value="{{ company.id }}">{{ company.title }}</option>
                             {% endfor %}
