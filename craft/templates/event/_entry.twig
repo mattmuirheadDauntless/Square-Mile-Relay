@@ -95,7 +95,7 @@
     <section class="races-by-year-nav">
         <h3>{{ 'View Races by Year'|t }}</h3>
         <ul>
-            {% for event in relatedEvents %}
+            {% for event in relatedEvents|reverse %}
                 {% if event.id == entry.id %}
                     <li class="active" data-year="{{ event.startDateTime|date('Y') }}">{{ event.startDateTime|date('Y') }}</li>
                 {% else %}

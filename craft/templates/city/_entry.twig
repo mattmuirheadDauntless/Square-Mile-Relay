@@ -142,7 +142,7 @@
         <h3>{{ 'View Races by Year'|t }}</h3>
         <ul>
             {% set count = 0 %}
-            {% for event in relatedEvents %}
+            {% for event in relatedEvents|reverse %}
                 {% set count = count + 1 %}
                 {% if count == 1 %}
                     <li class="active" data-year="{{ event.startDateTime|date('Y') }}">{{ event.startDateTime|date('Y') }}</li>
@@ -159,7 +159,7 @@
     <section class="races-by-year">
 
         {% set count = 0 %}
-        {% for event in relatedEvents %}
+        {% for event in relatedEvents|reverse %}
             {% set count = count + 1 %}
             {% set relatedPartners = event.relatedPartners %}
             {% set relatedCharities = event.relatedCharity %}
