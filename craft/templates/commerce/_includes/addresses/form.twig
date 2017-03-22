@@ -96,8 +96,8 @@
 			{% endif %}
         </div>
 
-        <div class="input-wrapper">
-            <input type="text" id="{{ modelName }}-phone" class="input" name="{{ modelName }}[phone]" value="{{ model ? model.phone : '' }}" placeholder="{{ 'Phone'|t }}">
+        <div class="input-wrapper required">
+            <input type="text" id="{{ modelName }}-phone" class="input" name="{{ modelName }}[phone]" value="{{ model ? model.phone : '' }}" placeholder="{{ 'Phone'|t }}" required>
             <label for="{{ modelName }}-phone">{{ 'Phone'|t }}</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">{{ 'Great!'|t }}</div>
