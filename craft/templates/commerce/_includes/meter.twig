@@ -1,18 +1,18 @@
 {% set steps = [
 {
-label: "Start Order",
+label: {{ "Start Order"|t }},
 url: 'commerce/checkout'
 },
 {
-label: "Address",
+label: {{ "Address"|t }},
 url: 'commerce/checkout/addresses'
 },
 {
-label: "Shipping",
+label: {{ "Shipping"|t }},
 url: 'commerce/checkout/shipping'
 },
 {
-label: "Payment",
+label: {{ "Payment"|t }},
 url: 'commerce/checkout/payment'
 }
 ] %}

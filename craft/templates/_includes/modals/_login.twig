@@ -15,7 +15,7 @@
                             name:        'loginName',
                             type:         'email',
                             value:       craft.session.rememberedUsername,
-                            placeholder: 'Email'
+                            placeholder: {{ 'Email'|t }}
                         }) }}
                         <label>{{ "Email"|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
@@ -27,7 +27,7 @@
                             id:          'password',
                             name:        'password',
                             type:        'password',
-                            placeholder: 'Password'
+                            placeholder: {{ 'Password'|t }}
                         }) }}
                         <label>{{ 'Password'|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>

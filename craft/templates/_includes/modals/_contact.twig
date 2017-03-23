@@ -47,7 +47,7 @@
                             {% if field.type == "Dropdown" %}
                             <div class="input-wrapper select">
                                 <select class="input" name="fields[{{ field.handle }}]">
-                                    <option value="select">- Select -</option>
+                                    <option value="select">- {{ 'Select'|t }} -</option>
                                     {% for option in field.settings.options %}
                                         <option value="{{ option.value }}">{{ option.label }}</option>
                                     {% endfor %}
@@ -62,7 +62,7 @@
                     {% endfor %}
 
                     <div class="button-group">
-                        <input type="submit" class="btn btn-orange btn-long" value="Submit">
+                        <input type="submit" class="btn btn-orange btn-long" value="{{ 'Submit'|t }}">
                     </div>
                 </form>
 

@@ -17,7 +17,7 @@
     <div class="col-sm-4">
         {{ formFields.input({
             id:    'title',
-            label: 'Team Name',
+            label: {{ 'Team Name'|t }},
             name:  'title',
             value: title
         }) }}
@@ -26,7 +26,7 @@
             {{ formFields.dropdown({
                 id:         'teamCaptain',
                 name:       'fields[teamCaptain][]',
-                label:      'Team Leader',
+                label:      {{ 'Team Leader'|t }},
                 value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
                 options:    craft.users.group('member'),
                 optionKeys: [
@@ -42,7 +42,7 @@
     <div class="col-sm-4">
         {{ formFields.textArea({
             id:    'summaryText',
-            label: 'Team Description',
+            label: {{ 'Team Description'|t }},
             name:  'fields[summaryText]',
             rows:  9,
             value: summaryText

@@ -53,8 +53,8 @@
                     </div>
 
                     <ul class="runners">
-                        <li>{{ 'Runners Invited'|t }} <span>{{ teamMembers }}/10</span></li>
-                        <li>{{ 'Registration Completed'|t }} <span>{{ activeMembers }}/10</span></li>
+                        <li>{{ 'Runners Invited'|t }} <span>{{ teamMembers }}/{{ '10'|t }}</span></li>
+                        <li>{{ 'Registration Completed'|t }} <span>{{ activeMembers }}/{{ '10'|t }}</span></li>
                     </ul>
 
                     <ul class="tasks">
@@ -84,9 +84,9 @@
                     <div class="input-wrapper">
                         {{ formFields.input({
                             id:    'title',
-                            label: 'Team Name',
+                            label: {{ 'Team Name'|t }},
                             name:  'title',
-                            placeholder: 'Team Name',
+                            placeholder: {{ 'Team Name'|t }},
                             value: title
                         }) }}
                     </div>
@@ -94,9 +94,9 @@
                     <div class="input-wrapper">
                         {{ formFields.input({
                             id:    'slug',
-                            label: 'Team Slug',
+                            label: {{ 'Team Slug'|T }},
                             name:  'slug',
-                            placeholder: 'Team Slug',
+                            placeholder: {{ 'Team Slug'|t }},
                             value: slug
                         }) }}
                     </div>
@@ -106,7 +106,7 @@
                             {{ formFields.dropdown({
                                 id:         'teamCaptain',
                                 name:       'fields[teamCaptain][]',
-                                label:      'Team Captain',
+                                label:      {{ 'Team Captain'|t }},
                                 value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
                                 options:    team.teamMembers,
                                 optionKeys: [
@@ -125,10 +125,10 @@
                     <div class="input-wrapper textarea">
                         {{ formFields.textArea({
                             id:    'summaryText',
-                            label: 'Team Description',
+                            label: {{ 'Team Description'|t }},
                             name:  'fields[summaryText]',
                             rows:  4,
-                            placeholder: 'Team Description',
+                            placeholder: {{ 'Team Description'|t }},
                             value: team.summaryText
                         }) }}
                     </div>
@@ -206,7 +206,7 @@
                                         id:          'firstName',
                                         name:        'firstName',
                                         value:       user.firstName,
-                                        placeholder: 'First Name'
+                                        placeholder: {{ 'First Name'|t }}
                                     }) }}
                                 </td>
                                 <td valign="center">
@@ -214,7 +214,7 @@
                                         id:          'lastName',
                                         name:        'lastName',
                                         value:       user.lastName,
-                                        placeholder: 'Last Name'
+                                        placeholder: {{ 'Last Name'|t }}
                                     }) }}
                                 </td>
                                 <td valign="center">
@@ -222,7 +222,7 @@
                                         id:   'email',
                                         name: 'email',
                                         value: user.email,
-                                        placeholder: 'Email'
+                                        placeholder: {{ 'Email'|t }}
                                     }) }}
                                 </td>
                                 <td valign="center">
@@ -253,21 +253,21 @@
                                     {{ formFields.input({
                                         id:   'firstName',
                                         name: 'newMembers['~ i ~'][firstName]',
-                                        placeholder: 'First Name'
+                                        placeholder: {{ 'First Name'|t }}
                                     }) }}
                                 </td>
                                 <td>
                                     {{ formFields.input({
                                         id:   'lastName',
                                         name: 'newMembers['~ i ~'][lastName]',
-                                        placeholder: 'Last Name'
+                                        placeholder: {{ 'Last Name'|t }}
                                     }) }}
                                 </td>
                                 <td>
                                     {{ formFields.input({
                                         id:   'email',
                                         name: 'newMembers['~ i ~'][email]',
-                                        placeholder: 'Email'
+                                        placeholder: {{ 'Email'|T }}
                                     }) }}
                                 </td>
                                 <td>
