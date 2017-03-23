@@ -10,12 +10,13 @@
                     {{ getCsrfInput() }}
                     <input type="hidden" name="action" value="users/login">
                     <div class="input-wrapper">
+                        {% set emailText =  'Email'|t %}
                         {{ formFields.input({
                             id:          'loginName',
                             name:        'loginName',
                             type:         'email',
                             value:       craft.session.rememberedUsername,
-                            placeholder: {{ 'Email'|t }}
+                            placeholder: emailText
                         }) }}
                         <label>{{ "Email"|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
@@ -23,11 +24,12 @@
                         <div class="msg in-valid">{{ 'Your email is incorrect.'|t }}</div>
                     </div>
                     <div class="input-wrapper">
+                        {% set passwordText = 'Password'|t %}
                         {{ formFields.input({
                             id:          'password',
                             name:        'password',
                             type:        'password',
-                            placeholder: {{ 'Password'|t }}
+                            placeholder:  passwordText
                         }) }}
                         <label>{{ 'Password'|t }}</label>
                         <i class="fa validation-icon" aria-hidden="true"></i>
