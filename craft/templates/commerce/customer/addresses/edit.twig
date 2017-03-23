@@ -23,7 +23,7 @@
 
         {% include 'commerce/_includes/addresses/form' %}
 
-        <input type="submit" class="btn btn-orange flr" value="Save Address">
+        <input type="submit" class="btn btn-orange flr" value="{{ 'Save Address'|t }}">
     </form>
     {% if redirect %}
         <a href="/{{ redirect }}">{{ 'Cancel'|t }}</a>
