@@ -81,41 +81,44 @@
                     {% set title = team is defined ? team.title : '' %}
                     {% set summaryText = team is defined ? team.summaryText : '' %}
 
-                    <div class="input-wrapper">
-                        {{ formFields.input({
-                            id:    'title',
-                            label: 'Team Name',
-                            name:  'title',
-                            placeholder: 'Team Name',
-                            value: title
-                        }) }}
-                    </div>
+                    {% if captain|length and currentUser.id == captain.id %}
 
-                    <div class="input-wrapper">
-                        {{ formFields.input({
-                            id:    'slug',
-                            label: 'Team Slug',
-                            name:  'slug',
-                            placeholder: 'Team Slug',
-                            value: slug
-                        }) }}
-                    </div>
-
-                    <div class="input-wrapper">
-                        {% if currentUser %}
-                            {{ formFields.dropdown({
-                                id:         'teamCaptain',
-                                name:       'fields[teamCaptain][]',
-                                label:      'Team Captain',
-                                value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
-                                options:    team.teamMembers,
-                                optionKeys: [
-                                    'id',
-                                    'firstName'
-                                ]
+                        <div class="input-wrapper">
+                            {{ formFields.input({
+                                id:    'title',
+                                label: 'Team Name',
+                                name:  'title',
+                                placeholder: 'Team Name',
+                                value: title
                             }) }}
-                        {% endif %}
-                    </div>
+                        </div>
+                    
+                        <div class="input-wrapper">
+                            {{ formFields.input({
+                                id:    'slug',
+                                label: 'Team Slug',
+                                name:  'slug',
+                                placeholder: 'Team Slug',
+                                value: slug
+                            }) }}
+                        </div>
+
+                        <div class="input-wrapper">
+                            {% if currentUser %}
+                                {{ formFields.dropdown({
+                                    id:         'teamCaptain',
+                                    name:       'fields[teamCaptain][]',
+                                    label:      'Team Captain',
+                                    value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
+                                    options:    team.teamMembers,
+                                    optionKeys: [
+                                        'id',
+                                        'firstName'
+                                    ]
+                                }) }}
+                            {% endif %}
+                        </div>
+
 
                     <div class="input-wrapper edit-element">
                         <label for="teamPhoto" class="active">{{ 'Team Photo'|t }}</label>
@@ -134,6 +137,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-orange btn-long">{{ 'Save'|t }}</button>
+                    {% endif %}
                 </form>
 
             </div>
@@ -141,7 +145,6 @@
 
         {% if currentUser and team is defined %}
             {% set users = team.teamMembers.status('null') %}
-            {% set captain = team.teamCaptain.first() %}
             {% set count = 0 %}
             <div class="table-wrapper runners-list">
                 <h2>{{ 'Runners & Race Order'|t }}</h2>
@@ -191,16 +194,22 @@
                             {% set count = count + 1 %}
                             <tr class="s-drag">
                                 <td>
-                                    {% if captain|length and user.id == captain.id %}
+                                    {% if captain|length and currentUser.id == captain.id %}
                                         <span class="captain">C</span>
                                         <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
                                     {% endif %}
                                 </td>
-                                <td valign="center" class="s-handle">
-                                    <i class="fa fa-bars"></i>
-                                    <input type="hidden" name="teamMembers[]" value="{{ user.id }}">
-                                    <span class="count">{{ count }}</span>
-                                </td>
+                                {% if captain|length and currentUser.id == captain.id %}
+                                    <td valign="center" class="s-handle">
+                                        <i class="fa fa-bars"></i>
+                                        <input type="hidden" name="teamMembers[]" value="{{ user.id }}">
+                                        <span class="count">{{ count }}</span>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <span class="count">{{ count }}</span>
+                                    </td>
+                                {% endif %}
                                 <td valign="center">
                                     {{ formFields.input({
                                         id:          'firstName',
@@ -242,13 +251,17 @@
                             {% set count = count + 1 %}
                             <tr class="s-drag">
                                 <td></td>
-                                <td class="s-handle">
-                                    <div class="dragtooltip">
-                                        <i class="fa fa-bars"></i>
-                                        <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
-                                    </div>
-                                    <span class="count">{{ count }}</span>
-                                </td>
+                                {% if captain|length and currentUser.id == captain.id %}
+                                    <td class="s-handle">
+                                        <div class="dragtooltip">
+                                            <i class="fa fa-bars"></i>
+                                            <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
+                                        </div>
+                                        <span class="count">{{ count }}</span>
+                                    </td>
+                                {% else %}
+                                    <td><span class="count">{{ count }}</span></td>
+                                {% endif %}
                                 <td>
                                     {{ formFields.input({
                                         id:   'firstName',
