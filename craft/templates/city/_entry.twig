@@ -65,7 +65,7 @@
         <div class="wrapper-thin">
             <div class="title">
                 <h1>{{ entry.title }}</h1>
-                {% if date|length > 1 and date|date('U') > "now"|date('U') %}
+                {% if date|date('U') > now|date('U') %}
                     <h2>{{ 'Next Race:'|t }} {{ date }}</h2>
                 {% endif %}
             </div>
