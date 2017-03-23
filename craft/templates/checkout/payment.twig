@@ -24,7 +24,7 @@
 
                             {{ formFields.dropdown({
                                 id:     'paymentMethod',
-                                label:  'Payment Method',
+                                label:  {{ 'Payment Method'|t }},
                                 name:   'paymentMethodId',
                                 options: craft.commerce.paymentMethods,
                                 value:   cart.paymentMethodId,
@@ -126,7 +126,7 @@
                                 <div class="col-sm-12">
                                     {{ formFields.input({
                                         id:    'cardNumber',
-                                        label: 'Card Number',
+                                        label: {{ 'Card Number'|t }},
                                         name:  'number',
                                         type:  'number',
                                         value: formValues.number
@@ -163,11 +163,11 @@
                                     <div class="col-sm-6">
                                         {{ formFields.input({
                                             id:    'cvv',
-                                            label: 'CVV',
+                                            label: {{ 'CVV'|t }},
                                             name:  'cvv',
                                             type:  'number',
                                             value: formValues.cvv,
-                                            placeholder: 'CVV'
+                                            placeholder: {{ 'CVV'|t }}
                                         }) }}
                                     </div>
                                 </div>

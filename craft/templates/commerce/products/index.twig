@@ -107,7 +107,7 @@
         <div class="terms input-wrapper checkbox">
             <input type="checkbox" class="input{% if cart.lineItems|length %} active{% endif %}" name="terms" id="terms">
             <label for="terms"></label>
-            <p>{{ "I accept the"|t }} <a href="{{ product.relatedEvent.first().relatedTermsAndConditions.first().getUrl() }}" target="_blank">{{ "Terms & Conditions"|t }}</a></p>
+            <p class="checkbox-paragraph">{{ "I accept the"|t }} <a href="{{ product.relatedEvent.first().relatedTermsAndConditions.first().getUrl() }}" target="_blank">{{ "Terms & Conditions"|t }}</a></p>
             <br>
         </div>
 
