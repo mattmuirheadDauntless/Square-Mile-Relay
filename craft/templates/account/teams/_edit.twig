@@ -82,31 +82,34 @@
                     {% set summaryText = team is defined ? team.summaryText : '' %}
 
                     <div class="input-wrapper">
+                        {% set vv = 'Team Name'|t %}
                         {{ formFields.input({
                             id:    'title',
-                            label: {{ 'Team Name'|t }},
+                            label: vv,
                             name:  'title',
-                            placeholder: {{ 'Team Name'|t }},
+                            placeholder: vv,
                             value: title
                         }) }}
                     </div>
 
                     <div class="input-wrapper">
+                        {% set vv = 'Team Slug'|t %}
                         {{ formFields.input({
                             id:    'slug',
-                            label: {{ 'Team Slug'|T }},
+                            label: vv,
                             name:  'slug',
-                            placeholder: {{ 'Team Slug'|t }},
+                            placeholder: vv,
                             value: slug
                         }) }}
                     </div>
 
                     <div class="input-wrapper">
+                        {% set vv = 'Team Captain'|t %}
                         {% if currentUser %}
                             {{ formFields.dropdown({
                                 id:         'teamCaptain',
                                 name:       'fields[teamCaptain][]',
-                                label:      {{ 'Team Captain'|t }},
+                                label:      vv,
                                 value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
                                 options:    team.teamMembers,
                                 optionKeys: [
@@ -123,12 +126,13 @@
                     </div>
 
                     <div class="input-wrapper textarea">
+                        {% set vv = 'Team Description'|t %}
                         {{ formFields.textArea({
                             id:    'summaryText',
-                            label: {{ 'Team Description'|t }},
+                            label: vv,
                             name:  'fields[summaryText]',
                             rows:  4,
-                            placeholder: {{ 'Team Description'|t }},
+                            placeholder: vv,
                             value: team.summaryText
                         }) }}
                     </div>
@@ -202,27 +206,31 @@
                                     <span class="count">{{ count }}</span>
                                 </td>
                                 <td valign="center">
+                                    {% set vv = 'First Name'|t %}
                                     {{ formFields.input({
                                         id:          'firstName',
                                         name:        'firstName',
                                         value:       user.firstName,
-                                        placeholder: {{ 'First Name'|t }}
+                                        placeholder: vv
                                     }) }}
                                 </td>
                                 <td valign="center">
+                                    {% set vv = 'Last Name'|t %}
                                     {{ formFields.input({
                                         id:          'lastName',
                                         name:        'lastName',
                                         value:       user.lastName,
-                                        placeholder: {{ 'Last Name'|t }}
+                                        placeholder: vv
                                     }) }}
                                 </td>
                                 <td valign="center">
+                                    {% set vv = 'Email'|t %}
+
                                     {{ formFields.input({
                                         id:   'email',
                                         name: 'email',
                                         value: user.email,
-                                        placeholder: {{ 'Email'|t }}
+                                        placeholder: vv
                                     }) }}
                                 </td>
                                 <td valign="center">
@@ -250,24 +258,30 @@
                                     <span class="count">{{ count }}</span>
                                 </td>
                                 <td>
+                                    {% set vv = 'First Name'|t %}
+
                                     {{ formFields.input({
                                         id:   'firstName',
                                         name: 'newMembers['~ i ~'][firstName]',
-                                        placeholder: {{ 'First Name'|t }}
+                                        placeholder: vv
                                     }) }}
                                 </td>
                                 <td>
+                                    {% set vv = 'Last Name'|t %}
+
                                     {{ formFields.input({
                                         id:   'lastName',
                                         name: 'newMembers['~ i ~'][lastName]',
-                                        placeholder: {{ 'Last Name'|t }}
+                                        placeholder: vv
                                     }) }}
                                 </td>
                                 <td>
+                                    {% set vv = 'Email'|t %}
+
                                     {{ formFields.input({
                                         id:   'email',
                                         name: 'newMembers['~ i ~'][email]',
-                                        placeholder: {{ 'Email'|T }}
+                                        placeholder: vv
                                     }) }}
                                 </td>
                                 <td>

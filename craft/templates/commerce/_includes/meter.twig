@@ -1,18 +1,23 @@
+{% set vv = 'Start Order'|t %}
+{% set aa = 'Address'|t %}
+{% set bb = 'Shipping'|t %}
+{% set cc = 'Payment'|t %}
+
 {% set steps = [
 {
-label: {{ "Start Order"|t }},
+label: vv,
 url: 'commerce/checkout'
 },
 {
-label: {{ "Address"|t }},
+label: aa,
 url: 'commerce/checkout/addresses'
 },
 {
-label: {{ "Shipping"|t }},
+label: bb,
 url: 'commerce/checkout/shipping'
 },
 {
-label: {{ "Payment"|t }},
+label: cc,
 url: 'commerce/checkout/payment'
 }
 ] %}

@@ -15,18 +15,22 @@
     {%- endif -%}
 
     <div class="col-sm-4">
+        {% set vv = 'Team Name'|t %}
+
         {{ formFields.input({
             id:    'title',
-            label: {{ 'Team Name'|t }},
+            label: vv,
             name:  'title',
             value: title
         }) }}
 
         {% if currentUser %}
+            {% set vv = 'Team Leader'|t %}
+
             {{ formFields.dropdown({
                 id:         'teamCaptain',
                 name:       'fields[teamCaptain][]',
-                label:      {{ 'Team Leader'|t }},
+                label:      vv,
                 value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
                 options:    craft.users.group('member'),
                 optionKeys: [
@@ -40,9 +44,11 @@
     </div>
 
     <div class="col-sm-4">
+        {% set vv = 'Team Description'|t %}
+
         {{ formFields.textArea({
             id:    'summaryText',
-            label: {{ 'Team Description'|t }},
+            label: vv,
             name:  'fields[summaryText]',
             rows:  9,
             value: summaryText

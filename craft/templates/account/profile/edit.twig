@@ -53,51 +53,56 @@
                         <div class="form">
 
                             <div class="input-wrapper edit-element required">
+                                {% set vv = 'First Name'|t %}
                                 {{ formFields.input({
                                     id:    'firstName',
-                                    label: {{ 'First Name'|t }},
+                                    label: vv,
                                     name:  'firstName',
-                                    placeholder: {{ 'First Name'|t }},
+                                    placeholder: vv,
                                     value: currentUser.firstName
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element required">
+                                {% set vv = 'Last Name'|t %}
                                 {{ formFields.input({
                                     id:    'lastName',
-                                    label: {{ 'Last Name'|t }},
+                                    label: vv,
                                     name:  'lastName',
-                                    placeholder: {{ 'Last Name'|t }},
+                                    placeholder: vv,
                                     value: currentUser.lastName
                                 }) }}
                             </div>
 
                              <div class="input-wrapper edit-element required">
+                                 {% set vv = 'Email'|t %}
                                 {{ formFields.input({
                                     id:    'email',
-                                    label: {{ 'Email'|t }},
+                                    label: vv,
                                     name:  'email',
                                     type: 'email',
-                                    placeholder: {{ 'Email'|t }},
+                                    placeholder: vv,
                                     value: currentUser.email
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
+                                {% set vv = 'Contact Number'|t %}
                                 {{ formFields.input({
                                     id:    'phoneNumber',
-                                    label: {{ 'Contact Number'|t }},
+                                    label: vv,
                                     name:  'fields[phoneNumber]',
-                                    placeholder: {{ 'Contact Number'|t }},
+                                    placeholder: vv,
                                     value: currentUser.phoneNumber
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element select">
                                 {% set genders = craft.fields.getFieldByHandle('gender').getAttribute('settings').options %}
+                                {% set vv = 'Gender'|t %}
                                 {{ formFields.dropdown({
                                     id:         'gender',
-                                    label:      {{ 'Gender'|t }},
+                                    label:      vv,
                                     name:       'fields[gender]',
                                     value:      currentUser.gender,
                                     options:    genders,
@@ -106,12 +111,13 @@
                             </div>
 
                             <div class="input-wrapper edit-element select">
+                                {% set vv = 'Date of birth'|t %}
                                 {{ formFields.input({
                                     id:    'dateOfBirth',
-                                    label: {{ 'Date of birth'|t }},
+                                    label: vv,
                                     name:  'fields[dateOfBirth]',
                                     type:  'date',
-                                    placeholder: {{ 'Date of Birth'|t }},
+                                    placeholder: vv,
                                     value: currentUser.dateOfBirth
                                 }) }}
                             </div>
@@ -119,11 +125,12 @@
                             <div class="input-wrapper edit-element select required">
                                 {% set companies = craft.entries.section('company').limit(null).order('title asc') %}
                                 {% set companyId = currentUser.relatedCompany.first() ? currentUser.relatedCompany.first().id : null %}
+                                {% set vv = 'Company'|t %}
                                 {{ formFields.dropdown({
                                     id:         'relatedCompany',
-                                    label:      {{ 'Company'|t }},
+                                    label:      vv,
                                     name:       'fields[relatedCompany][]',
-                                    placeholder: {{ 'Company'|t }},
+                                    placeholder: vv,
                                     value:      companyId,
                                     options:    companies,
                                     optionKeys: ['id', 'title'],
@@ -132,20 +139,22 @@
                             </div>
 
                             <div class="input-wrapper edit-element">
+                                {% set vv = 'Job Title'|t %}
                                 {{ formFields.input({
                                     id:    'jobTitle',
-                                    label: {{ 'Job Title'|t }},
+                                    label: vv,
                                     name:  'fields[jobTitle]',
-                                    placeholder: {{ 'Job Title'|t }},
+                                    placeholder: vv,
                                     value: currentUser.jobTitle
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element no-validation">
                                 {% set shirtSizes = craft.fields.getFieldByHandle('shirtSize').getAttribute('settings').options %}
+                                {% set vv = 'Shirt Size'|t %}
                                 {{ formFields.dropdown({
                                     id:         'shirtSize',
-                                    label:      {{ 'Shirt Size'|t }},
+                                    label:      vv,
                                     name:       'fields[shirtSize]',
                                     value:      currentUser.shirtSize,
                                     options:    shirtSizes,
@@ -170,52 +179,57 @@
                         <div class="form">
 
                             <div class="input-wrapper edit-element">
+                                {% set vv = 'Address Line 1'|t %}
                                {{ formFields.input({
                                     id:    'address1',
-                                    label: {{ 'Address Line 1'|t }},
+                                    label: vv,
                                     name:  'fields[address1]',
-                                    placeholder: {{ 'Address 1'|t }},
+                                    placeholder: vv,
                                     value: currentUser.address1
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
+                                {% set vv = 'Address Line 2'|t %}
                                 {{ formFields.input({
                                     id:    'address2',
-                                    label: {{ 'Address Line 2'|t }},
+                                    label: vv,
                                     name:  'fields[address2]',
-                                    placeholder: {{ 'Address 2'|t }},
+                                    placeholder: vv,
                                     value: currentUser.address2
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
+                                {% set vv = 'City'|t %}
                                 {{ formFields.input({
                                     id:    'addressCity',
-                                    label: {{ 'City'|t }},
+                                    label: vv,
                                     name:  'fields[addressCity]',
-                                    placeholder: {{ 'City'|t }},
+                                    placeholder: vv,
                                     value: currentUser.addressCity
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
+                                {% set vv = 'Postcode / Zip Code'|t %}
                                 {{ formFields.input({
                                     id:    'addressPostcode',
-                                    label: {{ 'Postcode / Zip Code'|t }},
+                                    label: vv,
                                     name:  'fields[addressPostCode]',
-                                    placeholder: {{ 'Postcode'|t }},
+                                    placeholder: vv,
                                     pattern: '((\d{5}([\-]\d{4})?)|[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2})',
                                     value: currentUser.addressPostCode
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element select">
+                                {% set vv = 'Country'|t %}
                                 {{ formFields.dropdown({
                                     id:         'addressCountry',
-                                    label:      {{ 'Country'|T }},
+                                    label:      vv,
                                     name:       'fields[addressCountry]',
-                                    placeholder: {{ 'Country'|T }},
+                                    placeholder: vv,
                                     value:      currentUser.addressCountry,
                                     options:    craft.commerce.getCountries(),
                                     optionKeys: ['iso', 'name']
@@ -232,12 +246,13 @@
                         <div class="form">
 
                             <div class="input-wrapper edit-element full-width textarea">
+                                {% set vv = 'Why are you interested in taking part?'|t %}
                                 {{ formFields.textArea({
                                     id:    'whyAreYouInterested',
-                                    label: {{ 'Why are you interested in taking part?'|t }},
+                                    label: vv,
                                     name:  'fields[whyAreYouInterested]',
                                     rows:  5,
-                                    placeholder: {{ 'Why are you interested in taking part?'|t }},
+                                    placeholder: vv,
                                     value: currentUser.whyAreYouInterested
                                 }) }}
                             </div>

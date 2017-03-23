@@ -21,10 +21,11 @@
                             <input type="hidden" name="redirect"
                                    value="commerce/checkout/payment">
                             {{ getCsrfInput() }}
+                            {% set vv = 'Payment Method'|t %}
 
                             {{ formFields.dropdown({
                                 id:     'paymentMethod',
-                                label:  {{ 'Payment Method'|t }},
+                                label:  vv,
                                 name:   'paymentMethodId',
                                 options: craft.commerce.paymentMethods,
                                 value:   cart.paymentMethodId,
@@ -124,9 +125,11 @@
 
                                 <!-- Card Number -->
                                 <div class="col-sm-12">
-                                    {{ formFields.input({
+                                {% set vv = 'Card Number'|t %}
+
+                                {{ formFields.input({
                                         id:    'cardNumber',
-                                        label: {{ 'Card Number'|t }},
+                                        label: vv,
                                         name:  'number',
                                         type:  'number',
                                         value: formValues.number
@@ -161,13 +164,15 @@
                                 <!-- CVV -->
                                 <div class="">
                                     <div class="col-sm-6">
+                                        {% set vv = 'CVV'|t %}
+
                                         {{ formFields.input({
                                             id:    'cvv',
-                                            label: {{ 'CVV'|t }},
+                                            label: vv,
                                             name:  'cvv',
                                             type:  'number',
                                             value: formValues.cvv,
-                                            placeholder: {{ 'CVV'|t }}
+                                            placeholder: vv
                                         }) }}
                                     </div>
                                 </div>
