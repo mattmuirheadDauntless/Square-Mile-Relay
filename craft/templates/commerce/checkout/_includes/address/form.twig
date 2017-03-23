@@ -8,7 +8,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <label for="{{ modelName }}-firstName">First Name *</label>
+            <label for="{{ modelName }}-firstName">{{ 'First Name'|t }} *</label>
             <div>
                 <input
                     type="text"
@@ -22,7 +22,7 @@
             {% endif %}
         </div>
         <div class="col-sm-6">
-            <label for="{{ modelName }}-lastName">Last Name *</label>
+            <label for="{{ modelName }}-lastName">{{ 'Last Name'|t }} *</label>
             <div>
                 <input
                     type="text"
@@ -39,7 +39,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <label for="{{ modelName }}-businessName">Business Name</label>
+            <label for="{{ modelName }}-businessName">{{ 'Business Name'|t }}</label>
             <div>
                 <input
                     type="text"
@@ -53,7 +53,7 @@
             {% endif %}
         </div>
         <div class="col-sm-6">
-            <label for="{{ modelName }}-businessTaxId">Business Tax ID</label>
+            <label for="{{ modelName }}-businessTaxId">{{ 'Business Tax ID'|t }}</label>
             <div>
                 <input
                     type="text"
@@ -70,7 +70,7 @@
 
     <div class="row">
         <div class="col-sm-3">
-            <label for="{{ modelName }}-address1">Address 1</label>
+            <label for="{{ modelName }}-address1">{{ 'Address 1'|t }}</label>
             <div>
                 <input
                     type="text"
@@ -85,7 +85,7 @@
         </div>
 
         <div class="col-sm-3">
-            <label for="{{ modelName }}-address2">Address 2</label>
+            <label for="{{ modelName }}-address2">{{ 'Address 2'|t }}</label>
             <div>
                 <input
                     type="text"
@@ -100,7 +100,7 @@
         </div>
 
         <div class="col-sm-3">
-            <label for="{{ modelName }}-city">City</label>
+            <label for="{{ modelName }}-city">{{ 'City'|t }}</label>
             <div>
                 <input
                     type="text"
@@ -115,7 +115,7 @@
         </div>
 
         <div class="col-sm-3">
-            <label for="{{ modelName }}-zipCode">Zip Code</label>
+            <label for="{{ modelName }}-zipCode">{{ 'Zip Code'|t }}</label>
             <div>
                 <input
                     type="text"
@@ -132,7 +132,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <label for="{{ modelName }}-phone">Phone</label>
+            <label for="{{ modelName }}-phone">{{ 'Phone'|t }}</label>
             <div>
                 <input
                     type="text"
@@ -147,7 +147,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="{{ modelName }}-alternativePhone">Alternative Phone</label>
+            <label for="{{ modelName }}-alternativePhone">{{ 'Alternative Phone'|t }}</label>
             <div>
                 <input
                     type="text"
@@ -164,7 +164,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <label for="{{ modelName }}-countryId">Country *</label>
+            <label for="{{ modelName }}-countryId">{{ 'Country'|t }} *</label>
             <div>
                 <select class="address-country form-control" name="{{ modelName }}[countryId]">
                     {% for key, option in countries %}
@@ -179,7 +179,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="{{ modelName }}-state">State</label>
+            <label for="{{ modelName }}-state">{{ 'State'|t }}</label>
             {% set options = (model and states[model.countryId] is defined ? states[model.countryId] : []) %}
             <div>
                 <select id="{{ modelName }}-stateId" data-modelname="{{ modelName }}" class="address-stateId form-control {% if options|length == 0 or (model and model.stateName) %}hidden{% endif %}" name="{{ modelName }}[stateValue]">

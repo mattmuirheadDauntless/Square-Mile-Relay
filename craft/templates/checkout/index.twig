@@ -20,14 +20,14 @@
                     id:          'loginName',
                     name:        'loginName',
                     value:       craft.session.rememberedUsername,
-                    placeholder: 'Email'
+                    placeholder: {{ 'Email'|t }}
                 }) }}
 
                 {{ formFields.input({
                     id:          'password',
                     name:        'password',
                     type:        'password',
-                    placeholder: 'Password'
+                    placeholder: {{ 'Password'|t }}
                 }) }}
 
                 <div class="form-group">
