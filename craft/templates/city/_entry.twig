@@ -289,9 +289,9 @@
                     {% set images = event.eventImages %}
                     {% set prevYear = 0 %}
                     {% if images|length == 0 %}
-                        {% set prevYear = 1 %}
+                        {% set prevYear = year - 1 %}
                         {% set city = event.relatedCity.first().title %}
-                        {% set lastEvent = craft.entries.section('event').search( city ~ " -" ~ year ).first %}
+                        {% set lastEvent = craft.entries.section('event').search( city ~ " - " ~ prevYear ).first %}
                         {% set images = lastEvent.eventImages %}
                     {% endif %}
 
