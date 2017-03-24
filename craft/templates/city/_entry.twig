@@ -287,16 +287,18 @@
                     <h3 title="{{ 'Gallery'|t }}">{{ 'Gallery'|t }}</h3>
 
                     {% set images = event.eventImages %}
+                    {% set lastYearRace = false %}
                     {% set prevYear = 0 %}
                     {% if images|length == 0 %}
                         {% set prevYear = year - 1 %}
                         {% set city = event.relatedCity.first().title %}
-                        {% set lastEvent = craft.entries.section('event').search( city ~ " - " ~ prevYear ).first %}
+                        {% set lastEvent = craft.entries.section('event').search('slug:"' ~ city ~ " - " ~ prevYear ~ '"').first() %}
                         {% set images = lastEvent.eventImages %}
+                        {% set lastYearRace = true %}
                     {% endif %}
 
                     {% if images|length %}
-                        {% if prevYear == 1 %}
+                        {% if lastYearRace %}
                         <h4>{{ "Check out the highlights from last year's race:"|t }}</h4>
                         {% endif %}
                         <div class="gallery-grid no-ajax">

@@ -232,17 +232,20 @@
 
                 {% set images = entry.eventImages %}
                 {% set prevYear = 0 %}
+                {% set lastYearRace = false %}
+
                 {% if images|length == 0 %}
-                    {% set prevYear = 1 %}
+                    {% set prevYear = year - 1 %}
                     {% set city = entry.relatedCity.first() %}
                     {% if city is not null %}
-                        {% set lastEvent = craft.entries.section('event').search( city.title ~ " -" ~ year ).first() %}
+                        {% set lastEvent = craft.entries.section('event').search( 'slug:"' ~ city.title ~ ' - ' ~ prevYear ~ '"' ).first() %}
                         {% set images = lastEvent.eventImages %}
+                        {% set lastYearRace = true %}
                     {% endif %}
                 {% endif %}
 
                 {% if images|length %}
-                    {% if prevYear == 1 %}
+                    {% if lastYearRace %}
                     <h4>{{ "Check out the highlights from last year's race:"|t }}</h4>
                     {% endif %}
                     <div class="gallery-grid no-ajax">
@@ -278,7 +281,9 @@
                     {% set image = charity.coverImage.first() %}
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="{{ image.url }}" alt={{ charity.title }}>
+                            {% if image is not null %}
+                                <img src="{{ image.url }}" alt={{ charity.title }}>
+                            {% endif %}
                         </div>
                         <div class="col-md-8">
                             <h4>{{ charity.title }}</h4>
