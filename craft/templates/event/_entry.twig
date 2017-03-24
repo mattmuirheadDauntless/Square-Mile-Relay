@@ -146,7 +146,7 @@
 
                         {% if relatedPartners|length %}
                             <h5>{{ 'Proudly sponsored by:'|t }}</h5>
-                            {% for partner in relatedProudSponsor|slice(0,3) %}
+                            {% for partner in relatedProudSponsor %}
                                 {% set logo = partner.companyLogo.first() %}
                                 <a href="{{ siteUrl }}partners?year={{ year }}&city={{ city.title }}">
                                     <img src="{{ logo.url }}" alt={{ partner.title }}>
