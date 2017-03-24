@@ -229,12 +229,16 @@
 
                             <div class="input-wrapper edit-element select">
                                 {% set addressCountry = 'Country'|t %}
+                                {% set addressCountryValue = '' %}
+                                {% if currentUser.addressCountry is defined  %}
+                                    {% set addressCountryValue = currentUser.addressCountry %}
+                                {% endif %}
                                 {{ formFields.dropdown({
                                     id:         'addressCountry',
                                     label:      addressCountry,
                                     name:       'fields[addressCountry]',
                                     placeholder: addressCountry,
-                                    value:      currentUser.addressCountry,
+                                    value:      addressCountryValue,
                                     options:    craft.commerce.getCountries(),
                                     optionKeys: ['iso', 'name']
                                 }) }}
