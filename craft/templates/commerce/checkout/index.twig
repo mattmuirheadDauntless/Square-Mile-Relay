@@ -74,7 +74,7 @@
 
                 {% from _self import errorList %}
 
-                <div class="input-wrapper">
+                <div class="input-wrapper required">
                     <input id="firstName" type="text" class="input" name="firstName" placeholder="{{ 'First Name'|t }}"
                     {%- if account is defined %} value="{{ account.firstName }}"{% endif -%}>
                     <label for="firstName">{{ 'First Name'|t }}</label>
@@ -87,7 +87,7 @@
                     {{ errorList(account.getErrors('firstName')) }}
                 {% endif %}
 
-                <div class="input-wrapper">
+                <div class="input-wrapper required">
                     <input id="lastName" type="text" class="input" name="lastName" placeholder="{{ 'Last Name'|t }}"
                     {%- if account is defined %} value="{{ account.lastName }}"{% endif -%}>
                     <label for="lastName">{{ 'Last Name'|t }}</label>
@@ -100,7 +100,7 @@
                     {{ errorList(account.getErrors('lastName')) }}
                 {% endif %}
 
-                <div class="input-wrapper select">
+                <div class="input-wrapper select required">
                     {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
                     {% if companies|length %}
                         <select name="fields[relatedCompany][]" id="relatedCompany" class="input">
@@ -119,7 +119,7 @@
                 <div class="input-wrapper checkbox">
                     <input id="newCompany" type="checkbox" class="input" name="newCompany">
                     <label for="newCompany"></label>
-                    <p>{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
+                    <p class="checkbox-paragraph">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
                 </div>
 
                 <div class="input-wrapper new-company-name hide">
@@ -127,26 +127,27 @@
                     <label for="newCompanyName">{{ 'Company Name'|t }}</label>
                 </div>
 
+                <div class="input-wrapper required">
+                    <input id="jobTitle" type="text" class="input" name="fields[jobTitle]" placeholder="{{ 'Job Title'|t }}"
+                    {%- if account is defined %} value="{{ account.jobTitle }}"{% endif -%}>
+                    <label for="jobTitle">{{ 'Job Title'|t }}</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That Job Title is invalid.'|t }}</div>
+                </div>
+
+                <div class="input-wrapper required">
+                    <input id="phoneNumber" type="text" class="input" name="phoneNumber" placeholder="{{ 'Phone Number'|t }}"
+                    {%- if account is defined %} value="{{ account.phoneNumber }}"{% endif -%}>
+                    <label for="phoneNumber">{{ 'Phone Number'|t }}</label>
+                    <i class="fa validation-icon" aria-hidden="true"></i>
+                    <div class="msg valid">{{ 'Great!'|t }}</div>
+                    <div class="msg in-valid">{{ 'That Phone Number is invalid.'|t }}</div>
+                </div>
+
                 {% if account is defined %}
                     {{ errorList(account.getErrors('addressCountry')) }}
                 {% endif %}
-
-                <div class="input-wrapper select">
-                    <select name="fields[addressCountry]" id="addressCountry" class="input">
-                        <option value="select">{{ "- Select -"|t }}</option>
-                        {% set countries = craft.commerce.countriesList %}
-                        {% set modelName = modelName is defined ? modelName : 'address' %}
-                        {% set model = address is defined ? address : null %}
-                        {% for key, option in countries %}
-                            {% set optionValue = (model ? model.countryId : '') %}
-                            <option value="{{ option }}">{{ option }}</option>
-                        {% endfor %}
-                    </select>
-                    <label for="addressCountry">{{ 'Country'|t }}</label>
-                    <i class="fa validation-icon" aria-hidden="true"></i>
-                    <div class="msg valid">{{ 'Great!'|t }}</div>
-                    <div class="msg in-valid">{{ 'That country is invalid.'|t }}</div>
-                </div>
 
                 {% if account is defined %}
                     {{ errorList(account.getErrors('addressCountry')) }}
