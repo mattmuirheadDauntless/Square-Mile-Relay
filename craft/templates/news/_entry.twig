@@ -32,7 +32,7 @@
                     </ul>
                 {% endif %}
                 <h1>{{ entry.title }}</h1>
-                <p class="date">{{ entry.postDate | date("j F Y") }} at {{ entry.postDate | date("h:i A") }}</p>
+                <p class="date">{{ entry.postDate | date("j F Y") }} {{ 'at'|t }} {{ entry.postDate | date("h:i A") }}</p>
             </div>
         </div>
     </section>
@@ -120,7 +120,7 @@
         }) %}
         {% if newsArticles|length %}
         <div class="wrapper">
-            <h3>Related Articles</h3>
+            <h3>{{ 'Related Articles'|t }}</h3>
             <div class="related-articles-slider">
                 {% for article in newsArticles %}
                     {% set image = article.coverImage.first() %}
@@ -134,7 +134,7 @@
                         {% if image|length %}
                         <img src="{{ image.getUrl('newsThumb') }}" alt="article image">
                         {% endif %}
-                        <p class="date">{{ article.postDate | date("j F Y") }} at {{ article.postDate | date("h:i A") }}</p>
+                        <p class="date">{{ article.postDate | date("j F Y") }} {{ 'at'|t }} {{ article.postDate | date("h:i A") }}</p>
                         <h2>{{ article.title }}</h2>
                         {% if cats | length %}
                             <ul>
