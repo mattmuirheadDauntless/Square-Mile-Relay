@@ -84,31 +84,35 @@
                     {% if captain|length and currentUser.id == captain.id %}
 
                         <div class="input-wrapper">
+                            {% set titleLabel = {{'Team Name'|t}} %}
                             {{ formFields.input({
                                 id:    'title',
-                                label: {{'Team Name'|t}},
+                                label: titleLabel,
                                 name:  'title',
-                                placeholder: {{'Team Name'|t}},
+                                placeholder: titleLabel,
                                 value: title
                             }) }}
                         </div>
 
                         <div class="input-wrapper">
+                            {% set slugLabel = {{'Team Slug'|t}} %}
                             {{ formFields.input({
                                 id:    'slug',
-                                label: {{'Team Slug'|t}},
+                                label: slugLabel,
                                 name:  'slug',
-                                placeholder: {{'Team Slug'|t}},
+                                placeholder: slugLabel,
                                 value: slug
                             }) }}
                         </div>
 
                         <div class="input-wrapper">
                             {% if currentUser %}
+                                {% set teamCaptainLabel = {{'Team Captain'|t}} %}
+
                                 {{ formFields.dropdown({
                                     id:         'teamCaptain',
                                     name:       'fields[teamCaptain][]',
-                                    label:      {{'Team Captain'|t}},
+                                    label:      teamCaptainLabel,
                                     value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
                                     options:    team.teamMembers,
                                     optionKeys: [
@@ -125,12 +129,14 @@
                     </div>
 
                     <div class="input-wrapper textarea">
+                        {% set summaryTextLabel = {{'Team Description'|t}} %}
+
                         {{ formFields.textArea({
                             id:    'summaryText',
-                            label: {{ 'Team Description'|t }},
+                            label: summaryTextLabel,
                             name:  'fields[summaryText]',
                             rows:  4,
-                            placeholder: {{ 'Team Description'|t }},
+                            placeholder: summaryTextLabel,
                             value: team.summaryText
                         }) }}
                     </div>
@@ -210,27 +216,33 @@
                                     </td>
                                 {% endif %}
                                 <td valign="center">
+                                    {% set firstNameLabel = {{'First Name'|t}} %}
+
                                     {{ formFields.input({
                                         id:          'firstName',
                                         name:        'firstName',
                                         value:       user.firstName,
-                                        placeholder: {{ 'First Name'|t }}
+                                        placeholder: firstNameLabel
                                     }) }}
                                 </td>
                                 <td valign="center">
+                                    {% set lastNameLabel = {{'Last Name'|t}} %}
+
                                     {{ formFields.input({
                                         id:          'lastName',
                                         name:        'lastName',
                                         value:       user.lastName,
-                                        placeholder: {{ 'Last Name'|t }}
+                                        placeholder: lastNameLabel
                                     }) }}
                                 </td>
                                 <td valign="center">
+                                    {% set emailLabel = {{'Email'|t}} %}
+
                                     {{ formFields.input({
                                         id:   'email',
                                         name: 'email',
                                         value: user.email,
-                                        placeholder: {{ 'Email'|t }}
+                                        placeholder: emailLabel
                                     }) }}
                                 </td>
                                 <td valign="center">
@@ -262,24 +274,30 @@
                                     <td><span class="count">{{ count }}</span></td>
                                 {% endif %}
                                 <td>
+                                    {% set firstNameLabel = {{'First Name'|t}} %}
+
                                     {{ formFields.input({
                                         id:   'firstName',
                                         name: 'newMembers['~ i ~'][firstName]',
-                                        placeholder: {{ 'First Name'|t }}
+                                        placeholder: firstNameLabel
                                     }) }}
                                 </td>
                                 <td>
+                                    {% set LastNameLabel = {{'Last Name'|t}} %}
+
                                     {{ formFields.input({
                                         id:   'lastName',
                                         name: 'newMembers['~ i ~'][lastName]',
-                                        placeholder: {{ 'Last Name'|t }}
+                                        placeholder: LastNameLabel
                                     }) }}
                                 </td>
                                 <td>
+                                    {% set emailLabell = {{'Email'|t}} %}
+
                                     {{ formFields.input({
                                         id:   'email',
                                         name: 'newMembers['~ i ~'][email]',
-                                        placeholder: {{ 'Email'|T }}
+                                        placeholder: emailLabell
                                     }) }}
                                 </td>
                                 <td>

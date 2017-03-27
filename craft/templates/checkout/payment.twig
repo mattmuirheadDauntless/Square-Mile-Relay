@@ -21,11 +21,11 @@
                             <input type="hidden" name="redirect"
                                    value="commerce/checkout/payment">
                             {{ getCsrfInput() }}
-                            {% set vv = 'Payment Method'|t %}
+                            {% set paymentMethodLabel = 'Payment Method'|t %}
 
                             {{ formFields.dropdown({
                                 id:     'paymentMethod',
-                                label:  vv,
+                                label:  paymentMethodLabel,
                                 name:   'paymentMethodId',
                                 options: craft.commerce.paymentMethods,
                                 value:   cart.paymentMethodId,
@@ -125,11 +125,11 @@
 
                                 <!-- Card Number -->
                                 <div class="col-sm-12">
-                                {% set vv = 'Card Number'|t %}
+                                {% set cardNumberLabel = 'Card Number'|t %}
 
                                 {{ formFields.input({
                                         id:    'cardNumber',
-                                        label: vv,
+                                        label: cardNumberLabel,
                                         name:  'number',
                                         type:  'number',
                                         value: formValues.number
@@ -164,15 +164,15 @@
                                 <!-- CVV -->
                                 <div class="">
                                     <div class="col-sm-6">
-                                        {% set vv = 'CVV'|t %}
+                                        {% set cvvLabel = 'CVV'|t %}
 
                                         {{ formFields.input({
                                             id:    'cvv',
-                                            label: vv,
+                                            label: cvvLabel,
                                             name:  'cvv',
                                             type:  'number',
                                             value: formValues.cvv,
-                                            placeholder: vv
+                                            placeholder: cvvLabel
                                         }) }}
                                     </div>
                                 </div>

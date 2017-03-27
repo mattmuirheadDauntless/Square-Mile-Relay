@@ -21,24 +21,24 @@
                     <input type="hidden" name="action" value="users/login">
 
                     <div class="input-wrapper">
-                        {% set vv = 'Email'|t %}
+                        {% set EmailLabel = 'Email'|t %}
 
                         {{ formFields.input({
                         id:          'loginName',
                         name:        'loginName',
                         value:       craft.session.rememberedUsername,
-                        placeholder: vv
+                        placeholder: EmailLabel
                     }) }}
                     </div>
 
                     <div class="input-wrapper">
-                        {% set vv = 'Password'|t %}
+                        {% set PasswordLabel = 'Password'|t %}
 
                         {{ formFields.input({
                         id:          'password',
                         name:        'password',
                         type:        'password',
-                        placeholder: vv
+                        placeholder: PasswordLabel
                     }) }}
                     </div>
 

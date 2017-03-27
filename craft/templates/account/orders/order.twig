@@ -107,7 +107,7 @@
                         {% if adjustment.type == 'Discount' %}
                             <tr>
                                 <td><strong>{{ adjustment.type }}</strong></td>
-                                <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.amount|commerceCurrency(iso,convert=true) }} using code {{ adjustment.optionsJson.code }})</td>
+                                <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.amount|commerceCurrency(iso,convert=true) }} {{ 'using code'|t }} {{ adjustment.optionsJson.code }})</td>
                                 <td class="text-right">{{ adjustment.amount|commerceCurrency(iso,convert=true) }}</td>
                             </tr>
                         {% else %}
