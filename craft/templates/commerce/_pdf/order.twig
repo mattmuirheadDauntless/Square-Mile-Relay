@@ -4,10 +4,55 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <style>
-    {% include 'commerce/style.css' %}
-    table.heading td{
-        vertical-align: top;
-    }
+    {#{% include 'commerce/style.css' %}#}
+        body {
+            margin:0;
+            padding:0;
+            background: #ffffff;
+        }
+        h4 {
+            font-size:30px;
+            font-weight:700;
+            font-family:arial,sans-serif;
+            margin:20px 0 30px 0;
+            line-height:100%;
+        }
+        table {
+            width:100%;
+            table-layout: fixed;
+            border:0;
+            border-collapse: collapse;
+            padding:0;
+            margin: 30px 0 0 0;
+        }
+        table td, table th {
+            padding:10px;
+            vertical-align: top;
+            border:0;
+            border-bottom:1px solid #eeeeee;
+            text-align: left;
+        }
+        table td ul {
+            margin:0;
+            padding:0;
+            list-style-type:none;
+        }
+        table tr ul li {
+            margin:0;
+            padding:0 0 10px 0;
+            font-size:14px;
+        }
+        table td, table th, table td ul li,table td p,table td h5 {
+            line-height:130%;
+            color: #000000;
+            font-family:arial,sans-serif;
+        }
+        table th,table td h5 {
+            font-size:18px;
+        }
+        table td h5 {
+            margin:0 0 20px 0;
+        }
     </style>
 </head>
 
@@ -23,12 +68,12 @@
     {% endif %}
 {% endfor %}
 {% set orderTable %}
-    <div class="row" style="font-family: 'AvenirNext';">
+    <div class="row" style="font-family: arial,sans-serif;">
         <div class="twelve columns">
             <table class="u-full-width heading">
                 <tr>
                     <td>
-                        <h5>Details</h5>
+                        <h5>{{ 'Details'|t }}</h5>
                         <ul>
                             <li><strong>{{ "Customer"|t }}:</strong> {{ order.customer.email }}</li>
                             <li><strong>{{ "Total"|t }}:</strong> {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</li>
@@ -36,13 +81,8 @@
                             <li><strong>{{ "Date"|t }}:</strong> {{ order.dateOrdered }}</li>
                         </ul>
                     </td>
-                    <td style="font-size: 11px;">
-                        <h5>{{ 'Address'|t }}</h5>
-                        {% if order.shippingAddress %}
-                        {% include 'commerce/_includes/addresses/address' with { address: order.shippingAddress } %}
-                        {% endif %}
-                    </td>
-                    <td style="font-size: 11px;">
+
+                    <td>
                         <h5>{{ 'Billing Address'|t }}</h5>
                         {% if order.billingAddress %}
                         {% include 'commerce/_includes/addresses/address' with { address: order.billingAddress } %}
@@ -56,7 +96,7 @@
                     <th>{{ 'Item'|t }}</th>
                     <th>{{ 'Unit Price'|t }}</th>
                     <th>{{ 'Quantity'|t }}</th>
-                    <th class="text-right">{{ 'Total'|t }}</th>
+                    <th style="text-align:right;">{{ 'Total'|t }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,7 +104,7 @@
                     <tr>
                         <td valign="top">
                             <strong>{{ item.description }}</strong><br>
-                            SKU: {{ item.sku }}
+                            {{ 'SKU'|t }}: {{ item.sku }}
                         </td>
                         <td>
                             {% if item.onSale %}
@@ -74,7 +114,7 @@
                             {% endif %}
                         </td>
                         <td>{{ item.qty }}</td>
-                        <td class="text-right">{{ item.total|commerceCurrency(iso, convert=false) }}</td>
+                        <td style="text-align:right;">{{ item.total|commerceCurrency(iso, convert=false) }}</td>
                     </tr>
                 {% endfor %}
 
@@ -83,22 +123,22 @@
                         <tr>
                             <td><strong>{{ adjustment.type }}</strong></td>
                             <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.amount|commerceCurrency(iso,convert=true) }} {{ 'using code'|t }} {{ adjustment.optionsJson.code }})</td>
-                            <td class="text-right">{{ adjustment.amount|commerceCurrency(iso,convert=true) }}</td>
+                            <td style="text-align:right;">{{ adjustment.amount|commerceCurrency(iso,convert=true) }}</td>
                         </tr>
                     {% else %}
                         <tr>
                             <td>{{ adjustment.type }}</td>
                             <td colspan="2"><strong>{{ adjustment.name }}</strong><br>({{ adjustment.description }})</td>
-                            <td class="text-right">{{ adjustment.amount|commerceCurrency(iso, convert=false) }}</td>
+                            <td style="text-align:right;">{{ adjustment.amount|commerceCurrency(iso, convert=false) }}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}
                 <tr>
-                    <td colspan="4" class="text-right">
+                    <td colspan="4" style="text-align:right;">
                         {{ 'Item Total:'|t }} {{ order.itemTotal|commerceCurrency(iso, convert=false) }}<br>
                         {{ 'Base Discount:'|t }} {{ order.baseDiscount|commerceCurrency(iso, convert=false) }}<br>
                         {{ 'Base Shipping Rate:'|t }} {{ order.baseShippingCost|commerceCurrency(iso, convert=false) }}<br>
-                        <h4>{{ 'Total:'|t }} {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</h4>
+                        <h5 style="margin-top:20px;">{{ 'Total:'|t }} {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</h5>
                     </td>
                 </tr>
 
@@ -112,15 +152,18 @@
 {# Use the option param passed into the pdf template to show different order pdf's depending on the context #}
 {% switch option %}
 {% case "receipt" %}
-    <div class="logo">
+    {#<div class="logo">
         <img src="{{ logos.companyLogo.first().url }}" alt="Square Mile Relay" style="width: 200px; height: 90px;">
-    </div>
-    <h4 style="font-family: 'AvenirNext';">{{ 'Receipt for Order #'|t }}{{ order.number[:7] }}</h4>
+    </div>#}
+    <h6 style="font-family:arial,sans-serif;font-size: 14px;font-weight:400;text-align:right;margin:0;color:#f37135;">Square Mile Relay</h6>
+    <h4>{{ 'Receipt for Order #'|t }}{{ order.number[:7] }}</h4>
     {{ orderTable }}
 {% case "ajax" %}
-    <h4 style="font-family: 'AvenirNext';">{{ 'NA'|t }}</h4>
+    <h6 style="font-family:arial,sans-serif;font-size: 14px;font-weight:400;text-align:right;margin:0;color:#f37135;">Square Mile Relay</h6>
+    <h4>{{ 'NA'|t }}</h4>
 {% default %}
-    <h4 style="font-family: 'AvenirNext';">{{ 'Order #'|t }}{{ order.number[:7] }}</h4>
+    <h6 style="font-family:arial,sans-serif;font-size: 14px;font-weight:400;text-align:right;margin:0;color:#f37135;">Square Mile Relay</h6>
+    <h4>{{ 'Order #'|t }}{{ order.number[:7] }}</h4>
     {{ orderTable }}
 {% endswitch %}
 
