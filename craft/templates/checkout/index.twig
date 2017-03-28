@@ -15,19 +15,21 @@
                 {{ getCsrfInput() }}
                 <input type="hidden" name="action" value="users/login">
                 <input type="hidden" name="redirect" value="checkout/addresses">
+                {% set EmailLabel = 'Email'|t %}
 
                 {{ formFields.input({
                     id:          'loginName',
                     name:        'loginName',
                     value:       craft.session.rememberedUsername,
-                    placeholder: {{ 'Email'|t }}
+                    placeholder: EmailLabel
                 }) }}
+                {% set PasswordLabel = 'Password'|t %}
 
                 {{ formFields.input({
                     id:          'password',
                     name:        'password',
                     type:        'password',
-                    placeholder: {{ 'Password'|t }}
+                    placeholder: PasswordLabel
                 }) }}
 
                 <div class="form-group">

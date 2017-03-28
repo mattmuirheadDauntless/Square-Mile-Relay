@@ -1,18 +1,23 @@
+{% set orderLabel = 'Start Order'|t %}
+{% set AddressLabel = 'Address'|t %}
+{% set ShippingLabel = 'Shipping'|t %}
+{% set PaymentLabel = 'Payment'|t %}
+
 {% set steps = [
 {
-label: {{ "Start Order"|t }},
+label: orderLabel,
 url: 'commerce/checkout'
 },
 {
-label: {{ "Address"|t }},
+label: AddressLabel,
 url: 'commerce/checkout/addresses'
 },
 {
-label: {{ "Shipping"|t }},
+label: ShippingLabel,
 url: 'commerce/checkout/shipping'
 },
 {
-label: {{ "Payment"|t }},
+label: PaymentLabel,
 url: 'commerce/checkout/payment'
 }
 ] %}

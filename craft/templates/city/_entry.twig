@@ -65,7 +65,7 @@
         <div class="wrapper-thin">
             <div class="title">
                 <h1>{{ entry.title }}</h1>
-                {% if date|length > 1 and date|date('U') > "now"|date('U') %}
+                {% if date|date('U') > now|date('U') %}
                     <h2>{{ 'Next Race:'|t }} {{ date }}</h2>
                 {% endif %}
             </div>
@@ -287,16 +287,18 @@
                     <h3 title="{{ 'Gallery'|t }}">{{ 'Gallery'|t }}</h3>
 
                     {% set images = event.eventImages %}
+                    {% set lastYearRace = false %}
                     {% set prevYear = 0 %}
                     {% if images|length == 0 %}
-                        {% set prevYear = 1 %}
+                        {% set prevYear = year - 1 %}
                         {% set city = event.relatedCity.first().title %}
-                        {% set lastEvent = craft.entries.section('event').search( city ~ " -" ~ year ).first %}
+                        {% set lastEvent = craft.entries.section('event').search('slug:"' ~ city ~ " - " ~ prevYear ~ '"').first() %}
                         {% set images = lastEvent.eventImages %}
+                        {% set lastYearRace = true %}
                     {% endif %}
 
                     {% if images|length %}
-                        {% if prevYear == 1 %}
+                        {% if lastYearRace %}
                         <h4>{{ "Check out the highlights from last year's race:"|t }}</h4>
                         {% endif %}
                         <div class="gallery-grid no-ajax">

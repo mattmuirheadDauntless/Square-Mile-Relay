@@ -101,7 +101,7 @@
                             {{ getCsrfInput() }}
                             <span class="{% if cart.getError('couponCode') %}has-error{% endif %}">
                             <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}"
-                                   placeholder="{{ "Coupon Code"|t }}">
+                                   placeholder="{{ "Discount Code"|t }}">
                             </span>
                             <input type="submit" class="button" value="{% if cart.couponCode %}{{ 'Change Coupon'|t }}{% else %}{{ 'Apply Coupon'|t }}{% endif %}"/>
                         </form>
