@@ -63,7 +63,7 @@
 
                             <h3 class="text-left">{{ ticketEvent.title }}</h3>
                             <p class="text-left">{{ 'How do you wish to pay?'|t }}</p>
-                            
+
                             {% if city.slug == 'tokyo' %}
                                 <div class="btn btn-orange btn-full-width next">{{ 'INVOICE/WIRE TRANSFER'|t }}</div>
                             {% else %}
@@ -107,6 +107,22 @@
                 <div class="row thank-you text-center">
                     <h2>{{ "Thank You!"|t }}</h2>
                     <p>{{ raceEnterModal.thankYou }}</p>
+
+                    <form method="post" accept-charset="UTF-8">
+                        {{ getCsrfInput() }}
+                        <input type="hidden" name="action" value="users/saveUser">
+                        <input type="hidden" name="userId" id="reasonUserID" value="">
+
+                        <div class="input-wrapper">
+                            <textarea id="whyAreYouInterested" name="fields[whyAreYouInterested]" class="input" placeholder="Why are you intereseted in Square Mile Relay"></textarea>
+                            <label for="whyAreYouInterested">{{ 'Why are you intereseted in Square Mile Relay'|t }}</label>
+                        </div>
+
+                        <div class="input-wrapper">
+                            <input type="submit" class="btn btn-orange" value="{{ 'Submit'|t }}">
+                        </div>
+                    </form>
+
                 </div>
             </div>
 
