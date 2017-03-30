@@ -437,7 +437,8 @@ $(function(){
     // });
 
     $('.finish-payment').click(function() {
-        var $page = $('#enterRaceFrame', window.parent.document).parent().parent().parent().parent().parent();
+        var $page = $('#enterRaceFrame', window.parent.document).parent().parent().parent().parent().parent(),
+            $userID = $(this).attr('data-user-id');
 
         $page.find('.slide.country[data-slide=2]:not(.hidden)').addClass('completed');
         $page.find('.slide.country[data-slide=2]:not(.hidden)').removeClass('current');
@@ -448,6 +449,8 @@ $(function(){
         $page.find('.modal-footer ul li[data-slide=2]').removeClass();
         $page.find('.modal-footer ul li[data-slide=2]').addClass('completed');
         $page.find('.modal-footer ul li[data-slide=3]').addClass('current');
+
+        $page.find('#reasonUserID').val($userID);
     });
 
     $('.send-to-my-account').click(function() {

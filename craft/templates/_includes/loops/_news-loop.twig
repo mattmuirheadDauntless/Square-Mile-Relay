@@ -28,7 +28,7 @@
             {% if image is not null %}
                 <div class="news-img" style="background-image: url({{ image.getUrl('newsThumb') }})"></div>
             {% endif %}
-            <p class="date">{{ newsItem.postDate | date("j F Y") }} at {{ newsItem.postDate | date("h:i A") }}</p>
+            <p class="date">{{ newsItem.postDate | date("j F Y") }} {{ 'at'|t }} {{ newsItem.postDate | date("h:i A") }}</p>
             <h3>{{ newsItem.title }}</h3>
             {% if cats | length %}
                 <ul>

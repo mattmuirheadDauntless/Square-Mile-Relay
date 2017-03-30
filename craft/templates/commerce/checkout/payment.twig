@@ -237,7 +237,7 @@
 						</fieldset>
 					{% endif %}
 
-					<button class="btn btn-orange flr finish-payment" type="submit">{{ 'Finish'|t }}</button>
+					<button class="btn btn-orange flr finish-payment" type="submit" id="finishPayment" data-user-id="{{ currentUser.id }}">{{ 'Finish'|t }}</button>
 				</form>
 			{% endif %}
 		</div>

@@ -84,34 +84,35 @@
                     {% if captain|length and currentUser.id == captain.id %}
 
                         <div class="input-wrapper">
-                            {% set teamNameText = 'Team Name'|t %}
+                            {% set titleLabel = 'Team Name'|t %}
                             {{ formFields.input({
                                 id:    'title',
-                                label: teamNameText,
+                                label: titleLabel,
                                 name:  'title',
-                                placeholder: teamNameText,
+                                placeholder: titleLabel,
                                 value: title
                             }) }}
                         </div>
 
                         <div class="input-wrapper">
-                            {% set teamSlugText = 'Team Slug'|t %}
+                            {% set slugLabel = 'Team Slug'|t %}
                             {{ formFields.input({
                                 id:    'slug',
-                                label: teamSlugText,
+                                label: slugLabel,
                                 name:  'slug',
-                                placeholder: teamSlugText,
+                                placeholder: slugLabel,
                                 value: slug
                             }) }}
                         </div>
 
                         <div class="input-wrapper">
                             {% if currentUser %}
-                                {% set teamCaptainText = 'Team Captain'|t %}
+                                {% set teamCaptainLabel = 'Team Captain'|t %}
+
                                 {{ formFields.dropdown({
                                     id:         'teamCaptain',
                                     name:       'fields[teamCaptain][]',
-                                    label:      teamCaptainText,
+                                    label:      teamCaptainLabel,
                                     value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
                                     options:    team.teamMembers,
                                     optionKeys: [
@@ -128,13 +129,14 @@
                     </div>
 
                     <div class="input-wrapper textarea">
-                        {% set teamDescriptionText = 'Team Description'|t %}
+                        {% set summaryTextLabel = 'Team Description'|t %}
+
                         {{ formFields.textArea({
                             id:    'summaryText',
-                            label: teamDescriptionText,
+                            label: summaryTextLabel,
                             name:  'fields[summaryText]',
                             rows:  4,
-                            placeholder: teamDescriptionText,
+                            placeholder: summaryTextLabel,
                             value: team.summaryText
                         }) }}
                     </div>
@@ -214,30 +216,33 @@
                                     </td>
                                 {% endif %}
                                 <td valign="center">
-                                    {% set firstNameText = 'First Name'|t %}
+                                    {% set firstNameLabel = 'First Name'|t %}
+
                                     {{ formFields.input({
                                         id:          'firstName',
                                         name:        'firstName',
                                         value:       user.firstName,
-                                        placeholder: firstNameText
+                                        placeholder: firstNameLabel
                                     }) }}
                                 </td>
                                 <td valign="center">
-                                    {% set lastNameText = 'Last Name'|t %}
+                                    {% set lastNameLabel = 'Last Name'|t %}
+
                                     {{ formFields.input({
                                         id:          'lastName',
                                         name:        'lastName',
                                         value:       user.lastName,
-                                        placeholder: lastNameText
+                                        placeholder: lastNameLabel
                                     }) }}
                                 </td>
                                 <td valign="center">
-                                    {% set emailText = 'Email'|t %}
+                                    {% set emailLabel = 'Email'|t %}
+
                                     {{ formFields.input({
                                         id:   'email',
                                         name: 'email',
                                         value: user.email,
-                                        placeholder: emailText
+                                        placeholder: emailLabel
                                     }) }}
                                 </td>
                                 <td valign="center">
@@ -269,27 +274,30 @@
                                     <td><span class="count">{{ count }}</span></td>
                                 {% endif %}
                                 <td>
-                                    {% set firstNameText = 'First Name'|t %}
+                                    {% set firstNameLabel = 'First Name'|t %}
+
                                     {{ formFields.input({
                                         id:   'firstName',
                                         name: 'newMembers['~ i ~'][firstName]',
-                                        placeholder: firstNameText
+                                        placeholder: firstNameLabel
                                     }) }}
                                 </td>
                                 <td>
-                                    {% set lastNameText = 'Last Name'|t %}
+                                    {% set LastNameLabel = 'Last Name'|t %}
+
                                     {{ formFields.input({
                                         id:   'lastName',
                                         name: 'newMembers['~ i ~'][lastName]',
-                                        placeholder: lastNameText
+                                        placeholder: LastNameLabel
                                     }) }}
                                 </td>
                                 <td>
-                                    {% set emailText = 'Email'|t %}
+                                    {% set emailLabell = 'Email'|t %}
+
                                     {{ formFields.input({
                                         id:   'email',
                                         name: 'newMembers['~ i ~'][email]',
-                                        placeholder: emailText
+                                        placeholder: emailLabell
                                     }) }}
                                 </td>
                                 <td>

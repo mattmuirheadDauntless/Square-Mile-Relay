@@ -34,7 +34,7 @@
             {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
             {% if companies|length %}
                 <select name="fields[relatedCompany][]" id="relatedCompany" class="input">
-                    <option value="" selected="selected">Please select Your company</option>
+                    <option value="" selected="selected">{{ 'Please select Your company'|t }}</option>
                     {% for company in companies %}
                         <option value="{{ company.id }}">{{ company.title }}</option>
                     {% endfor %}
@@ -59,7 +59,7 @@
 
         <div class="input-wrapper required">
             <input type="text" id="{{ modelName }}-address1" class="input" name="{{ modelName }}[address1]" value="{{ model ? model.address1 : '' }}" placeholder="{{ 'Address'|t }} 1" required>
-            <label for="{{ modelName }}-address1">{{ 'Address'|t }} 1</label>
+            <label for="{{ modelName }}-address1">{{ 'Address 1'|t }}</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">{{ 'Great!'|t }}</div>
             <div class="msg in-valid">{{ 'That address is invalid.'|t }}</div>
@@ -70,7 +70,7 @@
 
         <div class="input-wrapper">
             <input type="text" id="{{ modelName }}-address2" class="input" name="{{ modelName }}[address2]" value="{{ model ? model.address2 : '' }}" placeholder="{{ 'Address'|t }} 2">
-            <label for="{{ modelName }}-address2">{{ 'Address'|t }} 2</label>
+            <label for="{{ modelName }}-address2">{{ 'Address 2'|t }}</label>
             <i class="fa validation-icon" aria-hidden="true"></i>
             <div class="msg valid">{{ 'Great!'|t }}</div>
             <div class="msg in-valid">{{ 'That address is invalid.'|t }}</div>

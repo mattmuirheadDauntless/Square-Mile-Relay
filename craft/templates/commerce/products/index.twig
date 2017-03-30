@@ -25,18 +25,6 @@
                 {%- endfor -%}
             </select>
 
-            {# {% set sku = "" %}
-            {% for variant in product.variants %}
-                {% set sku = variant.sku %}
-            {% endfor %}
-
-            {% set inCart = 0 %}
-            {% for item in cart.lineItems %}
-                {% if item.sku == sku %}
-                    {% set inCart = item.qty %}
-                {% endif %}
-            {% endfor %} #}
-
             <div class="package">
                 <div class="description">
                     <h5>{{ product.title }}</h5>
@@ -47,7 +35,6 @@
                 </div>
                 <div class="price">
                     <p>{{ product.defaultPrice|commerceCurrency(isoCode) }} {# <br/>Excl. Tax #}</p>
-                    {# <p>In cart: {{ inCart }}</p> #}
                     {% if product.unlimitedStock or (product.unlimitedStock == false and product.totalStock > 0 ) %}
                         <button type="submit" class="btn btn-black btn-tiny">{{ "Add to basket"|t }}</button>
                     {% else %}
@@ -55,6 +42,7 @@
                     {% endif %}
                 </div>
             </div>
+            <div class="clear"></div>
         </form>
 
     {% endfor %}
@@ -67,15 +55,19 @@
                 <input type="hidden" name="action" value="commerce/cart/updateCart">
                 <input type="hidden" name="redirect" value="commerce/products?city={{ citySelected }}">
                 {{ getCsrfInput() }}
-                <span class="{% if cart.getError('couponCode') %}has-error{% endif %}">
-                <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ "Enter Discount Code"|t }}">
+                <span class="{% if cart.getError('couponCode') %}has-error{% endif %} col-6 left">
+                <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ "Enter Coupon Code"|t }}">
                 </span>
-                <input type="submit" class="btn btn-full-width btn-orange" value="{% if cart.couponCode %}{{ 'Change Coupon'|t }}{% else %}{{ 'Apply Coupon'|t }}{% endif %}"/>
+                <input type="submit" class="btn col-6 right btn-orange" value="{% if cart.couponCode %}{{ 'Change Coupon'|t }}{% else %}{{ 'Apply Coupon'|t }}{% endif %}"/>
+                <div class="clear"></div>
             </form>
         </div>
 
         <div class="totals">
             <ul>
+                {% if cart.lineItems|length > 0 %}
+                <li><p>Number of Teams in cart: <span>{{ cart.lineItems|length }}</span></p></li>
+                {% endif %}
                 {% if currentUser %}
                     {% for adjustment in cart.adjustments %}
                         <li>
@@ -101,7 +93,7 @@
                 {% endif %}
             </ul>
         </div>
-
+        <div class="clear"></div>
         {% set product = craft.commerce.products.search(citySelected).first() %}
 
         <div class="terms input-wrapper checkbox">
@@ -110,17 +102,17 @@
             <p class="checkbox-paragraph">{{ "I accept the"|t }} <a href="{{ product.relatedEvent.first().relatedTermsAndConditions.first().getUrl() }}" target="_blank">{{ "Terms & Conditions"|t }}</a></p>
             <br>
         </div>
+        <div class="clear"></div>
 
-        <a href="{{ siteUrl }}commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid flr">{{ 'Continue'|t }}</a>
+        <a href="{{ siteUrl }}commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid flr col-6 left">{{ 'Continue'|t }}</a>
 
-        <br>
-
-        <form method="POST">
+        <form method="POST" class="col-6 right">
             <input type="hidden" name="action" value="commerce/cart/removeAllLineItems"/>
             <input type="hidden" name="redirect" value="commerce/products?city={{ citySelected }}"/>
             {{ getCsrfInput() }}
             <input class="btn btn-empty btn-black fll" id="emptyCart" type="submit" value="{{ "Empty Basket"|t }}"/>
         </form>
+        <div class="clear"></div>
 
     </div>
 
