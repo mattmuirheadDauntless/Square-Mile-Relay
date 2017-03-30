@@ -84,7 +84,7 @@
                     {% if captain|length and currentUser.id == captain.id %}
 
                         <div class="input-wrapper">
-                            {% set titleLabel = {{'Team Name'|t}} %}
+                            {% set titleLabel = 'Team Name'|t %}
                             {{ formFields.input({
                                 id:    'title',
                                 label: titleLabel,
@@ -95,7 +95,7 @@
                         </div>
 
                         <div class="input-wrapper">
-                            {% set slugLabel = {{'Team Slug'|t}} %}
+                            {% set slugLabel = 'Team Slug'|t %}
                             {{ formFields.input({
                                 id:    'slug',
                                 label: slugLabel,
@@ -107,7 +107,7 @@
 
                         <div class="input-wrapper">
                             {% if currentUser %}
-                                {% set teamCaptainLabel = {{'Team Captain'|t}} %}
+                                {% set teamCaptainLabel = 'Team Captain'|t %}
 
                                 {{ formFields.dropdown({
                                     id:         'teamCaptain',
@@ -129,7 +129,7 @@
                     </div>
 
                     <div class="input-wrapper textarea">
-                        {% set summaryTextLabel = {{'Team Description'|t}} %}
+                        {% set summaryTextLabel = 'Team Description'|t %}
 
                         {{ formFields.textArea({
                             id:    'summaryText',
@@ -216,7 +216,7 @@
                                     </td>
                                 {% endif %}
                                 <td valign="center">
-                                    {% set firstNameLabel = {{'First Name'|t}} %}
+                                    {% set firstNameLabel = 'First Name'|t %}
 
                                     {{ formFields.input({
                                         id:          'firstName',
@@ -226,7 +226,7 @@
                                     }) }}
                                 </td>
                                 <td valign="center">
-                                    {% set lastNameLabel = {{'Last Name'|t}} %}
+                                    {% set lastNameLabel = 'Last Name'|t %}
 
                                     {{ formFields.input({
                                         id:          'lastName',
@@ -236,7 +236,7 @@
                                     }) }}
                                 </td>
                                 <td valign="center">
-                                    {% set emailLabel = {{'Email'|t}} %}
+                                    {% set emailLabel = 'Email'|t %}
 
                                     {{ formFields.input({
                                         id:   'email',
@@ -274,7 +274,7 @@
                                     <td><span class="count">{{ count }}</span></td>
                                 {% endif %}
                                 <td>
-                                    {% set firstNameLabel = {{'First Name'|t}} %}
+                                    {% set firstNameLabel = 'First Name'|t %}
 
                                     {{ formFields.input({
                                         id:   'firstName',
@@ -283,7 +283,7 @@
                                     }) }}
                                 </td>
                                 <td>
-                                    {% set LastNameLabel = {{'Last Name'|t}} %}
+                                    {% set LastNameLabel = 'Last Name'|t %}
 
                                     {{ formFields.input({
                                         id:   'lastName',
@@ -292,7 +292,7 @@
                                     }) }}
                                 </td>
                                 <td>
-                                    {% set emailLabell = {{'Email'|t}} %}
+                                    {% set emailLabell = 'Email'|t %}
 
                                     {{ formFields.input({
                                         id:   'email',
