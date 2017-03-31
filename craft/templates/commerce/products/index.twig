@@ -83,7 +83,7 @@
                                 {{ 'Discount'|t }}
                                 <span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
                             {% else %}
-                                {{ adjustment.type }} {{ adjustment.name }} ({{ adjustment.description }})<span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
+                                {{ adjustment.name }} ({{ adjustment.description }})<span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
                             {% endif %}
                         </li>
                         <br>
