@@ -84,9 +84,9 @@
     </div>
 </section>
 
-<section id="aboutAccordion" class="about-accordion">
-    <ul class="nav-items">
-        <li class="nav-item active" data-accordion="1">
+<section id="aboutAccordion" class="about-accordion elementScrollTop">
+    <ul class="nav-items elementPositioned">
+        <li class="nav-item active elemToBePositioned" data-accordion="1">
             <span>01</span>
             <h2>{{ entry.tabTitle1 }}</h2>
         </li>
@@ -113,7 +113,7 @@
             </div>
         </div>
 
-        <li class="nav-item" data-accordion="2">
+        <li class="nav-item elemToBePositioned" data-accordion="2">
             <span>02</span>
             <h2>{{ entry.tabTitle2 }}</h2>
         </li>
@@ -128,7 +128,7 @@
             </div>
         </div>
 
-        <li class="nav-item" data-accordion="3">
+        <li class="nav-item elemToBePositioned" data-accordion="3">
             <span>03</span>
             <h2>{{ entry.tabTitle3 }}</h2>
         </li>
@@ -149,7 +149,7 @@
             <a href="{{ siteUrl }}gallery" class="btn btn-orange">{{ 'View More Images'|t }}</a>
         </div>
 
-        <li class="nav-item" data-accordion="4">
+        <li class="nav-item elemToBePositioned" data-accordion="4">
             <span>04</span>
             <h2>{{ entry.tabTitle4 }}</h2>
         </li>
@@ -239,7 +239,7 @@
 {% include "_includes/_global-partners" %}
 
 {% set bgImg = entry.backgroundImage.first() %}
-<section class="home-results" style="background-image: url({{ bgImg.getUrl() }});">
+<section class="home-results elemBottom" style="background-image: url({{ bgImg.getUrl() }});">
     {% set featuredResults = entry.topResults %}
     <div class="wrapper-thin">
         <div class="row">

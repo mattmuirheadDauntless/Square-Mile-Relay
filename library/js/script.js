@@ -508,7 +508,29 @@ $(function(){
         $racesSlider.flickity('next');
     });
 
-    if ( $('.about-accordion').length > 0 && $(window).width() > 900 ){
+    $(window).on('scroll',function(){
+        var element = $('.elementScrollTop');
+        var elementPositioned = $(".elementPositioned").height();
+        var elemToBePositioned = $(".elemToBePositioned");
+        var elemOffset = element.offset().top - 127;
+        var elemBottom = $(".elemBottom").offset().top;
+        var offSet = elemBottom - elementPositioned;
+        element.each(function () {
+            if ($(window).scrollTop() >= elemOffset && $(window).scrollTop() < offSet) {
+                elemToBePositioned.removeClass("fixed-bottom").addClass("fixed");
+            }
+            else if ($(window).scrollTop() > offSet) {
+                elemToBePositioned.removeClass("fixed").addClass("fixed-bottom");
+            }
+            else {
+                elemToBePositioned.removeClass("fixed", "fixed-bottom");
+            }
+        })
+    });
+
+
+
+    /*if ( $('.about-accordion').length > 0 && $(window).width() > 900 ){
         new Waypoint({
             element: $('#aboutAccordion'),
             handler: function() {
@@ -526,7 +548,7 @@ $(function(){
         //     },
         //     offset: $(window).height()
         // });
-    }
+    }*/
 
     $('.about-accordion .nav-items .nav-item').click(function() {
         var $this = $(this),

@@ -61,7 +61,9 @@
     {% endfor %}
 
     <div class="checkout">
+
         {# Update Coupon form uses the single update controller action: #}
+
         <div class="coupons{% if cart.lineItems|length == 0 %} invalid{% endif %}">
             {% if cart.getError('couponCode') %}<span class="flash">{{ cart.getError('couponCode') }}</span>{% endif %}
             <form method="POST">

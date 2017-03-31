@@ -135,9 +135,7 @@
             }
         }
         .coupons {
-
             width: 50%;
-
             @include phone {
                 width: 100%;
             }
@@ -174,9 +172,7 @@
                     }
                 }
             }
-        }
-        .input-wrapper.checkbox {
-            margin:0;
+
         }
         .btn-continue {
             margin:0 0 10px 0;
