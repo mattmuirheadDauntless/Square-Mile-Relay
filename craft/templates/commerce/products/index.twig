@@ -58,9 +58,9 @@
                 <input type="hidden" name="redirect" value="commerce/products?city={{ citySelected }}">
                 {{ getCsrfInput() }}
                 <span class="{% if cart.getError('couponCode') %}has-error{% endif %} col-6 left">
-                <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ "Enter Coupon Code"|t }}">
+                <input type="text" name="couponCode" width="11" class="{% if cart.getError('couponCode') %}has-error{% endif %}" value="{{ cart.couponCode }}" placeholder="{{ 'Enter Discount Code'|t }}">
                 </span>
-                <input type="submit" class="btn col-6 right btn-orange" value="{% if cart.couponCode %}{{ 'Change Coupon'|t }}{% else %}{{ 'Apply Coupon'|t }}{% endif %}"/>
+                <input type="submit" class="btn col-6 right btn-orange" value="{% if cart.couponCode %}{{ 'Change Discount'|t }}{% else %}{{ 'Apply Discount'|t }}{% endif %}"/>
                 <div class="clear"></div>
             </form>
         </div>
@@ -89,6 +89,10 @@
         </div>
         <div class="clear"></div>
         {% set product = craft.commerce.products.search(citySelected).first() %}
+
+        <div class="hide">
+        {{ 'Enter Discount Code'|t }}
+        </div>
 
         <div class="terms input-wrapper checkbox">
             <input type="checkbox" class="input{% if cart.lineItems|length %} active{% endif %}" name="terms" id="terms">
