@@ -201,9 +201,9 @@
                                 <td>
                                     {% if captain|length and user.id == captain.id %}
                                         <span class="captain">C</span>
-                                        {% if captain|length and currentUser.id == captain.id %}
-                                            <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
-                                        {% endif %}
+                                    {% endif %}
+                                    {% if captain|length and currentUser.id == captain.id %}
+                                        <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
                                     {% endif %}
                                 </td>
                                 {% if captain|length and currentUser.id == captain.id %}
