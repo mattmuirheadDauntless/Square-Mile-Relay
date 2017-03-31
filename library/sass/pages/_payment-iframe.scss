@@ -121,11 +121,21 @@
         margin: 0;
         padding: 20px 20px 0 20px;
         width: 100%;
-
+        .col-6 {
+            width:49%;
+            display: block;
+            &.left {
+                float: left;
+            }
+            &.right {
+                float: right;
+            }
+            @media(max-width: 499px) {
+                width:100%;
+            }
+        }
         .coupons {
-
             width: 50%;
-
             @include phone {
                 width: 100%;
             }
@@ -138,19 +148,7 @@
                 color: $lightgrey;
                 font-size: 16px;
             }
-            .col-6 {
-                width:49%;
-                display: block;
-                &.left {
-                    float: left;
-                }
-                &.right {
-                    float: right;
-                }
-                @media(max-width: 499px) {
-                    width:100%;
-                }
-            }
+
         }
         .totals {
             float: right;
@@ -174,9 +172,7 @@
                     }
                 }
             }
-        }
-        .input-wrapper.checkbox {
-            margin:0;
+
         }
         .btn-continue {
             margin:0 0 10px 0;
