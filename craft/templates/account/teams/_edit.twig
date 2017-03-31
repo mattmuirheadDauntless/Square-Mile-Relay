@@ -15,7 +15,7 @@
 {% if currentUser.id == author.id or captain|length and currentUser.id != captain.id %}
     {% set access = 1 %}
 {% endif %}
-{% if event.lockTeamEditingFrom|date('U') < today %}
+{% if relatedEvent.lockTeamEditingFrom|date('U') < today %}
     {% set access = 0 %}
 {% endif %}
 
