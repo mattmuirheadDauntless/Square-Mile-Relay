@@ -5,9 +5,9 @@
 {% block content %}
 
     {% if currentUser.firstName|length %}
-        {% set pageHeading = 'Ready to race, ' ~ currentUser.firstName|t ~ '?' %}
+        {% set pageHeading = 'Ready to race, '|t ~ currentUser.firstName|t ~ '?' %}
     {% else %}
-        {% set pageHeading = 'Ready to race?' %}
+        {% set pageHeading = 'Ready to race?'|t %}
     {% endif %}
 
     {% set entry = craft.entries.section(craft.request.firstSegment).first() %}
