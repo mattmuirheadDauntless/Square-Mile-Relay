@@ -68,29 +68,21 @@
                 {% if cart.totalQty > 0 %}
                 <li><p>{{ 'Number of Teams in Basket'|t }}: <span>{{ cart.totalQty }}</span></p></li>
                 {% endif %}
-                {% if currentUser %}
-                    {% for adjustment in cart.adjustments %}
-                        <li>
-                            {% if adjustment.type == 'Discount' %}
-                                {{ 'Discount'|t }}
-                                <span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
-                            {% else %}
-                                {{ adjustment.name }} ({{ adjustment.description }})<span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
-                            {% endif %}
-                        </li>
-                        <br>
-                    {% endfor %}
+                {% for adjustment in cart.adjustments %}
                     <li>
-                        {{ 'Total'|t }}<span>{{ cart.totalPrice|commerceCurrency(isoCode, convert=false) }}</span>
-                        <br>
+                        {% if adjustment.type == 'Discount' %}
+                            {{ 'Discount'|t }}
+                            <span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
+                        {% else %}
+                            {{ adjustment.name }} ({{ adjustment.description }})<span>{{ adjustment.amount|commerceCurrency(isoCode, convert=false) }}</span>
+                        {% endif %}
                     </li>
-                {% else %}
-                <li>
-                    {{ 'Total'|t }}<span>{{ cart.itemSubtotal|commerceCurrency(isoCode, convert=false) }}</span>
                     <br>
-                    {# <span class="small">Excl. Tax</span> #}
+                {% endfor %}
+                <li>
+                    {{ 'Total'|t }}<span>{{ cart.totalPrice|commerceCurrency(isoCode, convert=false) }}</span>
+                    <br>
                 </li>
-                {% endif %}
             </ul>
         </div>
         <div class="clear"></div>
