@@ -138,8 +138,6 @@ $(function(){
 
                 $(window).scroll(function() {
                     if ( ($(window).scrollTop() + $segmentTop) <= $distance && ($(window).scrollTop() + $segmentBottom) >= $distance ) {
-                        console.log($distance);
-
 
                         if ( $distance > 7500 ) {
                             $('.slide-nav').css('margin-top', '-500px');
@@ -308,7 +306,6 @@ $(function(){
     $('.enter-race-modal').click(function() {
         var $this = $(this),
             $raceLocation = $this.attr('data-city');
-        console.log('I work like wind.');
 
         if ( $raceLocation != undefined && $raceLocation.length > 0 ) {
             $('#enterRaceLocation').val($raceLocation);
@@ -405,7 +402,6 @@ $(function(){
 
     //T&C validation on slide 2
     // $('.slide[data-slide="2"] .terms input').click(function() {
-    //     console.log(89);
     //     if ($(this).is(':checked')){
     //         $('.slide.current[data-slide="2"] .next.btn').addClass('btn-orange');
     //         $('.slide.current[data-slide="2"] .next.btn').removeClass('btn-invalid');
@@ -534,9 +530,6 @@ $(function(){
     $('.about-accordion .nav-items .nav-item').click(function() {
         var $this = $(this),
             $accordion = $this.attr('data-accordion');
-
-
-        console.log('test2');
 
         setTimeout(function(){
             $('.gallery-grid').isotope('layout');
@@ -1021,7 +1014,6 @@ $('.btn-remove-member').click(function(event) {
 
     $enterRace = $('#enterRace');
     var $city = getParameterByName('city');
-    console.log('city: 2' + $city);
 
     $enterRace.find('select').on('change', function() {
         if ( $(this).val().length > 0 ) {

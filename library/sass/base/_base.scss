@@ -68,6 +68,10 @@ body {
     color: #999;
 }
 
+.white {
+    color: $white !important;
+}
+
 .dragtooltip {
     position: relative;
     display: inline-block;
