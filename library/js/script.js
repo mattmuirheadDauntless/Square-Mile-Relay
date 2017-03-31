@@ -134,7 +134,7 @@ $(function(){
                 var $this = $(this),
                     $id = $this.attr('id'),
                     $slide = $this.attr('data-slide'),
-                    $distance = $('#'+$id).offset().top + 250;
+                    $distance = $('#'+$id).offset().top + 300;
 
                 $(window).scroll(function() {
                     if ( ($(window).scrollTop() + $segmentTop) <= $distance && ($(window).scrollTop() + $segmentBottom) >= $distance ) {
@@ -159,7 +159,12 @@ $(function(){
                             $(this).removeClass('active');
                         });
 
+                        $this.addClass("active");
+
                         $('.' + $id).addClass('active');
+                    }
+                    else {
+                        $this.removeClass("active");
                     }
                 });
             });
@@ -525,8 +530,9 @@ $(function(){
             else {
                 elemToBePositioned.removeClass("fixed", "fixed-bottom");
             }
-        })
+        });
     });
+
 
 
 
