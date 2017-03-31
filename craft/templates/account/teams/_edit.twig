@@ -164,7 +164,7 @@
 
                     <p>
                         {{ 'Please note that the order in which your runners appear below is the order that they will run in on race day!'|t }}<br>
-                        {% if event.lockTeamEditingFrom is not null %}
+                        {% if relatedEvent.lockTeamEditingFrom is not null %}
                             {{ 'The order can be updated until midnight'|t }} {{ event.lockTeamEditingFrom|date('j F Y') }}
                         {% endif %}
                     </p>
