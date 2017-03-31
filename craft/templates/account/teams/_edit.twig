@@ -5,6 +5,7 @@
 {% set relatedEvent = team.relatedEvent.first() %}
 {% set captain = team.teamCaptain.first() %}
 {% set author = team.author %}
+{% set today = date("now")|date("U") %}
 
 {#
 # User must be in the user group Team Captin
@@ -14,6 +15,10 @@
 {% if currentUser.id == author.id or captain|length and currentUser.id != captain.id %}
     {% set access = 1 %}
 {% endif %}
+{% if event.lockTeamEditingFrom|date('U') < today %}
+    {% set access = 0 %}
+{% endif %}
+
 {% if access == 0 %}
     {% redirect '/account/teams/' ~ team.slug %}
 {% endif %}
