@@ -66,7 +66,7 @@
             <div class="title">
                 <h1>{{ entry.title }}</h1>
                 {% if date|date('U') > now|date('U') %}
-                    <h2>{{ 'Next Race:'|t }} {{ date }}</h2>
+                    <h2>{{ 'Next Race:'|t }} {{ date|date('d F Y') }}</h2>
                 {% endif %}
             </div>
         </div>

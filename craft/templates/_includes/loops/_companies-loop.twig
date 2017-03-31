@@ -14,7 +14,20 @@
         {% set years = [] %}
         {% set cities = [] %}
         {% for team in relatedTeams %}
-            {% set teamCount = teamCount + 1 %}
+
+            {% if team|length %}
+                {% set event = team.relatedEvent.first() %}
+                {% if event|length %}
+                    {% set teamMembers = craft.entries.section('runningResults').relatedTo(team) %}
+                    {% set teamMember = teamMembers.first() %}
+                    {% if teamMember|length and teamMember.finishTime|length %}
+
+                        {% set teamCount = teamCount + 1 %}
+
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
             {% set relatedEvents = team.relatedEvent %}
             {% for relatedEvent in relatedEvents %}
                 {% set year = relatedEvent.startDateTime | date('Y') %}
@@ -29,18 +42,26 @@
         {% endfor %}
         {% set yearsFilters = years | join(' ') %}
         {% set citiesFilters = cities | join(' ') %}
+
         <div class="companies-item grid-item {{ yearsFilters }} {{ citiesFilters }}">
             <a href={{ company.url }} class="cover-link"></a>
             {% if image|length %}
             <div class="img-container" style="background-image: url({{ image.url }})"></div>
             {% endif %}
             <h3>{{ company.title }}</h3>
-            {% if teamCount == 1 %}
-                <h4>{{ teamCount }} {{ 'team'|t }}</h4>
+
+            {% if teamCount == 0 %}
+                <h4 class="white">No teams</h4>
             {% else %}
-                <h4>{{ teamCount }} {{ 'teams'|t }}</h4>
+                {% if teamCount == 1 %}
+                    <h4>{{ teamCount }} {{ 'team'|t }}</h4>
+                {% else %}
+                    <h4>{{ teamCount }} {{ 'teams'|t }}</h4>
+                {% endif %}
             {% endif %}
+
         </div>
+
     {% endfor %}
 
 {% endif %}
