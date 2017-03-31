@@ -31,7 +31,13 @@
                 {% if teams|length %}
                     {% for team in teams %}
                         <div class="team">
-                            <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
+
+                            {% set event = team.relatedEvent.first() %}
+                            {% set today = date("now")|date("U") %}
+                            {% if event.lockTeamEditingFrom|date('U') < today %}
+                            {% else %}
+                                <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
+                            {% endif %}
 
                             {% set inactiveMembers = team.teamMembers.status('pending')|length %}
                             {% set activeMembers = team.teamMembers.status('active')|length %}
@@ -46,7 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% set event = team.relatedEvent.first() %}
+
                             {% if event|length %}
                             {% set relatedCity = event.relatedCity.first() %}
                             {% if relatedCity is not null %}
