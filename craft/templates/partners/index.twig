@@ -65,7 +65,7 @@
 
     {% set events = craft.entries.section('event').order('title') %}
     {% if events|length %}
-        <section class="partners">
+        <section class="partners elementScrollTop">
             {% for event in events %}
                 {% set city = event.relatedCity.first() %}
                 {% set year = event.startDateTime|date('Y') %}
@@ -79,7 +79,7 @@
                     <div class="race-title">
                         <h2>{{ event.title }}</h2>
                     </div>
-                    <ul id="{{ event.slug }}PartnersNav" class="slide-nav">
+                    <ul id="{{ event.slug }}PartnersNav" class="slide-nav elementPositioned elemToBePositioned">
                     {% set liCounter = 1 %}
                     {% for partner in partners %}
                         <li class="{{ city.slug }}{{ year }}Partner{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}" data-slide="{{ partner.partnerType|lower|replace(" ", "-") }}">
@@ -108,7 +108,9 @@
         </section>
     {% endif %}
 
+    <div class="elemBottom">
     {% include "_includes/_global-partners" %}
+    </div>
 
     <section class="text partner-opportunities text-center">
         <div class="wrapper-thin">
