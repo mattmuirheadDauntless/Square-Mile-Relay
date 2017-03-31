@@ -30,6 +30,7 @@
     {% include "_includes/_cta-banner" %}
 
     {% set teams = craft.entries.section('team').relatedTo(entry).limit(null) %}
+    {% cache %}
     <section class="single-company">
         <div class="teams-header">
             <h3>{{ 'Teams'|t }}</h3>
@@ -40,7 +41,7 @@
                 <h3>{{ "There aren't any results for your filter search"|t }}</h3>
                 <div class="btn btn-black filter" data-filter="*">{{ "View all categories"|t }}</div>
             </div>
-            <table class="company-table">
+            <table class="company-table" id="companyTable">
                 <thead>
                     <tr>
                         <th><span></span>{{ 'Team Name'|t }}</th>
@@ -51,7 +52,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% set rows = [] %}
                     {% set finishedTeams = 0 %}
+
                     {% if teams|length %}
                         {% for team in teams.order('title') %}
                             {% set event = team.relatedEvent.first() %}
@@ -62,49 +65,57 @@
                                 {% set teamMember = teamMembers.first() %}
                                 {% if teamMember|length and teamMember.finishTime|length %}
                                     {% set finishedTeams = finishedTeams + 1 %}
-                                    <tr class="heading-row {{ date|date('Y') }} {{ city.slug }}">
-                                        <td><strong>{{ team.teamName }}
-                                        {% if teamMember is not null %}
-                                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                                        {% endif %}
-                                        </strong></td>
-                                        <td>{{ city.title }}</td>
-                                        <td>{{ date|date('F j Y') }}</td>
-                                        <td>
+                                    {% set row %}
+                                        <tr class="heading-row {{ date|date('Y') }} {{ city.slug }}" data-date="{{ date|date('U') }}">
+                                            <td><strong>{{ team.teamName }}
                                             {% if teamMember is not null %}
-                                                {{ teamMember.teamPosition }}
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
                                             {% endif %}
-                                        </td>
-                                        <td>
-                                            <strong>
-                                                {{ teamMember.finishTime }}
-                                            </strong>
-                                        </td>
-                                    </tr>
-                                    <tr class="child-row 2017 london">
-                                        <td class="table-expander" colspan="5">
-                                            <div>
-                                                {% set teamImage = team.teamPhoto.first() %}
-                                                {% if teamImage %}
-                                                <img src="{{ teamImage.url }}" alt="">
+                                            </strong></td>
+                                            <td>{{ city.title }}</td>
+                                            <td>{{ date|date('F j Y') }}</td>
+                                            <td>
+                                                {% if teamMember is not null %}
+                                                    {{ teamMember.teamPosition }}
                                                 {% endif %}
-                                                {% if teamMembers|length %}
-                                                <ul>
-                                                {% for member in teamMembers %}
-                                                    <li><span class="ellipsis" title="{{ member.runner }}">{{ loop.index }}. {{ member.runner }} </span> <span>{{ member.lapTime }}</span></li>
-                                                    {% if loop.index == 5 %}
-                                                    </ul>
-                                                    <ul>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    {{ teamMember.finishTime }}
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr class="child-row {{ date|date('Y') }} {{ city.slug }}" data-date="{{ date|date('U') }}">
+                                            <td class="table-expander" colspan="5">
+                                                <div>
+                                                    {% set teamImage = team.teamPhoto.first() %}
+                                                    {% if teamImage %}
+                                                    <img src="{{ teamImage.url }}" alt="">
                                                     {% endif %}
-                                                {% endfor %}
-                                                </ul>
-                                                {% endif %}
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                    {% if teamMembers|length %}
+                                                    <ul>
+                                                    {% for member in teamMembers %}
+                                                        <li><span class="ellipsis" title="{{ member.runner }}">{{ loop.index }}. {{ member.runner }} </span> <span>{{ member.lapTime }}</span></li>
+                                                        {% if loop.index == 5 %}
+                                                        </ul>
+                                                        <ul>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </ul>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endset %}
+                                    {% set rows = rows|merge({ (loop.index0): { 'date': date|date('U'), 'content': row } }) %}
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
+
+                        {% for rowItem in rows|sort('date')|reverse %}
+                            {{ rowItem.content }}
+                        {% endfor %}
+
                     {% endif %}
 
                     {% if teams|length == 0 or finishedTeams == 0 %}
@@ -121,5 +132,6 @@
             </table>
         </div>
     </section>
+    {% endcache %}
 
 {% endblock %}
