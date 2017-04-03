@@ -301,6 +301,15 @@ $(function(){
         $('#videoiFrame').attr('src', "");
     });
 
+    //Tab cycles through single form
+    $('form input[type=submit]').keydown(function(event) {
+        if (event.keyCode == 9){
+            event.preventDefault();
+            $(this).parent().find('*:input[type!=hidden]:first').focus();
+        }
+    });
+
+
 //===================================
 //ENTER RACE MODULE
 //===================================
@@ -1117,12 +1126,14 @@ $('.btn-remove-member').click(function(event) {
         window.location.href = $(this).val();
     });
 
-    $body = $('body');
+    if ( $('#update-team-members').length > 0 ) {
+        $body = $('body');
 
-    $(document).on({
-        ajaxStart: function() { $body.addClass('loading') },
-        ajaxStop: function() { $body.removeClass('loading') }    
-    });
+        $(document).on({
+            ajaxStart: function() { $body.addClass('loading') },
+            ajaxStop: function() { $body.removeClass('loading') }    
+        });
+    }
 });
 
 
