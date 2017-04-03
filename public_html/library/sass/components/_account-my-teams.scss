@@ -107,6 +107,7 @@
         text-align: center;
         position: relative;
         cursor: pointer;
+        border: 1px solid $lightgrey;
         &.edit-team {
             width: 100%;
             margin: 0 0 30px;
