@@ -48,7 +48,9 @@
     {% endfor %}
 
     <div class="checkout">
+
         {# Update Coupon form uses the single update controller action: #}
+
         <div class="coupons{% if cart.lineItems|length == 0 %} invalid{% endif %}">
             {% if cart.getError('couponCode') %}<span class="flash">{{ cart.getError('couponCode') }}</span>{% endif %}
             <form method="POST">
@@ -100,14 +102,15 @@
         </div>
         <div class="clear"></div>
 
-        <a href="{{ siteUrl }}commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid flr col-6 left">{{ 'Continue'|t }}</a>
 
-        <form method="POST" class="col-6 right">
+        <form method="POST" class="col-6 left">
             <input type="hidden" name="action" value="commerce/cart/removeAllLineItems"/>
             <input type="hidden" name="redirect" value="commerce/products?city={{ citySelected }}"/>
             {{ getCsrfInput() }}
             <input class="btn btn-empty btn-black fll" id="emptyCart" type="submit" value="{{ "Empty Basket"|t }}"/>
         </form>
+        <a href="{{ siteUrl }}commerce/checkout?city={{ citySelected }}" class="btn btn-continue btn-invalid col-6 right">{{ 'Continue'|t }}</a>
+
         <div class="clear"></div>
 
     </div>

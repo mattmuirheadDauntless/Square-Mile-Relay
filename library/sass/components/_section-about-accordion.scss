@@ -54,24 +54,24 @@
                 &[data-accordion="4"] {
                     top: 533px;
                 }
-                &.fixed-bottom {
-                    position: absolute;
-                    &[data-accordion="1"] {
-                        top: inherit;
-                        bottom: 450px;
-                    }
-                    &[data-accordion="2"] {
-                        top: inherit;
-                        bottom: 300px;
-                    }
-                    &[data-accordion="3"] {
-                        top: inherit;
-                        bottom: 150px;
-                    }
-                    &[data-accordion="4"] {
-                        top: inherit;
-                        bottom: 0;
-                    }
+            }
+            &.fixed-bottom {
+                position: absolute;
+                &[data-accordion="1"] {
+                    top: inherit;
+                    bottom: 405px;
+                }
+                &[data-accordion="2"] {
+                    top: inherit;
+                    bottom: 270px;
+                }
+                &[data-accordion="3"] {
+                    top: inherit;
+                    bottom: 135px;
+                }
+                &[data-accordion="4"] {
+                    top: inherit;
+                    bottom: 0;
                 }
             }
             &:before {
@@ -167,31 +167,14 @@
     .about-accordion {
         .nav-items {
             min-height: 400px;
-            li,li.fixed,li.fixed.fixed-bottom {
-                position:absolute !important;
+            li,li.fixed,li.fixed-bottom {
+                position:relative !important;
+                top:auto !important;
+                bottom:auto !important;
                 padding:40px;
                 height:100px; 
                 width: 100%;
                 overflow: hidden;
-                &[data-accordion="1"] {
-                    top: 0;
-                    bottom: auto;
-                }
-                &[data-accordion="2"] {
-                    top: 100px;
-                    bottom: auto;
-                }
-                &[data-accordion="3"] {
-                    top: 200px;
-                    bottom: auto;
-                }
-                &[data-accordion="4"] {
-                    top: 300px;
-                    bottom: auto;
-                }
-                &:before {
-                    left: -77px;
-                }
             }
         }
         .main-accordion {
@@ -205,7 +188,7 @@
             &.active {
                 border-bottom: 2px solid $lightergrey;
                 max-height: 3000px;
-                padding: 450px 15px 20px 15px !important;
+                padding: 20px 15px !important;
             }
         }
     }
@@ -213,7 +196,7 @@
 
 @include phone {
     .about-accordion .main-accordion.active {
-        padding: 420px 15px 20px 15px !important;
+        padding: 20px 15px !important;
         h3 {
             font-size: 20px;
             line-height: 120%;

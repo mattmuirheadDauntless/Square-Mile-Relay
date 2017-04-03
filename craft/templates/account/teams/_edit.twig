@@ -15,7 +15,7 @@
 {% if currentUser.id == author.id or captain|length and currentUser.id != captain.id %}
     {% set access = 1 %}
 {% endif %}
-{% if event.lockTeamEditingFrom|date('U') < today %}
+{% if relatedEvent.lockTeamEditingFrom|date('U') < today %}
     {% set access = 0 %}
 {% endif %}
 
@@ -164,8 +164,8 @@
 
                     <p>
                         {{ 'Please note that the order in which your runners appear below is the order that they will run in on race day!'|t }}<br>
-                        {% if event.lockTeamEditingFrom is not null %}
-                            {{ 'The order can be updated until midnight'|t }} {{ event.lockTeamEditingFrom|date('j F Y') }}
+                        {% if relatedEvent.lockTeamEditingFrom is not null %}
+                            {{ 'The order can be updated until midnight'|t }} {{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}
                         {% endif %}
                     </p>
 
@@ -204,8 +204,10 @@
                             {% set count = count + 1 %}
                             <tr class="s-drag">
                                 <td>
-                                    {% if captain|length and currentUser.id == captain.id %}
+                                    {% if captain|length and user.id == captain.id %}
                                         <span class="captain">C</span>
+                                    {% endif %}
+                                    {% if captain|length and currentUser.id == captain.id %}
                                         <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
                                     {% endif %}
                                 </td>
@@ -252,9 +254,11 @@
                                 </td>
                                 <td valign="center">
                                     {% if user.pending %}
-                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Sent'|t }}</div>
-                                        <br>
-                                        <button type="submit" class="btn btn-black btn-tiny">{{ 'Resend'|t }}</button>
+                                        {% if captain|length and currentUser.id == captain.id %}
+                                            <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Sent'|t }}</div>
+                                            <br>
+                                            <button type="submit" class="btn btn-black btn-tiny">{{ 'Resend'|t }}</button>
+                                        {% endif %}
                                     {% else %}
                                         <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Confirmed'|t }}</div>
                                     {% endif %}
@@ -306,7 +310,9 @@
                                     }) }}
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-orange btn-tiny">{{ 'Send Invitation'|t }}</button>
+                                    {% if captain|length and currentUser.id == captain.id %}
+                                        <button type="submit" class="btn btn-orange btn-tiny">{{ 'Send Invitation'|t }}</button>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
