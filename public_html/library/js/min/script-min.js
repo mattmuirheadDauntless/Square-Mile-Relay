@@ -134,10 +134,12 @@ $(function(){
                 var $this = $(this),
                     $id = $this.attr('id'),
                     $slide = $this.attr('data-slide'),
-                    $distance = $('#'+$id).offset().top + 300;
+                    $distance = $('#'+$id).offset().top + 250;
 
                 $(window).scroll(function() {
                     if ( ($(window).scrollTop() + $segmentTop) <= $distance && ($(window).scrollTop() + $segmentBottom) >= $distance ) {
+                        console.log($distance);
+
 
                         if ( $distance > 7500 ) {
                             $('.slide-nav').css('margin-top', '-500px');
@@ -157,12 +159,7 @@ $(function(){
                             $(this).removeClass('active');
                         });
 
-                        $this.addClass("active");
-
                         $('.' + $id).addClass('active');
-                    }
-                    else {
-                        $this.removeClass("active");
                     }
                 });
             });
@@ -311,6 +308,7 @@ $(function(){
     $('.enter-race-modal').click(function() {
         var $this = $(this),
             $raceLocation = $this.attr('data-city');
+        console.log('I work like wind.');
 
         if ( $raceLocation != undefined && $raceLocation.length > 0 ) {
             $('#enterRaceLocation').val($raceLocation);
@@ -407,6 +405,7 @@ $(function(){
 
     //T&C validation on slide 2
     // $('.slide[data-slide="2"] .terms input').click(function() {
+    //     console.log(89);
     //     if ($(this).is(':checked')){
     //         $('.slide.current[data-slide="2"] .next.btn').addClass('btn-orange');
     //         $('.slide.current[data-slide="2"] .next.btn').removeClass('btn-invalid');
@@ -512,30 +511,7 @@ $(function(){
         $racesSlider.flickity('next');
     });
 
-    $(window).on('scroll',function(){
-        var element = $('.elementScrollTop');
-        var elementPositioned = $(".elementPositioned").height();
-        var elemToBePositioned = $(".elemToBePositioned");
-        var elemOffset = element.offset().top - 127;
-        var elemBottom = $(".elemBottom").offset().top;
-        var offSet = elemBottom - elementPositioned;
-        element.each(function () {
-            if ($(window).scrollTop() >= elemOffset && $(window).scrollTop() < offSet) {
-                elemToBePositioned.removeClass("fixed-bottom").addClass("fixed");
-            }
-            else if ($(window).scrollTop() > offSet) {
-                elemToBePositioned.removeClass("fixed").addClass("fixed-bottom");
-            }
-            else {
-                elemToBePositioned.removeClass("fixed", "fixed-bottom");
-            }
-        });
-    });
-
-
-
-
-    /*if ( $('.about-accordion').length > 0 && $(window).width() > 900 ){
+    if ( $('.about-accordion').length > 0 && $(window).width() > 900 ){
         new Waypoint({
             element: $('#aboutAccordion'),
             handler: function() {
@@ -553,11 +529,14 @@ $(function(){
         //     },
         //     offset: $(window).height()
         // });
-    }*/
+    }
 
     $('.about-accordion .nav-items .nav-item').click(function() {
         var $this = $(this),
             $accordion = $this.attr('data-accordion');
+
+
+        console.log('test2');
 
         setTimeout(function(){
             $('.gallery-grid').isotope('layout');
@@ -831,6 +810,7 @@ $('.btn-remove-member').click(function(event) {
             $this.parent('td').parent('tr').find('.user-status').removeClass('confirmed');
             $this.parent('td').parent('tr').find('.user-status').removeClass('pending');
             $this.parent('td').parent('tr').find('.user-status').html('<button type="submit" class="btn btn-orange btn-tiny">Send Invitation</button>');
+            $this.parent('td').parent('tr').find('.resend').remove();
             $this.remove();
     });
 });
@@ -1042,6 +1022,7 @@ $('.btn-remove-member').click(function(event) {
 
     $enterRace = $('#enterRace');
     var $city = getParameterByName('city');
+    console.log('city: 2' + $city);
 
     $enterRace.find('select').on('change', function() {
         if ( $(this).val().length > 0 ) {
@@ -1113,3 +1094,5 @@ $('.btn-remove-member').click(function(event) {
     });
 
 });
+
+
