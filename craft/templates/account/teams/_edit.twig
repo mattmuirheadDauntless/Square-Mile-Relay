@@ -100,7 +100,7 @@
                             }) }}
                         </div>
 
-                        <div class="input-wrapper">
+                        <div class="input-wrapper hide">
                             {% set slugLabel = 'Team Slug'|t %}
                             {{ formFields.input({
                                 id:    'slug',
@@ -275,7 +275,6 @@
                                 {% if captain|length and currentUser.id == captain.id %}
                                     <td class="s-handle">
                                         <div class="dragtooltip">
-                                            <i class="fa fa-bars"></i>
                                             <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
                                         </div>
                                         <span class="count">{{ count }}</span>
