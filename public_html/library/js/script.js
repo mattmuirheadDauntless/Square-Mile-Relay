@@ -811,8 +811,11 @@ $('.btn-invite-member').click(function(event) {
                 '/',
                 { action: 'squareMileRelay/teamMembers/addTeamMember', firstName: $firstName, lastName: $lastName, email: $email, teamId: $teamId },
                 function(data, textStatus, xhr) {
-                    // $this.parent('td').parent('tr').find('.btn-invite-member').parent().html('<div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> Sent</div><br><button type="submit" class="btn btn-black btn-tiny resend">Resend</button>');
-                    location.reload();
+                    if ( data.includes('Sorry') ) {
+                        alert(data);
+                    } else {
+                        location.reload();
+                    }
             });
         }
 });
