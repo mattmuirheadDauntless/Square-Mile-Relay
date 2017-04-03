@@ -797,6 +797,26 @@ $('.save-btn').click(function() {
     });
 });
 
+$('.btn-invite-member').click(function(event) {
+    event.preventDefault();
+    var $this = $(this),
+
+        $teamId = $('#update-team-members input[name="teamId"]').val();
+        $firstName = $this.parent().parent().find('#firstName').val();
+        $lastName = $this.parent().parent().find('#lastName').val();
+        $email = $this.parent().parent().find('#email').val();
+
+        if ( $email.length > 0 ) {
+            $.post(
+                '/',
+                { action: 'squareMileRelay/teamMembers/addTeamMember', firstName: $firstName, lastName: $lastName, email: $email, teamId: $teamId },
+                function(data, textStatus, xhr) {
+                    // $this.parent('td').parent('tr').find('.btn-invite-member').parent().html('<div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> Sent</div><br><button type="submit" class="btn btn-black btn-tiny resend">Resend</button>');
+                    location.reload();
+            });
+        }
+});
+
 $('.btn-remove-member').click(function(event) {
     var $this = $(this),
         $userId = $this.data('user-id'),
@@ -813,6 +833,7 @@ $('.btn-remove-member').click(function(event) {
             $this.parent('td').parent('tr').find('.resend').remove();
             $this.remove();
     });
+
 });
 
 //===================================
@@ -1093,6 +1114,12 @@ $('.btn-remove-member').click(function(event) {
         window.location.href = $(this).val();
     });
 
+    $body = $('body');
+
+    $(document).on({
+        ajaxStart: function() { $body.addClass('loading') },
+        ajaxStop: function() { $body.removeClass('loading') }    
+    });
 });
 
 
