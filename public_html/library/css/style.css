@@ -186,6 +186,10 @@ body:after {
 .white {
   color: #fff !important; }
 
+p.error {
+  color: #fc6769;
+  text-align: left; }
+
 .dragtooltip {
   position: relative;
   display: inline-block; }
