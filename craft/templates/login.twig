@@ -20,6 +20,10 @@
                     {{ getCsrfInput() }}
                     <input type="hidden" name="action" value="users/login">
 
+                    {% if errorMessage is defined %}
+                        <p class="error">{{ errorMessage }}</p>
+                    {% endif %}
+
                     <div class="input-wrapper">
                         {% set EmailLabel = 'Email'|t %}
 
