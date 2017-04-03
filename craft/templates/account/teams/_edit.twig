@@ -12,7 +12,8 @@
 # to be able to view this page.
 #}
 {% set access = 0 %}
-{% if currentUser.id == author.id or captain|length and currentUser.id != captain.id %}
+
+{% if (currentUser.id == captain.id) or currentUser.id == author.id or (captain|length and currentUser.id != captain.id) %}
     {% set access = 1 %}
 {% endif %}
 {% if relatedEvent.lockTeamEditingFrom|date('U') < today %}
@@ -192,7 +193,7 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>{{ 'Race Order'|t }}</th>
+                                <th>{{ 'RRace Order'|t }}</th>
                                 <th>{{ 'First Name'|t }}</th>
                                 <th>{{ 'Last Name'|t }}</th>
                                 <th>{{ 'Email'|t }}</th>
@@ -204,10 +205,10 @@
                             {% set count = count + 1 %}
                             <tr class="s-drag">
                                 <td>
-                                    {% if captain|length and user.id == captain.id %}
+                                    {% if (captain|length and (user.id == captain.id) and (captain.id == author.id and user.id == captain.id)) or (user.id != captain.id and user.id == author.id) %}
                                         <span class="captain">C</span>
                                     {% endif %}
-                                    {% if captain|length and currentUser.id == captain.id %}
+                                    {% if (captain|length and currentUser.id == captain.id and currentUser.id != user.id) or (currentUser.id == author.id and currentUser.id != user.id) %}
                                         <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
                                     {% endif %}
                                 </td>
