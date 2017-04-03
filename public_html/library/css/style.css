@@ -4242,7 +4242,8 @@ header .cta-banner,
     width: calc(33.33% - 30px);
     text-align: center;
     position: relative;
-    cursor: pointer; }
+    cursor: pointer;
+    border: 1px solid #b0b0b0; }
     .my-teams .team.edit-team {
       width: 100%;
       margin: 0 0 30px;
