@@ -220,6 +220,9 @@
                                     </td>
                                 {% else %}
                                     <td>
+                                        {% if currentUser.id == author.id %}
+                                            <i class="fa fa-bars"></i>
+                                        {% endif %}
                                         <span class="count">{{ count }}</span>
                                     </td>
                                 {% endif %}
