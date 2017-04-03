@@ -179,14 +179,14 @@
     {#<div class="logo">
         <img src="{{ logos.companyLogo.first().url }}" alt="Square Mile Relay" style="width: 200px; height: 90px;">
     </div>#}
-    <h6 style="font-family:arial,sans-serif;font-size: 14px;font-weight:400;margin:0;color:#f37135;">Square Mile Relay</h6>
+    <img src="http://squaremilerelay.com/uploads/company/smr_logo.png" style="height:30px;border: 0;margin:0 0 30px 0;">
     <h4>{{ 'Receipt for Order #'|t }}{{ order.number[:7] }}</h4>
     {{ orderTable }}
 {% case "ajax" %}
-    <h6 style="font-family:arial,sans-serif;font-size: 14px;font-weight:400;margin:0;color:#f37135;">Square Mile Relay</h6>
+    <img src="http://squaremilerelay.com/uploads/company/smr_logo.png" style="height:30px;border: 0;margin:0 0 30px 0;">
     <h4>{{ 'NA'|t }}</h4>
 {% default %}
-    <h6 style="font-family:arial,sans-serif;font-size: 14px;font-weight:400;margin:0;color:#f37135;">Square Mile Relay</h6>
+    <img src="http://squaremilerelay.com/uploads/company/smr_logo.png" style="height:30px;border: 0;margin:0 0 30px 0;">
     <h4>{{ 'Order #'|t }}{{ order.number[:7] }}</h4>
     {{ orderTable }}
     {% endswitch %}
