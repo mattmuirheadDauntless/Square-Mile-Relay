@@ -193,7 +193,7 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>{{ 'RRace Order'|t }}</th>
+                                <th>{{ 'Race Order'|t }}</th>
                                 <th>{{ 'First Name'|t }}</th>
                                 <th>{{ 'Last Name'|t }}</th>
                                 <th>{{ 'Email'|t }}</th>
@@ -209,7 +209,7 @@
                                         <span class="captain">C</span>
                                     {% endif %}
                                     {% if (captain|length and currentUser.id == captain.id and currentUser.id != user.id) or (currentUser.id == author.id and currentUser.id != user.id) %}
-                                        <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
+                                        <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data--id="{{ team.id }}"></i>
                                     {% endif %}
                                 </td>
                                 {% if captain|length and currentUser.id == captain.id %}
