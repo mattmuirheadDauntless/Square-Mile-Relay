@@ -8,7 +8,6 @@
         cursor: pointer;
         text-align: left;
         color: $orange;
-        margin:0 0 10px 0;
         i {
             margin-right: 10px;
         }
@@ -65,6 +64,7 @@
     }
     .package {
         float: left;
+        margin-bottom: 20px;
         background-color: $lightestgrey;
         padding: 20px;
         width: 100%;
@@ -113,29 +113,25 @@
                 width: 100%;
                 height: inherit;
                 font-size: 9px;
-                letter-spacing:1px;
             }
         }
     }
     .checkout {
-        margin: 0;
-        padding: 20px 20px 0 20px;
+        float: left;
+        margin: 10px 0 20px;
+        padding: 20px;
         width: 100%;
-        .col-6 {
-            width:49%;
-            display: block;
-            &.left {
-                float: left;
-            }
-            &.right {
-                float: right;
-            }
-            @media(max-width: 499px) {
-                width:100%;
+
+        @include phone {
+            #emptyCart {
+                margin-top: 10px;
             }
         }
         .coupons {
+            float: left;
+            padding-right: 30px;
             width: 50%;
+
             @include phone {
                 width: 100%;
             }
@@ -148,12 +144,10 @@
                 color: $lightgrey;
                 font-size: 16px;
             }
-
         }
         .totals {
             float: right;
-            width: 60%;
-            margin:0 0 20px 0;
+            width: 50%;
             ul {
                 margin: 0;
                 padding: 0;
@@ -172,13 +166,6 @@
                     }
                 }
             }
-
-        }
-        .btn-continue {
-            margin:0 0 10px 0;
-        }
-        form #emptyCart {
-            margin:0;
         }
     }
     .addresses-body {

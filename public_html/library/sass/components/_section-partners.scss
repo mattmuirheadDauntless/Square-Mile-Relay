@@ -50,11 +50,6 @@
                 position: fixed;
                 top: 155px;
                 transition: all ease-in .3s;
-                &.fixed-bottom {
-                    position: absolute;
-                    top:auto;
-                    bottom:0;
-                }
             }
         }
         &.active {

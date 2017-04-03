@@ -238,8 +238,7 @@
     <!-- Bootstrap -->
     <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Plugins -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js"></script>
-    <script src="/app.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}app.js"></script>
     <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
     <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/isotope/dist/isotope.pkgd.min.js"></script>
@@ -249,7 +248,8 @@
     <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/tablesorter/jquery.tablesorter.min.js"></script>
     <!-- Main JS -->
     <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/plugins-min.js"></script>
-    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js?ver=001"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js?ver=004"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/sortable.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -267,6 +267,7 @@
 
     {% block jsFooter %}{% endblock %}
 
+    
     {% endcache %}
 
 </body>

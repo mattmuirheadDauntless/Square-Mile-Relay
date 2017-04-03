@@ -1,0 +1,131 @@
+a,
+a:hover {
+    text-decoration: none;
+}
+
+.header {
+    padding: 20px;
+}
+
+.header.home {
+    background-color: #E6E6E6;
+}
+
+.logo {
+    display: inline-block;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.tagline {
+    color: #606060;
+    font-size: 1.7em;
+    font-weight: bold;
+    text-align: right;
+    line-height: 1.2;
+    float: right;
+}
+
+.hashtag {
+    color: #aaa;
+}
+
+.banner {
+    position: relative;
+    background-color: #eee;
+    overflow: hidden;
+}
+
+.banner.city {
+    height: 400px;
+}
+
+.banner .carousel {
+    height: 100%;
+}
+
+.banner .container {
+    position: relative;
+    margin-top: -100px;
+    z-index: 99;
+}
+
+.list-inline {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.list-inline li {
+    padding: 0;
+    display: block;
+}
+
+.cities-big {
+    color: #606060;
+    font-size: 3em;
+    font-weight: bold;
+    line-height: 1.2;
+    padding: 20px 0 20px 0;
+    margin-left: 0;
+    list-style: none;
+}
+
+.cities-big a {
+    color: #606060;
+    text-decoration: none;
+}
+
+.cities-big a:hover {
+    background-color: #fff;
+}
+
+.jumbotron,
+.container .jumbotron {
+    border-radius: 0;
+}
+
+.user-bar {
+    background-color: #D8D8D8;
+}
+
+.user-bar a {
+    color: #6A6A6A;
+    padding: 20px;
+    display: inline-block;
+}
+
+.user-bar a:hover {
+    background-color: #ECECEC;
+}
+
+.call-to-action {
+    background-color: #eee;
+    text-align: center;
+    padding: 30px;
+}
+
+.call-to-action .heading {
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.address-data {
+    padding: 0 0 0 15px;
+    margin: 0;
+    list-style: none;
+    display: inline-block;
+}
+
+.address-data li {
+    display: inline-block;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 900px;
+    }
+}
