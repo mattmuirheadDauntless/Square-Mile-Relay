@@ -11,31 +11,34 @@
 {% else %}
 
     {% set count = 0 %}
-    {% for results in teamResults|group('teamName')%}
+    {% for results in teamResults|group('relatedTeam.title') %}
         {% set count = count + 1 %}
-        {% for result in results|slice(0, 1) %}
-            {% set event = result.relatedEvents.first() %}
-            {% set year = event.startDateTime|date('Y') %}
-            {% set city = event.relatedCity.first() %}
-            {% if city is not null %}
-                <tr class="{{ year }} {{ city.slug }}">
-                    <td><strong>{{ ((paginate.currentPage - 1) * 20) + count }}</strong></td>
-                    <td><strong>{{ result.teamPosition }}</strong></td>
-                    <td>
-                        <strong>{{ result.teamName }}</strong>
-                    </td>
-                    <td>
-                        {% if result.finishTime|length %}
-                            <strong>{{ result.finishTime|split('.')[0] }}</strong>
-                        {% else %}
-                            <strong>{{ result.finishedStatus|split('.')[0] }}</strong>
-                        {% endif %}
-                    </td>
-                    <td>{{ city.title }}</td>
-                    <td>{{ year }}</td>
-                </tr>
-            {% endif %}
+        {% for result in results %}
+            {% if loop.index is divisible by(10) %}
 
+                {% set event = result.relatedEvents.first() %}
+                {% set year = event.startDateTime|date('Y') %}
+                {% set city = event.relatedCity.first() %}
+                {% if city is not null %}
+                    <tr class="{{ year }} {{ city.slug }}">
+                        <td><strong>{{ (loop.index / 10) + (((paginate.currentPage - 1) * 2) * 10) }}</strong></td>
+                        <td><strong>{{ result.teamPosition }}</strong></td>
+                        <td>
+                            <strong>{{ result.teamName }}</strong>
+                        </td>
+                        <td>
+                            {% if result.finishTime|length %}
+                                <strong>{{ result.finishTime|split('.')[0] }}</strong>
+                            {% else %}
+                                <strong>{{ result.finishedStatus|split('.')[0] }}</strong>
+                            {% endif %}
+                        </td>
+                        <td>{{ city.title }}</td>
+                        <td>{{ year }}</td>
+                    </tr>
+                {% endif %}
+
+            {% endif %}
         {% endfor %}
     {% endfor %}
 
