@@ -1126,14 +1126,6 @@ $('.btn-remove-member').click(function(event) {
         window.location.href = $(this).val();
     });
 
-    if ( $('#update-team-members').length > 0 ) {
-        $body = $('body');
-
-        $(document).on({
-            ajaxStart: function() { $body.addClass('loading') },
-            ajaxStop: function() { $body.removeClass('loading') }    
-        });
-    }
 });
 
 
