@@ -257,7 +257,7 @@
                                         {% if captain|length and currentUser.id == captain.id %}
                                             <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Sent'|t }}</div>
                                             <br>
-                                            <button type="submit" class="btn btn-black btn-tiny">{{ 'Resend'|t }}</button>
+                                            <button type="submit" class="btn btn-black btn-tiny resend">{{ 'Resend'|t }}</button>
                                         {% endif %}
                                     {% else %}
                                         <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Confirmed'|t }}</div>
