@@ -72,6 +72,11 @@ body {
     color: $white !important;
 }
 
+p.error {
+    color: $red;
+    text-align: left;
+}
+
 .dragtooltip {
     position: relative;
     display: inline-block;
