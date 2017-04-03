@@ -205,10 +205,10 @@
                             {% set count = count + 1 %}
                             <tr class="s-drag">
                                 <td>
-                                    {% if (captain|length and (user.id == captain.id) and (captain.id == author.id and user.id == captain.id)) or (user.id != captain.id and user.id == author.id) %}
+                                    {% if (captain|length and user.id == captain.id)  %}
                                         <span class="captain">C</span>
                                     {% endif %}
-                                    {% if (captain|length and currentUser.id == captain.id and currentUser.id != user.id) or (currentUser.id == author.id and currentUser.id != user.id) %}
+                                    {% if (captain|length and user.id != captain.id)  %}
                                         <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data--id="{{ team.id }}"></i>
                                     {% endif %}
                                 </td>
