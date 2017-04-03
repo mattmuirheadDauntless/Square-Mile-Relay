@@ -59,7 +59,7 @@
                         {% for team in teams.order('title') %}
                             {% set event = team.relatedEvent.first() %}
                             {% if event|length %}
-                                {% set teamMembers = craft.entries.section('runningResults').relatedTo(team) %}
+                                {% set teamMembers = craft.entries.section('runningResults').relatedTo(team).order('lapTime') %}
                                 {% set city = event.relatedCity.first() %}
                                 {% set date = event.startDateTime %}
                                 {% set teamMember = teamMembers.first() %}

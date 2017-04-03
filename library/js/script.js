@@ -304,6 +304,15 @@ $(function(){
         $('#videoiFrame').attr('src', "");
     });
 
+    //Tab cycles through single form
+    $('form input[type=submit]').keydown(function(event) {
+        if (event.keyCode == 9){
+            event.preventDefault();
+            $(this).parent().find('*:input[type!=hidden]:first').focus();
+        }
+    });
+
+
 //===================================
 //ENTER RACE MODULE
 //===================================
