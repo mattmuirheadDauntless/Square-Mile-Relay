@@ -23,6 +23,10 @@
                 <input type="hidden" name="action" value="users/login">
                 <input type="hidden" name="redirect" value="{{ siteUrl }}commerce/checkout/addresses">
 
+                {% if errorMessage is defined %}
+                    <p class="error">{{ errorMessage }}</p>
+                {% endif %}
+
                 <div class="input-wrapper">
                     <input id="loginName" class="input" type="email" name="loginName" placeholder="{{ 'Email'|t }}"
                            value="{{ craft.session.rememberedUsername }}">
@@ -62,17 +66,9 @@
                 <input type="hidden" name="action" value="squareMileRelay/users/create">
                 <input type="hidden" name="redirect" value="{{ siteUrl }}commerce/checkout/addresses">
 
-                {% macro errorList(errors) %}
-                    {% if errors %}
-                        <ul class="errors">
-                            {% for error in errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                {% endmacro %}
-
-                {% from _self import errorList %}
+                {% if craft.request.post('email')|length or craft.request.post('email') != "" %}
+                    <p class="error">{{ craft.request.post('email') }} is already registered.</p>
+                {% endif %}
 
                 <div class="input-wrapper required">
                     <input id="firstName" type="text" class="input" name="firstName" placeholder="{{ 'First Name'|t }}"
@@ -83,10 +79,6 @@
                     <div class="msg in-valid">{{ 'That name is invalid.'|t }}</div>
                 </div>
 
-                {% if account is defined %}
-                    {{ errorList(account.getErrors('firstName')) }}
-                {% endif %}
-
                 <div class="input-wrapper required">
                     <input id="lastName" type="text" class="input" name="lastName" placeholder="{{ 'Last Name'|t }}"
                     {%- if account is defined %} value="{{ account.lastName }}"{% endif -%}>
@@ -95,10 +87,6 @@
                     <div class="msg valid">{{ 'Great!'|t }}</div>
                     <div class="msg in-valid">{{ 'That name is invalid.'|t }}</div>
                 </div>
-
-                {% if account is defined %}
-                    {{ errorList(account.getErrors('lastName')) }}
-                {% endif %}
 
                 <div class="input-wrapper select required">
                     {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
@@ -145,14 +133,6 @@
                     <div class="msg in-valid">{{ 'That Phone Number is invalid.'|t }}</div>
                 </div>
 
-                {% if account is defined %}
-                    {{ errorList(account.getErrors('addressCountry')) }}
-                {% endif %}
-
-                {% if account is defined %}
-                    {{ errorList(account.getErrors('addressCountry')) }}
-                {% endif %}
-
                 <div class="input-wrapper">
                     <input id="email" type="email" class="input" name="email" placeholder="{{ 'Email'|t }}"
                     {%- if account is defined %} value="{{ account.email }}"{% endif %}>
@@ -162,10 +142,6 @@
                     <div class="msg in-valid">{{ 'That email is invalid.'|t }}</div>
                 </div>
 
-                {% if account is defined %}
-                    {{ errorList(account.getErrors('email')) }}
-                {% endif %}
-
                 <div class="input-wrapper">
                     <input id="password" type="password" class="input" name="password" placeholder="{{ 'Password'|t }}">
                     <label for="password">{{ 'Password'|t }}</label>
@@ -173,10 +149,6 @@
                     <div class="msg valid">{{ 'Great!'|t }}</div>
                     <div class="msg in-valid">{{ 'That password is invalid.'|t }}</div>
                 </div>
-
-                {% if account is defined %}
-                    {{ errorList(account.getErrors('password')) }}
-                {% endif %}
 
                 <input type="submit" value="{{ "Register"|t }}" class="btn btn-orange flr">
             </form>
