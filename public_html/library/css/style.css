@@ -2447,22 +2447,35 @@ header .cta-banner,
     width: calc(100% - 40px); }
     .table-wrapper.runners-list .notification + .notification {
       margin-top: -40px; }
+  .table-wrapper.runners-list table tr.s-drag {
+    cursor: move; }
   .table-wrapper.runners-list table tr td {
     min-width: 0; }
-    .table-wrapper.runners-list table tr td .s-handle {
-      cursor: move; }
+    .table-wrapper.runners-list table tr td.s-handle {
+      text-align: right; }
+    .table-wrapper.runners-list table tr td .form-group input::-webkit-input-placeholder {
+      color: #cccccc; }
+    .table-wrapper.runners-list table tr td .form-group input::-moz-placeholder {
+      color: #cccccc; }
+    .table-wrapper.runners-list table tr td .form-group input:-ms-input-placeholder {
+      color: #cccccc; }
+    .table-wrapper.runners-list table tr td .form-group input::placeholder {
+      color: #cccccc; }
     .table-wrapper.runners-list table tr td .fa-times {
       cursor: pointer;
       width: 100%;
       text-align: center;
-      font-size: 24px; }
+      font-size: 24px;
+      margin-left: -6px;
+      margin-top: 5px; }
     .table-wrapper.runners-list table tr td .fa-bars {
-      margin-right: 10px;
+      margin-right: 20px;
       color: #b0b0b0;
       font-size: 30px; }
     .table-wrapper.runners-list table tr td .count {
       font-size: 28px;
-      font-weight: 700; }
+      font-weight: 700;
+      margin-right: 10px; }
     .table-wrapper.runners-list table tr td .captain {
       display: block;
       border-radius: 100%;
@@ -2472,7 +2485,8 @@ header .cta-banner,
       height: 30px;
       line-height: 32px;
       color: #fff;
-      font-weight: 600; }
+      font-weight: 600;
+      margin-top: 4px; }
     .table-wrapper.runners-list table tr td .user-status {
       font-size: 18px;
       font-weight: 600; }
