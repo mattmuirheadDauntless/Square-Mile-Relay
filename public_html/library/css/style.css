@@ -2452,7 +2452,8 @@ header .cta-banner,
   .table-wrapper.runners-list table tr td {
     min-width: 0; }
     .table-wrapper.runners-list table tr td.s-handle {
-      text-align: right; }
+      text-align: right;
+      max-width: 80px; }
     .table-wrapper.runners-list table tr td .form-group input::-webkit-input-placeholder {
       color: #cccccc; }
     .table-wrapper.runners-list table tr td .form-group input::-moz-placeholder {
@@ -2463,10 +2464,9 @@ header .cta-banner,
       color: #cccccc; }
     .table-wrapper.runners-list table tr td .fa-times {
       cursor: pointer;
-      width: 100%;
       text-align: center;
       font-size: 24px;
-      margin-left: -6px;
+      margin-left: 10%;
       margin-top: 5px; }
     .table-wrapper.runners-list table tr td .fa-bars {
       margin-right: 20px;
@@ -2475,7 +2475,7 @@ header .cta-banner,
     .table-wrapper.runners-list table tr td .count {
       font-size: 28px;
       font-weight: 700;
-      margin-right: 10px; }
+      margin-right: 20%; }
     .table-wrapper.runners-list table tr td .captain {
       display: block;
       border-radius: 100%;
@@ -2486,7 +2486,8 @@ header .cta-banner,
       line-height: 32px;
       color: #fff;
       font-weight: 600;
-      margin-top: 4px; }
+      margin-top: 4px;
+      margin-left: 10%; }
     .table-wrapper.runners-list table tr td .user-status {
       font-size: 18px;
       font-weight: 600; }
