@@ -493,7 +493,7 @@ p.error {
       text-transform: uppercase;
       text-decoration: none;
       color: #fff;
-      font-size: 16px; }
+      font-size: 13px; }
       .header .header-account a:hover, .header .header-account a:focus, .header .header-account a:active {
         outline: none; }
     @media (max-width: 1200px) {
@@ -855,7 +855,8 @@ p.error {
   .payment-iframe .back {
     cursor: pointer;
     text-align: left;
-    color: #f37135; }
+    color: #f37135;
+    margin: 0 0 10px 0; }
     .payment-iframe .back i {
       margin-right: 10px; }
   .payment-iframe .flr {
@@ -898,7 +899,6 @@ p.error {
       font-weight: 200; }
   .payment-iframe .package {
     float: left;
-    margin-bottom: 20px;
     background-color: #f7f7f7;
     padding: 20px;
     width: 100%; }
@@ -940,18 +940,23 @@ p.error {
         padding: 10px 0;
         width: 100%;
         height: inherit;
-        font-size: 9px; }
+        font-size: 9px;
+        letter-spacing: 1px; }
   .payment-iframe .checkout {
-    float: left;
-    margin: 10px 0 20px;
-    padding: 20px;
+    margin: 0;
+    padding: 20px 20px 0 20px;
     width: 100%; }
-    @media only screen and (max-width: 600px) {
-      .payment-iframe .checkout #emptyCart {
-        margin-top: 10px; } }
+    .payment-iframe .checkout .col-6 {
+      width: 49%;
+      display: block; }
+      .payment-iframe .checkout .col-6.left {
+        float: left; }
+      .payment-iframe .checkout .col-6.right {
+        float: right; }
+      @media (max-width: 499px) {
+        .payment-iframe .checkout .col-6 {
+          width: 100%; } }
     .payment-iframe .checkout .coupons {
-      float: left;
-      padding-right: 30px;
       width: 50%; }
       @media only screen and (max-width: 600px) {
         .payment-iframe .checkout .coupons {
@@ -968,7 +973,8 @@ p.error {
         font-size: 16px; }
     .payment-iframe .checkout .totals {
       float: right;
-      width: 50%; }
+      width: 60%;
+      margin: 0 0 20px 0; }
       .payment-iframe .checkout .totals ul {
         margin: 0;
         padding: 0;
@@ -983,6 +989,10 @@ p.error {
           .payment-iframe .checkout .totals ul li:last-child {
             font-size: 18px;
             font-weight: 800; }
+    .payment-iframe .checkout .btn-continue {
+      margin: 0 0 10px 0; }
+    .payment-iframe .checkout form #emptyCart {
+      margin: 0; }
   .payment-iframe .addresses-body form {
     text-align: left; }
     .payment-iframe .addresses-body form p {
@@ -2452,8 +2462,9 @@ header .cta-banner,
   .table-wrapper.runners-list table tr td {
     min-width: 0; }
     .table-wrapper.runners-list table tr td.s-handle {
-      text-align: right;
-      max-width: 80px; }
+      text-align: left;
+      max-width: 80px;
+      position: relative; }
     .table-wrapper.runners-list table tr td .form-group input::-webkit-input-placeholder {
       color: #cccccc; }
     .table-wrapper.runners-list table tr td .form-group input::-moz-placeholder {
@@ -2471,11 +2482,14 @@ header .cta-banner,
     .table-wrapper.runners-list table tr td .fa-bars {
       margin-right: 20px;
       color: #b0b0b0;
-      font-size: 30px; }
+      font-size: 30px;
+      position: absolute;
+      top: 23px;
+      left: 10px; }
     .table-wrapper.runners-list table tr td .count {
       font-size: 28px;
       font-weight: 700;
-      margin-right: 20%; }
+      padding-left: 50px; }
     .table-wrapper.runners-list table tr td .captain {
       display: block;
       border-radius: 100%;
