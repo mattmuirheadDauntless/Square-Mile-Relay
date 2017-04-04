@@ -246,23 +246,25 @@
             {% if featuredResults|length %}
                 {% for result in featuredResults %}
                     {% set user = result.entry.first() %}
-                    {% set event = user.relatedEvents.first() %}
-                    {% set type = result.teamOrIndividual %}
-                    {% set img = result.overrideImage.first() %}
-                    <div class="col-md-4 text-center">
-                        <img src="{{ img.getUrl('smallThumbs') }}">
-                        <h3>{{ result.resultTitle }}</h3>
-                        {% if type == "team" %}
-                        <h4>{{ user.teamName }}</h4>
-                        <h4>{{ user.finishTime }}</h4>
-                        {% else %}
-                        <h4>{{ user.runner }}</h4>
-                        <h4>{{ user.lapTime }}</h4>
-                        {% endif %}
-                        {% if event is not null %}
-                            <h5>{{ event.title }}</h5>
-                        {% endif %}
-                    </div>
+                    {% if user|length %}
+                        {% set event = user.relatedEvents.first() %}
+                        {% set type = result.teamOrIndividual %}
+                        {% set img = result.overrideImage.first() %}
+                        <div class="col-md-4 text-center">
+                            <img src="{{ img.getUrl('smallThumbs') }}">
+                            <h3>{{ result.resultTitle }}</h3>
+                            {% if type == "team" %}
+                            <h4>{{ user.teamName }}</h4>
+                            <h4>{{ user.finishTime }}</h4>
+                            {% else %}
+                            <h4>{{ user.runner }}</h4>
+                            <h4>{{ user.lapTime }}</h4>
+                            {% endif %}
+                            {% if event is not null %}
+                                <h5>{{ event.title }}</h5>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 <div class="col-md-12 text-center">

@@ -169,8 +169,6 @@
                             {{ 'The order can be updated until midnight'|t }} {{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}
                         {% endif %}
                     </p>
-
-                    <span class="close">{{ 'Dismiss'|t }}<i class="fa fa-times" aria-hidden="true"></i></span>
                 </div>
 
                 {% if users|length != 10 %}
@@ -178,8 +176,6 @@
                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 
                         <p><strong>{{ 'Alert'|t }}:</strong> {{ 'You currently have'|t }} {{ users|length }} {{ 'runners in your team. Please add more runners to complete your team entry.'|t }}</p>
-
-                        <span class="close">{{ 'Dismiss'|t }}<i class="fa fa-times" aria-hidden="true"></i></span>
                     </div>
                 {% endif %}
 
@@ -326,10 +322,8 @@
         {% endif %}
     </section>
 
-
-{% endblock %}
-
-{% block jsFooter %}
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/sortable.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}app.js"></script>
     <script>
         makeSortable('team-members', {
             handle: '.s-handle',
