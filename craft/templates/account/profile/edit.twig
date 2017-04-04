@@ -266,21 +266,23 @@
                                 {% if event|length %}
                                     {% set waiver = event.relatedWaiverForm.first() %}
 
-                                    {% set waiverAgreed = 0 %}
-                                    {% for savedWaiver in savedWaivers %}
-                                        {% if savedWaiver.event == event.title and savedWaiver.acceptedWaiver == "on" %}
-                                            {% set waiverAgreed = 1 %}
-                                        {% endif %}
-                                    {% endfor %}
+                                    {% if waiver|length %}
+                                        {% set waiverAgreed = 0 %}
+                                        {% for savedWaiver in savedWaivers %}
+                                            {% if savedWaiver.event == event.title and savedWaiver.acceptedWaiver == "on" %}
+                                                {% set waiverAgreed = 1 %}
+                                            {% endif %}
+                                        {% endfor %}
 
-                                    <div class="input-wrapper edit-element checkbox{% if loop.index == 1 %} first{% endif %}">
-                                        <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col2]" value="{{ event.title }}">
-                                        <input type="hidden" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]">
-                                        <input class="input" id="checkbox-{{ loop.index - 1 }}" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]" type="checkbox" {% if waiverAgreed == 1 %} checked{% endif %} required>
+                                        <div class="input-wrapper edit-element checkbox{% if loop.index == 1 %} first{% endif %}">
+                                            <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col2]" value="{{ event.title }}">
+                                            <input type="hidden" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]">
+                                            <input class="input" id="checkbox-{{ loop.index - 1 }}" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]" type="checkbox" {% if waiverAgreed == 1 %} checked{% endif %} required>
 
-                                        <label for="checkbox-{{ loop.index - 1 }}"></label>
-                                        <p>{{ 'I agree to the event'|t }} ({{ event.title }}) <a href="{{ waiver.url }}" target="_blank">{{ 'Injury Waiver Terms and Conditions'|t }}</a></p>
-                                    </div>
+                                            <label for="checkbox-{{ loop.index - 1 }}"></label>
+                                            <p>{{ 'I agree to the event'|t }} ({{ event.title }}) <a href="{{ waiver.url }}" target="_blank">{{ 'Injury Waiver Terms and Conditions'|t }}</a></p>
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
 
