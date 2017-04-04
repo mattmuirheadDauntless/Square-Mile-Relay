@@ -133,17 +133,17 @@
                     <div class="msg in-valid">{{ 'That Phone Number is invalid.'|t }}</div>
                 </div>
 
-                <div class="input-wrapper">
+                <div class="input-wrapper required">
                     <input id="email" type="email" class="input" name="email" placeholder="{{ 'Email'|t }}"
-                    {%- if account is defined %} value="{{ account.email }}"{% endif %}>
+                    {%- if account is defined %} value="{{ account.email }}"{% endif %} required>
                     <label for="email">{{ 'Email'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
                     <div class="msg valid">{{ 'Great!'|t }}</div>
                     <div class="msg in-valid">{{ 'That email is invalid.'|t }}</div>
                 </div>
 
-                <div class="input-wrapper">
-                    <input id="password" type="password" class="input" name="password" placeholder="{{ 'Password'|t }}">
+                <div class="input-wrapper required">
+                    <input id="password" type="password" class="input" name="password" placeholder="{{ 'Password'|t }}" required>
                     <label for="password">{{ 'Password'|t }}</label>
                     <i class="fa validation-icon" aria-hidden="true"></i>
                     <div class="msg valid">{{ 'Great!'|t }}</div>
