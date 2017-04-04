@@ -322,10 +322,8 @@
         {% endif %}
     </section>
 
-
-{% endblock %}
-
-{% block jsFooter %}
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/sortable.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}app.js"></script>
     <script>
         makeSortable('team-members', {
             handle: '.s-handle',
