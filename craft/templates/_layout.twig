@@ -249,7 +249,12 @@
     <!-- Main JS -->
     <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/plugins-min.js"></script>
     <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js?ver=004"></script>
-    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/sortable.js"></script>
+    
+    {% set segment = craft.request.lastSegment %}
+
+    {% if segment == 'edit' %}
+        <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/sortable.js"></script>
+    {% endif %}
 
     <script>
         $(document).ready(function() {
