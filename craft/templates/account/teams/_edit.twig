@@ -171,6 +171,7 @@
                     </p>
                 </div>
 
+                {% set event = relatedEvent.title %}
                 {% if users|length != 10 %}
                     <div class="notification warning">
                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -253,13 +254,39 @@
                                 </td>
                                 <td valign="center">
                                     {% if user.pending %}
+
                                         {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
-                                            <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Sent'|t }}</div>
+                                            <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Pending Registration'|t }}</div>
                                             <br>
                                             <button type="submit" class="btn btn-black btn-tiny resend">{{ 'Resend'|t }}</button>
                                         {% endif %}
+
                                     {% else %}
-                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Confirmed'|t }}</div>
+
+                                        {% set checked = 0 %}
+                                        {% set userWaivers = user.acceptedWaivers %}
+                                        {% if userWaivers|length %}
+                                            {% for waiver in userWaivers %}
+                                                {% if waiver.event == event %}
+                                                    {% if waiver.acceptedWaiver == "on" %}
+                                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Registered'|t }}</div>
+                                                        {% set checked = 1 %}
+                                                    {% else %}
+                                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Pending Injury waiver'|t }}</div>
+                                                        <br>
+                                                        <button type="submit" class="btn btn-black btn-tiny resend">{{ 'Resend'|t }}</button>
+                                                        {% set checked = 1 %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        {% if checked == 0 %}
+                                            <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Pending Injury waiver'|t }}</div>
+                                            <br>
+                                            <button type="submit" class="btn btn-black btn-tiny resend">{{ 'Resend'|t }}</button>
+                                        {% endif %}
+
                                     {% endif %}
                                 </td>
                             </tr>
