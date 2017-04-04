@@ -280,25 +280,36 @@
     }
     table {
         tr {
+            &.s-drag {
+                cursor: move;
+            }
             td {
                 min-width: 0;
-                .s-handle {
-                    cursor: move;
+                &.s-handle {
+                    text-align: right;
+                }
+                .form-group {
+                    input::placeholder {
+                        color: #cccccc;
+                    }
                 }
                 .fa-times {
                     cursor: pointer;
                     width: 100%;
                     text-align: center;
                     font-size: 24px;
+                    margin-left: -6px;
+                    margin-top: 5px;
                 }
                 .fa-bars {
-                    margin-right: 10px;
+                    margin-right: 20px;
                     color: $lightgrey;
                     font-size: 30px;
                 }
                 .count {
                     font-size: 28px;
                     font-weight: 700;
+                    margin-right: 10px;
                 }
                 .captain {
                     display: block;
@@ -310,6 +321,7 @@
                     line-height: 32px;
                     color: $white;
                     font-weight: 600;
+                    margin-top: 4px;
                 }
                 .user-status {
                     font-size: 18px;
