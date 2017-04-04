@@ -286,8 +286,9 @@
             td {
                 min-width: 0;
                 &.s-handle {
-                    text-align: right;
+                    text-align: left;
                     max-width: 80px;
+                    position: relative;
                 }
                 .form-group {
                     input::placeholder {
@@ -305,11 +306,14 @@
                     margin-right: 20px;
                     color: $lightgrey;
                     font-size: 30px;
+                    position: absolute;
+                    top: 23px;
+                    left: 10px;
                 }
                 .count {
                     font-size: 28px;
                     font-weight: 700;
-                    margin-right: 20%;
+                    padding-left: 50px;
                 }
                 .captain {
                     display: block;
