@@ -11,7 +11,7 @@
         {% set currencyCode = 'GBP' %}
     {% endif %}
     {% set relatedEvents = craft.entries.section('event').relatedTo(city)|reverse %}
-    {% set relatedCompanies = craft.entries.section('company').relatedTo(entry) %}
+    {% set relatedTeams = craft.entries.section('team').relatedTo(entry).limit(20) %}
     {% set relatedPartners = entry.relatedPartners %}
     {% set relatedCharities = entry.relatedCharity %}
 
@@ -132,13 +132,22 @@
                     </div>
 
                     <div class="col-md-4 col-md-offset-1">
-                        {% if relatedCompanies|length %}
+                        {% if relatedTeams|length %}
+                            {% if date|date('U') > "now"|date('U') %}
                             <h5>{{ "Who's competing?"|t }}</h5>
+                            {% else %}
+                            <h5>{{ "Who competed?"|t }}</h5>
+                            {% endif %}
                             <ul>
-                                {% set companyCount = 0 %}
-                                {% for company in relatedCompanies %}
-                                    {% set companyCount = companyCount + 1 %}
-                                    <li>{{ companyCount }}. {{ company.title }}</li>
+                                {% set teamCount = 0 %}
+                                {% set companies = [] %}
+                                {% for team in relatedTeams %}
+                                    {% set company = team.relatedCompany.first() %}
+                                    {% if company|length and teamCount < 10 and company.title not in companies %}
+                                        {% set teamCount = teamCount + 1 %}
+                                        {% set companies = companies|merge( [company.title] ) %}
+                                        <li>{{ teamCount }}.  {{ company.title }}</li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                             <a href="{{siteUrl}}companies" class="btn btn-black">{{ 'All Companies'|t }}</a>
