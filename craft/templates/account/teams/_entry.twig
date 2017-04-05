@@ -38,10 +38,12 @@
                             <h4><i>{{ 'None'|t }}</i></h4>
                         {% endif %}
                     </div>
+                    {% if team.summaryText|length %}
                     <div class="col-md-6">
                         <h3>{{ 'Team Description'|t }}</h3>
                         <h4>{{ team.summaryText }}</h4>
                     </div>
+                    {% endif %}
                 </div>
 
                 <h2>{{ 'Runners & running order'|t }}</h2>
@@ -53,7 +55,6 @@
                             <th>{{ 'First Name'|t }}</th>
                             <th>{{ 'Last Name'|t }}</th>
                             <th>{{ 'Email'|t }}</th>
-                            <th>{{ 'Status'|t }}</th>
                         </tr>
                     </thead>
                     <tbody id="team-members">
@@ -71,13 +72,6 @@
                                 </td>
                                 <td valign="center">
                                     {{ user.email }}
-                                </td>
-                                <td>
-                                    {% if user.pending %}
-                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Sent'|t }}</div>
-                                    {% else %}
-                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Confirmed'|t }}</div>
-                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}
