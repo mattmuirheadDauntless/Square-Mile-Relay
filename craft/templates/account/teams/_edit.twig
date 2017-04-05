@@ -268,7 +268,7 @@
                                         {% if userWaivers|length %}
                                             {% for waiver in userWaivers %}
                                                 {% if waiver.event == event %}
-                                                    {% if waiver.acceptedWaiver == "on" %}
+                                                    {% if waiver.acceptedWaiver == 1 %}
                                                         <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Registered'|t }}</div>
                                                         {% set checked = 1 %}
                                                     {% else %}

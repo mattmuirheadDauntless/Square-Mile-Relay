@@ -59,7 +59,8 @@
                                     label: firstNameLabel,
                                     name:  'firstName',
                                     placeholder: firstNameLabel,
-                                    value: currentUser.firstName
+                                    value: currentUser.firstName,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -70,7 +71,8 @@
                                     label: lastNamelabel,
                                     name:  'lastName',
                                     placeholder: lastNamelabel,
-                                    value: currentUser.lastName
+                                    value: currentUser.lastName,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -82,7 +84,8 @@
                                     name:  'email',
                                     type: 'email',
                                     placeholder: EmailLabel,
-                                    value: currentUser.email
+                                    value: currentUser.email,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -93,11 +96,12 @@
                                     label: phoneNumberlabel,
                                     name:  'fields[phoneNumber]',
                                     placeholder: phoneNumberlabel,
-                                    value: currentUser.phoneNumber
+                                    value: currentUser.phoneNumber,
+                                    required:   true
                                 }) }}
                             </div>
 
-                            <div class="input-wrapper edit-element select">
+                            <div class="input-wrapper edit-element select required">
                                 {% set genders = craft.fields.getFieldByHandle('gender').getAttribute('settings').options %}
                                 {% set Genderlabel = 'Gender'|t %}
                                 {{ formFields.dropdown({
@@ -106,7 +110,8 @@
                                     name:       'fields[gender]',
                                     value:      currentUser.gender,
                                     options:    genders,
-                                    optionKeys: ['value', 'label']
+                                    optionKeys: ['value', 'label'],
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -118,7 +123,8 @@
                                     name:  'fields[dateOfBirth]',
                                     type:  'date',
                                     placeholder: dateOfBirthLabel,
-                                    value: currentUser.dateOfBirth
+                                    value: currentUser.dateOfBirth,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -138,14 +144,15 @@
                                 }) }}
                             </div>
 
-                            <div class="input-wrapper edit-element">
+                            <div class="input-wrapper edit-element required">
                                 {% set jobTitleLabel = 'Job Title'|t %}
                                 {{ formFields.input({
                                     id:    'jobTitle',
                                     label: jobTitleLabel,
                                     name:  'fields[jobTitle]',
                                     placeholder: jobTitleLabel,
-                                    value: currentUser.jobTitle
+                                    value: currentUser.jobTitle,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -269,7 +276,7 @@
                                     {% if waiver|length %}
                                         {% set waiverAgreed = 0 %}
                                         {% for savedWaiver in savedWaivers %}
-                                            {% if savedWaiver.event == event.title and savedWaiver.acceptedWaiver == "on" %}
+                                            {% if savedWaiver.event == event.title and savedWaiver.acceptedWaiver == 1 %}
                                                 {% set waiverAgreed = 1 %}
                                             {% endif %}
                                         {% endfor %}
