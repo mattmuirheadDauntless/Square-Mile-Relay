@@ -21,7 +21,7 @@
 
     {% set headerImage = entry.backgroundImage.first() %}
     {% set relatedEvents = craft.entries.section('event').relatedTo(entry)|reverse %}
-    {% set relatedTeams = craft.entries.section('team').relatedTo(entry).limit(20) %}
+    {% set relatedTeams = craft.entries.section('team').relatedTo(entry).limit(30) %}
     {% set currencyCode = entry.currencyIsoCode %}
     {% if currencyCode|length == 0 %}
         {% set currencyCode = 'GBP' %}
