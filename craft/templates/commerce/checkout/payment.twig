@@ -236,7 +236,80 @@
 						</fieldset>
 					{% endif %}
 
-					<button class="btn btn-orange flr finish-payment" type="submit" id="finishPayment" data-user-id="{{ currentUser.id }}">{{ 'Finish'|t }}</button>
+					{# get product in cart - city #}
+					{% set city = '' %}
+					{% for item in cart.lineItems %}
+	            		{% if loop.first %}
+	                		{% set product = craft.commerce.products.hasVariant({ sku: item.getSku() }).first() %}
+	                		{% set city = product.relatedCities.first() %}
+	                	{% endif %}
+	                {% endfor %}
+
+                    {% if city.slug == 'tokyo' %}
+                        <div class="btn btn-orange flr finish-payment" id="finishPayment-invoice">{{ 'Pay with invoice/wire transfer'|t }}</div>
+                    {% else %}
+                        <div class="btn btn-orange flr finish-payment" id="finishPayment-invoice">{{ 'Pay with invoice/amex'|t }}</div>
+                    {% endif %}
+
+                    <br><br><br>
+
+                    {% if city.creditCardRedirectLink|length %}
+                        <div class="btn btn-orange flr finish-payment" id="finishPayment-credit" data-link="{{ city.creditCardRedirectLink }}" data-text="{{ "Continue to STG Payment"|t }}">{{ 'Credit Card'|t }}</div>
+                    {% else %}
+                        <div class="btn btn-invalid flr finish-payment" id="finishPayment-credit">{{ 'Credit Card'|t }}</div>
+                    {% endif %}
+
+					<button class="btn btn-orange flr finish-payment hide" type="submit" id="finishPayment" data-user-id="{{ currentUser.id }}">{{ 'Finish'|t }}</button>
+
+					<script>
+						jQuery('#finishPayment-invoice').click(function(e){
+							e.preventDefault();
+							jQuery('#paymentMethodId').val("7");
+
+							var form = jQuery("#paymentMethod");
+				        	var form_data = form.serializeArray()
+					        form_data.push({
+					            name: window.csrfTokenName,
+					            value: window.csrfTokenValue
+					        })
+
+					        jQuery.ajax({
+					            type: 'post',
+					            url: '/',
+					            data: form_data,
+					            success: function() {
+					            			jQuery('#finishPayment').trigger('click');
+							            }
+					        });
+						});
+
+
+						jQuery('#finishPayment-credit').click(function(e){
+							e.preventDefault();
+							jQuery('#paymentMethodId').val("9");
+
+							var link = jQuery(this).attr('data-link');
+							var text = jQuery(this).attr('data-text');
+							var form = jQuery("#paymentMethod");
+				        	var form_data = form.serializeArray()
+					        form_data.push({
+					            name: window.csrfTokenName,
+					            value: window.csrfTokenValue
+					        })
+
+					        jQuery.ajax({
+					            type: 'post',
+					            url: '/',
+					            data: form_data,
+					            success: function() {
+					            			$('#enterRaceFrame', window.parent.document).parent().parent().parent().parent().parent().find('#stgLink').append('<a href="'+ link +'" target="_blank" class="btn btn-orange">'+ text +'</a>');
+					            			setTimeout(function(){
+					            				jQuery('#finishPayment').trigger('click');
+					            			}, 500);
+							            }
+					        });
+						});
+					</script>
 				</form>
 			{% endif %}
 		</div>
