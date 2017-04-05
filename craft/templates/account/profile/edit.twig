@@ -288,23 +288,23 @@
 
                             <div class="input-wrapper edit-element checkbox">
                                 {% if currentUser.acceptToReceiveInformation == 1 %}
-                                    <input class="input" id="checkbox-2" name="fields[acceptToReceiveInformation]" checked="checked" type="checkbox">
+                                    <input class="input" id="acceptInformation" name="fields[acceptToReceiveInformation]" checked="checked" type="checkbox">
                                 {% else %}
-                                    <input class="input" id="checkbox-2" name="fields[acceptToReceiveInformation]" type="checkbox">
+                                    <input class="input" id="acceptInformation" name="fields[acceptToReceiveInformation]" type="checkbox">
                                 {% endif %}
 
-                                <label for="checkbox-2"></label>
+                                <label for="acceptInformation"></label>
                                 <p>{{ 'I would like to receive information from Bloomberg'|t }}</p>
                             </div>
 
                             <div class="input-wrapper edit-element checkbox">
                                 {% if currentUser.acceptContactByThirdParties == 1 %}
-                                    <input class="input" id="checkbox-3" name="fields[acceptContactByThirdParties]" checked="checked" type="checkbox">
+                                    <input class="input" id="acceptThirdParties" name="fields[acceptContactByThirdParties]" checked="checked" type="checkbox">
                                 {% else %}
-                                    <input class="input" id="checkbox-3" name="fields[acceptContactByThirdParties]" type="checkbox">
+                                    <input class="input" id="acceptThirdParties" name="fields[acceptContactByThirdParties]" type="checkbox">
                                 {% endif %}
 
-                                <label for="checkbox-3"></label>
+                                <label for="acceptThirdParties"></label>
                                 <p>{{ "I'm happy to be contacted by 3rd parties"|t }}</p>
                             </div>
 
