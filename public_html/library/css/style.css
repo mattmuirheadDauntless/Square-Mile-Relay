@@ -1172,7 +1172,8 @@ header .cta-banner,
   letter-spacing: 2px;
   color: #fff;
   font-size: 14px;
-  font-weight: 700; }
+  font-weight: 700;
+  cursor: pointer; }
   .btn:hover, .btn:focus, .btn:active {
     outline: none;
     text-decoration: none;
@@ -1727,14 +1728,10 @@ header .cta-banner,
         -webkit-transform: translate(0, -50%);
                 transform: translate(0, -50%); }
       .modal.enter .modal-footer ul li:nth-child(2) {
-        left: 33.33%;
+        left: 50%;
         -webkit-transform: translate(-25%, -50%);
                 transform: translate(-25%, -50%); }
       .modal.enter .modal-footer ul li:nth-child(3) {
-        left: 66.66%;
-        -webkit-transform: translate(-75%, -50%);
-                transform: translate(-75%, -50%); }
-      .modal.enter .modal-footer ul li:nth-child(4) {
         right: -5px;
         left: inherit;
         -webkit-transform: translate(-100%, -50%);
@@ -1769,10 +1766,8 @@ header .cta-banner,
     .modal.enter .modal-footer ul.stage-1:after {
       width: calc(0% - 40px); }
     .modal.enter .modal-footer ul.stage-2:after {
-      width: calc(40% - 40px); }
+      width: 47%; }
     .modal.enter .modal-footer ul.stage-3:after {
-      width: calc(70% - 40px); }
-    .modal.enter .modal-footer ul.stage-4:after, .modal.enter .modal-footer ul.stage-5:after {
       width: calc(100% - 40px); }
 
 .modal-backdrop {

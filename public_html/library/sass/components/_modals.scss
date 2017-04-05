@@ -543,14 +543,10 @@ overflow-y: scroll;
                         transform: translate(0, -50%);
                     }
                     &:nth-child(2) {
-                        left: 33.33%;
+                        left: 50%;
                         transform: translate(-25%, -50%);
                     }
                     &:nth-child(3) {
-                        left: 66.66% ;
-                        transform: translate(-75%, -50%);
-                    }
-                    &:nth-child(4) {
                         right: -5px;
                         left: inherit;
                         transform: translate(-100%, -50%);
@@ -588,13 +584,9 @@ overflow-y: scroll;
                     width: calc(0% - 40px);
                 }
                 &.stage-2:after {
-                    width: calc(40% - 40px);
+                    width: 47%;
                 }
                 &.stage-3:after {
-                    width: calc(70% - 40px);
-                }
-                &.stage-4:after,
-                &.stage-5:after {
                     width: calc(100% - 40px);
                 }
             }
