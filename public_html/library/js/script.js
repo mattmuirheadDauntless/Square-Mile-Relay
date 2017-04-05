@@ -808,7 +808,9 @@ $('.save-btn').click(function() {
 
 $('.btn-invite-member').click(function(event) {
     event.preventDefault();
-    var $this = $(this),
+    var $this = $(this);
+        $this.attr('disabled', 'disabled');
+        $this.text('please wait');
 
         $teamId = $('#update-team-members input[name="teamId"]').val();
         $firstName = $this.parent().parent().find('#firstName').val();
