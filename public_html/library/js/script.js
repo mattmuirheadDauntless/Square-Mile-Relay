@@ -125,7 +125,7 @@ $(function(){
             }
 
             //handle animate links
-            $('a[href*=\\#]').click(function(event){
+            $('a[href*=\\#]:not(.link)').click(function(event){
                 event.preventDefault();
                 $('html,body').animate({scrollTop: $( $.attr(this, 'href') ).offset().top - 170}, 500);
             });
@@ -972,7 +972,8 @@ $('.btn-remove-member').click(function(event) {
             offset: '180px'
         });
 
-        $('a[href*=\\#]').click(function(event){
+        $('a[href*=\\#]:not(.link)').click(function(event){
+            console.log('test');
             event.preventDefault();
             var offset = $( $.attr(this, 'href') ).offset();
             if ( offset != undefined ) {

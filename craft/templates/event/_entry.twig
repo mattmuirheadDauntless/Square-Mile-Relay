@@ -158,8 +158,8 @@
                             <h5>{{ 'Proudly sponsored by:'|t }}</h5>
                             {% for partner in relatedProudSponsor %}
                                 {% set logo = partner.companyLogo.first() %}
-                                <a href="{{ siteUrl }}partners?year={{ year }}&city={{ city.title }}">
-                                    <img src="{{ logo.url }}" alt={{ partner.title }}>
+                                <a class="link" href="{{ siteUrl }}partners?year={{ year }}&city={{ city.title }}#{{ entry.slug }}-{{ partner.slug }}">
+                                    <img src={{ logo.url }} alt={{ partner.title }}>
                                 </a>
                             {% endfor %}
                         {% endif %}
