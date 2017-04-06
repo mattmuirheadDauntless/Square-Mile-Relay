@@ -166,7 +166,11 @@
                     <p>
                         {{ 'Please note that the order in which your runners appear below is the order that they will run in on race day!'|t }}<br>
                         {% if relatedEvent.lockTeamEditingFrom is not null %}
-                            {{ 'The order can be updated until midnight'|t }} {{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}
+                            {% if craft.locale == "ja" %}
+                                出走順は{{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}まで変更が可能です。
+                            {% else %}
+                                {{ 'The order can be updated until midnight'|t }} {{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}
+                            {% endif %}
                         {% endif %}
                     </p>
                 </div>
