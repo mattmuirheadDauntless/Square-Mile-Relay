@@ -261,6 +261,8 @@ $(function(){
             $('.media-modal .img p').text($caption);
         }
         $('.media-modal .img img').attr('src', $src);
+
+        $('.loading-icon').remove();
     });
 
     if ($('.img-slider').length > 0){
