@@ -138,11 +138,9 @@
             {% if images | length %}
                 <div class="gallery-grid no-ajax">
                     {% for image in images.limit(20) %}
-                        {% set imageSmall = image.getUrl('newsThumb') %}
-                        {% set imageLarge = image.url %}
-                        <div class="img-item grid-item img-modal-link" data-toggle="modal" data-target="#media" data-src={{ imageLarge }} data-caption={{ image.summaryText }}>
-                            <img src={{ imageSmall }} alt="Gallery Image">
-                        </div>
+                        {% import "_includes/macros/_image-transform.twig" as transform %}
+
+                        {{ transform.transform(image) }}
                     {% endfor %}
                 </div>
             {% endif %}

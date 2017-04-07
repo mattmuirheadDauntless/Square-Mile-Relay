@@ -1,0 +1,29 @@
+{% macro transform(image) %}
+
+    {% set imageWidth = 1920 %}
+    {% set imageHeight = 1080 %}
+    
+    {% set imageOrientation = 'landscape' %}
+    {% set imageOrientation = 'landscape' %}
+
+    {% if image.height > image.width %}
+        {% set imageWidth = 607 %}
+        {% set imageHeight = 1080 %}
+    {% endif %}
+
+    {% set large = {
+        mode: 'crop',
+        width: imageWidth,
+        height: imageHeight,
+        quality: 85,
+        position: 'center-center'
+    } %}
+
+    {% set imageLarge = image.getUrl(large) %}
+    {% set imageSmall = image.getUrl('newsThumb') %}
+
+    <div class="img-item grid-item img-modal-link" data-toggle="modal" data-target="#media" data-src={{ imageLarge }} data-caption={{ image.summaryText }}>
+        <img src={{ imageSmall }} alt="Gallery Image">
+    </div>
+
+{% endmacro %}
