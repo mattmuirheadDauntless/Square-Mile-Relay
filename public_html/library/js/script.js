@@ -806,7 +806,7 @@ $('.save-btn').click(function() {
     });
 });
 
-$('.btn-invite-member').click(function(event) {
+$('.btn-invite-member, .resend').click(function(event) {
     event.preventDefault();
     var $this = $(this);
         $this.attr('disabled', 'disabled');
