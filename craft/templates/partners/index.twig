@@ -93,6 +93,7 @@
                     {% for partner in partners %}
                         {% set logo = partner.companyLogo.first() %}
                         <div class="slide-nav-section" id="{{ city.slug }}{{ year }}Partner{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}" data-slide="{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}">
+                            <div class="link" id="{{ city.slug }}-{{ year }}-{{ partner.slug }}" style="position: absolute; top: -170px;"></div>
                             <div class="content-left">
                                 <h3>{{ partner.partnerType }}</h3>
                                 <img src={{ logo.url }} alt={{ partner.title }}>
