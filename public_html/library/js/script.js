@@ -261,6 +261,8 @@ $(function(){
             $('.media-modal .img p').text($caption);
         }
         $('.media-modal .img img').attr('src', $src);
+
+        $('.loading-icon').remove();
     });
 
     if ($('.img-slider').length > 0){
@@ -806,7 +808,7 @@ $('.save-btn').click(function() {
     });
 });
 
-$('.btn-invite-member').click(function(event) {
+$('.btn-invite-member, .resend').click(function(event) {
     event.preventDefault();
     var $this = $(this);
         $this.attr('disabled', 'disabled');

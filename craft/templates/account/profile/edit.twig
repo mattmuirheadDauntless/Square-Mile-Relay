@@ -276,7 +276,7 @@
                                     {% if waiver|length %}
                                         {% set waiverAgreed = 0 %}
                                         {% for savedWaiver in savedWaivers %}
-                                            {% if savedWaiver.event == event.title and savedWaiver.acceptedWaiver == 1 %}
+                                            {% if savedWaiver.event == event.title and (savedWaiver.acceptedWaiver == 1 or savedWaiver.acceptedWaiver == 'on') %}
                                                 {% set waiverAgreed = 1 %}
                                             {% endif %}
                                         {% endfor %}
