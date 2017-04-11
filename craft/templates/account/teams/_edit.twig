@@ -268,10 +268,12 @@
                                     {% else %}
 
                                         {% set checked = 0 %}
+                                        {% set events = [] %}
                                         {% set userWaivers = user.acceptedWaivers %}
                                         {% if userWaivers|length %}
                                             {% for waiver in userWaivers %}
-                                                {% if waiver.event == event %}
+                                                {% if waiver.event == event and waiver.event not in events %}
+                                                    {% set events = events|merge([ waiver.event ]) %}
                                                     {% if waiver.acceptedWaiver == 1 %}
                                                         <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Registered'|t }}</div>
                                                         {% set checked = 1 %}

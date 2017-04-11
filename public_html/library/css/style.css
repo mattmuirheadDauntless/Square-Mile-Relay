@@ -186,6 +186,13 @@ body:after {
 .white {
   color: #fff !important; }
 
+.forgot-password-link,
+.forgot-password-link:hover {
+  color: #f37135;
+  text-decoration: none;
+  margin-bottom: 30px;
+  display: block; }
+
 p.error {
   color: #fc6769;
   text-align: left; }
@@ -2592,7 +2599,7 @@ header .cta-banner,
   -webkit-transition: all ease-in .3s;
   transition: all ease-in .3s;
   opacity: 0;
-  z-index: 99;
+  z-index: 9999;
   background: rgba(255, 255, 255, 0.8);
   pointer-events: none; }
   .loader div.svg-wrapper {
