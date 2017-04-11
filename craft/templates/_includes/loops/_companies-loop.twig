@@ -23,23 +23,20 @@
                     {% if teamMember|length and teamMember.finishTime|length %}
 
                         {% set teamCount = teamCount + 1 %}
+                        {% set year = event.startDateTime | date('Y') %}
+                        {% if year not in years %}
+                            {% set years = years | merge([year]) %}
+                        {% endif %}
+                        {% set city = event.relatedCity.first() %}
+                        {% if city is not null and city.slug not in cities %}
+                            {% set cities = cities | merge([city.slug]) %}
+                        {% endif %}
 
                     {% endif %}
                 {% endif %}
             {% endif %}
-
-            {% set relatedEvents = team.relatedEvent %}
-            {% for relatedEvent in relatedEvents %}
-                {% set year = relatedEvent.startDateTime | date('Y') %}
-                {% if year not in years %}
-                    {% set years = years | merge([year]) %}
-                {% endif %}
-                {% set city = relatedEvent.relatedCity.first() %}
-                {% if city is not null and city.slug not in cities %}
-                    {% set cities = cities | merge([city.slug]) %}
-                {% endif %}
-            {% endfor %}
         {% endfor %}
+
         {% set yearsFilters = years | join(' ') %}
         {% set citiesFilters = cities | join(' ') %}
 

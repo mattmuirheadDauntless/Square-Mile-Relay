@@ -39,19 +39,25 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    {% if entry.metaDescription|length > 0 %}
-        <meta name="description" content="{{ entry.metaDescription }}">
-    {% else %}
-        {% if entry.simpleContent|length > 0 %}
-            <meta name="description" content="{{ entry.simpleContent|striptags }}">
+    {% if entry is defined %}
+        {% if entry.metaDescription|length > 0 %}
+            <meta name="description" content="{{ entry.metaDescription }}">
         {% else %}
-            {% if entry.summaryText|length > 0 %}
-                <meta name="description" content="{{ entry.summaryText|striptags }}">
+            {% if entry.simpleContent|length > 0 %}
+                <meta name="description" content="{{ entry.simpleContent|striptags }}">
+            {% else %}
+                {% if entry.summaryText|length > 0 %}
+                    <meta name="description" content="{{ entry.summaryText|striptags }}">
+                {% endif %}
             {% endif %}
         {% endif %}
     {% endif %}
-    <title>{% if entry.metaTitle|length > 0 %}{{ entry.metaTitle }} |
+    {% if entry is defined %}
+        <title>{% if entry.metaTitle|length > 0 %}{{ entry.metaTitle }} |
     {% else %}{{ entry.title }} | {% endif %}{{ siteName }}</title>
+    {% else %}
+        <title>{{ craft.request.lastSegment|capitalize }} | {{ siteName }}</title>
+    {% endif %}
     <link rel="home" href="{{ siteUrl }}" />
     <!-- favicon -->
     <link rel="icon" type="image/png" href="{{ craft.config.environmentVariables.baseUrl }}library/images/squaremilerelay.png">

@@ -20,7 +20,7 @@
                 {% set outstandingWaiver = 0 %}
                 {% if waivers|length %}
                     {% for waiver in waivers %}
-                        {% if waiver.acceptedWaiver != 1 %}
+                        {% if waiver.acceptedWaiver != "on" and waiver.acceptedWaiver != 1 %}
                             {% set outstandingWaiver = 1 %}
                         {% endif %}
                     {% endfor %}
