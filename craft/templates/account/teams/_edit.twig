@@ -268,10 +268,12 @@
                                     {% else %}
 
                                         {% set checked = 0 %}
+                                        {% set events = [] %}
                                         {% set userWaivers = user.acceptedWaivers %}
                                         {% if userWaivers|length %}
                                             {% for waiver in userWaivers %}
-                                                {% if waiver.event == event %}
+                                                {% if waiver.event == event and waiver.event not in events %}
+                                                    {% set events = events|merge([ waiver.event ]) %}
                                                     {% if waiver.acceptedWaiver == 1 %}
                                                         <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Registered'|t }}</div>
                                                         {% set checked = 1 %}
@@ -297,54 +299,56 @@
                         {% endfor %}
 
                         {% set spacesLeft = 10 - users|length %}
-                        {% for i in 1..spacesLeft %}
-                            {% set count = count + 1 %}
-                            <tr class="s-drag">
-                                <td></td>
-                                {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
-                                    <td class="s-handle">
-                                        <div class="dragtooltip">
-                                            <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
-                                        </div>
-                                        <span class="count">{{ count }}</span>
-                                    </td>
-                                {% else %}
-                                    <td><span class="count">{{ count }}</span></td>
-                                {% endif %}
-                                <td>
-                                    {% set firstNameLabel = 'First Name'|t %}
-
-                                    {{ formFields.input({
-                                        id:   'firstName',
-                                        name: 'newMembers['~ i ~'][firstName]',
-                                        placeholder: firstNameLabel
-                                    }) }}
-                                </td>
-                                <td>
-                                    {% set LastNameLabel = 'Last Name'|t %}
-
-                                    {{ formFields.input({
-                                        id:   'lastName',
-                                        name: 'newMembers['~ i ~'][lastName]',
-                                        placeholder: LastNameLabel
-                                    }) }}
-                                </td>
-                                <td>
-                                    {% set emailLabell = 'Email'|t %}
-
-                                    {{ formFields.input({
-                                        id:   'email',
-                                        name: 'newMembers['~ i ~'][email]',
-                                        placeholder: emailLabell
-                                    }) }}
-                                </td>
-                                <td>
+                        {% if spacesLeft != 0 %}
+                            {% for i in 1..spacesLeft %}
+                                {% set count = count + 1 %}
+                                <tr class="s-drag">
+                                    <td></td>
                                     {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
-                                        <button type="submit" class="btn btn-orange btn-tiny btn-invite-member">{{ 'Send Invitation'|t }}</button>
+                                        <td class="s-handle">
+                                            <div class="dragtooltip">
+                                                <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
+                                            </div>
+                                            <span class="count">{{ count }}</span>
+                                        </td>
+                                    {% else %}
+                                        <td><span class="count">{{ count }}</span></td>
                                     {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
+                                    <td>
+                                        {% set firstNameLabel = 'First Name'|t %}
+
+                                        {{ formFields.input({
+                                            id:   'firstName',
+                                            name: 'newMembers['~ i ~'][firstName]',
+                                            placeholder: firstNameLabel
+                                        }) }}
+                                    </td>
+                                    <td>
+                                        {% set LastNameLabel = 'Last Name'|t %}
+
+                                        {{ formFields.input({
+                                            id:   'lastName',
+                                            name: 'newMembers['~ i ~'][lastName]',
+                                            placeholder: LastNameLabel
+                                        }) }}
+                                    </td>
+                                    <td>
+                                        {% set emailLabell = 'Email'|t %}
+
+                                        {{ formFields.input({
+                                            id:   'email',
+                                            name: 'newMembers['~ i ~'][email]',
+                                            placeholder: emailLabell
+                                        }) }}
+                                    </td>
+                                    <td>
+                                        {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
+                                            <button type="submit" class="btn btn-orange btn-tiny btn-invite-member">{{ 'Send Invitation'|t }}</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
                         </tbody>
                     </table>
                 </form>

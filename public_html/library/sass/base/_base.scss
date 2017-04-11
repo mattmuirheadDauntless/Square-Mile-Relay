@@ -72,6 +72,14 @@ body {
     color: $white !important;
 }
 
+.forgot-password-link,
+.forgot-password-link:hover {
+    color: $orange;
+    text-decoration: none;
+    margin-bottom: 30px;
+    display: block;
+}
+
 p.error {
     color: $red;
     text-align: left;

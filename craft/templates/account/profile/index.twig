@@ -18,15 +18,16 @@
                 {% set completedFields = 0 %}
                 {% set waivers = currentUser.acceptedWaivers %}
                 {% set outstandingWaiver = 0 %}
+                {% set teams = craft.entries.section('team').relatedTo(currentUser) %}
                 {% if waivers|length %}
                     {% for waiver in waivers %}
-                        {% if waiver.acceptedWaiver != 1 %}
+                        {% if waiver.acceptedWaiver != "on" and waiver.acceptedWaiver != 1 %}
                             {% set outstandingWaiver = 1 %}
                         {% endif %}
                     {% endfor %}
                 {% endif %}
 
-                {% if outstandingWaiver == 1 %}
+                {% if outstandingWaiver == 1 or teams|length != waivers|length %}
                     <div class="notification warning">
                         <a href="/account/profile/edit" class="cover-link"></a>
                         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
