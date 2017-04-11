@@ -94,7 +94,7 @@
         {{ 'Enter Discount Code'|t }}
         </div>
 
-        <div class="terms input-wrapper checkbox">
+        <div class="terms input-wrapper checkbox{% if cart.lineItems|length == 0 %} invalid{% endif %}">
             <input type="checkbox" class="input{% if cart.lineItems|length %} active{% endif %}" name="terms" id="terms">
             <label for="terms"></label>
             <p class="checkbox-paragraph">{{ "I accept the"|t }} <a href="{{ product.relatedEvent.first().relatedTermsAndConditions.first().getUrl() }}" target="_blank">{{ "Terms & Conditions"|t }}</a></p>
