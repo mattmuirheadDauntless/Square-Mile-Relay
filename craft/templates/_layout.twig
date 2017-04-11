@@ -39,19 +39,27 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    {% if entry.metaDescription|length > 0 %}
+    {% if entry is defined and entry.metaDescription|length > 0 %}
         <meta name="description" content="{{ entry.metaDescription }}">
     {% else %}
-        {% if entry.simpleContent|length > 0 %}
+        {% if entry is defined and entry.simpleContent|length > 0 %}
             <meta name="description" content="{{ entry.simpleContent|striptags }}">
         {% else %}
-            {% if entry.summaryText|length > 0 %}
+            {% if entry is defined and entry.summaryText|length > 0 %}
                 <meta name="description" content="{{ entry.summaryText|striptags }}">
             {% endif %}
         {% endif %}
     {% endif %}
-    <title>{% if entry.metaTitle|length > 0 %}{{ entry.metaTitle }} |
-    {% else %}{{ entry.title }} | {% endif %}{{ siteName }}</title>
+    <title>
+        {% if entry is defined %}
+            {% if entry.metaTitle|length > 0 %}
+                {{ entry.metaTitle }} |
+            {% else %}
+                {{ entry.title }} | 
+            {% endif %}
+        {% endif %}
+        {{ siteName }}
+    </title>
     <link rel="home" href="{{ siteUrl }}" />
     <!-- favicon -->
     <link rel="icon" type="image/png" href="{{ craft.config.environmentVariables.baseUrl }}library/images/squaremilerelay.png">
@@ -63,7 +71,7 @@
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/7d72b6aac4.js"></script>
     <!-- Main CSS -->
-    <link rel="stylesheet" href="{{ craft.config.environmentVariables.baseUrl }}library/css/style.css?v=32">
+    <link rel="stylesheet" href="{{ craft.config.environmentVariables.baseUrl }}library/css/style.css?v=33">
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -259,7 +267,7 @@
     <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/tablesorter/jquery.tablesorter.min.js"></script>
     <!-- Main JS -->
     <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/plugins-min.js"></script>
-    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js?ver=012"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js?ver=013"></script>
 
     <script>
         $(document).ready(function() {

@@ -2465,8 +2465,6 @@ header .cta-banner,
       position: relative; }
     .table-wrapper.runners-list table tr td .form-group input::-webkit-input-placeholder {
       color: #cccccc; }
-    .table-wrapper.runners-list table tr td .form-group input::-moz-placeholder {
-      color: #cccccc; }
     .table-wrapper.runners-list table tr td .form-group input:-ms-input-placeholder {
       color: #cccccc; }
     .table-wrapper.runners-list table tr td .form-group input::placeholder {
