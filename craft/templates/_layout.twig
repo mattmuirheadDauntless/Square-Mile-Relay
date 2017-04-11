@@ -39,7 +39,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+    {% if entry.metaDescription|length > 0 %}
+        <meta name="description" content="{{ entry.metaDescription }}">
+    {% else %}
+        {% if entry.simpleContent|length > 0 %}
+            <meta name="description" content="{{ entry.simpleContent|striptags }}">
+        {% else %}
+            {% if entry.summaryText|length > 0 %}
+                <meta name="description" content="{{ entry.summaryText|striptags }}">
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    <title>{% if entry.metaTitle|length > 0 %}{{ entry.metaTitle }} |
+    {% else %}{{ entry.title }} | {% endif %}{{ siteName }}</title>
     <link rel="home" href="{{ siteUrl }}" />
     <!-- favicon -->
     <link rel="icon" type="image/png" href="{{ craft.config.environmentVariables.baseUrl }}library/images/squaremilerelay.png">
