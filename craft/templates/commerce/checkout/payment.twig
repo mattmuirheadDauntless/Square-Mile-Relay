@@ -246,15 +246,15 @@
 	                {% endfor %}
 
                     {% if city.slug == 'tokyo' %}
-                        <div class="btn btn-orange flr finish-payment" id="finishPayment-invoice">{{ 'Pay with invoice/wire transfer'|t }}</div>
+                        <div class="btn btn-orange flr finish-payment" id="finishPayment-invoice" data-thank-you-text="{{ raceEnterModal.thankYou }}">{{ 'Pay with invoice/wire transfer'|t }}</div>
                     {% else %}
-                        <div class="btn btn-orange flr finish-payment" id="finishPayment-invoice">{{ 'Pay with invoice/amex'|t }}</div>
+                        <div class="btn btn-orange flr finish-payment" id="finishPayment-invoice" data-thank-you-text="{{ raceEnterModal.thankYou }}">{{ 'Pay with invoice/amex'|t }}</div>
                     {% endif %}
 
                     <br><br><br>
 
                     {% if city.creditCardRedirectLink|length %}
-                        <div class="btn btn-orange flr finish-payment" id="finishPayment-credit" data-link="{{ city.creditCardRedirectLink }}" data-text="{{ "Continue to STG Payment"|t }}">{{ 'Credit Card'|t }}</div>
+                        <div class="btn btn-orange flr finish-payment" id="finishPayment-credit" data-link="{{ city.creditCardRedirectLink }}" data-text="{{ "Continue to Credit Card Payment"|t }}" data-thank-you-text="{{ raceEnterModal.thankYouStg }}">{{ 'Credit Card'|t }}</div>
                     {% else %}
                         <div class="btn btn-invalid flr finish-payment" id="finishPayment-credit">{{ 'Credit Card'|t }}</div>
                     {% endif %}
@@ -266,6 +266,13 @@
 							e.preventDefault();
 							jQuery('#paymentMethodId').val("7");
 
+
+							var tyText = jQuery(this).attr('data-thank-you-text');
+							var body = $('#enterRaceFrame', window.parent.document).parent().parent().parent().parent().parent()
+
+							body.addClass('loading');
+							body.find('#thankYouText').text(tyText);
+
 							var form = jQuery("#paymentMethod");
 				        	var form_data = form.serializeArray()
 					        form_data.push({
@@ -278,7 +285,10 @@
 					            url: '/',
 					            data: form_data,
 					            success: function() {
-					            			jQuery('#finishPayment').trigger('click');
+					            			setTimeout(function(){
+					            				jQuery('#finishPayment').trigger('click');
+					            				body.removeClass('loading');
+					            			}, 1000);
 							            }
 					        });
 						});
@@ -288,8 +298,15 @@
 							e.preventDefault();
 							jQuery('#paymentMethodId').val("9");
 
+							var body = $('#enterRaceFrame', window.parent.document).parent().parent().parent().parent().parent()
 							var link = jQuery(this).attr('data-link');
 							var text = jQuery(this).attr('data-text');
+							var tyText = jQuery(this).attr('data-thank-you-text');
+
+							body.addClass('loading');
+							body.find('#stgLink').append('<a href="'+ link +'" target="_blank" class="btn btn-orange">'+ text +'</a>');
+	            			body.find('#thankYouText').text(tyText);
+
 							var form = jQuery("#paymentMethod");
 				        	var form_data = form.serializeArray()
 					        form_data.push({
@@ -302,10 +319,10 @@
 					            url: '/',
 					            data: form_data,
 					            success: function() {
-					            			$('#enterRaceFrame', window.parent.document).parent().parent().parent().parent().parent().find('#stgLink').append('<a href="'+ link +'" target="_blank" class="btn btn-orange">'+ text +'</a>');
 					            			setTimeout(function(){
 					            				jQuery('#finishPayment').trigger('click');
-					            			}, 500);
+					            				body.removeClass('loading');
+					            			}, 1000);
 							            }
 					        });
 						});
