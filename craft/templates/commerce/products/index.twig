@@ -68,7 +68,7 @@
         <div class="totals">
             <ul>
                 {% if cart.totalQty > 0 %}
-                <li><p>{{ 'Number of Teams in Basket'|t }}: <span>{{ cart.totalQty }}</span></p></li>
+                <li><p>{{ 'Number of items in basket'|t }}: <span>{{ cart.totalQty }}</span></p></li>
                 {% endif %}
                 {% for adjustment in cart.adjustments %}
                     <li>
