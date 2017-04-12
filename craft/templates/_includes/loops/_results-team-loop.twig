@@ -20,7 +20,7 @@
                 {% set year = event.startDateTime|date('Y') %}
                 {% set city = event.relatedCity.first() %}
                 {% if city is not null %}
-                    <tr class="{{ year }} {{ city.slug }}">
+                    <tr class="{{ year }} {{ city.slug }} {{ event.slug }}">
                         <td><strong>{{ (loop.index / 10) + (((paginate.currentPage - 1) * 2) * 10) }}</strong></td>
                         <td><strong>{{ result.teamPosition }}</strong></td>
                         <td>

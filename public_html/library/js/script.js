@@ -80,6 +80,13 @@ $(function(){
             $('.filter.active').each(function(){
                 $selector += $(this).attr('data-filter');
             });
+
+            if ( $('.filter.active:not(.btn)').length > 1 ) {
+                var $city = $('.filter-group.large .filter.active').attr('data-filter').replace(".", ""),
+                    $year = $('.filter-group.small .filter.active').attr('data-filter').replace(".", "");
+
+                $selector = "." + $city + "-" + $year;
+            }
         }
 
         $('.isotope-no-items').addClass('inactive');

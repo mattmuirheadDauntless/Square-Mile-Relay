@@ -72,9 +72,9 @@
                 {% set partners = event.relatedPartners %}
                 {% if partners|length %}
                 {% if city == urlCity and year == urlYear %}
-                    <div class="race {{ city.slug }} {{ year }} active">
+                    <div class="race {{ city.slug }} {{ year }} {{ event.slug }} active">
                 {% else %}
-                    <div class="race {{ city.slug }} {{ year }} hide active">
+                    <div class="race {{ city.slug }} {{ year }} {{ event.slug }} hide active">
                 {% endif %}
                     <div class="race-title">
                         <h2>{{ event.title }}</h2>
