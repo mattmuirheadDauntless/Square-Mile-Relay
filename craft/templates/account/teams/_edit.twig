@@ -84,18 +84,34 @@
                     <input type="hidden" name="teamId" value="{{ team.id }}">
                     {{ getCsrfInput() }}
 
-                    {% set title = team is defined ? team.title : '' %}
+
+                    {% if team.teamName|length > 0 %}
+                        {% set title = team.teamName %}
+                    {% else %}
+                        {% set title = team is defined ? team.title : '' %}
+                    {% endif %}
                     {% set summaryText = team is defined ? team.summaryText : '' %}
 
                     {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
 
-                        <div class="input-wrapper">
-                            {% set titleLabel = 'Team Name'|t %}
+                        <div class="input-wrapper hide invalid">
+                            {% set titleLabel = 'Title'|t %}
                             {{ formFields.input({
                                 id:    'title',
                                 label: titleLabel,
                                 name:  'title',
                                 placeholder: titleLabel,
+                                value: team.title
+                            }) }}
+                        </div>
+
+                        <div class="input-wrapper">
+                            {% set teamNameLabel = 'Team Name'|t %}
+                            {{ formFields.input({
+                                id:    'title',
+                                label: teamNameLabel,
+                                name:  'fields[teamName]',
+                                placeholder: teamNameLabel,
                                 value: title
                             }) }}
                         </div>

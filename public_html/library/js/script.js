@@ -55,7 +55,9 @@ $(function(){
 
     //date picker init
     $('#dateOfBirth').datepicker({
-        format: "dd/mm/yyyy"
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        startView: 2
     });
 
     //handle animate links
