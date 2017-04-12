@@ -61,7 +61,12 @@
                             <h6>{{ event.startDateTime|date('j F Y') }}</h6>
                             {% endif %}
 
-                            <h4 class="team-name">{{ team.title }}</h4>
+                            {% if team.teamName|length > 0 %}
+                                <h4 class="team-name">{{ team.teamName }}</h4>
+                            {% else %}
+                                <h4 class="team-name">{{ team.title }}</h4>
+                            {% endif %}
+
                             {% if team.relatedCompany|length %}
                                 {% set relatedCompany = team.relatedCompany.first() %}
                                 {% if relatedCompany is not null %}
