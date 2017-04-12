@@ -13,6 +13,7 @@
         {% set teamCount = 0 %}
         {% set years = [] %}
         {% set cities = [] %}
+        {% set events = [] %}
         {% for team in relatedTeams %}
 
             {% if team|length %}
@@ -32,6 +33,10 @@
                             {% set cities = cities | merge([city.slug]) %}
                         {% endif %}
 
+                        {% if event.slug not in events %}
+                            {% set events = events | merge([event.slug]) %}
+                        {% endif %}
+
                     {% endif %}
                 {% endif %}
             {% endif %}
@@ -39,8 +44,9 @@
 
         {% set yearsFilters = years | join(' ') %}
         {% set citiesFilters = cities | join(' ') %}
+        {% set eventsFilters = events | join(' ') %}
 
-        <div class="companies-item grid-item {{ yearsFilters }} {{ citiesFilters }}">
+        <div class="companies-item grid-item {{ yearsFilters }} {{ citiesFilters }} {{ eventsFilters }}">
             <a href={{ company.url }} class="cover-link"></a>
             {% if image|length %}
             <div class="img-container" style="background-image: url({{ image.url }})"></div>
@@ -48,7 +54,7 @@
             <h3>{{ company.title }}</h3>
 
             {% if teamCount == 0 %}
-                <h4 class="white">No teams</h4>
+                <h4 class="white">{{ 'No teams'|t }}</h4>
             {% else %}
                 {% if teamCount == 1 %}
                     <h4>{{ teamCount }} {{ 'team'|t }}</h4>
