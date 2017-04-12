@@ -115,15 +115,15 @@
                                 }) }}
                             </div>
 
-                            <div class="input-wrapper edit-element select">
+                            <div class="input-wrapper edit-element">
                                 {% set dateOfBirthLabel = 'Date of birth'|t %}
                                 {{ formFields.input({
                                     id:    'dateOfBirth',
                                     label: dateOfBirthLabel,
-                                    name:  'fields[dateOfBirth]',
-                                    type:  'date',
-                                    placeholder: dateOfBirthLabel,
-                                    value: currentUser.dateOfBirth,
+                                    name:  'fields[dateOfBirth][date]',
+                                    type:  'text',
+                                    placeholder: 'dd/mm/yyyy',
+                                    value: currentUser.dateOfBirth|date("d/m/Y"),
                                     required:   true
                                 }) }}
                             </div>

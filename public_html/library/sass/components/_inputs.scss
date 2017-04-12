@@ -61,7 +61,7 @@
             transition: all ease-in .1s;
             opacity: 1;
         }
-        &:not(select) {
+        &:not(select):not([type=date]), {
             &:not(:focus):not(:placeholder-shown):valid {
                 border: 2px solid $green;
             }
