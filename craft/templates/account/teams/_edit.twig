@@ -274,7 +274,7 @@
                                             {% for waiver in userWaivers %}
                                                 {% if waiver.event == event and waiver.event not in events %}
                                                     {% set events = events|merge([ waiver.event ]) %}
-                                                    {% if waiver.acceptedWaiver == 1 %}
+                                                    {% if waiver.acceptedWaiver == 1 or waiver.acceptedWaiver == "on" %}
                                                         <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Registered'|t }}</div>
                                                         {% set checked = 1 %}
                                                     {% else %}
