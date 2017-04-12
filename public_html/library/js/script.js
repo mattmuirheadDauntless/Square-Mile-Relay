@@ -53,6 +53,11 @@ $(function(){
     });
     //End input validation
 
+    //date picker init
+    $('#dateOfBirth').datepicker({
+        format: "dd/mm/yyyy"
+    });
+
     //handle animate links
     $('a[href="#contact"]').click(function(event){
         event.preventDefault();
