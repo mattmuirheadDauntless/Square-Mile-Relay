@@ -87,6 +87,9 @@
             }
             @media (max-width: 499px) {
                 width:100%;
+                p {
+                    margin-bottom:10px;
+                }
             }
         }
         .quantity {
