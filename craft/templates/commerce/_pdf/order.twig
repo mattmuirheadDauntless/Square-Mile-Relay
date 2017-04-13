@@ -1,7 +1,8 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Language" content="ja" />
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <style>
         {#{% include 'commerce/style.css' %}#}
@@ -13,7 +14,7 @@
         h4 {
             font-size:26px;
             font-weight:700;
-            font-family:arial,sans-serif;
+            font-family: DejaVu Sans;
             margin:20px 0 30px 0;
             line-height:100%;
         }
@@ -64,7 +65,7 @@
         table td, table th, table td ul li,table td p,table h5 {
             line-height:130%;
             color: #000000;
-            font-family:arial,sans-serif;
+            font-family: DejaVu Sans;
         }
         table h5 {
             font-size:18px;
@@ -88,20 +89,20 @@
         {% endif %}
     {% endfor %}
     {% set orderTable %}
-        <div class="row" style="font-family: arial,sans-serif;">
+        <div class="row" style="font-family: DejaVu Sans;">
             <div class="twelve columns">
                 <table class="u-full-width heading">
                     <tr>
-                        <th>{{ 'Details'|t }}</th>
-                        <th>{{ 'Billing Address'|t }}</th>
+                        <th>Details</th>
+                        <th>Billing Address</th>
                     </tr>
                     <tr>
                         <td>
                             <ul>
-                                <li><strong>{{ "Customer"|t }}:</strong> {{ order.customer.email }}</li>
-                                <li><strong>{{ "Total"|t }}:</strong> {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</li>
-                                <li><strong>{{ "Paid"|t }}:</strong> {{ order.totalPaid|commerceCurrency(iso, convert=false) }} {{ order.datePaid|date('D dS M Y') }}</li>
-                                <li><strong>{{ "Date"|t }}:</strong> {{ order.dateOrdered }}</li>
+                                <li><strong>Customer:</strong> {{ order.customer.email }}</li>
+                                <li><strong>Total:</strong> {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</li>
+                                <li><strong>Paid:</strong> {{ order.totalPaid|commerceCurrency(iso, convert=false) }} {{ order.datePaid|date('D dS M Y') }}</li>
+                                <li><strong>Date:</strong> {{ order.dateOrdered }}</li>
                             </ul>
                         </td>
                         <td>
@@ -117,10 +118,10 @@
                 <table class="u-full-width details">
                     <thead>
                         <tr>
-                            <th>{{ 'Item'|t }}</th>
-                            <th>{{ 'Unit Price'|t }}</th>
-                            <th>{{ 'Quantity'|t }}</th>
-                            <th style="text-align:right;">{{ 'Total'|t }}</th>
+                            <th>Item</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                            <th style="text-align:right;">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -128,7 +129,7 @@
                             <tr>
                                 <td valign="top">
                                     <strong>{{ item.description }}</strong><br>
-                                    {{ 'SKU'|t }}: {{ item.sku }}
+                                    SKU: {{ item.sku }}
                                 </td>
                                 <td>
                                     {% if item.onSale %}
@@ -146,7 +147,7 @@
                             {% if adjustment.type == 'Discount' %}
                                 <tr>
                                     <td><strong>{{ adjustment.type }}</strong></td>
-                                    <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.amount|commerceCurrency(iso,convert=true) }} {{ 'using code'|t }} {{ adjustment.optionsJson.code }})</td>
+                                    <td colspan="2">{{ adjustment.name }}<br>({{ adjustment.amount|commerceCurrency(iso,convert=true) }} using code {{ adjustment.optionsJson.code }})</td>
                                     <td style="text-align:right;">{{ adjustment.amount|commerceCurrency(iso,convert=true) }}</td>
                                 </tr>
                             {% else %}
@@ -159,10 +160,10 @@
                         {% endfor %}
                         <tr>
                             <td colspan="4" style="text-align:right;">
-                                <strong>{{ 'Item Total:'|t }}</strong> {{ order.itemTotal|commerceCurrency(iso, convert=false) }}<br>
-                                <strong>{{ 'Base Discount:'|t }}</strong> {{ order.baseDiscount|commerceCurrency(iso, convert=false) }}<br>
-                                <strong>{{ 'Base Shipping Rate:'|t }}</strong> {{ order.baseShippingCost|commerceCurrency(iso, convert=false) }}<br>
-                                <h5 style="margin-top:20px;">{{ 'Total:'|t }} {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</h5>
+                                <strong>Item Total:</strong> {{ order.itemTotal|commerceCurrency(iso, convert=false) }}<br>
+                                <strong>Base Discount:</strong> {{ order.baseDiscount|commerceCurrency(iso, convert=false) }}<br>
+                                <strong>Base Shipping Rate:</strong> {{ order.baseShippingCost|commerceCurrency(iso, convert=false) }}<br>
+                                <h5 style="margin-top:20px;">Total: {{ order.totalPrice|commerceCurrency(iso, convert=false) }}</h5>
                             </td>
                         </tr>
 
@@ -174,17 +175,22 @@
     {% endset %}
 
     {# Use the option param passed into the pdf template to show different order pdf's depending on the context #}
+    {% set logoUrl = "./uploads/company/smr_logo.png" %}
+    {% if craft.locale != "en_gb" %}
+        {% set logoUrl = "./../uploads/company/smr_logo.png" %}
+    {% endif %}
+
     {% switch option %}
     {% case "receipt" %}
-        <img src="./uploads/company/smr_logo.png" style="height:60px;border: 0;margin:0 0 30px 0;">
-        <h4>{{ 'Receipt for Order #'|t }}{{ order.number[:7] }}</h4>
+        <img src="{{ logoUrl }}" style="height:60px;border: 0;margin:0 0 30px 0;">
+        <h4>Receipt for Order #{{ order.number[:7] }}</h4>
         {{ orderTable }}
     {% case "ajax" %}
-        <img src="./uploads/company/smr_logo.png" style="height:60px;border: 0;margin:0 0 30px 0;">
-        <h4>{{ 'NA'|t }}</h4>
+        <img src="{{ logoUrl }}" style="height:60px;border: 0;margin:0 0 30px 0;">
+        <h4>NA</h4>
     {% default %}
-        <img src="./uploads/company/smr_logo.png" style="height:60px;border: 0;margin:0 0 30px 0;">
-        <h4>{{ 'Order #'|t }}{{ order.number[:7] }}</h4>
+        <img src="{{ logoUrl }}" style="height:60px;border: 0;margin:0 0 30px 0;">
+        <h4>Order #{{ order.number[:7] }}</h4>
         {{ orderTable }}
     {% endswitch %}
 
