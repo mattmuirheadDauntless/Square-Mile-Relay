@@ -117,14 +117,18 @@
 
                             <div class="input-wrapper edit-element">
                                 {% set dateOfBirthLabel = 'Date of birth'|t %}
+                                {% set dob = "" %}
+                                {% if currentUser.dateOfBirth|length %}
+                                    {% set dob = currentUser.dateOfBirth|date("d/m/Y") %}
+                                {% endif %}
                                 {{ formFields.input({
-                                    id:    'dateOfBirth',
+                                    id: 'dateOfBirth',
                                     label: dateOfBirthLabel,
-                                    name:  'fields[dateOfBirth][date]',
-                                    type:  'text',
+                                    name: 'fields[dateOfBirth][date]',
+                                    type: 'text',
                                     placeholder: 'dd/mm/yyyy',
-                                    value: currentUser.dateOfBirth|date("d/m/Y"),
-                                    required:   true
+                                    value: dob,
+                                    required: true
                                 }) }}
                             </div>
 
