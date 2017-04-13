@@ -278,7 +278,7 @@ overflow-y: scroll;
             &.commerce {
                 padding: 0;
                 height: calc(100% - 70px);
-                overflow: hidden;
+                /*overflow: hidden;*/
                 iframe {
                     width: 100%;
                     height: 100%;
