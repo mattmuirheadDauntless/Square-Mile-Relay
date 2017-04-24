@@ -287,7 +287,7 @@
 
                                         <div class="input-wrapper edit-element checkbox{% if loop.index == 1 %} first{% endif %}">
                                             <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col2]" value="{{ event.title }}">
-                                            <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col3]" value="{{ event.id }}">
+                                            <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col3]" value="{{ team.id }}">
                                             <input type="hidden" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]">
                                             <input class="input" id="checkbox-{{ loop.index - 1 }}" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]" type="checkbox" {% if waiverAgreed == 1 %} checked{% endif %} required>
 

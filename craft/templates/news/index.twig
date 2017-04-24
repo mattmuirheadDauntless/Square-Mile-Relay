@@ -33,6 +33,9 @@
         <section class="filters active">
             <div class="filters-btn">
                 <p>{{ 'filter'|t }}</p><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                <div class="search-results pull-right grid-search">
+                    <input type="text" name="search">
+                </div>
                 <div class="view-all">
                     <div class="btn btn-orange-hollow filter" data-filter="*">{{ 'View All'|t }}</div>
                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -41,13 +44,13 @@
             <div class="filter-dropdown">
                 <ul class="filter-group">
                     {% for filter in filters %}
-                        <li class="filter" data-filter=".{{ filter.slug }}">{{ filter.title }}</li>
+                        <li class="filter" data-filter="{{ filter.slug }}">{{ filter.title }}</li>
                     {% endfor %}
                 </ul>
             </div>
         </section>
 
-        <section class="news grid">
+        <section class="news grid" data-section="news" data-page="1" data-search="" data-city="" data-year="">
             <div class="isotope-no-items inactive">
                 <h2>{{ 'Sorry!'|t }}</h2>
                 <h3>{{ "There aren't any results for your filter search"|t }}</h3>
@@ -55,6 +58,10 @@
             </div>
 
             {% include "_includes/loops/_news-loop" %}
+
+            <div class="load-more">
+                <div class="btn btn-load-more">{{'Load More'|t}}</div>
+            </div>
 
         </section>
 

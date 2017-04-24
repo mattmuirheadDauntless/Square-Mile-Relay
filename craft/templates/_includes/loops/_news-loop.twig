@@ -1,10 +1,27 @@
 {% cache %}
 {% set limit = 9 %}
-{% set params = { section: 'news', limit: limit} %}
+
+{% set searchTerm = craft.request.getParam('search') %}
+{% if searchTerm|length > 0 %}{% set searchTerm = "relatedCategories:" ~ searchTerm %}{% endif %}
+
+{% set searchCity = craft.request.getParam('city') %}
+{% set searchYear = craft.request.getParam('year') %}
+
+{% set params = { section: 'news', limit: limit, search: searchTerm } %}
 {% paginate craft.entries(params) as newsItems %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    {{ 'no-results'|t }}
+    {% if craft.request.getPageNum() == 1 %}
+        <div class="no-results news-item grid-item">
+            <h2>{{ 'Sorry there are currently no results for your search!'|t }}</h2>
+            <p>{{ 'Try making your search less specific.'|t }}</p>
+        </div>
+    {% else %}
+        <div class="no-results news-item grid-item">
+            <h2>{{ 'You have reached the finish line!'|t }}</h2>
+            <p>{{ 'There are no more results.'|t }}</p>
+        </div>
+    {% endif %}
 {% else %}
     {% for newsItem in newsItems %}
 
