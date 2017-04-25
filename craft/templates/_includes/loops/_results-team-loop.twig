@@ -4,16 +4,16 @@
 {% if searchCity == " " %}{% set searchCity = "" %}{% endif %}
 {% set searchYear = craft.request.getParam('year') %}
 {% if searchYear == " " %}{% set searchYear = "" %}{% endif %}
-{# {% set search = "finishTime:*" ~ searchTerm ~ searchCity ~ searchYear %} #}
-{% set search = searchTerm ~ searchCity ~ searchYear %}
+{% set search = "finishTime:* " ~ searchTerm ~ searchCity ~ searchYear %}
 
-{% set allResults = craft.entries.section('runningResults').limit(300).order('finishTime') %}
+{% cache %}
+
+{% set allResults = craft.entries.section('runningResults').limit(1000).order('finishTime').search("finishTime:*") %}
 {% set ranks = [] %}
 {% for result in allResults %}
     {% set ranks = ranks|merge({ ("#" ~ result.id): loop.index }) %}
 {% endfor %}
 
-{% cache %}
 {% paginate craft.entries({
     section: 'runningResults',
     limit: 200,
