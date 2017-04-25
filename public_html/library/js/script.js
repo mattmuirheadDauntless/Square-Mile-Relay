@@ -611,7 +611,95 @@ $('.btn-invite-member, .resend').click(function(event) {
         }
 });
 
-$('.btn-remove-member').click(function(event) {
+function updatePositions() {
+    $('#team-members tr').each(function(index, value) {
+        var row = $('#team-members tr:nth-child('+ index +')');
+        row.find('.btn-remove-runner').data('position', index);
+        row.find('.count').text(index);
+    });
+}
+
+if ( $('.btn-remove-runner').length && $('#team-members').length ) {
+    $('html, body').animate({ scrollTop: $('#team-members').offset().top - 200}, 1000);
+}
+
+$('body').on('click', '.btn-add-runner', function(event) {
+    event.preventDefault();
+    var $this = $(this);
+        $teamId = $('#teamId').val();
+        $userId = $this.parent().parent().find('#email').val();
+
+        if ( $userId.length > 0 ) {
+            $.post(
+                '/',
+                { action: 'squareMileRelay/teamMembers/addRunner', userId: $userId, teamId: $teamId },
+                function(data, textStatus, xhr) {
+                    if ( data.includes('Sorry') ) {
+                        var obj = $.parseJSON(data);
+                        alert(obj.data.error);
+                    } else if ( data.includes('status') ) {
+                        var obj = $.parseJSON(data);
+                        var tableRow = $('#template-add-runner').clone();
+                        var firstName = tableRow.find('#firstName');
+                        var lastName = tableRow.find('#lastName');
+                        var email = tableRow.find('#email');
+                        var dataUserId = tableRow.find('.btn-remove-runner');
+                        dataUserId.data('position', obj.data.position);
+                        dataUserId.data('user-id', $userId);
+                        dataUserId.data('team-id', $teamId);
+                        var hiddenTeamMembers = tableRow.find('input[name="teamMembers[]"]');
+                        hiddenTeamMembers.val($userId);
+
+                        firstName.val(obj.data.firstName);
+                        lastName.val(obj.data.lastName);
+                        email.val(obj.data.email);
+
+                        console.log(obj.data.firstName);
+
+                        $('#team-members tr:last-child').before(tableRow);
+
+                        updatePositions();
+
+                        if ($('#team-members tr').length > 10) {
+                            $this.closest('tr').addClass('hide');
+                        }
+                    } else {
+                        location.reload();
+                    }
+                }
+            );
+        }
+});
+
+$('body').on('click', '.btn-remove-runner', function(event) {
+    event.preventDefault();
+    var $this = $(this);
+        $this.attr('disabled', 'disabled');
+        $this.text('please wait');
+
+        $teamId = $('#teamId').val();
+        $userId = $this.parent().parent().find('#email').val();
+        $position = $this.data('position');
+
+        if ( $userId.length > 0 ) {
+            $.post(
+                '/',
+                { action: 'squareMileRelay/teamMembers/removeRunner', userId: $userId, teamId: $teamId, position: $position },
+                function(data, textStatus, xhr) {
+                    if ( data.includes('Sorry') ) {
+                        alert(data);
+                    } else if ( data == '1' ) {
+                        $this.closest('tr').remove();
+                        updatePositions();
+                        $('#team-members tr:last-child').removeClass('hide');
+                    } else {
+                        location.reload();
+                    }
+                });
+        }
+});
+
+$('body').on('click', '.btn-remove-member', function(event) {
     var $this = $(this),
         $userId = $this.data('user-id'),
         $teamId = $this.data('team-id');
