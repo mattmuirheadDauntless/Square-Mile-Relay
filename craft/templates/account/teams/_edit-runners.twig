@@ -1,0 +1,390 @@
+{% extends "account/_layout" %}
+
+{% set teamSlug = craft.request.getSegment(3) %}
+{% set team = craft.entries.section('team').slug(teamSlug).first() %}
+{% set relatedEvent = team.relatedEvent.first() %}
+{% set captain = team.teamCaptain.first() %}
+{% set author = team.author %}
+{% set today = date("now")|date("U") %}
+
+{#
+# User must be in the user group Team Captin
+# to be able to view this page.
+#}
+{% set access = 0 %}
+
+{% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
+    {% set access = 1 %}
+{% endif %}
+{% if relatedEvent.lockTeamEditingFrom|date('U') < today %}
+    {% set access = 0 %}
+{% endif %}
+
+{% if access == 0 %}
+    {% redirect '/account/teams/' ~ team.slug %}
+{% endif %}
+
+{% import "_includes/forms/formFields" as formFields %}
+
+{% block beforeHeading %}
+    <div class="pull-right">
+        {% include '_includes/city_picker' %}
+    </div>
+{% endblock %}
+
+{% block subContent %}
+
+    <section class="my-account tabs-container">
+        <a href="{{ url('account/profile') }}" class="tab"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="{{ url('account/teams') }}" class="tab active"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+        <a href="{{ url('account/orders') }}" class="tab"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
+
+        <div class="tab-wrapper my-teams active">
+            <h5>{{ 'My Teams'|t }} {% if relatedEvent|length %}- {{ relatedEvent.title }}{% endif %} - <span>{{ 'Edit Team'|t }}</span></h5>
+
+            <div class="controls">
+                <div class="team edit-team">
+                    {% set inactiveMembers = team.teamMembers.status('pending')|length %}
+                    {% set activeMembers = team.teamMembers.status('active')|length %}
+                    {% set teamMembers = inactiveMembers + activeMembers %}
+                    {% set percentage = (activeMembers/10) * 100 %}
+
+                    <div class="progress-radial progress-{{ percentage }}">
+                        <div class="overlay">
+                            <div class="text">
+                                <span>{{ percentage }}%</span>
+                                {{ 'Complete'|t }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="runners">
+                        <li>{{ 'Runners Invited'|t }} <span>{{ teamMembers }}/{{ '10'|t }}</span></li>
+                        <li>{{ 'Registration Completed'|t }} <span>{{ activeMembers }}/{{ '10'|t }}</span></li>
+                    </ul>
+
+                    <ul class="tasks">
+                        {# Need to work out how we'll know if additional hospitality has been bought #}
+                        <li>{{ 'Additional Hospitality'|t }} <i class="fa fa-times" aria-hidden="true"></i></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="teams">
+                {% if relatedEvent|length %}
+                {% set relatedCity = relatedEvent.relatedCity.first() %}
+                {% if relatedCity is not null %}
+                    <h3>{{ relatedCity.title }}</h3>
+                {% endif %}
+                <h4>{{ relatedEvent.startDateTime|date('j F Y') }}</h4>
+                {% endif %}
+
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="squareMileRelay/teams/save">
+                    <input type="hidden" name="redirect" value="account/teams">
+                    <input type="hidden" id="teamId" name="teamId" value="{{ team.id }}">
+                    {{ getCsrfInput() }}
+
+
+                    {% if team.teamName|length > 0 %}
+                        {% set title = team.teamName %}
+                    {% else %}
+                        {% set title = team is defined ? team.title : '' %}
+                    {% endif %}
+                    {% set summaryText = team is defined ? team.summaryText : '' %}
+
+                    {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
+
+                        <div class="input-wrapper hide invalid">
+                            {% set titleLabel = 'Title'|t %}
+                            {{ formFields.input({
+                                id:    'title',
+                                label: titleLabel,
+                                name:  'title',
+                                placeholder: titleLabel,
+                                value: team.title
+                            }) }}
+                        </div>
+
+                        <div class="input-wrapper">
+                            {% set teamNameLabel = 'Team Name'|t %}
+                            {{ formFields.input({
+                                id:    'title',
+                                label: teamNameLabel,
+                                name:  'fields[teamName]',
+                                placeholder: teamNameLabel,
+                                value: title
+                            }) }}
+                        </div>
+
+                        <div class="input-wrapper hide">
+                            {% set slugLabel = 'Team Slug'|t %}
+                            {{ formFields.input({
+                                id:    'slug',
+                                label: slugLabel,
+                                name:  'slug',
+                                placeholder: slugLabel,
+                                value: slug
+                            }) }}
+                        </div>
+
+                        <div class="input-wrapper">
+                            {% if currentUser %}
+                                {% set teamCaptainLabel = 'Team Captain'|t %}
+
+                                {{ formFields.dropdown({
+                                    id:         'teamCaptain',
+                                    name:       'fields[teamCaptain][]',
+                                    label:      teamCaptainLabel,
+                                    value:      team.teamCaptain.first() ? team.teamCaptain.first().id : null,
+                                    options:    team.teamMembers,
+                                    optionKeys: [
+                                        'id',
+                                        'firstName'
+                                    ]
+                                }) }}
+                            {% endif %}
+                        </div>
+
+                    <div class="input-wrapper edit-element">
+                        <label for="teamPhoto" class="active">{{ 'Team Photo'|t }}</label>
+                        <input type="file" name="teamPhoto" value="{{ 'Upload Image'|t }}" class="input">
+                    </div>
+
+                    <div class="input-wrapper textarea">
+                        {% set summaryTextLabel = 'Team Description'|t %}
+
+                        {{ formFields.textArea({
+                            id:    'summaryText',
+                            label: summaryTextLabel,
+                            name:  'fields[summaryText]',
+                            rows:  4,
+                            placeholder: summaryTextLabel,
+                            value: team.summaryText
+                        }) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-orange btn-long">{{ 'Save'|t }}</button>
+                    {% endif %}
+                </form>
+
+            </div>
+        </div>
+
+        {% if currentUser and team is defined %}
+            {% set users = team.teamMembersMatrix.type('member') %}
+            {% set count = 0 %}
+            <div class="table-wrapper runners-list">
+
+                <h2>{{ 'Runners & Race Order'|t }}</h2>
+
+                <div class="notification warning">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+                    <p>
+                        {{ 'Please note that the order in which your runners appear below is the order that they will run in on race day!'|t }}<br>
+                        {% if relatedEvent.lockTeamEditingFrom is not null %}
+                            {% if craft.locale == "ja" %}
+                                出走順は{{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}まで変更が可能です。
+                            {% else %}
+                                {{ 'The order can be updated until midnight'|t }} {{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                </div>
+
+                {% set event = relatedEvent.title %}
+                {% if users|length != 10 %}
+                    <div class="notification warning">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+                        <p><strong>{{ 'Alert'|t }}:</strong> {{ 'You currently have'|t }} {{ users|length }} {{ 'runners in your team. Please add more runners to complete your team entry.'|t }}</p>
+                    </div>
+                {% endif %}
+
+                <a href="edit" class="tab"><span class="text">{{ 'Team Members'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+                <a href="runners" class="tab active"><span class="text">{{ 'Running Order'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+
+                <form id="update-team-members" method="POST">
+                    <input type="hidden" name="action" value="squareMileRelay/teamMembers/updateTeamRunners">
+                    <input type="hidden" name="redirect" value="account/teams/{{ team.slug }}/edit">
+                    <input type="hidden" name="teamId" value="{{ team.id }}">
+                    {{ getCsrfInput() }}
+
+                    <div class="hidden">
+                        <table>
+                            <tr id="template-add-runner" class="s-drag">
+                                <td>
+                                    <i class="fa fa-times btn-remove-runner" data-position="" data-user-id="" data-team-id=""></i>
+                                </td>
+                                                                    <td valign="center" class="s-handle">
+                                        <i class="fa fa-bars"></i>
+                                        <input type="hidden" name="teamMembers[]" value="">
+                                        <span class="count">1</span>
+                                    </td>
+                                                                <td valign="center">
+                                    
+                                        <div id="d-firstName" class="form-group">
+        <div>
+            <input type="text" id="firstName" name="firstName" class="input" value="wem" placeholder="First Name">
+            <label></label>
+            <i class="fa validation-icon" aria-hidden="true"></i>
+            <div class="msg valid">Great!</div>
+            <div class="msg in-valid">That's an invalid </div>
+        </div>
+    </div>
+
+                                </td>
+                                <td valign="center">
+                                    
+                                        <div id="d-lastName" class="form-group">
+        <div>
+            <input type="text" id="lastName" name="lastName" class="input" value="wem" placeholder="Last Name">
+            <label></label>
+            <i class="fa validation-icon" aria-hidden="true"></i>
+            <div class="msg valid">Great!</div>
+            <div class="msg in-valid">That's an invalid </div>
+        </div>
+    </div>
+
+                                </td>
+                                <td valign="center">
+                                    
+                                        <div id="d-email" class="form-group">
+        <div>
+            <input type="text" id="email" name="email" class="input" value="" placeholder="Email">
+            <label></label>
+            <i class="fa validation-icon" aria-hidden="true"></i>
+            <div class="msg valid">Great!</div>
+            <div class="msg in-valid">That's an invalid </div>
+        </div>
+    </div>
+
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>{{ 'Race Order'|t }}</th>
+                                <th>{{ 'First Name'|t }}</th>
+                                <th>{{ 'Last Name'|t }}</th>
+                                <th>{{ 'Email'|t }}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="team-members">
+                        {% for user in users %}
+                            {% set count = count + 1 %}
+                            <tr class="s-drag">
+                                <td>
+                                    <i class="fa fa-times btn-remove-runner" data-position="{{ count }}" data-user-id="{{ user.relatedUser.first.id }}" data-team-id="{{ team.id }}"></i>
+                                </td>
+                                {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
+                                    <td valign="center" class="s-handle">
+                                        <i class="fa fa-bars"></i>
+                                        <input type="hidden" name="teamMembers[]" value="{{ user.relatedUser.first.id }}">
+                                        <span class="count">{{ count }}</span>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        {% if currentUser.id == author.id %}
+                                            <i class="fa fa-bars"></i>
+                                        {% endif %}
+                                        <span class="count">{{ count }}</span>
+                                    </td>
+                                {% endif %}
+                                <td valign="center">
+                                    {% set firstNameLabel = 'First Name'|t %}
+
+                                    {{ formFields.input({
+                                        id:          'firstName',
+                                        name:        'firstName',
+                                        value:       user.relatedUser.first.firstName,
+                                        placeholder: firstNameLabel
+                                    }) }}
+                                </td>
+                                <td valign="center">
+                                    {% set lastNameLabel = 'Last Name'|t %}
+
+                                    {{ formFields.input({
+                                        id:          'lastName',
+                                        name:        'lastName',
+                                        value:       user.relatedUser.first.lastName,
+                                        placeholder: lastNameLabel
+                                    }) }}
+                                </td>
+                                <td valign="center">
+                                    {% set emailLabel = 'Email'|t %}
+
+                                    {{ formFields.input({
+                                        id:   'email',
+                                        name: 'email',
+                                        value: user.relatedUser.first.email,
+                                        placeholder: emailLabel
+                                    }) }}
+                                </td>
+                                <td></td>
+                            </tr>
+                        {% endfor %}
+                            
+                                {% for i in 1..1 %}
+                                    {% set count = count + 1 %}
+                                    <tr class="s-drag {% if users|length >= 10 %} hide {% endif %}">
+                                        <td></td>
+                                        {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
+                                            <td class="s-handle">
+                                                <div class="dragtooltip">
+                                                    <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
+                                                </div>
+                                                <span class="count"></span>
+                                            </td>
+                                        {% else %}
+                                            <td><span class="count"></span></td>
+                                        {% endif %}
+                                        <td>
+                                            {% set emailLabell = 'Email'|t %}
+
+                                            {{ formFields.dropdown({
+                                                id:         'email',
+                                                name: 'newMembers['~ i ~'][email]',
+                                                value:      null,
+                                                label:      emailLabell,
+                                                options:    team.teamMembers,
+                                                optionKeys: [
+                                                    'id',
+                                                    'email'
+                                                ]
+                                            }) }}
+                                        </td>
+                                        <td>
+                                            {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
+                                                <button type="submit" class="btn btn-orange btn-tiny btn-add-runner">{{ 'Add Runner'|t }}</button>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                </form>
+
+            </div>
+        {% endif %}
+    </section>
+
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/sortable.js"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}app.js"></script>
+    <script>
+        makeSortable('team-members', {
+            handle: '.s-handle',
+            onEnd: function () {
+                document.getElementById('update-team-members').submit();
+            }
+        });
+    </script>
+{% endblock %}
