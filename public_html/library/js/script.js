@@ -66,92 +66,114 @@ $(function(){
         $('#contactBtn').trigger('click');
     });
 
-    $('.filter').click(function() {
+    $('.partner-filters .filter').click(function() {
         var $this = $(this),
             $parent = $this.parent('.filter-group'),
-            $selector = $this.attr('data-filter');
+            $selector = $this.attr('data-filter'),
+            $latestDate = $this.attr('data-latest-event');
 
-        //if partners page
-        if ($('.partners').length > 0) {
-            var $latestDate = $this.attr('data-latest-event');
-            $('.partners .race').addClass('hide');
-            $('.partners .race'+$selector).removeClass('hide');
-            $('.partners .race').removeClass('fixed');
-
-            if ( $('.filter-group.small .filter.active').length <= 0 ){
-                if ($latestDate != "") {
-                    $('.filter-group.small .filter[data-filter=".'+ $latestDate +'"]').trigger('click');
-                } else {
-                    $('.filter-group.small .filter:first-child').trigger('click');
-                }
-            }
-
-            if ( $('.filter-group.large .filter.active').length <= 0 ){
-                $('.filter-group.large .filter:first-child').trigger('click');
-            }
-
-            //handle animate links
-            $('a[href*=\\#]:not(.link)').click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop: $( $.attr(this, 'href') ).offset().top - 170}, 500);
-            });
-
-            $('.slide-nav-section').each(function(){
-                var $this = $(this),
-                    $id = $this.attr('id'),
-                    $slide = $this.attr('data-slide'),
-                    $distance = $('#'+$id).offset().top + 250;
-
-                $(window).scroll(function() {
-                    if ( ($(window).scrollTop() + $segmentTop) <= $distance && ($(window).scrollTop() + $segmentBottom) >= $distance ) {
-                        console.log($distance);
-
-
-                        if ( $distance > 7500 ) {
-                            $('.slide-nav').css('margin-top', '-500px');
-                        } else if ( $distance > 6500 ) {
-                            $('.slide-nav').css('margin-top', '-400px');
-                        } else if ( $distance > 5500 ) {
-                            $('.slide-nav').css('margin-top', '-300px');
-                        } else if ( $distance > 4500 ) {
-                            $('.slide-nav').css('margin-top', '-200px');
-                        } else if ( $distance > 3500 ) {
-                            $('.slide-nav').css('margin-top', '-100px');
-                        } else {
-                            $('.slide-nav').css('margin-top', '0px');
-                        }
-
-                        $('.slide-nav li').each(function() {
-                            $(this).removeClass('active');
-                        });
-
-                        $('.' + $id).addClass('active');
-                    }
-                });
-            });
-
-            $('.race.active').each(function() {
-                var $this = $(this),
-                    $distance = $this.offset().top;
-
-                $(window).scroll(function() {
-                    if (($(window).scrollTop() + 140) >= $distance) {
-                        $this.addClass('fixed');
-                    } else {
-                        $this.removeClass('fixed');
-                    }
-                });
+        if ($selector == "*"){
+            $('.filter').removeClass('active');
+            $this.addClass('active');
+        } else {
+            $selector = "";
+            $('.filter.active').each(function(){
+                $selector += $(this).attr('data-filter');
             });
         }
 
-        //if faqs page
-        if ($('.faqs').length > 0) {
+        $parent.find('.filter.active').removeClass('active');
+        $this.addClass('active');
+
+        $('.filter.active').each(function() {
+            var $selector =+ $(this).attr('data-filter');
+        });
+
+        if ( $('.filter.active:not(.btn)').length > 1 ) {
+            var $city = $('.filter-group.large .filter.active').attr('data-filter').replace(".", ""),
+                $year = $('.filter-group.small .filter.active').attr('data-filter').replace(".", "");
+
+            $selector = "." + $city + "-" + $year;
+        }
+
+        $('.partners .race').addClass('hide');
+        $('.partners .race'+$selector).removeClass('hide');
+        $('.partners .race').removeClass('fixed');
+
+        if ( $('.filter-group.small .filter.active').length <= 0 ){
+            if ($latestDate != "") {
+                $('.filter-group.small .filter[data-filter=".'+ $latestDate +'"]').trigger('click');
+            } else {
+                $('.filter-group.small .filter:first-child').trigger('click');
+            }
+        }
+
+        if ( $('.filter-group.large .filter.active').length <= 0 ){
+            $('.filter-group.large .filter:first-child').trigger('click');
+        }
+
+        //handle animate links
+        $('a[href*=\\#]:not(.link)').click(function(event){
+            event.preventDefault();
+            $('html,body').animate({scrollTop: $( $.attr(this, 'href') ).offset().top - 170}, 500);
+        });
+
+         $('.slide-nav-section').each(function(){
+            var $this = $(this),
+                $id = $this.attr('id'),
+                $slide = $this.attr('data-slide'),
+                $distance = $('#'+$id).offset().top + 250;
+
+            $(window).scroll(function() {
+                if ( ($(window).scrollTop() + $segmentTop) <= $distance && ($(window).scrollTop() + $segmentBottom) >= $distance ) {
+                    console.log($distance);
+
+
+                    if ( $distance > 7500 ) {
+                        $('.slide-nav').css('margin-top', '-500px');
+                    } else if ( $distance > 6500 ) {
+                        $('.slide-nav').css('margin-top', '-400px');
+                    } else if ( $distance > 5500 ) {
+                        $('.slide-nav').css('margin-top', '-300px');
+                    } else if ( $distance > 4500 ) {
+                        $('.slide-nav').css('margin-top', '-200px');
+                    } else if ( $distance > 3500 ) {
+                        $('.slide-nav').css('margin-top', '-100px');
+                    } else {
+                        $('.slide-nav').css('margin-top', '0px');
+                    }
+
+                    $('.slide-nav li').each(function() {
+                        $(this).removeClass('active');
+                    });
+
+                    $('.' + $id).addClass('active');
+                }
+            });
+        });
+
+        $('.race.active').each(function() {
+            var $this = $(this),
+                $distance = $this.offset().top;
+
+            $(window).scroll(function() {
+                if (($(window).scrollTop() + 140) >= $distance) {
+                    $this.addClass('fixed');
+                } else {
+                    $this.removeClass('fixed');
+                }
+            });
+        });
+
+    });
+
+    //if faqs page
+    if ($('.faqs').length > 0) {
+        $('.filter').click(function() {
             $('.faq').addClass('hide');
             $('.faq'+$selector).removeClass('hide');
-        }
-
-        return false;
-    });
+        });
+    }
 
 
     //handle tables
@@ -799,7 +821,7 @@ $('.btn-remove-member').click(function(event) {
     });
 
     //on filter
-    $('.filter').click(function() {
+    $('.filters:not(.partner-filters) .filter').click(function() {
         var $this = $(this),
             $parent = $this.parent('.filter-group'),
             $selector = $this.attr('data-filter');
@@ -809,6 +831,7 @@ $('.btn-remove-member').click(function(event) {
             $('.grid-search input').val("");
             $('.filter').removeClass('active');
             $this.addClass('active');
+            var $search = "";
         } else {
             $parent.children('.filter').removeClass('active');
             $this.addClass('active');
