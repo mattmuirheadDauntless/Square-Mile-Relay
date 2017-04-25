@@ -55,10 +55,14 @@
                             {% set event = team.relatedEvent.first() %}
                             {% set today = date("now")|date("U") %}
                             
-                            {% if event|length %}
-                                {% if event.lockTeamEditingFrom|date('U') > today %}
+                            {% if (team.teamCaptain.first()|length and currentUser.id == team.teamCaptain.first().id) or (currentUser.id == team.author.id) %}
+                                {% if event|length and event.lockTeamEditingFrom|date('U') < today %}
                                     <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
+                                {% else %}
+                                    <a href="{{ url('account/teams/' ~ team.slug) }}" class="cover-link"></a>
                                 {% endif %}
+                            {% else %}
+                                <a href="{{ url('account/teams/' ~ team.slug) }}" class="cover-link"></a>
                             {% endif %}
                             
                             {% set inactiveMembers = team.teamMembers.status('pending')|length %}
