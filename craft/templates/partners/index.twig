@@ -19,7 +19,7 @@
     {% cache %}
     {% set urlYear = craft.request.getParam('year') %}
     {% set urlCity = craft.request.getParam('city') %}
-    <section class="filters active">
+    <section class="partner-filters filters active">
         <div class="filters-btn">
             <p>{{ 'filter'|t }}</p><i class="fa fa-chevron-down" aria-hidden="true"></i>
         </div>
@@ -72,9 +72,9 @@
                 {% set partners = event.relatedPartners %}
                 {% if partners|length %}
                 {% if city == urlCity and year == urlYear %}
-                    <div class="race {{ city.slug }} {{ year }} active">
+                    <div class="race {{ city.slug }} {{ year }} {{ event.slug }} active">
                 {% else %}
-                    <div class="race {{ city.slug }} {{ year }} hide active">
+                    <div class="race {{ city.slug }} {{ year }} {{ event.slug }} hide active">
                 {% endif %}
                     <div class="race-title">
                         <h2>{{ event.title }}</h2>
@@ -93,6 +93,7 @@
                     {% for partner in partners %}
                         {% set logo = partner.companyLogo.first() %}
                         <div class="slide-nav-section" id="{{ city.slug }}{{ year }}Partner{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}" data-slide="{{ partner.partnerType|lower|replace(" ", "-") ~ '-' ~ liCounter }}">
+                            <div class="link" id="{{ city.slug }}-{{ year }}-{{ partner.slug }}" style="position: absolute; top: -170px;"></div>
                             <div class="content-left">
                                 <h3>{{ partner.partnerType }}</h3>
                                 <img src={{ logo.url }} alt={{ partner.title }}>

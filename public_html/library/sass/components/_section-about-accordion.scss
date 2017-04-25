@@ -1,0 +1,239 @@
+.about-accordion {
+    position: relative;
+    float: left;
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+    .nav-items {
+        position: relative;
+        float: left;
+        margin: -1px 0 0 0;
+        cursor: pointer;
+        padding: 0;
+        width: 100%;
+        min-height: 600px;
+        list-style: none;
+        & > li {
+            position: absolute;
+            left: 0;
+            float: left;
+            clear: both;
+            z-index: 3;
+            border-right: 2px solid $lightergrey;
+            border-bottom: 2px solid $lightergrey;
+            background-color: $offwhite;
+            cursor: pointer;
+            padding: 60px 20px 50px 80px;
+            width: 28%;
+            height: 135px;
+            overflow: hidden;
+            margin-top: -1px;
+            &[data-accordion="1"] {
+                top: 0;
+            }
+            &[data-accordion="2"] {
+                top: 135px;
+            }
+            &[data-accordion="3"] {
+                top: 270px;
+            }
+            &[data-accordion="4"] {
+                top: 405px;
+            }
+            &.fixed {
+                position: fixed;
+                &[data-accordion="1"] {
+                    top: 128px;
+                }
+                &[data-accordion="2"] {
+                    top: 263px;
+                }
+                &[data-accordion="3"] {
+                    top: 398px;
+                }
+                &[data-accordion="4"] {
+                    top: 533px;
+                }
+                &.fixed-bottom {
+                    position: absolute;
+                    &[data-accordion="1"] {
+                        top: inherit;
+                        bottom: 450px;
+                    }
+                    &[data-accordion="2"] {
+                        top: inherit;
+                        bottom: 300px;
+                    }
+                    &[data-accordion="3"] {
+                        top: inherit;
+                        bottom: 150px;
+                    }
+                    &[data-accordion="4"] {
+                        top: inherit;
+                        bottom: 0;
+                    }
+                }
+            }
+            &:before {
+                position: absolute;
+                top: 50%;
+                left: -60px;
+                transform: translateX(-100%) translateY(-50%);
+                transition: all ease-in .2s .2s;
+                z-index: 2;
+                border-width: 230px 0 230px 105px;
+                border-style: solid;
+                border-color: transparent transparent transparent $orange;
+                width: 0;
+                height: 0;
+                content: "";
+            }
+            &:after {
+                position: absolute;
+                top: 0;
+                right: -2px;
+                bottom: 0;
+                left: 0;
+                transform: translateX(-100%);
+                transition: all ease-in .3s .2s;
+                z-index: 1;
+                background-color: $white;
+                content: "";
+            }
+            h2 {
+                position: relative;
+                transition: all ease-in .3s .2s;
+                z-index: 4;
+                margin: 0;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: $grey;
+                font-size: 16px;
+                font-weight: 800;
+            }
+            span {
+                position: absolute;
+                top: 54%;
+                left: 14px;
+                transform: translateY(-50%);
+                transition: all ease-in .3s .2s;
+                z-index: 3;
+                color: $lightergrey;
+                font-size: 90px;
+                font-weight: 800;
+            }
+            &:hover {
+                h2 {
+                    transform: translateX(15px);
+                    transition: all ease-in .3s .2s;
+                }
+                span {
+                    transform: translateX(10px) translateY(-50%);
+                    transition: all ease-in .3s .2s;
+                }
+            }
+            &.active {
+                &:before {
+                    transform: translateX(0%) translateY(-50%);
+                    transition: all ease-in .3s .2s;
+                }
+                &:after {
+                    transform: translateX(0);
+                    transition: all ease-in .3s .2s;
+                }
+                h2 {
+                    transform: translateX(65px);
+                    transition: all ease-in .3s .2s;
+                }
+                span {
+                    transform: translateX(60px) translateY(-50%);
+                    transition: all ease-in .3s .2s;
+                }
+            }
+        }
+    }
+    .main-accordion {
+        display: none;
+        position: relative;
+        float: right;
+        width: 72%;
+        &.active {
+            display: block;
+        }
+    }
+}
+
+@include tablet-l {
+    .about-accordion {
+        .nav-items {
+            min-height: 400px;
+            li,li.fixed,li.fixed.fixed-bottom {
+                position:absolute !important;
+                padding:40px;
+                height:100px; 
+                width: 100%;
+                overflow: hidden;
+                &[data-accordion="1"] {
+                    top: 0;
+                    bottom: auto;
+                }
+                &[data-accordion="2"] {
+                    top: 100px;
+                    bottom: auto;
+                }
+                &[data-accordion="3"] {
+                    top: 200px;
+                    bottom: auto;
+                }
+                &[data-accordion="4"] {
+                    top: 300px;
+                    bottom: auto;
+                }
+                &:before {
+                    left: -77px;
+                }
+            }
+        }
+        .main-accordion {
+            position: relative;
+            transform: none;
+            border-bottom: 0 solid $lightergrey;
+            box-shadow: none;
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            &.active {
+                border-bottom: 2px solid $lightergrey;
+                max-height: 3000px;
+                padding: 450px 15px 20px 15px !important;
+            }
+        }
+    }
+}
+
+@include phone {
+    .about-accordion .main-accordion.active {
+        padding: 420px 15px 20px 15px !important;
+        h3 {
+            font-size: 20px;
+            line-height: 120%;
+            margin: 0 0 20px 0
+        }
+        .text {
+            p {
+                font-size: 15px;
+                line-height: 150%;
+                margin-bottom: 30px;
+            }
+            h4 {
+                strong {
+                    font-size: 22px;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+                
+                
+       

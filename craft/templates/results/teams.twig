@@ -31,11 +31,11 @@
 
         {% cache %}
 
-        <section class="filters">
+        <section class="filters active">
             <div class="filters-btn">
                 <p>{{ 'filter'|t }}</p><i class="fa fa-chevron-down" aria-hidden="true"></i>
-                <div class="search-results pull-right">
-                    <input type="text" name="">
+                <div class="search-results pull-right grid-search">
+                    <input type="text" name="search">
                 </div>
                 <div class="clear"></div>
                 <div class="view-all">
@@ -56,7 +56,7 @@
 
                     <ul class="filter-group small">
                         {% for year in years %}
-                            <li class="filter" data-filter=".{{ year }}">{{ year }}</li>
+                            <li class="filter" data-filter="{{ year }}">{{ year }}</li>
                         {% endfor %}
                     </ul>
 
@@ -65,7 +65,7 @@
                 {% if cities | length %}
                 <ul class="filter-group large">
                     {% for city in cities %}
-                        <li class="filter" data-filter=".{{ city.slug }}">{{ city.title }}</li>
+                        <li class="filter" data-filter="{{ city.slug }}">{{ city.title }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
@@ -77,7 +77,7 @@
             <a href="{{ siteUrl }}results/teams" class="tab active"><span class="text">{{ 'Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
             <a href="{{ siteUrl }}results/individuals" class="tab"><span class="text">{{ 'Individuals'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
 
-            <div class="table-wrapper tab-wrapper active">
+            <div class="table-wrapper tab-wrapper active grid" data-section="results/teams" data-page="1" data-search="" data-city="" data-year="">
                 <div class="isotope-no-items inactive">
                     <h2>{{ 'Sorry!'|t }}</h2>
                     <h3>{{ "There aren't any results for your filter search"|t }}</h3>
@@ -94,23 +94,15 @@
                             <th><span></span>{{ 'Race Year'|t }}</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="results">
 
                         {% include "_includes/loops/_results-team-loop" %}
 
-                        {# {% else %}
-                            <tr>
-                                <td colspan="6">
-                                    <div class="no-results">
-                                        <h2>{{ 'Sorry!'|t }}</h2>
-                                        <h3>{{ "We currently don't have any results, please check back later"|t }}</h3>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}#}
-
                     </tbody>
                 </table>
+                <div class="load-more">
+                    <div class="btn btn-load-more">{{'Load More'|t}}</div>
+                </div>
             </div>
 
             {% include "_includes/_loading" %}

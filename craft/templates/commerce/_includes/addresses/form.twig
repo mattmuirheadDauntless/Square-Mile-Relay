@@ -101,6 +101,20 @@
 			{% endif %}
         </div>
 
+        <div class="input-wrapper required select">
+            <select class="address-country input" name="{{ modelName }}[countryId]" required>
+                <option value="select">{{ '- Select -'|t }}</option>
+                {% for key, option in countries %}
+                    {% set optionValue = (model ? model.countryId : '') %}
+                    <option value="{{ key }}" {% if key == optionValue %} selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+            {% if model and model.getErrors('countryId') %}
+                <span class="flash">{{ model.getErrors('countryId')|join }}</span>
+            {% endif %}
+            <label for="{{ modelName }}-countryId">Country *</label>
+        </div>
+
 {#         <div class="input-wrapper required">
            <select class="address-addressCountry input" name="{{ modelName }}[addressCountry]">
                 <option value="select">{{ '- Select -'|t }}</option>

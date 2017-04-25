@@ -1,41 +1,76 @@
+{% set searchTerm = craft.request.getParam('search') ~ " " %}
+{% if searchTerm == " " %}{% set searchTerm = "" %}{% endif %}
+{% set searchCity = craft.request.getParam('city') ~ " " %}
+{% if searchCity == " " %}{% set searchCity = "" %}{% endif %}
+{% set searchYear = craft.request.getParam('year') %}
+{% if searchYear == " " %}{% set searchYear = "" %}{% endif %}
+{% set search = "finishTime:* " ~ searchTerm ~ searchCity ~ searchYear %}
+
 {% cache %}
+
+{% set allResults = craft.entries.section('runningResults').limit(1000).order('finishTime').search("finishTime:*") %}
+{% set ranks = [] %}
+{% for result in allResults %}
+    {% set ranks = ranks|merge({ ("#" ~ result.id): loop.index }) %}
+{% endfor %}
+
 {% paginate craft.entries({
     section: 'runningResults',
     limit: 200,
     order: 'finishTime',
-    search: 'finishTime:*'
+    search: search
 }) as teamResults %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    {{ 'no-results'|t }}
+    {% if craft.request.getPageNum() == 1 %}
+        <tr class="result-item grid-item">
+            <td class="full-width" colspan="7">
+                <div class="no-results">
+                    <h2>{{ 'Sorry there are currently no results for your search!'|t }}</h2>
+                    <p>{{ 'Try making your search less specific.'|t }}</p>
+                </div>
+            </td>
+        </tr>
+    {% else %}
+        <tr class="result-item grid-item">
+            <td class="full-width" colspan="7">
+                <div class="no-results">
+                    <h2>{{ 'You have reached the finish line!'|t }}</h2>
+                    <p>{{ 'There are no more results.'|t }}</p>
+                </div>
+            </td>
+        </tr>
+    {% endif %}
 {% else %}
-
     {% set count = 0 %}
-    {% for results in teamResults|group('teamName')%}
+    {% for results in teamResults|group('relatedTeam.title') %}
         {% set count = count + 1 %}
-        {% for result in results|slice(0, 1) %}
-            {% set event = result.relatedEvents.first() %}
-            {% set year = event.startDateTime|date('Y') %}
-            {% set city = event.relatedCity.first() %}
-            {% if city is not null %}
-                <tr class="{{ year }} {{ city.slug }}">
-                    <td><strong>{{ ((paginate.currentPage - 1) * 20) + count }}</strong></td>
-                    <td><strong>{{ result.teamPosition }}</strong></td>
-                    <td>
-                        <strong>{{ result.teamName }}</strong>
-                    </td>
-                    <td>
-                        {% if result.finishTime|length %}
-                            <strong>{{ result.finishTime|split('.')[0] }}</strong>
-                        {% else %}
-                            <strong>{{ result.finishedStatus|split('.')[0] }}</strong>
-                        {% endif %}
-                    </td>
-                    <td>{{ city.title }}</td>
-                    <td>{{ year }}</td>
-                </tr>
-            {% endif %}
+        {% for result in results %}
+            {% if loop.index is divisible by(10) %}
 
+                {% set event = result.relatedEvents.first() %}
+                {% set year = event.startDateTime|date('Y') %}
+                {% set city = event.relatedCity.first() %}
+                {% if city is not null %}
+                    <tr class="result-item grid-item {{ year }} {{ city.slug }} {{ event.slug }}">
+                        <td><strong>{% if ranks["#" ~ result.id] is defined %}{{ (ranks["#" ~ result.id]) / 10 }}{% else %}{{ 'TBC'|t }}{% endif %}</strong></td>
+                        <td><strong>{{ result.teamPosition }}</strong></td>
+                        <td>
+                            <strong>{{ result.teamName }}</strong>
+                        </td>
+                        <td>
+                            {% if result.finishTime|length %}
+                                <strong>{{ result.finishTime|split('.')[0] }}</strong>
+                            {% else %}
+                                <strong>{{ result.finishedStatus|split('.')[0] }}</strong>
+                            {% endif %}
+                        </td>
+                        <td>{{ city.title }}</td>
+                        <td>{{ year }}</td>
+                    </tr>
+                {% endif %}
+
+            {% endif %}
         {% endfor %}
     {% endfor %}
 

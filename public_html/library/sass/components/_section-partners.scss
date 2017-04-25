@@ -1,0 +1,237 @@
+.partners {
+    background-color: $white;
+    padding: 30px 0 20px;
+    position: relative;
+    z-index:2;
+    .slide-nav {
+        position: absolute;
+        top: 160px;
+        left: 0;
+        transition: all ease-in .3s;
+        opacity: 0;
+        margin: 0;
+        padding: 10px;
+        list-style: none;
+        background: #fff;
+        &.fixed {
+            position: fixed;
+            top: 155px;
+            transition: all ease-in .3s;
+        }
+        li {
+            transition: all ease-in .3s;
+            margin: 0 0 30px;
+            color: $black;
+            font-size: 18px;
+            font-weight: 800;
+            a {
+                transition: all ease-in .3s;
+                text-decoration: none;
+                color: $black;
+            }
+            &.active {
+                a {
+                    transition: all ease-in .3s;
+                    color: $offwhite;
+                }
+            }
+        }
+    }
+    .race {
+        position: relative;
+        transition: all ease-in 0s;
+        z-index: 1;
+        background-color: $white;
+        padding-left: 300px;
+        width: 100%;
+        overflow: hidden;
+        &.fixed {
+            .slide-nav {
+                position: fixed;
+                top: 155px;
+                transition: all ease-in .3s;
+            }
+        }
+        &.active {
+            border-bottom: 1px solid $lightestgrey;
+            .race-partners {
+                transition: all ease-in .3s .4s;
+                opacity: 1;
+                max-height: 99999px;
+            }
+            .slide-nav {
+                transition: all ease-in .3s .4s;
+                opacity: 1;
+            }
+        }
+        .race-title {
+            background-color: $white;
+            cursor: pointer;
+            padding: 75px 5px 65px;
+            h2 {
+                margin: 0;
+                font-size: 44px;
+                font-weight: 800;
+            }
+        }
+        .race-partners {
+            float: left;
+            transition: all ease-in .3s 0s;
+            opacity: 0;
+            padding: 0 20px 0 5px;
+            width: 100%;
+            max-height: 0;
+            .slide-nav-section {
+                position: relative;
+                float: left;
+                border-top: 2px solid $lightgrey;
+                padding: 60px 0 75px;
+                width: 100%;
+                .content-left {
+                    float: left;
+                    padding-right: 30px;
+                    width: 75%;
+                    img {
+                        margin-bottom: 30px;
+                        width: 100%;
+                        max-width: 200px;
+                    }
+                    p {
+                        margin-bottom: 23px;
+                        line-height: 23px;
+                        color: $grey;
+                        font-size: 14.5px;
+                        font-weight: 400;
+                        a {
+                            text-decoration: none;
+                            color: $orange;
+                        }
+                    }
+                }
+                .content-right {
+                    float: right;
+                    margin-top: 135px;
+                    width: 25%;
+                    img {
+                        margin-bottom: 10px;
+                    }
+                }
+                &.active {
+                    h3 {
+                        transition: all ease-in .3s;
+                        color: $black;
+                        &:before {
+                            transform: translate(0, -50%);
+                            transition: all ease-on .3s;
+                            opacity: 1;
+                        }
+                    }
+                }
+                h3 {
+                    position: absolute;
+                    top: -42px;
+                    left: 0;
+                    transition: all ease-in .3s;
+                    background-color: $white;
+                    padding: 0 15px 0 2px;
+                    color: $lightgrey;
+                    font-size: 24px;
+                    font-weight: 800;
+                    &:before {
+                        position: absolute;
+                        top: 50%;
+                        left: -30px;
+                        transform: translate(-10px, -50%);
+                        transition: all ease-on .3s;
+                        opacity: 0;
+                        z-index: 1;
+                        border-width: 10px 0 10px 15px;
+                        border-style: solid;
+                        border-color: transparent transparent transparent $orange;
+                        width: 0;
+                        height: 0;
+                        content: "";
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include tablet-l {
+    .partners {
+        .race {
+            .race-title {
+                h2 {
+                    font-size: 35px;
+                }
+            }
+            .race-partners {
+                .slide-nav-section {
+                    .content-left {
+                        float: left;
+                        width: 100%;
+                    }
+                    .content-right {
+                        float: left;
+                        margin-top: 15px;
+                        width: 100%;
+                        img {
+                            margin-right: 8px;
+                            width: calc(50% - 30px);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@include phone {
+    .partners {
+        .slide-nav {
+            display: none;
+        }
+        .race {
+            padding: 30px 20px 0;
+            .race-title {
+                padding: 10px 0 25px;
+                h2 {
+                    font-size: 30px;
+                }
+            }
+            .race-partners {
+                padding: 0;
+                .slide-nav-section {
+                    margin-top: 20px;
+                    padding: 25px 0 35px;
+                    img {
+                        width: 100%;
+                    }
+                    h3 {
+                        top: -44px;
+                        padding: 5px 0 5px;
+                        color: $black;
+                        font-size: 20px;
+                    }
+                    &.active {
+                        h3 {
+                            padding: 5px 0 5px;
+                            color: $black;
+                            &:before {
+                                display: none;
+                            }
+                        }
+                    }
+                    .content-left {
+                        padding-right: 0;
+                    }
+                    .content-right {
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,168 @@
+.loader {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: all ease-in .3s;
+    opacity: 0;
+    z-index: 9999;
+    background: rgba(255, 255, 255, .8);
+
+    pointer-events: none;
+    div.svg-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+        background-color: $white;
+        width: 150px;
+        height: 150px;
+        &:before {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translate(0, -50%);
+            z-index: 3;
+            background-color: $white;
+            width: 50%;
+            height: 5px;
+            content: "";
+        }
+    }
+    svg {
+        position: absolute;
+        top: 6px;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        polyline {
+            animation: line 3s ease-in alternate infinite;
+
+            stroke-dasharray: 2200.199951171875;
+            stroke-dashoffset: 2200.199951171875;
+            transform-origin: center;
+        }
+        .line-4 {
+            transform: scale(1);
+        }
+        .line-3 {
+            transform: scale(.8);
+
+            stroke-width: 50px;
+        }
+        .line-2 {
+            transform: scale(.6);
+
+            stroke-width: 70px;
+        }
+        .line-1 {
+            transform: scale(.4);
+
+            stroke-width: 100px;
+        }
+    }
+}
+
+.loading {
+    .loader {
+        transition: all ease-in .3s;
+        opacity: 1;
+
+        pointer-events: none;
+    }
+}
+
+.loading-icon {
+    margin-top: 90px;
+    .svg-wrapper {
+        position: relative;
+        margin: 0 auto;
+        width: 150px;
+        height: 150px;
+        &:before {
+            position: absolute;
+            top: 45%;
+            right: 0;
+            transform: translate(0, -50%);
+            z-index: 3;
+            background-color: $white;
+            width: 50%;
+            height: 5px;
+            content: "";
+        }
+    }
+    svg {
+        width: 100%;
+        height: 100%;
+        polyline {
+            animation: line 3s ease-in alternate infinite;
+
+            stroke-dasharray: 2200.199951171875;
+            stroke-dashoffset: 2200.199951171875;
+            transform-origin: center;
+        }
+        .line-4 {
+            transform: scale(1);
+        }
+        .line-3 {
+            transform: scale(.8);
+
+            stroke-width: 50px;
+        }
+        .line-2 {
+            transform: scale(.6);
+
+            stroke-width: 70px;
+        }
+        .line-1 {
+            transform: scale(.4);
+
+            stroke-width: 100px;
+        }
+    }
+    p {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+    }
+}
+
+.media-modal {
+    .loading-icon {
+        display: block !important;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        .svg-wrapper {
+            background-color: $white;
+            &:before {
+                top: 50%;
+            }
+            svg {
+                position: absolute;
+                top: 55%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+        p {
+            margin-top: 10px;
+            color: $white;
+        }
+    }
+}
+
+@keyframes line {
+    0% {
+        stroke-dashoffset: 2200.199951171875;
+    }
+    90% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}

@@ -59,7 +59,8 @@
                                     label: firstNameLabel,
                                     name:  'firstName',
                                     placeholder: firstNameLabel,
-                                    value: currentUser.firstName
+                                    value: currentUser.firstName,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -70,7 +71,8 @@
                                     label: lastNamelabel,
                                     name:  'lastName',
                                     placeholder: lastNamelabel,
-                                    value: currentUser.lastName
+                                    value: currentUser.lastName,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -82,7 +84,8 @@
                                     name:  'email',
                                     type: 'email',
                                     placeholder: EmailLabel,
-                                    value: currentUser.email
+                                    value: currentUser.email,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -93,11 +96,12 @@
                                     label: phoneNumberlabel,
                                     name:  'fields[phoneNumber]',
                                     placeholder: phoneNumberlabel,
-                                    value: currentUser.phoneNumber
+                                    value: currentUser.phoneNumber,
+                                    required:   true
                                 }) }}
                             </div>
 
-                            <div class="input-wrapper edit-element select">
+                            <div class="input-wrapper edit-element select required">
                                 {% set genders = craft.fields.getFieldByHandle('gender').getAttribute('settings').options %}
                                 {% set Genderlabel = 'Gender'|t %}
                                 {{ formFields.dropdown({
@@ -106,19 +110,25 @@
                                     name:       'fields[gender]',
                                     value:      currentUser.gender,
                                     options:    genders,
-                                    optionKeys: ['value', 'label']
+                                    optionKeys: ['value', 'label'],
+                                    required:   true
                                 }) }}
                             </div>
 
-                            <div class="input-wrapper edit-element select">
+                            <div class="input-wrapper edit-element">
                                 {% set dateOfBirthLabel = 'Date of birth'|t %}
+                                {% set dob = "" %}
+                                {% if currentUser.dateOfBirth|length %}
+                                    {% set dob = currentUser.dateOfBirth|date("d/m/Y") %}
+                                {% endif %}
                                 {{ formFields.input({
-                                    id:    'dateOfBirth',
+                                    id: 'dateOfBirth',
                                     label: dateOfBirthLabel,
-                                    name:  'fields[dateOfBirth]',
-                                    type:  'date',
-                                    placeholder: dateOfBirthLabel,
-                                    value: currentUser.dateOfBirth
+                                    name: 'fields[dateOfBirth][date]',
+                                    type: 'text',
+                                    placeholder: 'dd/mm/yyyy',
+                                    value: dob,
+                                    required: true
                                 }) }}
                             </div>
 
@@ -138,14 +148,15 @@
                                 }) }}
                             </div>
 
-                            <div class="input-wrapper edit-element">
+                            <div class="input-wrapper edit-element required">
                                 {% set jobTitleLabel = 'Job Title'|t %}
                                 {{ formFields.input({
                                     id:    'jobTitle',
                                     label: jobTitleLabel,
                                     name:  'fields[jobTitle]',
                                     placeholder: jobTitleLabel,
-                                    value: currentUser.jobTitle
+                                    value: currentUser.jobTitle,
+                                    required:   true
                                 }) }}
                             </div>
 
@@ -178,59 +189,91 @@
                     <div class="edit-col-large">
                         <div class="form">
 
+                            {% set addresses = craft.commerce.getCustomer.getAddresses() %}
+
                             <div class="input-wrapper edit-element">
                                 {% set address1label = 'Address Line 1'|t %}
+                                    
+                                {% set addressLine1 = currentUser.address1 %}
+                                {% if currentUser.address1 == '' %}
+                                    {% set addressLine1 = addresses[0].address1 %}
+                                {% endif %}
+
                                {{ formFields.input({
                                     id:    'address1',
                                     label: address1label,
                                     name:  'fields[address1]',
                                     placeholder: address1label,
-                                    value: currentUser.address1
+                                    value: addressLine1
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
                                 {% set address2label = 'Address Line 2'|t %}
+
+                                {% set addressLine2 = currentUser.address2 %}
+                                {% if currentUser.address2 == '' %}
+                                    {% set addressLine2 = addresses[0].address2 %}
+                                {% endif %}
+
                                 {{ formFields.input({
                                     id:    'address2',
                                     label: address2label,
                                     name:  'fields[address2]',
                                     placeholder: address2label,
-                                    value: currentUser.address2
+                                    value: addressLine2
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
                                 {% set Citylabel = 'City'|t %}
+                                
+                                {% set addressCity = currentUser.addressCity %}
+                                {% if currentUser.addressCity == '' %}
+                                    {% set addressCity = addresses[0].city %}
+                                {% endif %}
+
                                 {{ formFields.input({
                                     id:    'addressCity',
                                     label: Citylabel,
                                     name:  'fields[addressCity]',
                                     placeholder: Citylabel,
-                                    value: currentUser.addressCity
+                                    value: addressCity
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
                                 {% set addressPostcodelabel = 'Postcode / Zip Code'|t %}
+
+                                {% set addressZipCode = currentUser.addressPostCode %}
+                                {% if currentUser.addressPostCode == '' %}
+                                    {% set addressZipCode = addresses[0].zipCode %}
+                                {% endif %}
+
                                 {{ formFields.input({
                                     id:    'addressPostcode',
                                     label: addressPostcodelabel,
                                     name:  'fields[addressPostCode]',
                                     placeholder: addressPostcodelabel,
                                     pattern: '((\d{5}([\-]\d{4})?)|[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2})',
-                                    value: currentUser.addressPostCode
+                                    value: addressZipCode
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element select">
                                 {% set addressCountrylabel = 'Country'|t %}
+
+                                {% set addressCountry = currentUser.addressCountry %}
+                                {% if currentUser.addressPostCode == '' %}
+                                    {% set addressCountry = addresses[0].country %}
+                                {% endif %}
+
                                 {{ formFields.dropdown({
                                     id:         'addressCountry',
                                     label:      addressCountrylabel,
                                     name:       'fields[addressCountry]',
                                     placeholder: addressCountrylabel,
-                                    value:      currentUser.addressCountry,
+                                    value:      addressCountry,
                                     options:    craft.commerce.getCountries(),
                                     optionKeys: ['iso', 'name']
                                 }) }}
@@ -266,43 +309,46 @@
                                 {% if event|length %}
                                     {% set waiver = event.relatedWaiverForm.first() %}
 
-                                    {% set waiverAgreed = 0 %}
-                                    {% for savedWaiver in savedWaivers %}
-                                        {% if savedWaiver.event == event.title and savedWaiver.acceptedWaiver == "on" %}
-                                            {% set waiverAgreed = 1 %}
-                                        {% endif %}
-                                    {% endfor %}
+                                    {% if waiver|length %}
+                                        {% set waiverAgreed = 0 %}
+                                        {% for savedWaiver in savedWaivers %}
+                                            {% if savedWaiver.event == event.title and (savedWaiver.acceptedWaiver == 1 or savedWaiver.acceptedWaiver == 'on') %}
+                                                {% set waiverAgreed = 1 %}
+                                            {% endif %}
+                                        {% endfor %}
 
-                                    <div class="input-wrapper edit-element checkbox{% if loop.index == 1 %} first{% endif %}">
-                                        <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col2]" value="{{ event.title }}">
-                                        <input type="hidden" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]">
-                                        <input class="input" id="checkbox-{{ loop.index - 1 }}" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]" type="checkbox" {% if waiverAgreed == 1 %} checked{% endif %} required>
+                                        <div class="input-wrapper edit-element checkbox{% if loop.index == 1 %} first{% endif %}">
+                                            <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col2]" value="{{ event.title }}">
+                                            <input type="text" class="hide" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col3]" value="{{ team.id }}">
+                                            <input type="hidden" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]">
+                                            <input class="input" id="checkbox-{{ loop.index - 1 }}" name="fields[acceptedWaivers][{{ loop.index - 1 }}][col1]" type="checkbox" {% if waiverAgreed == 1 %} checked{% endif %} required>
 
-                                        <label for="checkbox-{{ loop.index - 1 }}"></label>
-                                        <p>{{ 'I agree to the event'|t }} ({{ event.title }}) <a href="{{ waiver.url }}" target="_blank">{{ 'Injury Waiver Terms and Conditions'|t }}</a></p>
-                                    </div>
+                                            <label for="checkbox-{{ loop.index - 1 }}"></label>
+                                            <p>{{ 'I agree to the event'|t }} ({{ event.title }}) <a href="{{ waiver.url }}" target="_blank">{{ 'Injury Waiver Terms and Conditions'|t }}</a></p>
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
 
                             <div class="input-wrapper edit-element checkbox">
                                 {% if currentUser.acceptToReceiveInformation == 1 %}
-                                    <input class="input" id="checkbox-2" name="fields[acceptToReceiveInformation]" checked="checked" type="checkbox">
+                                    <input class="input" id="acceptInformation" name="fields[acceptToReceiveInformation]" checked="checked" type="checkbox">
                                 {% else %}
-                                    <input class="input" id="checkbox-2" name="fields[acceptToReceiveInformation]" type="checkbox">
+                                    <input class="input" id="acceptInformation" name="fields[acceptToReceiveInformation]" type="checkbox">
                                 {% endif %}
 
-                                <label for="checkbox-2"></label>
+                                <label for="acceptInformation"></label>
                                 <p>{{ 'I would like to receive information from Bloomberg'|t }}</p>
                             </div>
 
                             <div class="input-wrapper edit-element checkbox">
                                 {% if currentUser.acceptContactByThirdParties == 1 %}
-                                    <input class="input" id="checkbox-3" name="fields[acceptContactByThirdParties]" checked="checked" type="checkbox">
+                                    <input class="input" id="acceptThirdParties" name="fields[acceptContactByThirdParties]" checked="checked" type="checkbox">
                                 {% else %}
-                                    <input class="input" id="checkbox-3" name="fields[acceptContactByThirdParties]" type="checkbox">
+                                    <input class="input" id="acceptThirdParties" name="fields[acceptContactByThirdParties]" type="checkbox">
                                 {% endif %}
 
-                                <label for="checkbox-3"></label>
+                                <label for="acceptThirdParties"></label>
                                 <p>{{ "I'm happy to be contacted by 3rd parties"|t }}</p>
                             </div>
 

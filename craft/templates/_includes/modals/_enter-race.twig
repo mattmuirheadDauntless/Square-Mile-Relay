@@ -51,64 +51,14 @@
                 {% endfor %}
             {% endif %}
 
-            {% if cities|length %}
-                {% for city in cities %}
-                    {% set ticket = craft.commerce.products.relatedTo(city).first() %}
-                    {% if ticket|length %}
-                        {% set ticketEvent = ticket.relatedEvent.first() %}
-                        <div class="slide country text-left" data-city="{{ city.slug }}" data-slide="3">
-                            <div class="modal-header">
-                                <h4 class="modal-title">{{ 'Payment Method'|t }}</h4>
-                            </div>
-
-                            <h3 class="text-left">{{ ticketEvent.title }}</h3>
-                            <p class="text-left">{{ 'How do you wish to pay?'|t }}</p>
-
-                            {% if city.slug == 'tokyo' %}
-                                <div class="btn btn-orange btn-full-width next">{{ 'INVOICE/WIRE TRANSFER'|t }}</div>
-                            {% else %}
-                                <div class="btn btn-orange btn-full-width next">{{ 'INVOICE/AMEX'|t }}</div>
-                            {% endif %}
-
-                            <br><br><br>
-                            {% if city.creditCardRedirectLink|length %}
-                                <a href="{{ city.creditCardRedirectLink }}" target="_blank" class="btn btn-orange btn-full-width next credit-card" data-event="{{ ticketEvent.title }}">{{ 'Credit Card'|t }}</a>
-                            {% else %}
-                                {% if city.slug == 'tokyo' %}
-                                    <a class="btn btn-invalid btn-full-width next credit-card" data-event="{{ ticketEvent.title }}">{{ 'Credit Card'|t }}</a>
-                                {% else %}
-                                    <a class="btn btn-invalid btn-full-width next credit-card" data-event="{{ ticketEvent.title }}">{{ 'Credit Card'|t }}*</a>
-                                    <br>
-                                    <p class="tiny-text">
-                                        * {{ 'This will take you to our online payment platform; this does not accept Amex cards.'|t }}
-                                    </p>
-                                {% endif %}
-                            {% endif %}
-
-                            {# <p class="small text-left">* {{ raceEnterModal.paymentMethodNote }}</p> #}
-                        </div>
-                    {% else %}
-                        <div class="slide country" data-city="{{ city.slug }}" data-slide="3">
-                            <h2>{{ "Register your interest!"|t }}</h2>
-                            {% if city.registerInterestForm|length > 0 %}
-                            <p>{{ "We are yet to announce the race date for"|t }} {{ city.title }}.
-                                {{ "Sign up below for updates about the next race in"|t }} {{ city.title }} {{ 'and we’ll let you know when entries are open!'|t }}</p>
-                            {{ city.registerInterestForm|raw }}
-                            {% else %}
-                            <p>{{ "We are yet to announce the race date for"|t }} {{ city.title }}.</p>
-                            <a href="{{ city.url }}" class="btn btn-orange">{{ 'View past races'|t }}</a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-
-            <div class="slide commerce" data-slide="4">
+            <div class="slide commerce" data-slide="3">
                 <div class="row thank-you text-center">
                     <h2>{{ "Thank You!"|t }}</h2>
-                    <p>{{ raceEnterModal.thankYou }}</p>
+                    <p id="thankYouText"></p>
 
-                    <form method="post" accept-charset="UTF-8">
+                    <div id="stgLink"></div>
+
+                    {# <form method="post" accept-charset="UTF-8">
                         {{ getCsrfInput() }}
                         <input type="hidden" name="action" value="users/saveUser">
                         <input type="hidden" name="userId" id="reasonUserID" value="">
@@ -121,7 +71,7 @@
                         <div class="input-wrapper">
                             <input type="submit" class="btn btn-orange" value="{{ 'Submit'|t }}">
                         </div>
-                    </form>
+                    </form> #}
 
                 </div>
             </div>
@@ -131,7 +81,6 @@
                     <li class="current" data-slide="1">{{ '1'|t }}</li>
                     <li data-slide="2">{{ '2'|t }}</li>
                     <li data-slide="3">{{ '3'|t }}</li>
-                    <li data-slide="4">{{ '4'|t }}</li>
                 </ul>
             </div>
         </div>

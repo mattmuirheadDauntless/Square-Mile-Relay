@@ -130,7 +130,7 @@
                         {% set catFilterList = catFilterList ~ " " ~ cat.slug %}
                     {% endfor %}
                     <div class="carousel-cell">
-                        <a href="/news-single.php" class="cover-link"></a>
+                        <a href="{{ article.url }}" class="cover-link"></a>
                         {% if image|length %}
                         <img src="{{ image.getUrl('newsThumb') }}" alt="article image">
                         {% endif %}

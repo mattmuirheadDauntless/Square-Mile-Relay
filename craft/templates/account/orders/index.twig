@@ -5,6 +5,8 @@
 
 {% block subContent %}
 
+    {% set criteria = {'customerId': customer.id} %}
+    {% set orders = craft.commerce.orders(criteria) %}
     <section class="my-account tabs-container">
         <a href="{{ url('account/profile') }}" class="tab"><span class="text">{{ 'My Profile & Results'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
         <a href="{{ url('account/teams') }}" class="tab"><span class="text">{{ 'My Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
@@ -16,19 +18,31 @@
             <div class="order-wrapper">
                 <h3>{{ 'Orders History'|t }}</h3>
 
+                {% set warning = 0 %}
+                {% if orders|length %}
+                    {% for order in orders %}
+                        {% for status in craft.commerce.getOrderStatuses() %}
+                            {% if status.id == order.orderStatusId %}
+                                {% if status.name == "New" %}
+                                    {% set warning = 1 %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if warning == 1 %}
                 <div class="notification error">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
 
                     <p><strong>{{ 'Important:'|t }}</strong> {{ "We have not received payment for this team's entry into the race. You can add/edit your team, but it won't be entered until payment is made."|t }}</p>
-
-                    <span class="close">{{ 'Got it!'|t }}<i class="fa fa-times" aria-hidden="true"></i></span>
                 </div>
+                {% endif %}
+
             </div>
 
             <div class="table-wrapper">
                 <table class="tablesorter">
-                    {% set criteria = {'customerId': customer.id} %}
-                    {% set orders = craft.commerce.orders(criteria) %}
                     <thead>
                         <tr>
                             <th><span></span>{{ 'Date'|t }}</th>
