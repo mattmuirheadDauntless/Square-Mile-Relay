@@ -302,7 +302,9 @@
                         {% set prevYear = year - 1 %}
                         {% set city = event.relatedCity.first().title %}
                         {% set lastEvent = craft.entries.section('event').search('slug:"' ~ city ~ " - " ~ prevYear ~ '"').first() %}
-                        {% set images = lastEvent.eventImages %}
+                        {% if lastEvent|length > 1 %}
+                            {% set images = lastEvent.eventImages %}
+                        {% endif %}
                         {% set lastYearRace = true %}
                     {% endif %}
 
