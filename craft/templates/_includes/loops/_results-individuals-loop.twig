@@ -1,13 +1,46 @@
+{% set searchTerm = craft.request.getParam('search') ~ " " %}
+{% if searchTerm == " " %}{% set searchTerm = "" %}{% endif %}
+{% set searchCity = craft.request.getParam('city') ~ " " %}
+{% if searchCity == " " %}{% set searchCity = "" %}{% endif %}
+{% set searchYear = craft.request.getParam('year') %}
+{% if searchYear == " " %}{% set searchYear = "" %}{% endif %}
+{# {% set search = "lapTime:*" ~ searchTerm ~ searchCity ~ searchYear %} #}
+{% set search = searchTerm ~ searchCity ~ searchYear %}
+
+{% set allResults = craft.entries.section('runningResults').limit(500).order('lapTime') %}
+{% set ranks = [] %}
+{% for result in allResults %}
+    {% set ranks = ranks|merge({ ("#" ~ result.id): loop.index }) %}
+{% endfor %}
+
 {% cache %}
 {% paginate craft.entries({
     section: 'runningResults',
     limit: 20,
     order: 'lapTime',
-    search: 'lapTime:*'
+    search: search
 }) as individualResults %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    {{ 'no-results'|t }}
+    {% if craft.request.getPageNum() == 1 %}
+        <tr class="result-item grid-item">
+            <td class="full-width" colspan="7">
+                <div class="no-results">
+                    <h2>{{ 'Sorry there are currently no results for your search!'|t }}</h2>
+                    <p>{{ 'Try making your search less specific.'|t }}</p>
+                </div>
+            </td>
+        </tr>
+    {% else %}
+        <tr class="result-item grid-item">
+            <td class="full-width" colspan="7">
+                <div class="no-results">
+                    <h2>{{ 'You have reached the finish line!'|t }}</h2>
+                    <p>{{ 'There are no more results.'|t }}</p>
+                </div>
+            </td>
+        </tr>
+    {% endif %}
 {% else %}
 
     {% for result in individualResults %}
@@ -15,8 +48,8 @@
         {% set year = event.startDateTime|date('Y') %}
         {% set city = event.relatedCity.first() %}
         {% if city is not null %}
-            <tr class="{{ year }} {{ city.slug }} {{ event.slug }}">
-                <td><strong>{{ ((paginate.currentPage - 1) * 20) + loop.index }}</strong></td>
+            <tr class="result-item grid-item {{ year }} {{ city.slug }} {{ event.slug }}">
+                <td><strong>{% if ranks["#" ~ result.id] is defined %}{{ ranks["#" ~ result.id] }}{% else %}{{ 'TBC'|t }}{% endif %}</strong></td>
                 <td><strong>{{ result.lapPosition }}</strong></td>
                 <td>
                     <strong>{{ result.runner }}</strong>

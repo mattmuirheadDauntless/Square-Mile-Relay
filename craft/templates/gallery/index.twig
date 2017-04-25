@@ -58,6 +58,9 @@
         <section class="filters active">
             <div class="filters-btn">
                 <p>{{ 'filter'|t }}</p><i class="fa fa-chevron-down" aria-hidden="true"></i>
+                <div class="search-results pull-right grid-search">
+                    <input type="text" name="search">
+                </div>
                 <div class="view-all">
                     <a href="#" class="btn btn-orange-hollow filter" data-filter="*">{{ 'View All'|t }}</a>
                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -69,14 +72,14 @@
                     {% if years|length %}
                         <ul class="filter-group small">
                         {% for year in years %}
-                            <li class="filter" data-filter=".{{ year }}">{{ year }}</li>
+                            <li class="filter" data-filter="{{ year }}">{{ year }}</li>
                         {% endfor %}
                         </ul>
                     {% endif %}
                     {% if cities|length %}
                         <ul class="filter-group large">
                         {% for city in cities %}
-                            <li class="filter" data-filter=".{{ city|replace({' ':'-'})|lower }}">{{ city }}</li>
+                            <li class="filter" data-filter="{{ city|replace({' ':'-'})|lower }}">{{ city }}</li>
                         {% endfor %}
                         </ul>
                     {% endif %}
@@ -91,7 +94,7 @@
             search: 'eventVideos:*'
         }) %}
         <section class="global-gallery">
-            <div class="gallery-grid">
+            <div class="gallery-grid grid" data-section="gallery" data-page="1" data-search="" data-city="" data-year="">
                 {% if events|length %}
                 <div class="stamp">
                     {% for event in events %}
@@ -117,6 +120,9 @@
 
                 {% include "_includes/loops/_gallery-loop" %}
 
+                <div class="load-more">
+                    <div class="btn btn-load-more">{{'Load More'|t}}</div>
+                </div>
             </div>
 
             {% include "_includes/_loading" %}
