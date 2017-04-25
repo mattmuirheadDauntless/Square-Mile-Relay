@@ -150,7 +150,7 @@
                                     {% endif %}
                                 {% endfor %}
                             </ul>
-                            <a href="{{siteUrl}}companies" class="btn btn-black">{{ 'All Companies'|t }}</a>
+                            <a href="{{siteUrl}}companies?city={{ city.slug }}&year={{ year }}" class="btn btn-black">{{ 'All Companies'|t }}</a>
                         {% endif %}
 
                         {% set relatedProudSponsor = entry.relatedProudSponsor %}
@@ -249,7 +249,9 @@
                     {% set city = entry.relatedCity.first() %}
                     {% if city is not null %}
                         {% set lastEvent = craft.entries.section('event').search( 'slug:"' ~ city.title ~ ' - ' ~ prevYear ~ '"' ).first() %}
-                        {% set images = lastEvent.eventImages %}
+                        {% if lastEvent|length > 0 %}
+                            {% set images = lastEvent.eventImages %}
+                        {% endif %}
                         {% set lastYearRace = true %}
                     {% endif %}
                 {% endif %}
