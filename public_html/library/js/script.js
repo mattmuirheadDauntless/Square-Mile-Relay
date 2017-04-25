@@ -714,6 +714,7 @@ $('body').on('click', '.btn-remove-member', function(event) {
             $this.parent('td').parent('tr').find('.user-status').html('<button type="submit" class="btn btn-orange btn-tiny">Send Invitation</button>');
             $this.parent('td').parent('tr').find('.resend').remove();
             $this.remove();
+            location.reload();
     });
 
 });
