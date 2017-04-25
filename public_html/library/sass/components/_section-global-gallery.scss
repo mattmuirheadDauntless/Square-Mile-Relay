@@ -25,6 +25,21 @@
             cursor: pointer;
             padding: 7.5px;
             width: 25%;
+            &.no-results {
+                width: 100%;
+                text-align: center;
+                h2 {
+                    font-weight: 800;
+                    width: 100%;
+                    padding: 0 20px;
+                    max-width: 500px;
+                    margin: 20px auto 10px;
+                    font-size: 30px;
+                }
+                p {
+                    font-size: 18px;
+                }
+            }
             img {
                 transition: all .2s ease-in;
                 width: 100%;

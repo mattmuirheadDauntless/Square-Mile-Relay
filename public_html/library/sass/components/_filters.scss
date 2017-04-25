@@ -9,7 +9,6 @@
     padding: 0;
     overflow: hidden;
     .filters-btn {
-        cursor: pointer;
         padding: 22px 20px;
         p {
             display: inline-block;
@@ -20,9 +19,7 @@
             font-weight: 800;
         }
         .fa-chevron-down {
-            margin-left: 50px;
-            font-size: 20px;
-            font-weight: bold;
+            display: none;
         }
         .view-all {
             position: absolute;
@@ -31,11 +28,7 @@
             transform: translateX(150%);
             transition: all ease-in .3s;
             .fa-times {
-                margin: 0 0 0 12px;
-                cursor: pointer;
-                vertical-align: -5px;
-                font-size: 25px;
-                font-weight: 100;
+                display: none;
             }
         }
     }

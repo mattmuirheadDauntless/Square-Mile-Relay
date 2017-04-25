@@ -1,15 +1,42 @@
 {% cache %}
-{% set limit = 15 %}
-{% set params = { section: 'company', limit: limit, order: 'title' } %}
+{% set limit = 30 %}
+
+{% set searchTerm = craft.request.getParam('search') %}
+{% set searchCity = craft.request.getParam('city') %}
+{% set searchYear = craft.request.getParam('year') %}
+
+{% set params = { section: 'company', limit: limit, order: 'title', search: searchTerm } %}
 {% paginate craft.entries(params) as companies %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
-    {{ 'no-results'|t }}
+     {% if craft.request.getPageNum() == 1 %}
+        <div class="no-results companies-item grid-item">
+            <h2>{{ 'Sorry there are currently no results for your search!'|t }}</h2>
+            <p>{{ 'Try making your search less specific.'|t }}</p>
+        </div>
+    {% else %}
+        <div class="no-results companies-item grid-item">
+            <h2>{{ 'You have reached the finish line!'|t }}</h2>
+            <p>{{ 'There are no more results.'|t }}</p>
+        </div>
+    {% endif %}
 {% else %}
 
     {% for company in companies %}
         {% set image = company.companyLogo.first() %}
-        {% set relatedTeams = craft.entries.section('team').relatedTo(company) %}
+
+        {% set teamSearch = "" %}
+        {% if searchCity == "" %}{% set teamSearch = searchYear %}{% endif %}
+        {% if searchYear == "" %}{% set teamSearch = searchCity %}{% endif %}
+        {% if searchCity != "" and searchYear != "" %}{% set teamSearch = searchCity ~ '-' ~ searchYear %}{% endif %}
+
+        {% if teamSearch == "" %}
+            {% set teamParams = { section: 'team', order: 'title', relatedTo: company, limit: null  } %}
+        {% else %}
+            {% set teamParams = { section: 'team', order: 'title', relatedTo: company, limit: null, search: 'relatedEvent:' ~ teamSearch  } %}
+        {% endif %}
+
+        {% set relatedTeams = craft.entries(teamParams) %}
         {% set teamCount = 0 %}
         {% set years = [] %}
         {% set cities = [] %}
@@ -40,30 +67,52 @@
                     {% endif %}
                 {% endif %}
             {% endif %}
+
         {% endfor %}
 
         {% set yearsFilters = years | join(' ') %}
         {% set citiesFilters = cities | join(' ') %}
         {% set eventsFilters = events | join(' ') %}
 
-        <div class="companies-item grid-item {{ yearsFilters }} {{ citiesFilters }} {{ eventsFilters }}">
-            <a href={{ company.url }} class="cover-link"></a>
-            {% if image|length %}
-            <div class="img-container" style="background-image: url({{ image.url }})"></div>
-            {% endif %}
-            <h3>{{ company.title }}</h3>
-
-            {% if teamCount == 0 %}
-                <h4 class="white">{{ 'No teams'|t }}</h4>
-            {% else %}
-                {% if teamCount == 1 %}
-                    <h4>{{ teamCount }} {{ 'team'|t }}</h4>
-                {% else %}
-                    <h4>{{ teamCount }} {{ 'teams'|t }}</h4>
+       {% if teamSearch == ""%}
+           <div class="companies-item grid-item {{ yearsFilters }} {{ citiesFilters }} {{ eventsFilters }}">
+                <a href={{ company.url }} class="cover-link"></a>
+                {% if image|length %}
+                <div class="img-container" style="background-image: url({{ image.url }})"></div>
                 {% endif %}
-            {% endif %}
+                <h3>{{ company.title }}</h3>
 
-        </div>
+                {% if teamCount == 0 %}
+                    <h4 class="white">{{ 'No teams'|t }}</h4>
+                {% else %}
+                    {% if teamCount == 1 %}
+                        <h4>{{ teamCount }} {{ 'team'|t }}</h4>
+                    {% else %}
+                        <h4>{{ teamCount }} {{ 'teams'|t }}</h4>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% else %}
+            {% if teamCount > 0 %}
+            <div class="companies-item grid-item {{ yearsFilters }} {{ citiesFilters }} {{ eventsFilters }}">
+                <a href={{ company.url }} class="cover-link"></a>
+                {% if image|length %}
+                <div class="img-container" style="background-image: url({{ image.url }})"></div>
+                {% endif %}
+                <h3>{{ company.title }}</h3>
+
+                {% if teamCount == 0 %}
+                    <h4 class="white">{{ 'No teams'|t }}</h4>
+                {% else %}
+                    {% if teamCount == 1 %}
+                        <h4>{{ teamCount }} {{ 'team'|t }}</h4>
+                    {% else %}
+                        <h4>{{ teamCount }} {{ 'teams'|t }}</h4>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endif %}
 
     {% endfor %}
 
