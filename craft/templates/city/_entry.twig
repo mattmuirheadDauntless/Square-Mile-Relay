@@ -208,7 +208,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
-                                <a href="{{siteUrl}}companies" class="btn btn-black">{{ 'All Companies'|t }}</a>
+                                <a href="{{siteUrl}}companies?city={{ entry.slug }}&year={{ year }}" class="btn btn-black">{{ 'All Companies'|t }}</a>
                             {% endif %}
 
                             {% if event.relatedProudSponsor|length %}

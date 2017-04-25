@@ -150,7 +150,7 @@
                                     {% endif %}
                                 {% endfor %}
                             </ul>
-                            <a href="{{siteUrl}}companies" class="btn btn-black">{{ 'All Companies'|t }}</a>
+                            <a href="{{siteUrl}}companies?city={{ city.slug }}&year={{ year }}" class="btn btn-black">{{ 'All Companies'|t }}</a>
                         {% endif %}
 
                         {% set relatedProudSponsor = entry.relatedProudSponsor %}
