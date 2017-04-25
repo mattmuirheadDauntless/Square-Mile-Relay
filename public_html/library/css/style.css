@@ -2254,7 +2254,6 @@ header .cta-banner,
   padding: 0;
   overflow: hidden; }
   .filters .filters-btn {
-    cursor: pointer;
     padding: 22px 20px; }
     .filters .filters-btn p {
       display: inline-block;
@@ -2264,9 +2263,7 @@ header .cta-banner,
       font-size: 22px;
       font-weight: 800; }
     .filters .filters-btn .fa-chevron-down {
-      margin-left: 50px;
-      font-size: 20px;
-      font-weight: bold; }
+      display: none; }
     .filters .filters-btn .view-all {
       position: absolute;
       top: 20px;
@@ -2276,11 +2273,7 @@ header .cta-banner,
       -webkit-transition: all ease-in .3s;
       transition: all ease-in .3s; }
       .filters .filters-btn .view-all .fa-times {
-        margin: 0 0 0 12px;
-        cursor: pointer;
-        vertical-align: -5px;
-        font-size: 25px;
-        font-weight: 100; }
+        display: none; }
   .filters .filter-dropdown {
     float: left;
     -webkit-transition: all ease-in .3s;
@@ -5432,6 +5425,18 @@ header .cta-banner,
     position: relative;
     padding: 11.5px 10.5px 55px;
     width: 20%; }
+    .news .news-item.no-results {
+      width: 100%;
+      text-align: center; }
+      .news .news-item.no-results h2 {
+        font-weight: 800;
+        width: 100%;
+        padding: 0 20px;
+        max-width: 500px;
+        margin: 20px auto 10px;
+        font-size: 30px; }
+      .news .news-item.no-results p {
+        font-size: 18px; }
     .news .news-item .news-img {
       background-position: center;
       background-size: cover;
@@ -6041,7 +6046,7 @@ section.text .wrapper-thin {
   .companies .companies-item {
     -webkit-transition: all ease-in .2s;
     transition: all ease-in .2s;
-    margin: 10px;
+    margin: 9px;
     border: 1px solid #b0b0b0;
     padding: 10px;
     width: calc(20% - 20px);
@@ -6050,6 +6055,18 @@ section.text .wrapper-thin {
       -webkit-transition: all ease-in .2s;
       transition: all ease-in .2s;
       border-color: #f37135; }
+    .companies .companies-item.no-results {
+      width: calc(100% - 20px);
+      border: 0;
+      text-align: center; }
+      .companies .companies-item.no-results h2 {
+        font-weight: 800;
+        width: 100%;
+        padding: 0 20px;
+        max-width: 500px;
+        margin: 20px auto 10px; }
+      .companies .companies-item.no-results p {
+        font-size: 18px; }
     .companies .companies-item .img-container {
       margin: 0 auto;
       background-repeat: no-repeat;
@@ -6133,6 +6150,70 @@ section.text .wrapper-thin {
     width: calc(50% - 40px); }
   .results-table .load-more {
     bottom: -100px; }
+  .results-table thead,
+  .results-table tbody {
+    display: block;
+    width: 100%; }
+    .results-table thead tr,
+    .results-table tbody tr {
+      display: block;
+      width: 100%; }
+      .results-table thead tr td:nth-child(1), .results-table thead tr th:nth-child(1),
+      .results-table tbody tr td:nth-child(1),
+      .results-table tbody tr th:nth-child(1) {
+        width: 12vw; }
+      .results-table thead tr td:nth-child(2), .results-table thead tr th:nth-child(2),
+      .results-table tbody tr td:nth-child(2),
+      .results-table tbody tr th:nth-child(2) {
+        width: 12vw; }
+      .results-table thead tr td:nth-child(3), .results-table thead tr th:nth-child(3),
+      .results-table tbody tr td:nth-child(3),
+      .results-table tbody tr th:nth-child(3) {
+        width: 36vw; }
+      .results-table thead tr td:nth-child(4), .results-table thead tr th:nth-child(4),
+      .results-table tbody tr td:nth-child(4),
+      .results-table tbody tr th:nth-child(4) {
+        width: 15vw; }
+      .results-table thead tr td:nth-child(5), .results-table thead tr th:nth-child(5),
+      .results-table tbody tr td:nth-child(5),
+      .results-table tbody tr th:nth-child(5) {
+        width: 15vw; }
+      .results-table thead tr td:nth-child(6), .results-table thead tr th:nth-child(6),
+      .results-table tbody tr td:nth-child(6),
+      .results-table tbody tr th:nth-child(6) {
+        width: 10vw; }
+      .results-table thead tr td:nth-child(1).full-width, .results-table thead tr th:nth-child(1).full-width,
+      .results-table tbody tr td:nth-child(1).full-width,
+      .results-table tbody tr th:nth-child(1).full-width {
+        width: 100vw !important; }
+  .results-table.results-individuals thead tr td:nth-child(1), .results-table.results-individuals thead tr th:nth-child(1),
+  .results-table.results-individuals tbody tr td:nth-child(1),
+  .results-table.results-individuals tbody tr th:nth-child(1) {
+    width: 12vw; }
+  .results-table.results-individuals thead tr td:nth-child(2), .results-table.results-individuals thead tr th:nth-child(2),
+  .results-table.results-individuals tbody tr td:nth-child(2),
+  .results-table.results-individuals tbody tr th:nth-child(2) {
+    width: 10vw; }
+  .results-table.results-individuals thead tr td:nth-child(3), .results-table.results-individuals thead tr th:nth-child(3),
+  .results-table.results-individuals tbody tr td:nth-child(3),
+  .results-table.results-individuals tbody tr th:nth-child(3) {
+    width: 25vw; }
+  .results-table.results-individuals thead tr td:nth-child(4), .results-table.results-individuals thead tr th:nth-child(4),
+  .results-table.results-individuals tbody tr td:nth-child(4),
+  .results-table.results-individuals tbody tr th:nth-child(4) {
+    width: 13vw; }
+  .results-table.results-individuals thead tr td:nth-child(5), .results-table.results-individuals thead tr th:nth-child(5),
+  .results-table.results-individuals tbody tr td:nth-child(5),
+  .results-table.results-individuals tbody tr th:nth-child(5) {
+    width: 22vw; }
+  .results-table.results-individuals thead tr td:nth-child(6), .results-table.results-individuals thead tr th:nth-child(6),
+  .results-table.results-individuals tbody tr td:nth-child(6),
+  .results-table.results-individuals tbody tr th:nth-child(6) {
+    width: 10vw; }
+  .results-table.results-individuals thead tr td:nth-child(7), .results-table.results-individuals thead tr th:nth-child(7),
+  .results-table.results-individuals tbody tr td:nth-child(7),
+  .results-table.results-individuals tbody tr th:nth-child(7) {
+    width: 8vw; }
 
 @media only screen and (max-width: 1200px) {
   .results-table .tab {
@@ -6351,6 +6432,21 @@ section.text .wrapper-thin {
       cursor: pointer;
       padding: 7.5px;
       width: 25%; }
+      .global-gallery .gallery-grid .grid-item.no-results,
+      .global-gallery .gallery-grid .vid-item.no-results {
+        width: 100%;
+        text-align: center; }
+        .global-gallery .gallery-grid .grid-item.no-results h2,
+        .global-gallery .gallery-grid .vid-item.no-results h2 {
+          font-weight: 800;
+          width: 100%;
+          padding: 0 20px;
+          max-width: 500px;
+          margin: 20px auto 10px;
+          font-size: 30px; }
+        .global-gallery .gallery-grid .grid-item.no-results p,
+        .global-gallery .gallery-grid .vid-item.no-results p {
+          font-size: 18px; }
       .global-gallery .gallery-grid .grid-item img,
       .global-gallery .gallery-grid .vid-item img {
         -webkit-transition: all .2s ease-in;

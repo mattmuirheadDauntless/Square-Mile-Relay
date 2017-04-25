@@ -1,8 +1,11 @@
 {% extends "account/_layout" %}
-
 {% set teamSlug = craft.request.getSegment(3) %}
 {% set team = craft.entries.section('team').slug(teamSlug).first() %}
-{% set relatedEvent = team.relatedEvent.first() %}
+
+{% if team|length == 0 %}
+    {% redirect '/account/teams/' %}
+{% endif %}
+
 {% set captain = team.teamCaptain.first() %}
 {% set author = team.author %}
 {% set today = date("now")|date("U") %}
@@ -16,7 +19,7 @@
 {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
     {% set access = 1 %}
 {% endif %}
-{% if relatedEvent.lockTeamEditingFrom|date('U') < today %}
+{% if team.relatedEvent|length and team.relatedEvent.first.lockTeamEditingFrom|date('U') < today %}
     {% set access = 0 %}
 {% endif %}
 
@@ -40,7 +43,7 @@
         <a href="{{ url('account/orders') }}" class="tab"><span class="text">{{ 'Orders & Billing'|t }}</span> <i class="fa fa-credit-card" aria-hidden="true"></i></a>
 
         <div class="tab-wrapper my-teams active">
-            <h5>{{ 'My Teams'|t }} {% if relatedEvent|length %}- {{ relatedEvent.title }}{% endif %} - <span>{{ 'Edit Team'|t }}</span></h5>
+            <h5>{{ 'My Teams'|t }} {% if team.relatedEvent|length %}- {{ team.relatedEvent.first.title }}{% endif %} - <span>{{ 'Edit Team'|t }}</span></h5>
 
             <div class="controls">
                 <div class="team edit-team">
@@ -70,12 +73,12 @@
                 </div>
             </div>
             <div class="teams">
-                {% if relatedEvent|length %}
-                {% set relatedCity = relatedEvent.relatedCity.first() %}
-                {% if relatedCity is not null %}
-                    <h3>{{ relatedCity.title }}</h3>
-                {% endif %}
-                <h4>{{ relatedEvent.startDateTime|date('j F Y') }}</h4>
+                {% if team.relatedEvent|length %}
+                    {% set relatedCity = team.relatedEvent.first.relatedCity.first() %}
+                    {% if relatedCity is not null %}
+                        <h3>{{ relatedCity.title }}</h3>
+                    {% endif %}
+                    <h4>{{ team.relatedEvent.first.startDateTime|date('j F Y') }}</h4>
                 {% endif %}
 
                 <form method="POST" enctype="multipart/form-data">
@@ -182,24 +185,17 @@
 
                     <p>
                         {{ 'Please note that the order in which your runners appear below is the order that they will run in on race day!'|t }}<br>
-                        {% if relatedEvent.lockTeamEditingFrom is not null %}
+                        {% if team.relatedEvent.first.lockTeamEditingFrom is not null %}
                             {% if craft.locale == "ja" %}
-                                出走順は{{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}まで変更が可能です。
+                                出走順は{{ team.relatedEvent.first.lockTeamEditingFrom|date('j F Y') }}まで変更が可能です。
                             {% else %}
-                                {{ 'The order can be updated until midnight'|t }} {{ relatedEvent.lockTeamEditingFrom|date('j F Y') }}
+                                {{ 'The order can be updated until midnight'|t }} {{ team.relatedEvent.first.lockTeamEditingFrom|date('j F Y') }}
                             {% endif %}
                         {% endif %}
                     </p>
                 </div>
 
-                {% set event = relatedEvent.title %}
-                {% if users|length != 10 %}
-                    <div class="notification warning">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-
-                        <p><strong>{{ 'Alert'|t }}:</strong> {{ 'You currently have'|t }} {{ users|length }} {{ 'runners in your team. Please add more runners to complete your team entry.'|t }}</p>
-                    </div>
-                {% endif %}
+                {% set event = team.relatedEvent.first.title %}
 
                 <a href="edit" class="tab"><span class="text">{{ 'Team Members'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
                 <a href="runners" class="tab active"><span class="text">{{ 'Running Order'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
@@ -345,7 +341,7 @@
                                             <td><span class="count"></span></td>
                                         {% endif %}
                                         <td>
-                                            {% set emailLabell = 'Email'|t %}
+                                            {% set emailLabell = 'Runner'|t %}
 
                                             {{ formFields.dropdown({
                                                 id:         'email',
