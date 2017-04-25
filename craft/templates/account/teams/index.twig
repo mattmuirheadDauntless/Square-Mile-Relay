@@ -27,18 +27,40 @@
             </div>
 
             <div class="teams">
-                {% set teams = craft.entries.section('team').relatedTo(currentUser).order('id desc') %}
+                {% set teams = craft.entries({
+                    section: 'team',
+                    authorId: currentUser.id,
+                    limit: null
+                }) %}
+
+                {% set teamsTwo = craft.entries({
+                    section: 'team',
+                    search: 'teamCaptain:' ~ currentUser,
+                    limit: null
+                }) %}
+
+                {% set teamsThree = craft.entries.section('team').relatedTo({
+                    targetElement: currentUser,
+                    field: 'teamMembers'
+                }) %}
+
+                {% set teams = teams|merge(teamsTwo) %}
+                {% set teams = teams|merge(teamsThree) %}
+                {% set teams = teams|unique %}
+                
                 {% if teams|length %}
                     {% for team in teams %}
                         <div class="team">
 
                             {% set event = team.relatedEvent.first() %}
                             {% set today = date("now")|date("U") %}
-                            {% if event.lockTeamEditingFrom|date('U') < today %}
-                            {% else %}
-                                <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
+                            
+                            {% if event|length %}
+                                {% if event.lockTeamEditingFrom|date('U') > today %}
+                                    <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
+                                {% endif %}
                             {% endif %}
-
+                            
                             {% set inactiveMembers = team.teamMembers.status('pending')|length %}
                             {% set activeMembers = team.teamMembers.status('active')|length %}
                             {% set teamMembers = inactiveMembers + activeMembers %}
