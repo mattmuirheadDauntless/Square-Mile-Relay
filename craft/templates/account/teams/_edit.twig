@@ -13,7 +13,7 @@
 #}
 {% set access = 0 %}
 
-{% if currentUser.id == captain.id or currentUser.id == author.id %}
+{% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
     {% set access = 1 %}
 {% endif %}
 {% if relatedEvent.lockTeamEditingFrom|date('U') < today %}
@@ -92,7 +92,7 @@
                     {% endif %}
                     {% set summaryText = team is defined ? team.summaryText : '' %}
 
-                    {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
+                    {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
 
                         <div class="input-wrapper hide invalid">
                             {% set titleLabel = 'Title'|t %}
@@ -174,7 +174,7 @@
             {% set users = team.teamMembers.status('null') %}
             {% set count = 0 %}
             <div class="table-wrapper runners-list">
-                <h2>{{ 'Runners & Race Order'|t }}</h2>
+                <h2>{{ 'Members & Order'|t }}</h2>
 
                 <div class="notification warning">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -200,6 +200,9 @@
                     </div>
                 {% endif %}
 
+                <a href="" class="tab active"><span class="text">{{ 'Team Members'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+                <a href="runners" class="tab"><span class="text">{{ 'Running Order'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+
                 <form id="update-team-members" method="POST">
                     <input type="hidden" name="action" value="squareMileRelay/teamMembers/updateTeamMembers">
                     <input type="hidden" name="redirect" value="account/teams/{{ team.slug }}/edit">
@@ -210,7 +213,6 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>{{ 'Race Order'|t }}</th>
                                 <th>{{ 'First Name'|t }}</th>
                                 <th>{{ 'Last Name'|t }}</th>
                                 <th>{{ 'Email'|t }}</th>
@@ -220,7 +222,7 @@
                         <tbody id="team-members">
                         {% for user in users %}
                             {% set count = count + 1 %}
-                            <tr class="s-drag">
+                            <tr>
                                 <td>
                                     {% if captain|length and user.id == captain.id %}
                                         <span class="captain">C</span>
@@ -228,21 +230,10 @@
                                         <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
                                     {% endif %}
                                 </td>
-                                {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
-                                    <td valign="center" class="s-handle">
-                                        <i class="fa fa-bars"></i>
-                                        <input type="hidden" name="teamMembers[]" value="{{ user.id }}">
-                                        <span class="count">{{ count }}</span>
-                                    </td>
-                                {% else %}
-                                    <td>
-                                        {% if currentUser.id == author.id %}
-                                            <i class="fa fa-bars"></i>
-                                        {% endif %}
-                                        <span class="count">{{ count }}</span>
-                                    </td>
-                                {% endif %}
                                 <td valign="center">
+                                    {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
+                                        <input type="hidden" name="teamMembers[]" value="{{ user.id }}">
+                                    {% endif %}
                                     {% set firstNameLabel = 'First Name'|t %}
 
                                     {{ formFields.input({
@@ -275,7 +266,7 @@
                                 <td valign="center">
                                     {% if user.pending %}
 
-                                        {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
+                                        {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
                                             <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Pending Registration'|t }}</div>
                                             <br>
                                             <button type="submit" class="btn btn-black btn-tiny resend">{{ 'Resend'|t }}</button>
@@ -314,22 +305,12 @@
                             </tr>
                         {% endfor %}
 
-                        {% set spacesLeft = 10 - users|length %}
+                        {% set spacesLeft = 1 %}
                         {% if spacesLeft != 0 %}
                             {% for i in 1..spacesLeft %}
                                 {% set count = count + 1 %}
-                                <tr class="s-drag">
+                                <tr>
                                     <td></td>
-                                    {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
-                                        <td class="s-handle">
-                                            <div class="dragtooltip">
-                                                <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
-                                            </div>
-                                            <span class="count">{{ count }}</span>
-                                        </td>
-                                    {% else %}
-                                        <td><span class="count">{{ count }}</span></td>
-                                    {% endif %}
                                     <td>
                                         {% set firstNameLabel = 'First Name'|t %}
 
@@ -358,7 +339,7 @@
                                         }) }}
                                     </td>
                                     <td>
-                                        {% if captain|length and (currentUser.id == captain.id or currentUser.id == author.id) %}
+                                        {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
                                             <button type="submit" class="btn btn-orange btn-tiny btn-invite-member">{{ 'Send Invitation'|t }}</button>
                                         {% endif %}
                                     </td>
