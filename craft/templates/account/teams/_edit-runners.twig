@@ -81,7 +81,7 @@
                 <form method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="squareMileRelay/teams/save">
                     <input type="hidden" name="redirect" value="account/teams">
-                    <input type="hidden" name="teamId" value="{{ team.id }}">
+                    <input type="hidden" id="teamId" name="teamId" value="{{ team.id }}">
                     {{ getCsrfInput() }}
 
 
@@ -171,10 +171,11 @@
         </div>
 
         {% if currentUser and team is defined %}
-            {% set users = team.teamMembers.status('null') %}
+            {% set users = team.teamMembersMatrix.type('member') %}
             {% set count = 0 %}
             <div class="table-wrapper runners-list">
-                <h2>{{ 'Members & Order'|t }}</h2>
+
+                <h2>{{ 'Runners & Race Order'|t }}</h2>
 
                 <div class="notification warning">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -200,46 +201,108 @@
                     </div>
                 {% endif %}
 
-                <a href="" class="tab active"><span class="text">{{ 'Team Members'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
-                <a href="runners" class="tab"><span class="text">{{ 'Running Order'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+                <a href="edit" class="tab"><span class="text">{{ 'Team Members'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
+                <a href="runners" class="tab active"><span class="text">{{ 'Running Order'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
 
                 <form id="update-team-members" method="POST">
-                    <input type="hidden" name="action" value="squareMileRelay/teamMembers/updateTeamMembers">
+                    <input type="hidden" name="action" value="squareMileRelay/teamMembers/updateTeamRunners">
                     <input type="hidden" name="redirect" value="account/teams/{{ team.slug }}/edit">
                     <input type="hidden" name="teamId" value="{{ team.id }}">
                     {{ getCsrfInput() }}
+
+                    <div class="hidden">
+                        <table>
+                            <tr id="template-add-runner" class="s-drag">
+                                <td>
+                                    <i class="fa fa-times btn-remove-runner" data-position="" data-user-id="" data-team-id=""></i>
+                                </td>
+                                                                    <td valign="center" class="s-handle">
+                                        <i class="fa fa-bars"></i>
+                                        <input type="hidden" name="teamMembers[]" value="">
+                                        <span class="count">1</span>
+                                    </td>
+                                                                <td valign="center">
+                                    
+                                        <div id="d-firstName" class="form-group">
+        <div>
+            <input type="text" id="firstName" name="firstName" class="input" value="wem" placeholder="First Name">
+            <label></label>
+            <i class="fa validation-icon" aria-hidden="true"></i>
+            <div class="msg valid">Great!</div>
+            <div class="msg in-valid">That's an invalid </div>
+        </div>
+    </div>
+
+                                </td>
+                                <td valign="center">
+                                    
+                                        <div id="d-lastName" class="form-group">
+        <div>
+            <input type="text" id="lastName" name="lastName" class="input" value="wem" placeholder="Last Name">
+            <label></label>
+            <i class="fa validation-icon" aria-hidden="true"></i>
+            <div class="msg valid">Great!</div>
+            <div class="msg in-valid">That's an invalid </div>
+        </div>
+    </div>
+
+                                </td>
+                                <td valign="center">
+                                    
+                                        <div id="d-email" class="form-group">
+        <div>
+            <input type="text" id="email" name="email" class="input" value="" placeholder="Email">
+            <label></label>
+            <i class="fa validation-icon" aria-hidden="true"></i>
+            <div class="msg valid">Great!</div>
+            <div class="msg in-valid">That's an invalid </div>
+        </div>
+    </div>
+
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
 
                     <table class="table">
                         <thead>
                             <tr>
                                 <th></th>
+                                <th>{{ 'Race Order'|t }}</th>
                                 <th>{{ 'First Name'|t }}</th>
                                 <th>{{ 'Last Name'|t }}</th>
                                 <th>{{ 'Email'|t }}</th>
-                                <th>{{ 'Status'|t }}</th>
                             </tr>
                         </thead>
                         <tbody id="team-members">
                         {% for user in users %}
                             {% set count = count + 1 %}
-                            <tr>
+                            <tr class="s-drag">
                                 <td>
-                                    {% if captain|length and user.id == captain.id %}
-                                        <span class="captain">C</span>
-                                    {% else %}
-                                        <i class="fa fa-times btn-remove-member" data-user-id="{{ user.id }}" data-team-id="{{ team.id }}"></i>
-                                    {% endif %}
+                                    <i class="fa fa-times btn-remove-runner" data-position="{{ count }}" data-user-id="{{ user.relatedUser.first.id }}" data-team-id="{{ team.id }}"></i>
                                 </td>
+                                {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
+                                    <td valign="center" class="s-handle">
+                                        <i class="fa fa-bars"></i>
+                                        <input type="hidden" name="teamMembers[]" value="{{ user.relatedUser.first.id }}">
+                                        <span class="count">{{ count }}</span>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        {% if currentUser.id == author.id %}
+                                            <i class="fa fa-bars"></i>
+                                        {% endif %}
+                                        <span class="count">{{ count }}</span>
+                                    </td>
+                                {% endif %}
                                 <td valign="center">
-                                    {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
-                                        <input type="hidden" name="teamMembers[]" value="{{ user.id }}">
-                                    {% endif %}
                                     {% set firstNameLabel = 'First Name'|t %}
 
                                     {{ formFields.input({
                                         id:          'firstName',
                                         name:        'firstName',
-                                        value:       user.firstName,
+                                        value:       user.relatedUser.first.firstName,
                                         placeholder: firstNameLabel
                                     }) }}
                                 </td>
@@ -249,7 +312,7 @@
                                     {{ formFields.input({
                                         id:          'lastName',
                                         name:        'lastName',
-                                        value:       user.lastName,
+                                        value:       user.relatedUser.first.lastName,
                                         placeholder: lastNameLabel
                                     }) }}
                                 </td>
@@ -259,93 +322,53 @@
                                     {{ formFields.input({
                                         id:   'email',
                                         name: 'email',
-                                        value: user.email,
+                                        value: user.relatedUser.first.email,
                                         placeholder: emailLabel
                                     }) }}
                                 </td>
-                                <td valign="center">
-                                    {% if user.pending %}
-
-                                        {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
-                                            <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Pending Registration'|t }}</div>
-                                            <br>
-                                            <button type="submit" class="btn btn-black btn-tiny resend">{{ 'Resend'|t }}</button>
-                                        {% endif %}
-
-                                    {% else %}
-
-                                        {% set checked = 0 %}
-                                        {% set events = [] %}
-                                        {% set userWaivers = user.acceptedWaivers %}
-                                        {% if userWaivers|length %}
-                                            {% for waiver in userWaivers %}
-                                                {% if waiver.event == event and waiver.event not in events %}
-                                                    {% set events = events|merge([ waiver.event ]) %}
-                                                    {% if waiver.acceptedWaiver == 1 or waiver.acceptedWaiver == "on" %}
-                                                        <div class="user-status confirmed"><i class="fa fa-check" aria-hidden="true"></i> {{ 'Registered'|t }}</div>
-                                                        {% set checked = 1 %}
-                                                    {% else %}
-                                                        <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Pending Injury waiver'|t }}</div>
-                                                        <br>
-                                                        <button type="submit" class="btn btn-black btn-tiny resend">{{ 'Resend'|t }}</button>
-                                                        {% set checked = 1 %}
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-
-                                        {% if checked == 0 %}
-                                            <div class="user-status pending"><i class="fa fa-arrow-right" aria-hidden="true"></i> {{ 'Pending Injury waiver'|t }}</div>
-                                            <br>
-                                            <button type="submit" class="btn btn-black btn-tiny resend">{{ 'Resend'|t }}</button>
-                                        {% endif %}
-
-                                    {% endif %}
-                                </td>
+                                <td></td>
                             </tr>
                         {% endfor %}
-
-                        {% set spacesLeft = 1 %}
-                        {% if spacesLeft != 0 %}
-                            {% for i in 1..spacesLeft %}
-                                {% set count = count + 1 %}
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        {% set firstNameLabel = 'First Name'|t %}
-
-                                        {{ formFields.input({
-                                            id:   'firstName',
-                                            name: 'newMembers['~ i ~'][firstName]',
-                                            placeholder: firstNameLabel
-                                        }) }}
-                                    </td>
-                                    <td>
-                                        {% set LastNameLabel = 'Last Name'|t %}
-
-                                        {{ formFields.input({
-                                            id:   'lastName',
-                                            name: 'newMembers['~ i ~'][lastName]',
-                                            placeholder: LastNameLabel
-                                        }) }}
-                                    </td>
-                                    <td>
-                                        {% set emailLabell = 'Email'|t %}
-
-                                        {{ formFields.input({
-                                            id:   'email',
-                                            name: 'newMembers['~ i ~'][email]',
-                                            placeholder: emailLabell
-                                        }) }}
-                                    </td>
-                                    <td>
+                            
+                                {% for i in 1..1 %}
+                                    {% set count = count + 1 %}
+                                    <tr class="s-drag {% if users|length >= 10 %} hide {% endif %}">
+                                        <td></td>
                                         {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
-                                            <button type="submit" class="btn btn-orange btn-tiny btn-invite-member">{{ 'Send Invitation'|t }}</button>
+                                            <td class="s-handle">
+                                                <div class="dragtooltip">
+                                                    <span class="dragtooltiptext">{{ 'Drag to order.'|t }}</span>
+                                                </div>
+                                                <span class="count"></span>
+                                            </td>
+                                        {% else %}
+                                            <td><span class="count"></span></td>
                                         {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        {% endif %}
+                                        <td>
+                                            {% set emailLabell = 'Email'|t %}
+
+                                            {{ formFields.dropdown({
+                                                id:         'email',
+                                                name: 'newMembers['~ i ~'][email]',
+                                                value:      null,
+                                                label:      emailLabell,
+                                                options:    team.teamMembers,
+                                                optionKeys: [
+                                                    'id',
+                                                    'email'
+                                                ]
+                                            }) }}
+                                        </td>
+                                        <td>
+                                            {% if (captain|length and currentUser.id == captain.id) or currentUser.id == author.id %}
+                                                <button type="submit" class="btn btn-orange btn-tiny btn-add-runner">{{ 'Add Runner'|t }}</button>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            
                         </tbody>
                     </table>
                 </form>
