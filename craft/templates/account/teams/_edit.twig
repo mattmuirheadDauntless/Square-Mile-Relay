@@ -305,7 +305,7 @@
                             </tr>
                         {% endfor %}
 
-                        {% set spacesLeft = (users|length) - 10 %}
+                        {% set spacesLeft = 10 - (users|length) %}
                         {% if spacesLeft != 0 %}
                             {% for i in 1..spacesLeft %}
                                 {% set count = count + 1 %}
