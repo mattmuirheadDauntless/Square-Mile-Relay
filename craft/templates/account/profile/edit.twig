@@ -193,7 +193,7 @@
 
                             <div class="input-wrapper edit-element">
                                 {% set address1label = 'Address Line 1'|t %}
-                                    
+
                                 {% set addressLine1 = currentUser.address1 %}
                                 {% if currentUser.address1 == '' and addresses[0] is defined %}
                                     {% set addressLine1 = addresses[0].address1 %}
@@ -227,7 +227,7 @@
 
                             <div class="input-wrapper edit-element">
                                 {% set Citylabel = 'City'|t %}
-                                
+
                                 {% set addressCity = currentUser.addressCity %}
                                 {% if currentUser.addressCity == '' and addresses[0] is defined %}
                                     {% set addressCity = addresses[0].city %}
@@ -255,7 +255,6 @@
                                     label: addressPostcodelabel,
                                     name:  'fields[addressPostCode]',
                                     placeholder: addressPostcodelabel,
-                                    pattern: '((\d{5}([\-]\d{4})?)|[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2})',
                                     value: addressZipCode
                                 }) }}
                             </div>
@@ -304,7 +303,7 @@
                                 targetElement: currentUser,
                                 field: 'teamMembers'
                             }) %}
-                            
+
                             {% set savedWaivers = currentUser.acceptedWaivers %}
                             <input type="hidden" name="fields[acceptedWaivers]" value="">
 
