@@ -37,9 +37,9 @@
             <option value="">{{ '- Select '  ~ options.label ~ ' -'|t }}</option>
             {% for option in options.options %}
                 {% if options.value is defined and options.value == option[optionKey] %}
-                    <option value="{{ option[optionKey] }}" selected="selected">{{ option[optionValue] }}</option>
+                    <!--email_off--><option value="{{ option[optionKey] }}" selected="selected">{{ option[optionValue] }}</option><!--/email_off-->
                 {% else %}
-                    <option value="{{ option[optionKey] }}">{{ option[optionValue] }}</option>
+                    <!--email_off--><option value="{{ option[optionKey] }}">{{ option[optionValue] }}</option><!--/email_off-->
                 {% endif %}
             {% endfor %}
         </select>
