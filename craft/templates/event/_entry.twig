@@ -220,7 +220,7 @@
 
                         {% set logo = partner.companyLogo.first() %}
                         <div class="partner-wrapper">
-                            <a href="{{ siteUrl }}{{'partners'|t}}?year={{ year }}&city={{ city.title }}" class="cover-link"></a>
+                            <a href="{{ siteUrl }}{{'partners'|t}}?year={{ year }}&city={{ city.title }}#{{ entry.slug }}-{{ partner.slug }}" class="cover-link link"></a>
                             <div class="partner-img" style="background-image: url({{ logo.url }})"></div>
                             <h4>{{ partner.partnerType }}</h4>
                         </div>
