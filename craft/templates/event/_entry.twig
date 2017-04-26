@@ -10,7 +10,7 @@
     {% if currencyCode|length == 0 %}
         {% set currencyCode = 'GBP' %}
     {% endif %}
-    {% set relatedEvents = craft.entries.section('event').relatedTo(city)|reverse %}
+    {% set relatedEvents = craft.entries.section('event').relatedTo(city).order('startDateTime')|reverse %}
     {% set relatedTeams = craft.entries.section('team').relatedTo(entry).limit(30) %}
     {% set relatedPartners = entry.relatedPartners %}
     {% set relatedCharities = entry.relatedCharity %}
@@ -95,7 +95,7 @@
     <section class="races-by-year-nav">
         <h3>{{ 'View Races by Year'|t }}</h3>
         <ul>
-            {% for event in relatedEvents|reverse %}
+            {% for event in relatedEvents %}
                 {% if event.id == entry.id %}
                     <li class="active" data-year="{{ event.startDateTime|date('Y') }}">{{ event.startDateTime|date('Y') }}</li>
                 {% else %}
@@ -248,8 +248,8 @@
                     {% set prevYear = year - 1 %}
                     {% set city = entry.relatedCity.first() %}
                     {% if city is not null %}
-                        {% set lastEvent = craft.entries.section('event').search( 'slug:"' ~ city.title ~ ' - ' ~ prevYear ~ '"' ).first() %}
-                        {% if lastEvent|length > 0 %}
+                        {% set lastEvent = craft.entries.section('event').search( city.slug ~ '-' ~ prevYear ).first() %}
+                        {% if lastEvent|length >= 1 %}
                             {% set images = lastEvent.eventImages %}
                         {% endif %}
                         {% set lastYearRace = true %}

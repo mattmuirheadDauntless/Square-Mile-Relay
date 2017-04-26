@@ -133,7 +133,7 @@
                                                         {% set eventDate = event.startDateTime | date('U') %}
                                                         {% set daysLeft = ((today - eventDate) / (60 * 60 * 24)) | round %}
                                                         {% if daysLeft < 0 and daysLeft > nextEventDaysLeft %}
-                                                            {% set nextEventDate =  event.startDateTime | date('j F Y') %}
+                                                            {% set nextEventDate =  event.startDateTime|date('d F Y') %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
