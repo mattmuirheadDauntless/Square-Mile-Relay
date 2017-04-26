@@ -41,7 +41,7 @@
                             {% set today = date("now")|date("U") %}
                             
                             {% if (team.teamCaptain.first()|length and currentUser.id == team.teamCaptain.first().id) or (currentUser.id == team.author.id) %}
-                                {% if event|length and event.lockTeamEditingFrom|date('U') > today %}
+                                {% if (event|length and (event.lockTeamEditingFrom|length and event.lockTeamEditingFrom|date('U') > today)) or (event|length and event.lockTeamEditingFrom|length == 0) %}
                                     <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
                                 {% else %}
                                     <a href="{{ url('account/teams/' ~ team.slug) }}" class="cover-link"></a>
