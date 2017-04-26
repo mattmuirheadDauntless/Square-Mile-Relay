@@ -39,7 +39,7 @@
 
                             <h2>{{ 'Register your interest!'|t }}</h2>
                             {% if city.registerInterestForm|length > 0 %}
-                            <p>{{ 'We are yet to announce the race date for'|t }} {{ city.title }}. {{ "Sign up below for updates about the next race in"|t }} {{ city.title }} {{ "and we’ll let you know when entries are open!"|t }}</p>
+                            <p>{{ 'Sign up below for updates about the next race in '|t }} {{ city.title }} {{ "and we’ll let you know when entries are open!"|t }}</p>
                             {{ city.registerInterestForm|raw }}
                             {% else %}
                             <p>{{ "We currently haven't announced any races for this city."|t }}</p>
