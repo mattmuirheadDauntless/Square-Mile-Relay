@@ -20,7 +20,7 @@
     {# {% cache %} #}
 
     {% set headerImage = entry.backgroundImage.first() %}
-    {% set relatedEvents = craft.entries.section('event').relatedTo(entry)|reverse %}
+    {% set relatedEvents = craft.entries.section('event').relatedTo(entry).order('startDateTime')|reverse %}
     {% set currencyCode = entry.currencyIsoCode %}
     {% if currencyCode|length == 0 %}
         {% set currencyCode = 'GBP' %}
@@ -141,7 +141,7 @@
         <h3>{{ 'View Races by Year'|t }}</h3>
         <ul>
             {% set count = 0 %}
-            {% for event in relatedEvents|reverse %}
+            {% for event in relatedEvents %}
                 {% set count = count + 1 %}
                 {% if count == 1 %}
                     <li class="active" data-year="{{ event.startDateTime|date('Y') }}">{{ event.startDateTime|date('Y') }}</li>
@@ -158,7 +158,7 @@
     <section class="races-by-year">
 
         {% set count = 0 %}
-        {% for event in relatedEvents|reverse %}
+        {% for event in relatedEvents %}
             {% set count = count + 1 %}
             {% set relatedPartners = event.relatedPartners %}
             {% set relatedCharities = event.relatedCharity %}
@@ -300,9 +300,9 @@
                     {% set prevYear = 0 %}
                     {% if images|length == 0 %}
                         {% set prevYear = year - 1 %}
-                        {% set city = event.relatedCity.first().title %}
-                        {% set lastEvent = craft.entries.section('event').search('slug:"' ~ city ~ " - " ~ prevYear ~ '"').first() %}
-                        {% if lastEvent|length > 1 %}
+                        {% set city = event.relatedCity.first().slug %}
+                        {% set lastEvent = craft.entries.section('event').search(city ~ "-" ~ prevYear).first() %}
+                        {% if lastEvent|length >= 1 %}
                             {% set images = lastEvent.eventImages %}
                         {% endif %}
                         {% set lastYearRace = true %}
