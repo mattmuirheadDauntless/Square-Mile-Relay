@@ -31,6 +31,14 @@
                     targetElement: currentUser
                 }) %}
 
+                {% set teamsTwo = craft.entries({
+                    section: 'team',
+                    authorId: currentUser.id,
+                    limit: null
+                }) %}
+
+                {% set teams = teams|merge(teamsTwo) %}
+
                 {% set teams = teams|unique %}
                 
                 {% if teams|length %}
