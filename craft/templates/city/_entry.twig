@@ -215,7 +215,7 @@
                                 <h5>{{ 'Proudly sponsored by:'|t }}</h5>
                                 {% for partner in event.relatedProudSponsor %}
                                     {% set logo = partner.companyLogo.first() %}
-                                    <a class="link" href="{{ siteUrl }}partners?year={{ year }}&city={{ entry.title }}#{{ event.slug }}-{{ partner.slug }}">
+                                    <a class="link" href="{{ siteUrl }}{{'partners'|t}}?year={{ year }}&city={{ entry.title }}#{{ event.slug }}-{{ partner.slug }}">
                                         <img src={{ logo.url }} alt={{ partner.title }}>
                                     </a>
                                 {% endfor %}
@@ -276,7 +276,7 @@
                         {% for partner in relatedPartners %}
                             {% set logo = partner.companyLogo.first() %}
                             <div class="partner-wrapper">
-                                <a href="{{ siteUrl }}partners?year={{ year }}&city={{ entry.title }}" class="cover-link"></a>
+                                <a href="{{ siteUrl }}{{'partners'|t}}?year={{ year }}&city={{ entry.title }}#{{ event.slug }}-{{ partner.slug }}" class="cover-link link"></a>
                                 <div class="partner-img" style="background-image: url({{ logo.url }})"></div>
                                 <h4>{{ partner.partnerType }}</h4>
                             </div>
@@ -287,7 +287,7 @@
                             <h5>{{ 'Sorry!'|t }}</h5>
                             <p>{{ 'There are currently no community partners for this event. Check back later to see our partners for this race!'|t }}</p>
                             <h6>{{ 'Or'|t }}</h6>
-                            <a href="{{ siteUrl }}partners" class="btn btn-orange">{{ 'View all our partners'|t }}</a>
+                            <a href="{{ siteUrl }}{{'partners'|t}}" class="btn btn-orange">{{ 'View all our partners'|t }}</a>
                         </div>
                     {% endif %}
                 </div>

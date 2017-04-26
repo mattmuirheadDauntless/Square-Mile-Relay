@@ -189,59 +189,90 @@
                     <div class="edit-col-large">
                         <div class="form">
 
+                            {% set addresses = craft.commerce.getCustomer.getAddresses() %}
+
                             <div class="input-wrapper edit-element">
                                 {% set address1label = 'Address Line 1'|t %}
+
+                                {% set addressLine1 = currentUser.address1 %}
+                                {% if currentUser.address1 == '' and addresses[0] is defined %}
+                                    {% set addressLine1 = addresses[0].address1 %}
+                                {% endif %}
+
                                {{ formFields.input({
                                     id:    'address1',
                                     label: address1label,
                                     name:  'fields[address1]',
                                     placeholder: address1label,
-                                    value: currentUser.address1
+                                    value: addressLine1
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
                                 {% set address2label = 'Address Line 2'|t %}
+
+                                {% set addressLine2 = currentUser.address2 %}
+                                {% if currentUser.address2 == '' and addresses[0] is defined %}
+                                    {% set addressLine2 = addresses[0].address2 %}
+                                {% endif %}
+
                                 {{ formFields.input({
                                     id:    'address2',
                                     label: address2label,
                                     name:  'fields[address2]',
                                     placeholder: address2label,
-                                    value: currentUser.address2
+                                    value: addressLine2
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
                                 {% set Citylabel = 'City'|t %}
+
+                                {% set addressCity = currentUser.addressCity %}
+                                {% if currentUser.addressCity == '' and addresses[0] is defined %}
+                                    {% set addressCity = addresses[0].city %}
+                                {% endif %}
+
                                 {{ formFields.input({
                                     id:    'addressCity',
                                     label: Citylabel,
                                     name:  'fields[addressCity]',
                                     placeholder: Citylabel,
-                                    value: currentUser.addressCity
+                                    value: addressCity
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element">
                                 {% set addressPostcodelabel = 'Postcode / Zip Code'|t %}
+
+                                {% set addressZipCode = currentUser.addressPostCode %}
+                                {% if currentUser.addressPostCode == '' and addresses[0] is defined %}
+                                    {% set addressZipCode = addresses[0].zipCode %}
+                                {% endif %}
+
                                 {{ formFields.input({
                                     id:    'addressPostcode',
                                     label: addressPostcodelabel,
                                     name:  'fields[addressPostCode]',
                                     placeholder: addressPostcodelabel,
-                                    pattern: '((\d{5}([\-]\d{4})?)|[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2})',
-                                    value: currentUser.addressPostCode
+                                    value: addressZipCode
                                 }) }}
                             </div>
 
                             <div class="input-wrapper edit-element select">
                                 {% set addressCountrylabel = 'Country'|t %}
+
+                                {% set addressCountry = currentUser.addressCountry %}
+                                {% if currentUser.addressCountry == '' and addresses[0] is defined %}
+                                    {% set addressCountry = addresses[0].country.iso %}
+                                {% endif %}
+
                                 {{ formFields.dropdown({
                                     id:         'addressCountry',
                                     label:      addressCountrylabel,
                                     name:       'fields[addressCountry]',
                                     placeholder: addressCountrylabel,
-                                    value:      currentUser.addressCountry,
+                                    value:      addressCountry,
                                     options:    craft.commerce.getCountries(),
                                     optionKeys: ['iso', 'name']
                                 }) }}
@@ -268,7 +299,11 @@
                                 }) }}
                             </div>
 
-                            {% set teams = craft.entries.section('team').relatedTo(currentUser) %}
+                            {% set teams = craft.entries.section('team').relatedTo({
+                                targetElement: currentUser,
+                                field: 'teamMembers'
+                            }) %}
+
                             {% set savedWaivers = currentUser.acceptedWaivers %}
                             <input type="hidden" name="fields[acceptedWaivers]" value="">
 
