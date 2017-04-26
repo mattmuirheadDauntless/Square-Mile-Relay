@@ -170,6 +170,7 @@ $(function(){
     //if faqs page
     if ($('.faqs').length > 0) {
         $('.filter').click(function() {
+            var $selector = $(this).attr('data-filter');
             $('.faq').addClass('hide');
             $('.faq'+$selector).removeClass('hide');
         });
