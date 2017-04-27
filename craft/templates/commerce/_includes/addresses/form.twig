@@ -33,7 +33,7 @@
         <div class="input-wrapper select required">
             {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
             {% if companies|length %}
-                <select name="fields[relatedCompany][]" id="relatedCompany" class="input" required>
+                <select name="fields[relatedCompany][]" id="relatedCompany" class="input">
                     <option value="" disabled selected hidden>{{ 'Please select your company'|t }}</option>
                     {% for company in companies %}
                         <option value="{{ company.id }}">{{ company.title }}</option>
