@@ -3,18 +3,17 @@
 {% set twelveMonthsAgo = now|date_modify('-12 months') %}
 {% set searchTerm = craft.request.getParam('search') ~ " " %}
 {% if searchTerm == " " %}{% set searchTerm = "" %}{% endif %}
-{% set searchCity = craft.request.getParam('city') ~ " " %}
-{% if searchCity == " " %}{% set searchCity = "" %}{% endif %}
+{% set searchCity = "slug:" ~ craft.request.getParam('city') %}
+{% if searchCity == "slug:" %}{% set searchCity = "" %}{% endif %}
 {% set searchYear = craft.request.getParam('year') %}
 {% if searchYear == " " %}{% set searchYear = "" %}{% endif %}
-{% set search = "eventImages:*" ~ searchTerm ~ searchCity ~ searchYear %}
+{% set search = searchTerm ~ searchCity ~ searchYear ~ " eventImages:*" %}
 
 {% paginate craft.entries({
     section: 'event',
     order: 'startDateTime desc',
     search: search,
-    limit: 1,
-    startDateTime: '>=' ~ twelveMonthsAgo
+    limit: 1
 }) as events %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
@@ -52,11 +51,12 @@
                     position: 'center-center'
             } %}
 
-            {% set imageSmall = image.getUrl('newsThumb') %}
-            {% set imageLarge = image.getUrl(large) %}
+            {% set imageSmall = image.getUrl('newsThumb')|replace("http://squaremilecms.dev", "https://squaremilerelay.com") %}
+            {% set imageLarge = image.getUrl(large)|replace("http://squaremilecms.dev", "https://squaremilerelay.com") %}
 
-            <div class="img-item grid-item slider-modal-link {% if craft.request.isAjax %}ajax-item{% endif %} {{ year }} {% if city is not null %}{{ city.slug }}{% endif %}" data-toggle="modal" data-target="#media" data-src="{{ imageLarge }}" data-caption="{{ image.summaryText }}">
+            <div class="img-item grid-item slider-modal-link {% if craft.request.isAjax %}ajax-item{% endif %} {{ year }} {% if city is not null %}{{ city.slug }}{% endif %}" data-toggle="modal" data-target="#media" data-src="{{ imageLarge }}" data-caption="{{ image.summaryText }}" data-id="{{ image.id }}">
                 <img src="{{ imageSmall }}" alt="">
+                {# <div style="background: red; height: 150px; width: 100%;">{{ city.slug }} {{ year }}</div> #}
                 <p class="caption">{{ image.summaryText }}</p>
             </div>
         {% endfor %}

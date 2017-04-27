@@ -30,7 +30,7 @@
 			{% endif %}
         </div>
 
-        <div class="input-wrapper select required">
+        <div class="input-wrapper select related-company required">
             {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
             {% if companies|length %}
                 <select name="fields[relatedCompany][]" id="relatedCompany" class="input" required>
