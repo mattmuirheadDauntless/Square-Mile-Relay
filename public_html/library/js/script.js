@@ -394,7 +394,18 @@ $(function(){
     });
 
     $('#newCompany').on('change', function() {
-        $('.new-company-name').toggleClass('hide');
+        var $this = $(this);
+
+        $('.new-company-name').toggleClass('hide').toggleClass('required');
+        $('.related-company').toggleClass('disabled').toggleClass('invalid');
+
+        if ( $this.is(':checked') ) {
+            $('#relatedCompany').removeAttr('required');
+            $('#newCompanyName').attr('required', 'true');
+        } else {
+            $('#relatedCompany').attr('required', 'true');
+            $('#newCompanyName').removeAttr('required');
+        }
     });
 
 //===================================
