@@ -758,10 +758,7 @@ p.error {
     margin: 0;
     cursor: pointer;
     -webkit-transition: all 0.3s linear;
-    transition: all 0.3s linear;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-         appearance: none; }
+    transition: all 0.3s linear; }
     .header .language-select:hover {
       background: #222;
       color: #fff; }
@@ -937,7 +934,7 @@ p.error {
       font-size: 10px;
       margin-top: 3px; }
   .header .language-select {
-    right: 152px;
+    right: 167px;
     position: fixed;
     top: 25px;
     font-size: 12px;
@@ -1143,8 +1140,6 @@ p.error {
 .payment-iframe {
   background-color: #fff;
   min-height: 100vh; }
-  .payment-iframe .container {
-    padding: 15px; }
   .payment-iframe .hide {
     display: none; }
   .payment-iframe .back {
@@ -1208,11 +1203,6 @@ p.error {
         font-weight: 700; }
       .payment-iframe .package .description p {
         margin: 0; }
-      @media (max-width: 499px) {
-        .payment-iframe .package .description {
-          width: 100%; }
-          .payment-iframe .package .description p {
-            margin-bottom: 10px; } }
     .payment-iframe .package .quantity {
       float: left;
       padding: 0 30px;
@@ -1231,12 +1221,6 @@ p.error {
         .payment-iframe .package .quantity input::-webkit-outer-spin-button, .payment-iframe .package .quantity input::-webkit-inner-spin-button {
           -webkit-appearance: none;
           margin: 0; }
-      @media (max-width: 499px) {
-        .payment-iframe .package .quantity {
-          width: 50%;
-          padding: 0; }
-          .payment-iframe .package .quantity input {
-            margin: 0; } }
     .payment-iframe .package .price {
       float: left;
       padding-top: 15px;
@@ -1248,27 +1232,10 @@ p.error {
         height: inherit;
         font-size: 9px;
         letter-spacing: 1px; }
-      @media (max-width: 499px) {
-        .payment-iframe .package .price {
-          width: 50%;
-          padding: 0; }
-          .payment-iframe .package .price p {
-            margin: 0 0 5px 0;
-            text-align: center;
-            line-height: 100%; }
-          .payment-iframe .package .price .btn.btn-tiny {
-            padding: 7px 0;
-            margin: 0; } }
   .payment-iframe .checkout {
     margin: 0;
-    padding: 0;
+    padding: 20px 20px 0 20px;
     width: 100%; }
-    .payment-iframe .checkout .input-wrapper.checkbox input {
-      position: absolute;
-      left: 0; }
-    @media (max-width: 499px) {
-      .payment-iframe .checkout .input-wrapper.checkbox p {
-        font-size: 14px; } }
     .payment-iframe .checkout .col-6 {
       width: 49%;
       display: block; }
@@ -1298,9 +1265,6 @@ p.error {
       float: right;
       width: 60%;
       margin: 0 0 20px 0; }
-      @media (max-width: 499px) {
-        .payment-iframe .checkout .totals {
-          width: 100%; } }
       .payment-iframe .checkout .totals ul {
         margin: 0;
         padding: 0;
@@ -1725,9 +1689,6 @@ header .cta-banner,
   height: 750px;
   max-height: 90vh;
   overflow: hidden; }
-  @media only screen and (max-width: 600px) {
-    .modal.enter .modal-content {
-      height: 100%; } }
 
 .modal.enter .desc {
   font-size: 18px; }
@@ -1822,11 +1783,11 @@ header .cta-banner,
           color: #fff; }
   .modal.enter .slide.commerce {
     padding: 0;
-    height: calc(100% - 70px); }
+    height: calc(100% - 70px);
+    overflow: hidden; }
     .modal.enter .slide.commerce iframe {
       width: 100%;
-      height: 100%;
-      overflow: scroll; }
+      height: 100%; }
   .modal.enter .slide .thank-you {
     padding: 30px 50px;
     text-align: center; }
@@ -3264,9 +3225,7 @@ header .cta-banner,
       background-image: none; }
       .hero-home .play-video .play-btn {
         width: 65px;
-        height: 65px;
-        left: 0;
-        top: 0; }
+        height: 65px; }
         .hero-home .play-video .play-btn .fa-play {
           font-size: 28px; }
       .hero-home .play-video span {
@@ -6567,9 +6526,6 @@ section.text .wrapper-thin {
     .global-gallery .gallery-grid .grid-item,
     .global-gallery .gallery-grid .stamp {
       width: 50%; } }
-
-.flickity-page-dots {
-  display: none; }
 
 .city-cta {
   position: relative;
