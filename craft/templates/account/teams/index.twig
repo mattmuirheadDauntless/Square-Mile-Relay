@@ -27,18 +27,41 @@
             </div>
 
             <div class="teams">
-                {% set teams = craft.entries.section('team').relatedTo(currentUser).order('id desc') %}
+                {% set teamIds = [] %}
+                {% set teams = craft.entries.section('team').relatedTo('or',
+                    { targetElement: currentUser, field: 'teamMembers' },
+                    { targetElement: currentUser, field: 'teamCaptain' }
+                ) %}
+
+                {% set teamsTwo = craft.entries.section('team').authorId(currentUser.id) %}
+
+                {% for teamOne in teams %}
+                    {% set teamIds = teamIds|merge([teamOne.id]) %}
+                {% endfor %}
+
+                {% for teamTwo in teamsTwo %}
+                    {% if teamTwo.id not in teamIds %}
+                        {% set teams = teams|merge([teamTwo]) %}
+                    {% endif %}
+                {% endfor %}
+
                 {% if teams|length %}
                     {% for team in teams %}
                         <div class="team">
 
                             {% set event = team.relatedEvent.first() %}
                             {% set today = date("now")|date("U") %}
-                            {% if event.lockTeamEditingFrom|date('U') < today %}
+                            
+                            {% if (team.teamCaptain.first()|length and currentUser.id == team.teamCaptain.first().id) or (currentUser.id == team.author.id) %}
+                                {% if (event|length and (event.lockTeamEditingFrom|length and event.lockTeamEditingFrom|date('U') > today)) or (event|length and event.lockTeamEditingFrom|length == 0) %}
+                                    <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
+                                {% else %}
+                                    <a href="{{ url('account/teams/' ~ team.slug) }}" class="cover-link"></a>
+                                {% endif %}
                             {% else %}
-                                <a href="{{ url('account/teams/' ~ team.slug ~ '/edit') }}" class="cover-link"></a>
+                                <a href="{{ url('account/teams/' ~ team.slug) }}" class="cover-link"></a>
                             {% endif %}
-
+                            
                             {% set inactiveMembers = team.teamMembers.status('pending')|length %}
                             {% set activeMembers = team.teamMembers.status('active')|length %}
                             {% set teamMembers = inactiveMembers + activeMembers %}
@@ -61,7 +84,12 @@
                             <h6>{{ event.startDateTime|date('j F Y') }}</h6>
                             {% endif %}
 
-                            <h4 class="team-name">{{ team.title }}</h4>
+                            {% if team.teamName|length > 0 %}
+                                <h4 class="team-name">{{ team.teamName }}</h4>
+                            {% else %}
+                                <h4 class="team-name">{{ team.title }}</h4>
+                            {% endif %}
+
                             {% if team.relatedCompany|length %}
                                 {% set relatedCompany = team.relatedCompany.first() %}
                                 {% if relatedCompany is not null %}
