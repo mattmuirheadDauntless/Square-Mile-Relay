@@ -235,14 +235,16 @@ $(function(){
             var $this = $(this),
                 $src = $this.attr('data-src'),
                 $caption = $this.attr('data-caption'),
-                $item = $('<div class="img-cell"><img data-flickity-lazyload="' + $src + '"><br><p class="caption">' + $caption + '</p></div>');
+                $imgId = $this.attr('data-id'),
+                $item = $('<div class="img-cell" data-id="' + $imgId + '"><img src="' + $src + '"><br><p class="caption">' + $caption + '</p></div>');
 
             $sliderModal.flickity( 'append', $item );
         });
     }
 
-    $('.slider-modal-link').click(function() {
+    $('.img-item').click(function() {
         var $this = $(this),
+            $id = $this.attr('data-id'),
             $index = $('.slider-modal-link').index(this);
 
         $('.media-modal .img').addClass('hide');
@@ -250,6 +252,9 @@ $(function(){
         $('.media-modal .slider').removeClass('hide');
 
         $sliderModal.flickity( 'select', $index );
+
+        // $('.img-cell').removeClass('is-selected').css('left', '100%');
+        // $('.img-cell[data-id='+ $id +']').addClass('is-selected').css('left', '0%');
     });
 
     $('.modal .close').click(function(){
@@ -994,6 +999,39 @@ $('body').on('click', '.btn-remove-member', function(event) {
 
             if ( $('.no-results').length > 0 ) {
                 $('.load-more').addClass('hide');
+            }
+
+            if ( $('.gallery-grid').length > 0 ) {
+                $('.img-cell').each(function() {
+                    var $this = $(this);
+
+                    $sliderModal.flickity( 'remove', $this );
+                });
+
+                $('.img-item').each(function(){
+                    var $this = $(this),
+                        $src = $this.attr('data-src'),
+                        $caption = $this.attr('data-caption'),
+                        $imgId = $this.attr('data-id'),
+                        $item = $('<div class="img-cell" data-id="' + $imgId + '"><img src="' + $src + '"><br><p class="caption">' + $caption + '</p></div>');
+
+                    $sliderModal.flickity( 'append', $item );
+                });
+
+                $('.img-item').click(function() {
+                    var $this = $(this),
+                        $id = $this.attr('data-id'),
+                        $index = $('.slider-modal-link').index(this);
+
+                    $('.media-modal .img').addClass('hide');
+                    $('.media-modal .video').addClass('hide');
+                    $('.media-modal .slider').removeClass('hide');
+
+                    $sliderModal.flickity( 'select', $index );
+
+                    // $('.img-cell').removeClass('is-selected').css('left', '100%');
+                    // $('.img-cell[data-id='+ $id +']').addClass('is-selected').css('left', '0%');
+                });
             }
 
         });

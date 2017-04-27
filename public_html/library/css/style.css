@@ -6568,6 +6568,9 @@ section.text .wrapper-thin {
     .global-gallery .gallery-grid .stamp {
       width: 50%; } }
 
+.flickity-page-dots {
+  display: none; }
+
 .city-cta {
   position: relative;
   background-color: #f7f7f7; }
