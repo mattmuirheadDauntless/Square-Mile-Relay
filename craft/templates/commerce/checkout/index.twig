@@ -88,11 +88,11 @@
                     <div class="msg in-valid">{{ 'That name is invalid.'|t }}</div>
                 </div>
 
-                <div class="input-wrapper select required">
+                <div class="input-wrapper select related-company required">
                     {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
                     {% if companies|length %}
-                        <select name="fields[relatedCompany][]" id="relatedCompany" class="input">
-                            <option value="" selected="selected">{{ 'Please select Your company'|t }}</option>
+                        <select name="fields[relatedCompany][]" id="relatedCompany" class="input" required>
+                            <option value="" disabled selected hidden>{{ 'Please select your company'|t }}</option>
                             {% for company in companies %}
                                 <option value="{{ company.id }}">{{ company.title }}</option>
                             {% endfor %}
