@@ -20,7 +20,12 @@
             <div class="title">
                 <h1>{{ entry.title }}</h1>
                 {% if entry.startDateTime|length and entry.startDateTime|date('U') > "now"|date('U') %}
-                    <h2>{{ 'Next Race:'|t }} {{ entry.startDateTime|date('j F Y') }}</h2>
+                    {% set formattedDate = entry.startDateTime|date('d F Y') %}
+                    {% set currentLocale = craft.i18n.getCurrentLocale() %}
+                    {% if currentLocale.id == 'ja' %}
+                        {% set formattedDate = entry.startDateTime|date('Y') ~ '年 ' ~ entry.startDateTime|date('F') ~ " " ~ entry.startDateTime|date('d') ~ '日' %}
+                    {% endif %}
+                    <h2>{{ 'Next Race:'|t }} {{ formattedDate }}</h2>
                 {% endif %}
             </div>
         </div>
