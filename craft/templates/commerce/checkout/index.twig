@@ -88,6 +88,7 @@
                     <div class="msg in-valid">{{ 'That name is invalid.'|t }}</div>
                 </div>
 
+                <p>{{'If your company has taken part in our race before, please select from the list below:'|t}}</p>
                 <div class="input-wrapper select related-company required">
                     {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
                     {% if companies|length %}
@@ -104,10 +105,15 @@
                     <div class="msg in-valid">{{ 'That company is invalid.'|t }}</div>
                 </div>
 
+                {% set currentLocale = craft.i18n.getCurrentLocale() %}
                 <div class="input-wrapper checkbox">
-                    <input id="newCompany" type="checkbox" class="input" name="newCompany">
+                    <input id="newCompany" type="checkbox" class="input" name="newCompany" style="position: absolute;">
                     <label for="newCompany"></label>
-                    <p class="checkbox-paragraph">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
+                    {% if currentLocale.id == 'ja' %}
+                        <p class="checkbox-paragraph" style="font-size: 14px;">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
+                    {% else %}
+                        <p class="checkbox-paragraph">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
+                    {% endif %}
                 </div>
 
                 <div class="input-wrapper new-company-name hide">

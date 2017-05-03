@@ -60,12 +60,17 @@
         {% endif %}
     {% endif %}
 
-    <section class="single-city-heading" {% if headerImage|length %}style="background-image: url('{{ headerImage }}');"{% endif %}>
+    <section class="single-city-heading" {% if headerImage|length %}style="background-image: url('{{ headerImage }}'); background: black;"{% endif %}>
         <div class="wrapper-thin">
             <div class="title">
                 <h1>{{ entry.title }}</h1>
                 {% if date|date('U') > now|date('U') %}
-                    <h2>{{ 'Next Race:'|t }} {{ date|date('d F Y') }}</h2>
+                    {% set formattedDate = date|date('d F Y') %}
+                    {% set currentLocale = craft.i18n.getCurrentLocale() %}
+                    {% if currentLocale.id == 'ja' %}
+                        {% set formattedDate = date|date('Y') ~ '年 ' ~ date|date('F') ~ " " ~ date|date('d') ~ '日' %}
+                    {% endif %}
+                    <h2>{{ 'Next Race:'|t }} {{ formattedDate }}</h2>
                 {% endif %}
             </div>
         </div>
