@@ -30,14 +30,14 @@
 			{% endif %}
         </div>
 
-        <p>{{'If your company has taken part in our race before, please select from the list below:'|t}}</p>
+        <p>{{'If your company has taken part in our race before, please select from the list below:'|t}} {{ currentUser.relatedCompany.first().title }}</p>
         <div class="input-wrapper select related-company required">
             {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
             {% if companies|length %}
                 <select name="fields[relatedCompany][]" id="relatedCompany" class="input" required>
-                    <option value="" disabled selected hidden>{{ 'Please select your company'|t }}</option>
+                    <option value="" disabled {% if currentUser.relatedCompany.first() == null %}selected{% endif %} hidden>{{ 'Please select your company'|t }}</option>
                     {% for company in companies %}
-                        <option value="{{ company.id }}">{{ company.title }}</option>
+                        <option value="{{ company.id }}" {% if company.id == currentUser.relatedCompany.first().id %}selected{% endif %}>{{ company.title }}</option>
                     {% endfor %}
                 </select>
             {% endif %}
