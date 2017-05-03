@@ -110,7 +110,7 @@
                     <input id="newCompany" type="checkbox" class="input" name="newCompany" style="position: absolute;">
                     <label for="newCompany"></label>
                     {% if currentLocale.id == 'ja' %}
-                        <p class="checkbox-paragraph" style="font-size: 14px;">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
+                        <p class="checkbox-paragraph" style="font-size: 14px; float: right; width: calc(100% - 50px); padding-left: 0;">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
                     {% else %}
                         <p class="checkbox-paragraph">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
                     {% endif %}
