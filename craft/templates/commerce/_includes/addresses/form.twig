@@ -30,7 +30,7 @@
 			{% endif %}
         </div>
 
-        <p>{{'If your company has taken part in our race before, please select from the list below:'|t}} {{ currentUser.relatedCompany.first().title }}</p>
+        <p>{{'If your company has taken part in our race before, please select from the list below:'|t}}</p>
         <div class="input-wrapper select related-company required">
             {% set companies = craft.entries.section('company').order('title asc').limit(null) %}
             {% if companies|length %}
