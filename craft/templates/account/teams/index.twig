@@ -27,25 +27,10 @@
             </div>
 
             <div class="teams">
-                {% set teams = craft.entries({
-                    section: 'team',
-                    authorId: currentUser.id,
-                    limit: null
+                {% set teams = craft.entries.section('team').relatedTo({
+                    targetElement: currentUser
                 }) %}
 
-                {% set teamsTwo = craft.entries({
-                    section: 'team',
-                    search: 'teamCaptain:' ~ currentUser,
-                    limit: null
-                }) %}
-
-                {% set teamsThree = craft.entries.section('team').relatedTo({
-                    targetElement: currentUser,
-                    field: 'teamMembers'
-                }) %}
-
-                {% set teams = teams|merge(teamsTwo) %}
-                {% set teams = teams|merge(teamsThree) %}
                 {% set teams = teams|unique %}
                 
                 {% if teams|length %}
