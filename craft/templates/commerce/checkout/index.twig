@@ -67,7 +67,7 @@
                 <input type="hidden" name="redirect" value="{{ siteUrl }}commerce/checkout/addresses">
 
                 {% if craft.request.post('email')|length or craft.request.post('email') != "" %}
-                    <p class="error">{{ craft.request.post('email') }} is already registered.</p>
+                    <p class="error">{{ craft.request.post('email') }} {{'is already registered.'|t}}</p>
                 {% endif %}
 
                 <div class="input-wrapper required">
