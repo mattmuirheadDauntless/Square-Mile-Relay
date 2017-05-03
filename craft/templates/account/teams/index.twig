@@ -27,20 +27,24 @@
             </div>
 
             <div class="teams">
-                {% set teams = craft.entries.section('team').relatedTo({
-                    targetElement: currentUser
-                }) %}
+                {% set teamIds = [] %}
+                {% set teams = craft.entries.section('team').relatedTo('or',
+                    { targetElement: currentUser, field: 'teamMembers' },
+                    { targetElement: currentUser, field: 'teamCaptain' }
+                ) %}
 
-                {% set teamsTwo = craft.entries({
-                    section: 'team',
-                    authorId: currentUser.id,
-                    limit: null
-                }) %}
+                {% set teamsTwo = craft.entries.section('team').authorId(currentUser.id) %}
 
-                {% set teams = teams|merge(teamsTwo) %}
+                {% for teamOne in teams %}
+                    {% set teamIds = teamIds|merge([teamOne.id]) %}
+                {% endfor %}
 
-                {% set teams = teams|unique %}
-                
+                {% for teamTwo in teamsTwo %}
+                    {% if teamTwo.id not in teamIds %}
+                        {% set teams = teams|merge([teamTwo]) %}
+                    {% endif %}
+                {% endfor %}
+
                 {% if teams|length %}
                     {% for team in teams %}
                         <div class="team">
