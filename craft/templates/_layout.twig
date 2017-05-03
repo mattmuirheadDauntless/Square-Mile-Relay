@@ -133,11 +133,16 @@
                                                         {% set eventDate = event.startDateTime | date('U') %}
                                                         {% set daysLeft = ((today - eventDate) / (60 * 60 * 24)) | round %}
                                                         {% if daysLeft < 0 and daysLeft > nextEventDaysLeft %}
-                                                            {% set nextEventDate =  event.startDateTime|date('d F Y') %}
+                                                            {% set nextEventDate =  event.startDateTime %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
-                                                <span class="time">{{ nextEventDate }}</span>
+                                                {% set formattedDate = nextEventDate|date('d F Y') %}
+                                                {% set currentLocale = craft.i18n.getCurrentLocale() %}
+                                                {% if currentLocale.id == 'ja' %}
+                                                    {% set formattedDate = nextEventDate|date('Y') ~ '年 ' ~ nextEventDate|date('F') ~ " " ~ nextEventDate|date('d') ~ '日' %}
+                                                {% endif %}
+                                                <span class="time">{{ formattedDate }}</span>
                                             </div>
                                         </a></li>
                                     {% endfor %}

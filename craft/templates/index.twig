@@ -34,6 +34,12 @@
             {% if event|length %}
             {% set eventDate = event.startDateTime|date('U') %}
             {% set daysLeft = ((todaysDate - eventDate) / (60 * 60 * 24)) | round %}
+
+            {% set formattedDate = event.startDateTime|date('d F Y') %}
+            {% set currentLocale = craft.i18n.getCurrentLocale() %}
+            {% if currentLocale.id == 'ja' %}
+                {% set formattedDate = event.startDateTime|date('Y') ~ '年 ' ~ event.startDateTime|date('F') ~ " " ~ event.startDateTime|date('d') ~ '日' %}
+            {% endif %}
             <div class="race">
                 <a href="{{ city.url }}" class="cover-link"></a>
                 <div class="text">
@@ -41,7 +47,7 @@
                         <h4>{{ 'Next Race:'|t }}</h4>
                     {% endif %}
                     {% if eventDate > todaysDate %}
-                    <h3>{{ event.startDateTime }}</h3>
+                    <h3>{{ formattedDate }}</h3>
                     {% else %}
                     <h3>{{ 'Date coming soon'|t }}</h3>
                     {% endif %}
