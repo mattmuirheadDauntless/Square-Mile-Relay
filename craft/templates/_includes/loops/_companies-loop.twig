@@ -116,5 +116,17 @@
 
 {% endif %}
 
+{% if craft.request.isAjax %}
+    <script>
+        jQuery('.load-more').css('display', 'none');
+        jQuery('.loading-icon').css('display', 'block');
+        if ( jQuery('.no-results').length == 0 ){
+            jQuery('.btn-load-more').click();
+        } else {
+            jQuery('.loading-icon').css('display', 'none');
+        }
+    </script>
+{% endif %}
+
 {% endpaginate %}
 {% endcache %}

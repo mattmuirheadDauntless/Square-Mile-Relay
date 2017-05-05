@@ -70,7 +70,7 @@
             </div>
         </section>
 
-        <section class="companies grid" data-section="companies" data-page="1" data-search="" data-city="" data-year="">
+        <section class="companies grid" data-section="companies" data-page="1" data-search="{{ craft.request.getParam('search') }}" data-city="{{ craft.request.getParam('city') }}" data-year="{{ craft.request.getParam('year') }}">
 
             {% include "_includes/loops/_companies-loop" %}
 
