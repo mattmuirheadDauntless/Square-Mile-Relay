@@ -17,7 +17,7 @@
 {% paginate craft.entries({
     section: 'runningResults',
     limit: 20,
-    order: 'lapTime',
+    order: 'lapTime, lapPosition',
     search: search
 }) as individualResults %}
 
