@@ -126,6 +126,7 @@
                                                 {% set events = craft.entries.section('event') %}
                                                 {% set nextEventDaysLeft = -999999999 %}
                                                 {% set nextEventDate = "" %}
+                                                {% set formattedDate = "" %}
                                                 {% for event in events.order('startDateTime asc') %}
                                                     {% set eventCity = event.relatedCity.first() %}
                                                     {% if eventCity is not null and eventCity.title == city.title %}
@@ -137,12 +138,14 @@
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
-                                                {% set formattedDate = nextEventDate|date('d F Y') %}
-                                                {% set currentLocale = craft.i18n.getCurrentLocale() %}
-                                                {% if currentLocale.id == 'ja' %}
-                                                    {% set formattedDate = nextEventDate|date('Y') ~ '年 ' ~ nextEventDate|date('F') ~ " " ~ nextEventDate|date('d') ~ '日' %}
+                                                {% if nextEventDate != "" %}
+                                                    {% set formattedDate = nextEventDate|date('d F Y') %}
+                                                    {% set currentLocale = craft.i18n.getCurrentLocale() %}
+                                                    {% if currentLocale.id == 'ja' %}
+                                                        {% set formattedDate = nextEventDate|date('Y') ~ '年 ' ~ nextEventDate|date('F') ~ " " ~ nextEventDate|date('d') ~ '日' %}
+                                                    {% endif %}
+                                                    <span class="time">{{ formattedDate }}</span>
                                                 {% endif %}
-                                                <span class="time">{{ formattedDate }}</span>
                                             </div>
                                         </a></li>
                                     {% endfor %}
@@ -270,7 +273,7 @@
     <script src="{{ craft.config.environmentVariables.baseUrl }}bower_components/tablesorter/jquery.tablesorter.min.js"></script>
     <!-- Main JS -->
     <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/plugins-min.js?ver=001"></script>
-    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js?ver=030"></script>
+    <script src="{{ craft.config.environmentVariables.baseUrl }}library/js/min/script-min.js?ver=31"></script>
 
     <script>
         $(document).ready(function() {

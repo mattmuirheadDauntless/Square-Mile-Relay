@@ -2,7 +2,7 @@
 
     {% set imageWidth = 1920 %}
     {% set imageHeight = 1080 %}
-    
+
     {% set imageOrientation = 'landscape' %}
     {% set imageOrientation = 'landscape' %}
 
@@ -22,7 +22,7 @@
     {% set imageLarge = image.getUrl(large) %}
     {% set imageSmall = image.getUrl('newsThumb') %}
 
-    <div class="img-item grid-item img-modal-link" data-toggle="modal" data-target="#media" data-src={{ imageLarge }} data-caption={{ image.summaryText }}>
+    <div class="img-item grid-item slider-modal-link" data-toggle="modal" data-target="#media" data-src={{ imageLarge }} data-caption={{ image.summaryText }}>
         <img src={{ imageSmall }} alt="Gallery Image">
     </div>
 

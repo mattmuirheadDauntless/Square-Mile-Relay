@@ -67,7 +67,7 @@
                 <input type="hidden" name="redirect" value="{{ siteUrl }}commerce/checkout/addresses">
 
                 {% if craft.request.post('email')|length or craft.request.post('email') != "" %}
-                    <p class="error">{{ craft.request.post('email') }} is already registered.</p>
+                    <p class="error">{{ craft.request.post('email') }} {{'is already registered.'|t}}</p>
                 {% endif %}
 
                 <div class="input-wrapper required">
@@ -110,7 +110,7 @@
                     <input id="newCompany" type="checkbox" class="input" name="newCompany" style="position: absolute;">
                     <label for="newCompany"></label>
                     {% if currentLocale.id == 'ja' %}
-                        <p class="checkbox-paragraph" style="font-size: 14px;">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
+                        <p class="checkbox-paragraph" style="font-size: 14px; float: right; width: calc(100% - 50px); padding-left: 0;">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
                     {% else %}
                         <p class="checkbox-paragraph">{{ 'Is your company new to the Square Mile Relay?'|t }}</p>
                     {% endif %}
