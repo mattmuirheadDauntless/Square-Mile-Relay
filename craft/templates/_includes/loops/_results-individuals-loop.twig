@@ -8,7 +8,7 @@
 {# {% set search = searchTerm ~ searchCity ~ searchYear %} #}
 
 {% cache %}
-{% set allResults = craft.entries.section('runningResults').limit(1000).order('lapTime').search("lapTime:*") %}
+{% set allResults = craft.entries.section('runningResults').limit(1000).order('lapTime, lapPosition').search("lapTime:*") %}
 {% set ranks = [] %}
 {% for result in allResults %}
     {% set ranks = ranks|merge({ ("#" ~ result.id): loop.index }) %}
@@ -17,7 +17,7 @@
 {% paginate craft.entries({
     section: 'runningResults',
     limit: 20,
-    order: 'lapTime',
+    order: 'lapTime, lapPosition',
     search: search
 }) as individualResults %}
 
