@@ -83,8 +83,13 @@
                         </li>
                         <li>
                             <strong>{{ 'Date of Birth'|t }}</strong>
+                            {% set currentLocale = craft.i18n.getCurrentLocale() %}
                             {% if currentUser.dateOfBirth|length %}
-                                <span>{{ currentUser.dateOfBirth|date('F j Y') }}</span>
+                                {% if currentLocale.id == 'ja' %}
+                                    <span>{{ currentUser.dateOfBirth|date('Y') ~ '年 ' ~ currentUser.dateOfBirth|date('F') ~ " " ~ currentUser.dateOfBirth|date('d') ~ '日' }}</span>
+                                {% else %}
+                                    <span>{{ currentUser.dateOfBirth|date('F j Y') }}</span>
+                                {% endif %}
                                 {% set completedFields = completedFields + 1 %}
                             {% else %}
                                 <span class="no-info">{{ 'Please enter...'|t }}</span>
