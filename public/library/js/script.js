@@ -569,13 +569,6 @@ $(function(){
         $companiesGrid.isotope('layout');
     });
 
-    $('.companies-filter .filter-group.large .filter').click(function() {
-        var $this = $(this),
-            $year = $this.attr('data-latest-event');
-
-        $('.companies-filter .filter-group.small .filter[data-filter='+ $year +']').trigger('click');
-    });
-
 //===================================
 //RESULTS PAGE
 //===================================
