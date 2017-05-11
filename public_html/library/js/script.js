@@ -569,13 +569,6 @@ $(function(){
         $companiesGrid.isotope('layout');
     });
 
-    $('.companies-filter .filter-group.large .filter').click(function() {
-        var $this = $(this),
-            $year = $this.attr('data-latest-event');
-
-        $('.companies-filter .filter-group.small .filter[data-filter='+ $year +']').trigger('click');
-    });
-
 //===================================
 //RESULTS PAGE
 //===================================
@@ -969,6 +962,10 @@ $('body').on('click', '.btn-remove-member', function(event) {
 
         if ( $year == undefined ) {
             var $year = "";
+            if ($('.companies-filter').length) {
+                $year = $this.attr('data-latest-event');
+                $('.companies-filter .filter-group.small .filter[data-filter='+ $year +']').trigger('click');
+            }
         }
 
         if ($grid.attr('data-search') != undefined) {
