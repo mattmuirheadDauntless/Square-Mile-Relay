@@ -32,11 +32,12 @@
 
         {% for company in companies %}
             <div class="companies-item grid-item">
-                {% set image = company.companyLogo.first() %}
+                {# {% set image = company.companyLogo.first() %}
                 <a href={{ company.url }} class="cover-link"></a>
                 {% if image|length %}
                 <div class="img-container" style="background-image: url({{ image.url }})"></div>
-                {% endif %}
+                {% endif %} #}
+                <h3>All events</h3>
                 <h3>{{ company.title }}</h3>
 
                 {% set teams = craft.entries.section('team').relatedTo(company) %}
@@ -58,11 +59,14 @@
 {% else %}
 
     {# IF VIEW EVENT #}
+    {% if searchCity != "" and searchYear == "" %}{% set searchTerm = searchCity %}{% endif %}
+    {% if searchCity == "" and searchYear != "" %}{% set searchTerm = searchYear %}{% endif %}
+    {% if searchCity != "" and searchYear != "" %}{% set searchTerm = searchCity ~ "-" ~ searchYear %}{% endif %}
     {% set eventParams = {
         section: 'event',
         order: 'title',
         limit: 1,
-        search: searchCity ~ "-" ~ searchYear
+        search: searchTerm
     } %}
 
     {% paginate craft.entries(eventParams) as events %}
@@ -98,11 +102,12 @@
 
                 <div class="companies-item grid-item">
                     {% set relatedCompany = teams[0].relatedCompany.first() %}
-                    {% set image = relatedCompany.companyLogo.first() %}
+                    {#{% set image = relatedCompany.companyLogo.first() %}
                     <a href={{ relatedCompany.url }} class="cover-link"></a>
                     {% if image|length %}
                     <div class="img-container" style="background-image: url({{ image.url }})"></div>
-                    {% endif %}
+                    {% endif %} #}
+                    <h3>{{ event.title }}</h3>
                     <h3>{{ relatedCompany.title }}</h3>
 
                     {% if teams|length != 0 %}
