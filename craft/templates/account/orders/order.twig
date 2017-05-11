@@ -39,7 +39,14 @@
                             <ul>
                                 <li><strong>{{ "Customer"|t }}:</strong> {{ order.customer.email }}</li>
                                 <li><strong>{{ "Total"|t }}:</strong> {{ order.totalPrice|commerceCurrency(iso,convert=true) }}</li>
-                                <li><strong>{{ "Date"|t }}:</strong> {{ order.dateOrdered }}</li>
+                                <li><strong>{{ "Date"|t }}:</strong>
+                                    {% set currentLocale = craft.i18n.getCurrentLocale() %}
+                                    {% if currentLocale.id == 'ja' %}
+                                        {{ order.dateOrdered|date('Y') ~ '年 ' ~ order.dateOrdered|date('F') ~ " " ~ order.dateOrdered|date('d') ~ '日' }}
+                                    {% else %}
+                                        {{ order.dateOrdered|date('j/m/Y') }}
+                                    {% endif %}
+                                </li>
                             </ul>
 
                         </div>

@@ -66,7 +66,14 @@
                                     {% endif %}
                                 {% endfor %}
                                 <tr>
-                                    <td>{{ order.dateOrdered|date('j/m/Y') }}</td>
+                                    <td>
+                                        {% set currentLocale = craft.i18n.getCurrentLocale() %}
+                                        {% if currentLocale.id == 'ja' %}
+                                            {{ order.dateOrdered|date('Y') ~ '年 ' ~ order.dateOrdered|date('F') ~ " " ~ order.dateOrdered|date('d') ~ '日' }}
+                                        {% else %}
+                                            {{ order.dateOrdered|date('j/m/Y') }}
+                                        {% endif %}
+                                    </td>
                                     <td><a href="{{ url('account/orders/1?number=' ~ order.number) }}">{{ order }}</a></td>
                                     <td>{{ order.totalQty }}</td>
                                     <td>{{ order.totalPrice|commerceCurrency(iso, convert=false) }}</td>
