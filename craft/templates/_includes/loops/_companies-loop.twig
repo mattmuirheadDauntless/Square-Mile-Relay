@@ -62,7 +62,7 @@
         section: 'event',
         order: 'title',
         limit: 1,
-        search: searchCity ~ " " ~ searchYear
+        search: searchCity ~ "-" ~ searchYear
     } %}
 
     {% paginate craft.entries(eventParams) as events %}
