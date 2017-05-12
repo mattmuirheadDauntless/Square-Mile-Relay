@@ -58,11 +58,14 @@
 {% else %}
 
     {# IF VIEW EVENT #}
+    {% if searchCity != "" and searchYear == "" %}{% set searchTerm = searchCity %}{% endif %}
+    {% if searchCity == "" and searchYear != "" %}{% set searchTerm = searchYear %}{% endif %}
+    {% if searchCity != "" and searchYear != "" %}{% set searchTerm = searchCity ~ "-" ~ searchYear %}{% endif %}
     {% set eventParams = {
         section: 'event',
         order: 'title',
         limit: 1,
-        search: searchCity ~ "-" ~ searchYear
+        search: searchTerm
     } %}
 
     {% paginate craft.entries(eventParams) as events %}

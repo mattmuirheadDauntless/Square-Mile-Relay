@@ -974,6 +974,10 @@ $('body').on('click', '.btn-remove-member', function(event) {
 
         if ( $year == undefined ) {
             var $year = "";
+            if ($('.companies-filter').length) {
+                $year = $this.attr('data-latest-event');
+                $('.companies-filter .filter-group.small .filter[data-filter='+ $year +']').trigger('click');
+            }
         }
 
         if ($grid.attr('data-search') != undefined) {
