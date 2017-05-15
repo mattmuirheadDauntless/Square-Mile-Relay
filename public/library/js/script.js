@@ -176,10 +176,6 @@ $(function(){
         });
     }
 
-
-    //handle tables
-    $(".tablesorter").tablesorter();
-
     //hide notification
     $('.notification .close').click(function() {
         var $this = $(this),

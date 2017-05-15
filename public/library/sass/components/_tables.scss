@@ -34,13 +34,6 @@
                 background-color: $white !important;
             }
         }
-        &.tablesorter {
-            tr {
-                th {
-                    cursor: pointer;
-                }
-            }
-        }
         td,
         th {
             &.text-right {
