@@ -2585,8 +2585,6 @@ header .cta-banner,
   .table-wrapper table thead tr,
   .table-wrapper table thead th {
     background-color: #fff !important; }
-  .table-wrapper table.tablesorter tr th {
-    cursor: pointer; }
   .table-wrapper table td.text-right,
   .table-wrapper table th.text-right {
     text-align: right; }
