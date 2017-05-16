@@ -5,14 +5,8 @@
 {% set searchYear = craft.request.getParam('year') %}
 {% if searchYear == " " %}{% set searchYear = "" %}{% endif %}
 {% set search = "lapTime:* " ~ searchTerm ~ searchCity ~ searchYear %}
-{# {% set search = searchTerm ~ searchCity ~ searchYear %} #}
 
 {% cache %}
-{# {% set allResults = craft.entries.section('runningResults').limit(1000).order('lapTime, lapPosition').search("lapTime:*") %}
-{% set ranks = [] %}
-{% for result in allResults %}
-    {% set ranks = ranks|merge({ ("#" ~ result.id): loop.index }) %}
-{% endfor %} #}
 
 {% paginate craft.entries({
     section: 'runningResults',
@@ -49,7 +43,6 @@
         {% set city = event.relatedCity.first() %}
         {% if city is not null %}
             <tr class="result-item grid-item {{ year }} {{ city.slug }} {{ event.slug }}">
-                {# <td><strong>{% if ranks["#" ~ result.id] is defined %}{{ ranks["#" ~ result.id] }}{% else %}{{ 'TBC'|t }}{% endif %}</strong></td> #}
                 <td><strong>{{ result.globalRank }}</strong></td>
                 <td><strong>{{ result.lapPosition }}</strong></td>
                 <td>

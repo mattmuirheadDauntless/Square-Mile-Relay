@@ -1001,12 +1001,12 @@ $('body').on('click', '.btn-remove-member', function(event) {
     });
 
     //load entries
-    function loadEntries(section, page, search, city, year) {
+    function loadEntries(section, page, search, city, year, orderBy, orderDir) {
         //hide load more - show loading
         $('.loading-icon').removeClass('hide');
         $('.load-more').addClass('hide');
-        $.get( "/"+section+"/p"+page+"?search="+search+"&city="+city+"&year="+year, function( data ) {
-            console.log("/"+section+"/p"+page+"?search="+search+"&city="+city+"&year="+year);
+        $.get( "/"+section+"/p"+page+"?search="+search+"&city="+city+"&year="+year+"&orderBy="+orderBy+"&orderDir="+orderDir, function( data ) {
+            console.log("/"+section+"/p"+page+"?search="+search+"&city="+city+"&year="+year+"&orderBy="+orderBy+"&orderDir="+orderDir);
             if ( data != "" ) {
                 var $items = $(''+ data +'');
                 //append new items
@@ -1151,6 +1151,29 @@ $('body').on('click', '.btn-remove-member', function(event) {
 
     $('.language-select').on('change', function() {
         window.location.href = $(this).val();
+    });
+
+    $('.results-table .header').on('click', function() {
+        if ( $(this).hasClass('headerSortUp') ) {
+            var $orderDir = 'asc';
+        } else {
+            var $orderDir = 'desc';
+        }
+
+        console.log($(this).attr('class'));
+
+        var $grid = $(this).closest('.grid');
+        $page = $grid.attr('data-page'),
+        $section = $grid.attr('data-section'),
+        $search = $grid.attr('data-search'),
+        $city = $grid.attr('data-city'),
+        $year = $grid.attr('data-year');
+        $year = $grid.attr('data-year');
+
+        var results = $grid.find('.results').empty();
+
+        
+        // loadEntries($section, $page, $search, $city, $year, $(this).text(), $orderDir);
     });
 
 });
