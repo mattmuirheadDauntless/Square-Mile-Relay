@@ -34,7 +34,7 @@
 
         <select id="{{ options.id }}" name="{{ options.name }}" class="input"
         {%- if options.required is defined -%} required{%- endif -%} >
-            <option value="">{{ '- Select '  ~ options.label ~ ' -'|t }}</option>
+            <option value="">{{ '- Select '|t  ~ options.label ~ ' -'|t }}</option>
             {% for option in options.options %}
                 {% if options.value is defined and options.value == option[optionKey] %}
                     <!--email_off--><option value="{{ option[optionKey] }}" selected="selected">{{ option[optionValue] }}</option><!--/email_off-->

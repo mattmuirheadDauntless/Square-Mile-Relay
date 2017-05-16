@@ -610,9 +610,21 @@ $('.btn-invite-member, .resend').click(function(event) {
         $lastName = $this.parent().parent().find('#lastName').val();
         $email = $this.parent().parent().find('#email').val();
 
+        var locale = $('body').data('locale');
+
+        if ( locale == undefined || (locale != undefined && locale.length <= 0) ) {
+            locale = '';
+        } else {
+            if ( locale == 'en_gb' ) {
+                locale = '';
+            } else {
+                locale = '/' + locale + '/';
+            }
+        }
+
         if ( $email.length > 0 ) {
             $.post(
-                '/',
+                locale,
                 { action: 'squareMileRelay/teamMembers/addTeamMember', firstName: $firstName, lastName: $lastName, email: $email, teamId: $teamId },
                 function(data, textStatus, xhr) {
                     if ( data.includes('Sorry') ) {
