@@ -63,6 +63,16 @@
                     </thead>
                     <tbody id="team-members">
                         {% set users = team.teamMembers.status('null') %}
+                        {% if team.teamMembersMatrix|length %}
+                            {% set orderedUsers = [] %}
+                            {% for member in team.teamMembersMatrix %}
+                                {% set orderedUsers = orderedUsers|merge([member.relatedUser.first()]) %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if orderedUsers|length == 10 %}
+                            {% set users = orderedUsers %}
+                        {% endif %}
+
                         {% set count = 0 %}
                         {% for user in users %}
                             {% set count = count + 1 %}
