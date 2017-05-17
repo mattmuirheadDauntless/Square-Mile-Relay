@@ -39,7 +39,8 @@
                 {% else %}
                 <div class="img-container" style="background-image: url(/library/images/smr-grey-out.png)"></div>
                 {% endif %}
-                <h3 class="name">{{ company.title }}</h3>
+                <div class="name hide">{{ company.slug }}</div>
+                <h3>{{ company.title }}</h3>
 
                 {% set teams = craft.entries.section('team').relatedTo(company) %}
                 {% if teams|length != 0 %}
@@ -110,7 +111,8 @@
                     {% else %}
                     <div class="img-container" style="background-image: url(/library/images/smr-grey-out.png)"></div>
                     {% endif %}
-                    <h3 class="name">{{ relatedCompany.title }}</h3>
+                    <div class="name hide">{{ relatedCompany.slug }}</div>
+                    <h3>{{ relatedCompany.title }}</h3>
 
                     {% if teams|length != 0 %}
                         {% if teams|length > 1 %}
