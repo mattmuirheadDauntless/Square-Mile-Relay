@@ -558,12 +558,18 @@ $(function(){
     var $companiesGrid = $('.companies').isotope({
         itemSelector: '.companies-item',
         percentPosition: true,
-        layoutMode: 'fitRows'
+        layoutMode: 'fitRows',
+        getSortData: {
+            name: '.name'
+        }
     });
 
     $companiesGrid.imagesLoaded().progress( function() {
         $companiesGrid.isotope('layout');
     });
+
+    $companiesGrid.isotope({ sortBy: 'name' });
+
 
 //===================================
 //RESULTS PAGE
@@ -1024,6 +1030,10 @@ $('body').on('click', '.btn-remove-member', function(event) {
                 $('.load-more').addClass('hide');
             }
 
+            if ( $('.companies.grid').length > 0 ) {
+                $companiesGrid.isotope({ sortBy: 'name' });
+            }
+
             if ( $('.gallery-grid').length > 0 ) {
                 $('.img-cell').each(function() {
                     var $this = $(this);
@@ -1052,8 +1062,6 @@ $('body').on('click', '.btn-remove-member', function(event) {
 
                     $sliderModal.flickity( 'select', $index );
 
-                    // $('.img-cell').removeClass('is-selected').css('left', '100%');
-                    // $('.img-cell[data-id='+ $id +']').addClass('is-selected').css('left', '0%');
                 });
             }
 

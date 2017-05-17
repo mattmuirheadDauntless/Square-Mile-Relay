@@ -36,8 +36,10 @@
                 <a href={{ company.url }} class="cover-link"></a>
                 {% if image|length %}
                 <div class="img-container" style="background-image: url({{ image.url }})"></div>
+                {% else %}
+                <div class="img-container" style="background-image: url(/library/images/smr-grey-out.png)"></div>
                 {% endif %}
-                <h3>{{ company.title }}</h3>
+                <h3 class="name">{{ company.title }}</h3>
 
                 {% set teams = craft.entries.section('team').relatedTo(company) %}
                 {% if teams|length != 0 %}
@@ -105,8 +107,10 @@
                     <a href={{ relatedCompany.url }} class="cover-link"></a>
                     {% if image|length %}
                     <div class="img-container" style="background-image: url({{ image.url }})"></div>
+                    {% else %}
+                    <div class="img-container" style="background-image: url(/library/images/smr-grey-out.png)"></div>
                     {% endif %}
-                    <h3>{{ relatedCompany.title }}</h3>
+                    <h3 class="name">{{ relatedCompany.title }}</h3>
 
                     {% if teams|length != 0 %}
                         {% if teams|length > 1 %}
