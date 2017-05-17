@@ -11,47 +11,51 @@
 {% if searchCity == " " %}{% set searchCity = "" %}{% endif %}
 {% set searchYear = craft.request.getParam('year') %}
 {% if searchYear == " " %}{% set searchYear = "" %}{% endif %}
-{% set search = "finishTime:* " ~ searchTerm ~ searchCity ~ searchYear %}
+{% set search = searchTerm ~ searchCity ~ searchYear %}
 
-{% if craft.request.getParam('orderBy') is defined and craft.request.getParam('orderBy') is not null %}
-    {% if craft.request.getParam('orderBy') == 'Global Rank' %}
+{% if searchCity|length %}
+    {% set search = 'title:' ~ searchCity %}
+{% endif %}
+
+{% if orderBy != '' %}
+    {% if orderBy == 'Global Rank' %}
         {% set orderBy = 'globalTeamRank' %}
     {% endif %}
-    {% if craft.request.getParam('orderBy') == 'City Rank' %}
+    {% if orderBy == 'City Rank' %}
         {% set orderBy = 'teamPosition' %}
     {% endif %}
-    {% if craft.request.getParam('orderBy') == 'Team Name' %}
-        {% set orderBy = 'relatedTeam.first.teamName' %}
+    {% if orderBy == 'Team Name' %}
+        {% set orderBy = 'teamName' %}
     {% endif %}
-    {% if craft.request.getParam('orderBy') == 'Time' %}
+    {% if orderBy == 'Time' %}
         {% set orderBy = 'finishTime' %}
     {% endif %}
-    {% if craft.request.getParam('orderBy') == 'Race Location' %}
-        {% set orderBy = 'relatedEvent.first.realtedCity.first.title' %}
+    {% if orderBy == 'Race Location' %}
+        {% set orderBy = 'title' %}
     {% endif %}
-    {% if craft.request.getParam('orderBy') == 'Race Year' %}
-        {% set orderBy = 'relatedEvent.first.startDateTime' %}
+    {% if orderBy == 'Race Year' %}
+        {% set orderBy = 'startDateTime' %}
     {% endif %}
 {% endif %}
 
 {% if orderBy|length > 0 %}
-    {% set order = ', ' ~ orderBy ~ ' ' ~ orderDir %}
+    {% set order = orderBy ~ ' ' ~ orderDir %}
 {% else %}
-    {% set order = '' %}
+    {% set order = 'finishTime asc' %}
 {% endif %}
 
 {% cache %}
 
 {% paginate craft.entries({
     section: 'runningResults',
-    limit: 20,
-    order: 'finishTime' ~ order,
+    limit: 200,
+    order: order,
     search: search
-}) as teamResults %}
+}).finishTime('not DNS').finishTime('not DNF').globalTeamRank('not 0') as teamResults %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
     {% if craft.request.getPageNum() == 1 %}
-        <tr class="">
+        <tr class="result-item grid-item">
             <td class="full-width" colspan="7">
                 <div class="no-results">
                     <h2>{{ 'Sorry there are currently no results for your search!'|t }}</h2>
@@ -60,7 +64,7 @@
             </td>
         </tr>
     {% else %}
-        <tr class="">
+        <tr class="result-item grid-item">
             <td class="full-width" colspan="7">
                 <div class="no-results">
                     <h2>{{ 'You have reached the finish line!'|t }}</h2>
@@ -76,14 +80,23 @@
             {% set result = result[0] %}
         
             {% set event = result.relatedEvents.first() %}
-            {% set year = event.startDateTime|date('Y') %}
-            {% set city = event.relatedCity.first() %}
+            {% if event is null %}
+                {% set year = '' %}
+                {% set city = { 'slug': '', 'title': '' } %}
+            {% else %}
+                {% set year = event.startDateTime|date('Y') %}
+                {% set city = event.relatedCity.first() %}
+            {% endif %}
 
-            <tr class="{{ year }} {{ city.slug }} {{ event.slug }}">
+            <tr class="result-item grid-item {{ year }} {% if city is not null %}{{ city.slug }}{% endif %} {% if event is not null %}{{ event.slug }}{% endif %}">
                 <td><strong>{{ result.globalTeamRank }}</strong></td>
                 <td><strong>{{ result.teamPosition }}</strong></td>
                 <td>
-                    <strong>{{ result.relatedTeam.first.teamName }}</strong>
+                    {% set teamName = '' %}
+                    {% if result.relatedTeam is defined and result.relatedTeam.first is not null %}
+                        {% set teamName = result.relatedTeam.first.teamName %}
+                    {% endif %}
+                    <strong>{{ teamName }}</strong>
                 </td>
                 <td>
                     {% if result.finishTime|length %}
@@ -92,7 +105,7 @@
                         <strong>{{ result.finishedStatus|split('.')[0] }}</strong>
                     {% endif %}
                 </td>
-                <td>{{ city.title }}</td>
+                <td>{% if city is not null %}{{ city.title }}{% endif %}</td>
                 <td>{{ year }}</td>
             </tr>
     {% endfor %}

@@ -1,19 +1,63 @@
+{% set orderDir = craft.request.getParam('orderDir') %}
+{% set orderBy = craft.request.getParam('orderBy') %}
+
+{% if orderDir|length == 0 %} 
+    {% set orderDir = 'asc' %}
+{% endif %}
+
 {% set searchTerm = craft.request.getParam('search') ~ " " %}
 {% if searchTerm == " " %}{% set searchTerm = "" %}{% endif %}
 {% set searchCity = craft.request.getParam('city') ~ " " %}
 {% if searchCity == " " %}{% set searchCity = "" %}{% endif %}
 {% set searchYear = craft.request.getParam('year') %}
 {% if searchYear == " " %}{% set searchYear = "" %}{% endif %}
-{% set search = "lapTime:* " ~ searchTerm ~ searchCity ~ searchYear %}
+{% set search = searchTerm ~ searchCity ~ searchYear %}
 
+{% if searchCity|length %}
+    {% set search = 'title:' ~ searchCity %}
+{% endif %}
+
+{% if orderBy != '' %}
+    {% if orderBy == 'Global Rank' %}
+        {% set orderBy = 'globalRank' %}
+    {% endif %}
+    {% if orderBy == 'City Rank' %}
+        {% set orderBy = 'lapPosition' %}
+    {% endif %}
+    {% if orderBy == 'Team Name' %}
+        {% set orderBy = 'teamName' %}
+    {% endif %}
+    {% if orderBy == 'Time' %}
+        {% set orderBy = 'lapTime' %}
+    {% endif %}
+    {% if orderBy == 'Race Location' %}
+        {% set orderBy = 'title' %}
+    {% endif %}
+    {% if orderBy == 'Race Year' %}
+        {% set orderBy = 'startDateTime' %}
+    {% endif %}
+{% endif %}
+
+{% if orderBy|length > 0 %}
+    {% set order = orderBy ~ ' ' ~ orderDir %}
+{% else %}
+    {% set order = 'lapTime asc' %}
+{% endif %}
 {% cache %}
 
-{% paginate craft.entries({
+{# {% paginate craft.entries({
     section: 'runningResults',
     limit: 20,
     order: 'lapTime, lapPosition',
     search: search
-}) as individualResults %}
+}) as individualResults %} #}
+
+{% paginate craft.entries({
+    section: 'runningResults',
+    limit: 200,
+    order: order,
+    search: search
+}).lapTime('not DNS').lapTime('not DNF').globalRank('not 0').lapPosition('not 0') as individualResults %}
 
 {% if craft.request.getPageNum() > paginate.totalPages %}
     {% if craft.request.getPageNum() == 1 %}
