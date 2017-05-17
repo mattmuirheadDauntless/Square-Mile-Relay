@@ -1157,6 +1157,8 @@ $('body').on('click', '.btn-remove-member', function(event) {
     //New Results Page Functionality
     if ( $('.results-table').length ) {
 
+        $('.loading-icon').addClass('hide');
+
         var $page = $('.results-table .table-wrapper').data('page');
         var $section = $('.results-table .table-wrapper').data('section');
         var $search = $('.results-table .table-wrapper').data('search');

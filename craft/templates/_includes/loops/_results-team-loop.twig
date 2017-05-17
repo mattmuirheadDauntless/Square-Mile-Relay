@@ -92,11 +92,7 @@
                 <td><strong>{{ result.globalTeamRank }}</strong></td>
                 <td><strong>{{ result.teamPosition }}</strong></td>
                 <td>
-                    {% set teamName = '' %}
-                    {% if result.relatedTeam is defined and result.relatedTeam.first is not null %}
-                        {% set teamName = result.relatedTeam.first.teamName %}
-                    {% endif %}
-                    <strong>{{ teamName }}</strong>
+                    <strong>{{ result.teamName }}</strong>
                 </td>
                 <td>
                     {% if result.finishTime|length %}
