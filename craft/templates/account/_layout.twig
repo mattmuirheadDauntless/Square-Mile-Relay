@@ -1,5 +1,7 @@
 {% requireLogin %}
 
+{% set entry = craft.entries.section(craft.request.firstSegment).first() %}
+
 {% extends "_layout" %}
 
 {% block content %}
@@ -10,7 +12,6 @@
         {% set pageHeading = 'Ready to race?'|t %}
     {% endif %}
 
-    {% set entry = craft.entries.section(craft.request.firstSegment).first() %}
     {% set image = entry.backgroundImage.first() %}
     <section class="main-heading" style="background-image: url('{{ image.url }}');">
         <div class="wrapper-thin">
