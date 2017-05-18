@@ -15,3 +15,5 @@ web.config
 .DS_*
 ._.DS_*
 .phpintel
+._*
+.gitignore

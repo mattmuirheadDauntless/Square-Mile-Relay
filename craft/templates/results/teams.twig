@@ -31,10 +31,10 @@
 
         {% cache %}
 
-        <section class="filters active">
+        <section class="filters team-filters active">
             <div class="filters-btn">
                 <p>{{ 'filter'|t }}</p><i class="fa fa-chevron-down" aria-hidden="true"></i>
-                <div class="search-results pull-right grid-search">
+                <div class="search-results pull-right grid-search team-search">
                     <input type="text" name="search">
                 </div>
                 <div class="clear"></div>
@@ -56,7 +56,7 @@
 
                     <ul class="filter-group small">
                         {% for year in years %}
-                            <li class="filter" data-filter="{{ year }}">{{ year }}</li>
+                            <li class="filter year-filter" data-filter="{{ year }}">{{ year }}</li>
                         {% endfor %}
                     </ul>
 
@@ -65,7 +65,7 @@
                 {% if cities | length %}
                 <ul class="filter-group large">
                     {% for city in cities %}
-                        <li class="filter" data-filter="{{ city.slug }}">{{ city.title }}</li>
+                        <li class="filter city-filter" data-filter="{{ city.title }}">{{ city.title }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
@@ -73,28 +73,23 @@
         </section>
 
 
-        <section class="results-table results-teams tabs-container">
+        <section class="results-table tabs-container">
             <a href="{{ siteUrl }}results/teams" class="tab active"><span class="text">{{ 'Teams'|t }}</span> <i class="fa fa-users" aria-hidden="true"></i></a>
             <a href="{{ siteUrl }}results/individuals" class="tab"><span class="text">{{ 'Individuals'|t }}</span> <i class="fa fa-user" aria-hidden="true"></i></a>
 
-            <div class="table-wrapper tab-wrapper active grid" data-section="results/teams" data-page="1" data-search="" data-city="" data-year="">
-                <div class="isotope-no-items inactive">
-                    <h2>{{ 'Sorry!'|t }}</h2>
-                    <h3>{{ "There aren't any results for your filter search"|t }}</h3>
-                    <div class="btn btn-black filter" data-filter="*">{{ 'View all categories'|t }}</div>
-                </div>
-                <table class="tablesorter">
+            <div class="table-wrapper tab-wrapper active" data-section="results/teams" data-page="1" data-search="" data-city="" data-year="">
+                <table>
                     <thead>
                         <tr>
-                            <th><span></span>{{ 'Global Rank'|t }}</th>
-                            <th><span></span>{{ 'City Rank'|t }}</th>
-                            <th><span></span>{{ 'Team Name'|t }}</th>
-                            <th><span></span>{{ 'Time'|t }}</th>
-                            <th><span></span>{{ 'Race Location'|t }}</th>
-                            <th><span></span>{{ 'Race Year'|t }}</th>
+                            <th class="cursor-pointer"><span></span>{{ 'Global Rank'|t }}</th>
+                            <th class="cursor-pointer"><span></span>{{ 'City Rank'|t }}</th>
+                            <th class="cursor-pointer"><span></span>{{ 'Team Name'|t }}</th>
+                            <th class="cursor-pointer"><span></span>{{ 'Time'|t }}</th>
+                            <th>{{ 'Race Location'|t }}</th>
+                            <th>{{ 'Race Year'|t }}</th>
                         </tr>
                     </thead>
-                    <tbody class="results">
+                    <tbody class="result-order">
 
                         {% include "_includes/loops/_results-team-loop" %}
 
