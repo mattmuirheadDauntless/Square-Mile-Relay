@@ -68,9 +68,9 @@
                             {% for member in team.teamMembersMatrix %}
                                 {% set orderedUsers = orderedUsers|merge([member.relatedUser.first()]) %}
                             {% endfor %}
-                        {% endif %}
-                        {% if orderedUsers|length == 10 %}
-                            {% set users = orderedUsers %}
+                            {% if orderedUsers is defined and orderedUsers|length == 10 %}
+                                {% set users = orderedUsers %}
+                            {% endif %}
                         {% endif %}
 
                         {% set count = 0 %}

@@ -871,7 +871,7 @@ $('body').on('click', '.btn-remove-member', function(event) {
     }
 
     //search
-    $('.grid-search input').keyup(function(event){
+    $('.grid-search:not(.team-search) input').keyup(function(event){
         if(event.keyCode == 13){
             var $val = $(this).val();
             gridSearch($val);
@@ -941,7 +941,7 @@ $('body').on('click', '.btn-remove-member', function(event) {
     });
 
     //on filter
-    $('.filters:not(.partner-filters) .filter').click(function() {
+    $('.filters:not(.partner-filters):not(.team-filters) .filter').click(function() {
         var $this = $(this),
             $parent = $this.parent('.filter-group'),
             $selector = $this.attr('data-filter');
@@ -1003,12 +1003,12 @@ $('body').on('click', '.btn-remove-member', function(event) {
     });
 
     //load entries
-    function loadEntries(section, page, search, city, year) {
+    function loadEntries(section, page, search, city, year, orderBy, orderDir) {
         //hide load more - show loading
         $('.loading-icon').removeClass('hide');
         $('.load-more').addClass('hide');
-        $.get( "/"+section+"/p"+page+"?search="+search+"&city="+city+"&year="+year, function( data ) {
-            console.log("/"+section+"/p"+page+"?search="+search+"&city="+city+"&year="+year);
+        $.get( "/"+section+"/p"+page+"?search="+search+"&city="+city+"&year="+year+"&orderBy="+orderBy+"&orderDir="+orderDir, function( data ) {
+            console.log("/"+section+"/p"+page+"?search="+search+"&city="+city+"&year="+year+"&orderBy="+orderBy+"&orderDir="+orderDir);
             if ( data != "" ) {
                 var $items = $(''+ data +'');
                 //append new items
@@ -1157,4 +1157,134 @@ $('body').on('click', '.btn-remove-member', function(event) {
         window.location.href = $(this).val();
     });
 
+
+    //New Results Page Functionality
+    if ( $('.results-table').length ) {
+
+        $('.loading-icon').addClass('hide');
+
+        var $page = $('.results-table .table-wrapper').data('page');
+        var $section = $('.results-table .table-wrapper').data('section');
+        var $search = $('.results-table .table-wrapper').data('search');
+        var $city = $('.results-table .table-wrapper').data('city');
+        var $year = $('.results-table .table-wrapper').data('year');
+        var $orderBy = '';
+        var $orderDir = 'desc';
+
+        $('.results-table th.cursor-pointer').on('click', function() {
+            if ( $orderBy.length > 0 && $orderBy != $(this).text() ) {
+                $.each($('.results-table th'), function() {
+                    $(this).removeClass('headerSortDown');
+                    $(this).removeClass('headerSortUp');
+                });
+            }
+
+            if ( $(this).hasClass('headerSortDown') ) {
+                $(this).removeClass('headerSortDown');
+                $(this).addClass('headerSortUp');
+                $orderDir = 'asc';
+            } else {
+                $(this).removeClass('headerSortUp');
+                $(this).addClass('headerSortDown');
+                $orderDir = 'desc';
+            }
+
+            $orderBy = $(this).text();
+            $('.result-order').html('');
+            loadResultEntries($section, $page, $search, $city, $year, $orderBy, $orderDir);
+        });
+
+        $('.team-search input[name="search"]').on('keyup', function(event) {
+            if ( event.keyCode == 13 ) {
+                $('.result-order').html('');
+                loadResultEntries($section, $page, $(this).val(), $city, $year, $orderBy, $orderDir);
+            }
+        });
+
+        //load entries
+        function loadResultEntries(section, page, search, city, year, orderBy, orderDir) {
+            //hide load more - show loading
+            $('.loading-icon').removeClass('hide');
+            $('.load-more').addClass('hide');
+
+            var thisUrl = "/" + section + "/p" + page + "?search=" + search + "&city=" + city + "&year=" + year + "&orderBy=" + orderBy + "&orderDir=" + orderDir;
+
+            $.get( thisUrl, function( data ) {
+                console.log(thisUrl);
+
+                if ( data != "" ) {
+                    $('.result-order').append($(data));
+                } else {
+                    $('.load-more').addClass('hide');
+                }
+            })
+            .done( function(){
+                //hide loading
+                $('.loading-icon').addClass('hide');
+                //show load more
+                $('.load-more').removeClass('hide');
+
+                if ( $('.no-results').length > 0 ) {
+                    $('.load-more').addClass('hide');
+                }
+            });
+        }
+
+        $('.results-table .load-more').on('click', function() {
+            $page = parseInt($page + 1);
+            $('.results-table .table-wrapper').attr('data-page', $page);
+            loadResultEntries($section, $page, $search, $city, $year, $orderBy, $orderDir);
+        });
+
+        $('li.city-filter').on('click', function() {
+            $('.result-order').html('');
+
+            $.each($('li.city-filter'), function() {
+                if ( $(this).hasClass('active') ) {
+                    $(this).removeClass('active');
+                }
+            });
+            
+            $city = $(this).text();
+            $(this).addClass('active');
+            loadResultEntries($section, $page, $search, $city, $year, $orderBy, $orderDir); 
+        });
+
+        $('li.year-filter').on('click', function() {
+            $('.result-order').html('');
+            
+            $.each($('li.year-filter'), function() {
+                if ( $(this).hasClass('active') ) {
+                    $(this).removeClass('active');
+                }
+            });
+            
+            $city = $(this).text();
+            $(this).addClass('active');
+            loadResultEntries($section, $page, $search, $city, $year, $orderBy, $orderDir);
+            $city = '';
+        });
+
+        $('.view-all').on('click', function() {
+            $page = 1;
+            $search = '';
+            $city = '';
+            $year = '';
+            $orderBy = '';
+            $orderDir = '';
+
+            $.each($('.city-filter, .year-filter'), function() {
+                if ( $(this).hasClass('active') ) {
+                    $(this).removeClass('active');
+                }
+            });
+
+            $('.team-search input[name="search"]').val('');
+            $('.result-order').html('');
+            loadResultEntries($section, $page, $search, $city, $year, $orderBy, $orderDir);
+        });
+    }
+
+
+    
 });
