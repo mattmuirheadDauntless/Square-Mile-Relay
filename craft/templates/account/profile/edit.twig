@@ -89,7 +89,7 @@
                                 }) }}
                             </div>
 
-                            <div class="input-wrapper edit-element">
+                            <div class="input-wrapper edit-element required">
                                 {% set phoneNumberlabel = 'Contact Number'|t %}
                                 {{ formFields.input({
                                     id:    'phoneNumber',
@@ -115,7 +115,7 @@
                                 }) }}
                             </div>
 
-                            <div class="input-wrapper edit-element">
+                            <div class="input-wrapper edit-element required">
                                 {% set dateOfBirthLabel = 'Date of birth'|t %}
                                 {% set dob = "" %}
                                 {% if currentUser.dateOfBirth|length %}
